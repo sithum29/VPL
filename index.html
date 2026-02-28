@@ -3,711 +3,756 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPL - Pre Mini Auction 2026</title>
+    <title>VPL - Virtual Premier League | Season 01</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vpl: {
+                            dark: '#0f172a', // Slate 900
+                            card: '#1e293b', // Slate 800
+                            accent: '#39ff14', // Neon Green
+                            accentHover: '#2ebd0e',
+                            orange: '#ff6b00',
+                            text: '#e2e8f0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'stadium': "linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 1)), url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2070&auto=format&fit=crop')",
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --neon-blue: #00f3ff;
-            --neon-purple: #bc13fe;
-            --neon-gold: #ffd700;
-            --glass-bg: rgba(15, 23, 42, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background: #0a0a0a;
-            color: white;
-            overflow-x: hidden;
-        }
-
-        .font-teko {
-            font-family: 'Teko', sans-serif;
-        }
-
-        /* Animated Background */
-        .bg-stadium {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-            z-index: -2;
-        }
-
-        .bg-stadium::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(0, 243, 255, 0.2) 0%, transparent 50%);
-            animation: pulseGlow 10s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        /* Cricket Pitch Pattern */
-        .pitch-pattern {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
-            background: repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 50px,
-                rgba(255, 255, 255, 0.03) 50px,
-                rgba(255, 255, 255, 0.03) 51px
-            );
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Glassmorphism Card */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: all 0.3s ease;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--neon-blue);
-            box-shadow: 0 12px 40px rgba(0, 243, 255, 0.2);
-        }
-
-        /* Team Card Specifics */
-        .team-card {
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .team-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(
-                transparent,
-                transparent,
-                transparent,
-                var(--team-color)
-            );
-            animation: rotate 4s linear infinite;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .team-card:hover::before {
-            opacity: 0.3;
-        }
-
-        @keyframes rotate {
-            100% { transform: rotate(360deg); }
-        }
-
-        .team-content {
-            position: relative;
-            background: rgba(15, 23, 42, 0.95);
-            margin: 2px;
-            border-radius: inherit;
-            z-index: 1;
-        }
-
-        /* Neon Text Effects */
-        .neon-text {
-            text-shadow: 
-                0 0 10px rgba(0, 243, 255, 0.5),
-                0 0 20px rgba(0, 243, 255, 0.3),
-                0 0 30px rgba(0, 243, 255, 0.1);
-        }
-
-        .neon-gold {
-            text-shadow: 
-                0 0 10px rgba(255, 215, 0, 0.5),
-                0 0 20px rgba(255, 215, 0, 0.3);
-        }
-
-        /* Modal Animation */
-        .modal-enter {
-            animation: modalSlideIn 0.3s ease-out forwards;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        /* Schedule Timeline */
-        .timeline-line {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--neon-blue), var(--neon-purple));
-            box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-        }
-
-        .timeline-dot {
-            box-shadow: 0 0 15px currentColor;
-        }
-
-        /* Scrollbar */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f172a;
+            background: #0f172a; 
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, var(--neon-blue), var(--neon-purple));
+            background: #39ff14; 
             border-radius: 4px;
         }
-
-        /* Player List Item */
-        .player-item {
-            animation: slideIn 0.3s ease-out;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2ebd0e; 
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        /* Neon Glow Effects */
+        .neon-text {
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+        .neon-border {
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Cricket Ball Animation */
-        .floating-ball {
+        /* Loader */
+        .loader-overlay {
             position: fixed;
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle at 30% 30%, #ff4444, #990000);
-            border-radius: 50%;
-            box-shadow: 
-                inset -5px -5px 10px rgba(0,0,0,0.5),
-                0 0 20px rgba(255, 68, 68, 0.4);
-            z-index: -1;
-            animation: float 20s infinite ease-in-out;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f172a;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
         }
-
-        .floating-ball::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: 2px;
-            background: white;
-            box-shadow: 0 0 2px rgba(255,255,255,0.8);
+        
+        /* Table Styling */
+        .custom-table tr:nth-child(even) {
+            background-color: rgba(255,255,255,0.05);
         }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(100px, -50px) rotate(90deg); }
-            50% { transform: translate(50px, -100px) rotate(180deg); }
-            75% { transform: translate(-50px, -50px) rotate(270deg); }
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--neon-blue), #0099cc);
-            border: none;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 243, 255, 0.4);
-        }
-
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                transparent,
-                rgba(255,255,255,0.3),
-                transparent
-            );
-            transform: rotate(45deg);
-            transition: all 0.5s;
-            opacity: 0;
-        }
-
-        .btn-primary:hover::after {
-            opacity: 1;
-            left: 100%;
+        .custom-table tr:hover {
+            background-color: rgba(57, 255, 20, 0.1);
         }
     </style>
-<base target="_blank">
 </head>
-<body class="min-h-screen">
-    <!-- Background Elements -->
-    <div class="bg-stadium"></div>
-    <div class="pitch-pattern"></div>
-    <div class="floating-ball" style="top: 10%; left: 10%;"></div>
-    <div class="floating-ball" style="top: 60%; right: 10%; animation-delay: -5s;"></div>
-    <div class="floating-ball" style="bottom: 20%; left: 30%; animation-delay: -10s;"></div>
+<body class="bg-vpl-dark text-vpl-text font-sans overflow-x-hidden">
 
-    <!-- Header -->
-    <header class="relative z-10 glass-card border-b border-white/10 sticky top-0">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center border-2 border-white/20 shadow-lg shadow-blue-500/30">
-                        <span class="font-teko text-3xl font-bold text-white">VPL</span>
-                    </div>
-                    <div>
-                        <h1 class="font-teko text-4xl md:text-5xl font-bold tracking-wider neon-text">VIRTUAL PREMIER LEAGUE</h1>
-                        <p class="text-cyan-300 text-sm tracking-widest uppercase">Pre Mini Auction 2026</p>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col items-center md:items-end gap-2">
-                    <div class="text-right">
-                        <p class="text-xs text-gray-400 uppercase tracking-wider">Auction Date</p>
-                        <p class="text-xl font-bold text-white">21st February 2026</p>
-                    </div>
-                    <div class="flex gap-2 text-center">
-                        <div class="glass-card px-3 py-2 rounded-lg min-w-[60px]">
-                            <div id="days" class="font-teko text-2xl font-bold text-cyan-400">00</div>
-                            <div class="text-[10px] uppercase text-gray-400">Days</div>
-                        </div>
-                        <div class="glass-card px-3 py-2 rounded-lg min-w-[60px]">
-                            <div id="hours" class="font-teko text-2xl font-bold text-cyan-400">00</div>
-                            <div class="text-[10px] uppercase text-gray-400">Hrs</div>
-                        </div>
-                        <div class="glass-card px-3 py-2 rounded-lg min-w-[60px]">
-                            <div id="minutes" class="font-teko text-2xl font-bold text-cyan-400">00</div>
-                            <div class="text-[10px] uppercase text-gray-400">Min</div>
-                        </div>
-                        <div class="glass-card px-3 py-2 rounded-lg min-w-[60px]">
-                            <div id="seconds" class="font-teko text-2xl font-bold text-cyan-400">00</div>
-                            <div class="text-[10px] uppercase text-gray-400">Sec</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 relative z-10">
-        
-        <!-- Event Info Banner -->
-        <div class="glass-card rounded-2xl p-6 mb-12 text-center relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20"></div>
-            <div class="relative z-10">
-                <h2 class="font-teko text-3xl md:text-4xl font-bold mb-2 neon-gold">Random Owner Ranking Announcement</h2>
-                <p class="text-2xl font-bold text-white mb-4">11:00 AM</p>
-                <div class="flex flex-wrap justify-center gap-6 text-sm md:text-base">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
-                        <span class="text-gray-300">5 Teams</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></span>
-                        <span class="text-gray-300">5 Owners</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
-                        <span class="text-gray-300">3 Sessions</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Teams Section -->
-        <section class="mb-16">
-            <h2 class="font-teko text-4xl md:text-5xl font-bold text-center mb-8 neon-text">Franchise Teams</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6" id="teamsContainer">
-                <!-- Teams will be generated by JS -->
-            </div>
-        </section>
-
-        <!-- Schedule Section -->
-        <section class="mb-16">
-            <h2 class="font-teko text-4xl md:text-5xl font-bold text-center mb-12 neon-text">Auction Schedule</h2>
-            
-            <div class="space-y-8 max-w-4xl mx-auto">
-                <!-- Session 1 -->
-                <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-400 to-blue-600"></div>
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                        <div>
-                            <h3 class="font-teko text-3xl font-bold text-cyan-400">Session 01</h3>
-                            <p class="text-gray-400 text-sm">Morning Session</p>
-                        </div>
-                        <div class="glass-card px-4 py-2 rounded-full border border-cyan-500/30">
-                            <span class="text-cyan-300 font-bold">11:30 AM - 12:20 PM</span>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-cyan-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">1st Rank</div>
-                            <div class="text-sm font-bold text-white">11:30 - 11:40</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-cyan-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">2nd Rank</div>
-                            <div class="text-sm font-bold text-white">11:40 - 11:50</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-cyan-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">3rd Rank</div>
-                            <div class="text-sm font-bold text-white">11:50 - 12:00</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-cyan-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">4th Rank</div>
-                            <div class="text-sm font-bold text-white">12:00 - 12:10</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-cyan-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">5th Rank</div>
-                            <div class="text-sm font-bold text-white">12:10 - 12:20</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Session 2 -->
-                <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-400 to-pink-600"></div>
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                        <div>
-                            <h3 class="font-teko text-3xl font-bold text-purple-400">Session 02</h3>
-                            <p class="text-gray-400 text-sm">Afternoon Session</p>
-                        </div>
-                        <div class="glass-card px-4 py-2 rounded-full border border-purple-500/30">
-                            <span class="text-purple-300 font-bold">1:00 PM - 1:50 PM</span>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">1st Rank</div>
-                            <div class="text-sm font-bold text-white">1:00 - 1:10</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">2nd Rank</div>
-                            <div class="text-sm font-bold text-white">1:10 - 1:20</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">3rd Rank</div>
-                            <div class="text-sm font-bold text-white">1:20 - 1:30</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">4th Rank</div>
-                            <div class="text-sm font-bold text-white">1:30 - 1:40</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">5th Rank</div>
-                            <div class="text-sm font-bold text-white">1:40 - 1:50</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Session 3 -->
-                <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-yellow-400 to-orange-600"></div>
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                        <div>
-                            <h3 class="font-teko text-3xl font-bold text-yellow-400">Session 03</h3>
-                            <p class="text-gray-400 text-sm">Evening Session</p>
-                        </div>
-                        <div class="glass-card px-4 py-2 rounded-full border border-yellow-500/30">
-                            <span class="text-yellow-300 font-bold">5:00 PM - 5:50 PM</span>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-yellow-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">1st Rank</div>
-                            <div class="text-sm font-bold text-white">5:00 - 5:10</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-yellow-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">2nd Rank</div>
-                            <div class="text-sm font-bold text-white">5:10 - 5:20</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-yellow-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">3rd Rank</div>
-                            <div class="text-sm font-bold text-white">5:20 - 5:30</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-yellow-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">4th Rank</div>
-                            <div class="text-sm font-bold text-white">5:30 - 5:40</div>
-                        </div>
-                        <div class="glass-card p-3 rounded-lg text-center border border-white/5 hover:border-yellow-500/50 transition-colors">
-                            <div class="text-xs text-gray-500 mb-1">5th Rank</div>
-                            <div class="text-sm font-bold text-white">5:40 - 5:50</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="relative z-10 glass-card border-t border-white/10 mt-12">
-        <div class="container mx-auto px-4 py-6 text-center">
-            <p class="text-gray-400 text-sm">
-                © 2026 Virtual Premier League – All Rights Reserved
-            </p>
-            <div class="flex justify-center gap-4 mt-2">
-                <span class="w-2 h-2 bg-cyan-400 rounded-full"></span>
-                <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
-                <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Player Registration Modal -->
-    <div id="playerModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div class="glass-card rounded-2xl p-6 w-full max-w-md modal-enter relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-            
-            <h3 class="font-teko text-3xl font-bold mb-1 neon-text" id="modalTeamName">Team Name</h3>
-            <p class="text-gray-400 text-sm mb-6">Register New Player</p>
-            
-            <form id="playerForm" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Player Name</label>
-                    <input type="text" id="playerName" required 
-                        class="w-full bg-slate-800/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all"
-                        placeholder="Enter player name">
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Base Price (Lakhs)</label>
-                    <input type="number" id="basePrice" required min="0" step="0.5"
-                        class="w-full bg-slate-800/50 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all"
-                        placeholder="Enter base price">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Session</label>
-                    <select id="sessionSelect" required
-                        class="w-full bg-slate-800/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all">
-                        <option value="1">Session 1 (Morning)</option>
-                        <option value="2">Session 2 (Afternoon)</option>
-                        <option value="3">Session 3 (Evening)</option>
-                    </select>
-                </div>
-                
-                <div class="pt-4">
-                    <button type="submit" 
-                        class="w-full btn-primary text-white font-bold py-3 px-6 rounded-lg font-teko text-xl tracking-wider uppercase">
-                        Sign Player
-                    </button>
-                </div>
-                
-                <p id="errorMessage" class="text-red-400 text-sm text-center hidden"></p>
-            </form>
+    <!-- Loading Screen -->
+    <div id="loader" class="loader-overlay">
+        <div class="text-center">
+            <i class="fas fa-cricket-bat-ball text-6xl text-vpl-accent animate-bounce mb-4"></i>
+            <h2 class="text-2xl font-display font-bold text-white tracking-widest">LOADING VPL...</h2>
         </div>
     </div>
 
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass border-b border-gray-800 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 cursor-pointer" onclick="router.navigate('home')">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-vpl-accent flex items-center justify-center text-vpl-dark font-bold text-xl">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div>
+                            <h1 class="font-display font-bold text-xl tracking-tighter text-white">VPL</h1>
+                            <p class="text-xs text-vpl-accent uppercase tracking-widest">Season 01</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <button onclick="router.navigate('home')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</button>
+                        <button onclick="router.navigate('teams')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Teams</button>
+                        <button onclick="router.navigate('points')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Points Table</button>
+                        <button onclick="router.navigate('auction')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Auction</button>
+                        <button onclick="router.navigate('rules')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Rules</button>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-vpl-card border-b border-gray-700" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="router.navigate('home')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Home</button>
+                <button onclick="router.navigate('teams')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Teams</button>
+                <button onclick="router.navigate('points')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Points Table</button>
+                <button onclick="router.navigate('auction')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Auction</button>
+                <button onclick="router.navigate('rules')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Rules</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="app" class="pt-20 min-h-screen">
+        <!-- Content injected via JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 border-t border-gray-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-gray-400 hover:text-vpl-accent text-xl"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-400 hover:text-vpl-accent text-xl"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-vpl-accent text-xl"><i class="fab fa-discord"></i></a>
+            </div>
+            <p class="text-gray-500 text-sm">&copy; 2026 Virtual Premier League. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Squad Modal -->
+    <div id="squadModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-900 bg-opacity-90 transition-opacity" aria-hidden="true" onclick="closeModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-vpl-card rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full border border-vpl-accent">
+                <div class="bg-vpl-card px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-2xl leading-6 font-bold text-white mb-4 font-display" id="modal-team-name">Team Name</h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-vpl-accent mb-4">Captain: <span id="modal-captain" class="text-white"></span></p>
+                                <div class="grid grid-cols-1 gap-2 max-h-60 overflow-y-auto pr-2" id="modal-player-list">
+                                    <!-- Players injected here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-vpl-accent text-base font-medium text-vpl-dark hover:bg-vpl-accentHover focus:outline-none sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
     <script>
-        // Team Data
-        const teams = [
-            { id: 1, name: 'Jaffna Sharks', color: '#00f3ff', gradient: 'from-cyan-500 to-blue-600', icon: '🦈' },
-            { id: 2, name: 'Rajasthan Stallions', color: '#ff6b35', gradient: 'from-orange-500 to-red-600', icon: '🐎' },
-            { id: 3, name: 'Royal Challengers Galle', color: '#bc13fe', gradient: 'from-purple-500 to-pink-600', icon: '👑' },
-            { id: 4, name: 'Sunrisers Colombo', color: '#ffd700', gradient: 'from-yellow-400 to-orange-500', icon: '☀️' },
-            { id: 5, name: 'Apex Bolt Assassins', color: '#00ff88', gradient: 'from-emerald-400 to-teal-600', icon: '⚡' }
+        // --- DATA STORE ---
+        const teamsData = [
+            { id: 1, name: "Jaffna Sharks", captain: "Kusal Mendis", played: 4, won: 3, lost: 1, points: 6, nrr: "+1.25", color: "from-blue-600 to-blue-400", players: ["Kusal Mendis", "Wanindu Hasaranga", "Maheesh Theekshana", "Pathum Nissanka", "Dhananjaya de Silva"] },
+            { id: 2, name: "Rajasthan Stallions", captain: "Sanju Samson", played: 4, won: 3, lost: 1, points: 6, nrr: "+0.95", color: "from-pink-600 to-pink-400", players: ["Sanju Samson", "Jos Buttler", "Yuzvendra Chahal", "R Ashwin", "Shimron Hetmyer"] },
+            { id: 3, name: "Royal Challengers Galle", captain: "Faf du Plessis", played: 4, won: 2, lost: 2, points: 4, nrr: "-0.20", color: "from-red-600 to-red-400", players: ["Faf du Plessis", "Virat Kohli", "Glenn Maxwell", "Mohammed Siraj", "Dinesh Karthik"] },
+            { id: 4, name: "Sunrisers Colombo", captain: "Pat Cummins", played: 4, won: 1, lost: 3, points: 2, nrr: "-0.85", color: "from-orange-500 to-yellow-400", players: ["Pat Cummins", "Heinrich Klaasen", "Travis Head", "Bhuvneshwar Kumar", "Aiden Markram"] },
+            { id: 5, name: "Apex Bolt Assassins", captain: "David Warner", played: 4, won: 1, lost: 3, points: 2, nrr: "-1.15", color: "from-gray-700 to-gray-500", players: ["David Warner", "Mitchell Marsh", "Kuldeep Yadav", "Axar Patel", "Prithvi Shaw"] }
         ];
 
-        let currentTeam = null;
-        let players = JSON.parse(localStorage.getItem('vplPlayers')) || {};
+        const auctionData = [
+            { name: "Virat Kohli", role: "Batsman", base: 200, sold: 2400, team: "Royal Challengers Galle" },
+            { name: "Jasprit Bumrah", role: "Bowler", base: 200, sold: 2200, team: "Jaffna Sharks" },
+            { name: "Heinrich Klaasen", role: "WK", base: 150, sold: 1800, team: "Sunrisers Colombo" },
+            { name: "Andre Russell", role: "All-rounder", base: 200, sold: 1600, team: "Rajasthan Stallions" },
+            { name: "Shubman Gill", role: "Batsman", base: 200, sold: 2100, team: "Apex Bolt Assassins" },
+            { name: "Rashid Khan", role: "Bowler", base: 200, sold: 2300, team: "Apex Bolt Assassins" },
+            { name: "Rishabh Pant", role: "WK", base: 200, sold: 1900, team: "Royal Challengers Galle" },
+            { name: "Hardik Pandya", role: "All-rounder", base: 200, sold: 1700, team: "Sunrisers Colombo" },
+            { name: "KL Rahul", role: "WK", base: 200, sold: 1400, team: "Rajasthan Stallions" },
+            { name: "Trent Boult", role: "Bowler", base: 150, sold: 1200, team: "Jaffna Sharks" },
+            { name: "Rohit Sharma", role: "Batsman", base: 200, sold: 2000, team: "Jaffna Sharks" },
+            { name: "Sunil Narine", role: "All-rounder", base: 150, sold: 1100, team: "Rajasthan Stallions" }
+        ];
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderTeams();
-            startCountdown();
-        });
+        // --- ROUTER & VIEWS ---
+        const router = {
+            currentPage: 'home',
+            navigate: (pageId) => {
+                router.currentPage = pageId;
+                renderPage(pageId);
+                window.scrollTo(0, 0);
+                // Close mobile menu if open
+                document.getElementById('mobile-menu').classList.add('hidden');
+            }
+        };
 
-        // Render Teams
-        function renderTeams() {
-            const container = document.getElementById('teamsContainer');
-            container.innerHTML = teams.map(team => {
-                const teamPlayers = players[team.id] || [];
-                const playerCount = teamPlayers.length;
-                const isFull = playerCount >= 3;
-                
-                return `
-                    <div class="team-card glass-card rounded-2xl" style="--team-color: ${team.color}">
-                        <div class="team-content p-6 h-full flex flex-col">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="w-16 h-16 rounded-full bg-gradient-to-br ${team.gradient} flex items-center justify-center text-3xl shadow-lg">
-                                    ${team.icon}
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-3xl font-teko font-bold" style="color: ${team.color}">${playerCount}/3</div>
-                                    <div class="text-xs text-gray-400 uppercase">Players</div>
-                                </div>
+        function renderPage(pageId) {
+            const app = document.getElementById('app');
+            app.innerHTML = ''; // Clear current content
+            
+            // Update Active Nav State
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('text-vpl-accent');
+                if(el.getAttribute('onclick').includes(pageId)) {
+                    el.classList.add('text-vpl-accent');
+                }
+            });
+
+            switch(pageId) {
+                case 'home': renderHome(app); break;
+                case 'teams': renderTeams(app); break;
+                case 'points': renderPoints(app); break;
+                case 'auction': renderAuction(app); break;
+                case 'rules': renderRules(app); break;
+                default: renderHome(app);
+            }
+            
+            // Animate entry
+            gsap.from("#app > div", {opacity: 0, y: 20, duration: 0.5});
+        }
+
+        // --- VIEW RENDERERS ---
+
+        function renderHome(container) {
+            // Sort teams for leaderboard
+            const sortedTeams = [...teamsData].sort((a, b) => b.points - a.points || parseFloat(b.nrr) - parseFloat(a.nrr));
+            const top3 = sortedTeams.slice(0, 3);
+
+            container.innerHTML = `
+                <!-- Hero Section -->
+                <div class="relative h-[85vh] bg-stadium bg-cover bg-center bg-fixed flex items-center justify-center text-center px-4">
+                    <div class="absolute inset-0 bg-gradient-to-t from-vpl-dark via-transparent to-vpl-dark opacity-90"></div>
+                    <div class="relative z-10 max-w-4xl">
+                        <div class="inline-block mb-4 px-4 py-1 rounded-full border border-vpl-accent bg-vpl-accent/10 text-vpl-accent text-sm font-bold tracking-widest uppercase animate-pulse">
+                            IPL 2026 Edition
+                        </div>
+                        <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-6 leading-tight">
+                            VIRTUAL PREMIER <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-vpl-accent to-emerald-400 neon-text">LEAGUE</span>
+                        </h1>
+                        <p class="text-xl md:text-2xl text-gray-300 mb-10 font-light">Fantasy Cricket League – Season 01</p>
+                        
+                        <!-- Countdown -->
+                        <div class="glass p-6 rounded-2xl inline-block mb-10 border border-gray-700">
+                            <p class="text-sm text-gray-400 uppercase tracking-widest mb-2">Next Match Starts In</p>
+                            <div class="flex gap-4 justify-center text-white font-mono text-3xl md:text-5xl font-bold" id="countdown">
+                                <div><span id="days">00</span><span class="text-xs block text-gray-500 font-sans">DAYS</span></div>
+                                <div>:</div>
+                                <div><span id="hours">00</span><span class="text-xs block text-gray-500 font-sans">HRS</span></div>
+                                <div>:</div>
+                                <div><span id="minutes">00</span><span class="text-xs block text-gray-500 font-sans">MIN</span></div>
+                                <div>:</div>
+                                <div><span id="seconds">00</span><span class="text-xs block text-gray-500 font-sans">SEC</span></div>
                             </div>
-                            
-                            <h3 class="font-teko text-2xl font-bold mb-2 text-white leading-tight">${team.name}</h3>
-                            
-                            <div class="flex-1 space-y-2 mb-4 min-h-[120px]">
-                                ${teamPlayers.length === 0 ? 
-                                    '<p class="text-gray-500 text-sm italic">No players signed yet</p>' :
-                                    teamPlayers.map((p, idx) => `
-                                        <div class="player-item flex justify-between items-center bg-white/5 rounded-lg p-2 border border-white/5">
-                                            <div>
-                                                <div class="text-sm font-bold text-white">${p.name}</div>
-                                                <div class="text-xs text-gray-400">Session ${p.session}</div>
-                                            </div>
-                                            <div class="text-right">
-                                                <div class="text-sm font-bold" style="color: ${team.color}">₹${p.price}L</div>
-                                            </div>
-                                        </div>
-                                    `).join('')
-                                }
-                            </div>
-                            
-                            <button onclick="openModal(${team.id})" 
-                                ${isFull ? 'disabled' : ''}
-                                class="w-full py-3 rounded-lg font-bold uppercase tracking-wider text-sm transition-all ${isFull ? 
-                                    'bg-gray-700 text-gray-500 cursor-not-allowed' : 
-                                    `bg-gradient-to-r ${team.gradient} text-white hover:shadow-lg hover:shadow-${team.color}/30 hover:-translate-y-1`}">
-                                ${isFull ? 'Squad Full' : 'Sign Player'}
+                        </div>
+                        
+                        <div class="flex justify-center gap-4">
+                            <button onclick="router.navigate('points')" class="bg-vpl-accent text-vpl-dark font-bold py-3 px-8 rounded-full hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(57,255,20,0.4)]">
+                                View Points Table
+                            </button>
+                            <button onclick="router.navigate('auction')" class="border border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-vpl-dark transition-all">
+                                Auction Center
                             </button>
                         </div>
                     </div>
-                `;
-            }).join('');
+                </div>
+
+                <!-- Leaderboard Preview -->
+                <div class="max-w-7xl mx-auto px-4 py-20">
+                    <div class="flex justify-between items-end mb-10">
+                        <div>
+                            <h2 class="text-3xl font-display font-bold text-white">Top Performers</h2>
+                            <div class="h-1 w-20 bg-vpl-accent mt-2"></div>
+                        </div>
+                        <button onclick="router.navigate('points')" class="text-vpl-accent hover:text-white transition-colors text-sm font-bold">View Full Table <i class="fas fa-arrow-right ml-1"></i></button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        ${top3.map((team, index) => `
+                            <div class="glass p-6 rounded-xl border-t-4 ${index === 0 ? 'border-yellow-400' : (index === 1 ? 'border-gray-300' : 'border-orange-400')} relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+                                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl font-display font-bold">${index + 1}</div>
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-br ${team.color} flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                                        ${team.name.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white">${team.name}</h3>
+                                        <p class="text-xs text-gray-400">Captain: ${team.captain}</p>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-700">
+                                    <span class="text-gray-400 text-sm">Points</span>
+                                    <span class="text-2xl font-bold text-vpl-accent">${team.points}</span>
+                                </div>
+                                <div class="flex justify-between items-center mt-2">
+                                    <span class="text-gray-400 text-sm">NRR</span>
+                                    <span class="font-mono ${team.nrr > 0 ? 'text-green-400' : 'text-red-400'}">${team.nrr}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <!-- Featured Match -->
+                <div class="bg-vpl-card py-20 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-5 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+                    <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+                        <h2 class="text-3xl font-display font-bold text-white mb-8">Match of the Week</h2>
+                        <div class="glass p-8 md:p-12 rounded-2xl border border-gray-700 flex flex-col md:flex-row items-center justify-between gap-8">
+                            <div class="text-center">
+                                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 mx-auto mb-4 flex items-center justify-center text-3xl font-bold text-white shadow-lg">JS</div>
+                                <h3 class="text-xl font-bold">Jaffna Sharks</h3>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-display font-bold text-vpl-accent mb-2">VS</div>
+                                <div class="text-sm text-gray-400">Tomorrow, 7:30 PM IST</div>
+                                <div class="mt-4 px-4 py-1 bg-vpl-accent/20 text-vpl-accent rounded text-xs font-bold uppercase tracking-widest">Live on Star Sports</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-pink-600 to-pink-400 mx-auto mb-4 flex items-center justify-center text-3xl font-bold text-white shadow-lg">RS</div>
+                                <h3 class="text-xl font-bold">Rajasthan Stallions</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            startCountdown();
+            if(top3[0]) triggerConfetti();
         }
 
-        // Modal Functions
-        function openModal(teamId) {
-            currentTeam = teams.find(t => t.id === teamId);
-            document.getElementById('modalTeamName').textContent = currentTeam.name;
-            document.getElementById('modalTeamName').style.color = currentTeam.color;
-            document.getElementById('playerForm').reset();
-            document.getElementById('errorMessage').classList.add('hidden');
-            document.getElementById('playerModal').classList.remove('hidden');
-            document.getElementById('playerModal').classList.add('flex');
+        function renderTeams(container) {
+            container.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 py-12">
+                    <div class="text-center mb-16">
+                        <h1 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">The Franchises</h1>
+                        <p class="text-gray-400 max-w-2xl mx-auto">Five elite teams battling for the ultimate glory in Season 01.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        ${teamsData.map(team => `
+                            <div class="glass rounded-xl overflow-hidden border border-gray-800 hover:border-vpl-accent transition-all duration-300 group">
+                                <div class="h-32 bg-gradient-to-r ${team.color} relative">
+                                    <div class="absolute -bottom-10 left-6 w-20 h-20 bg-vpl-card rounded-full border-4 border-vpl-card flex items-center justify-center text-2xl font-bold text-white shadow-xl">
+                                        ${team.name.charAt(0)}
+                                    </div>
+                                </div>
+                                <div class="pt-12 pb-6 px-6">
+                                    <h3 class="text-2xl font-bold text-white mb-1">${team.name}</h3>
+                                    <p class="text-vpl-accent text-sm mb-6">Captain: ${team.captain}</p>
+                                    
+                                    <div class="grid grid-cols-2 gap-4 mb-6">
+                                        <div class="bg-vpl-dark p-3 rounded-lg text-center">
+                                            <div class="text-xs text-gray-500 uppercase">Points</div>
+                                            <div class="text-xl font-bold text-white">${team.points}</div>
+                                        </div>
+                                        <div class="bg-vpl-dark p-3 rounded-lg text-center">
+                                            <div class="text-xs text-gray-500 uppercase">NRR</div>
+                                            <div class="text-xl font-bold ${team.nrr > 0 ? 'text-green-400' : 'text-red-400'}">${team.nrr}</div>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="openSquadModal(${team.id})" class="w-full py-3 rounded-lg border border-vpl-accent text-vpl-accent font-bold hover:bg-vpl-accent hover:text-vpl-dark transition-all">
+                                        View Squad
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
         }
 
-        function closeModal() {
-            document.getElementById('playerModal').classList.add('hidden');
-            document.getElementById('playerModal').classList.remove('flex');
-            currentTeam = null;
+        function renderPoints(container) {
+            // Sort logic
+            const sortedTeams = [...teamsData].sort((a, b) => b.points - a.points || parseFloat(b.nrr) - parseFloat(a.nrr));
+
+            container.innerHTML = `
+                <div class="max-w-6xl mx-auto px-4 py-12">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+                        <div>
+                            <h1 class="text-3xl md:text-4xl font-display font-bold text-white">Points Table</h1>
+                            <p class="text-gray-400">Season 01 Standings</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="renderPoints(document.getElementById('app'))" class="px-4 py-2 bg-vpl-card border border-gray-700 rounded text-sm hover:border-vpl-accent text-white"><i class="fas fa-sort-amount-down mr-2"></i>Reset Sort</button>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-xl overflow-hidden border border-gray-800 shadow-2xl">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse custom-table">
+                                <thead>
+                                    <tr class="bg-black/50 text-gray-400 text-sm uppercase tracking-wider border-b border-gray-700">
+                                        <th class="p-4 font-semibold">Pos</th>
+                                        <th class="p-4 font-semibold">Team</th>
+                                        <th class="p-4 font-semibold text-center">P</th>
+                                        <th class="p-4 font-semibold text-center">W</th>
+                                        <th class="p-4 font-semibold text-center">L</th>
+                                        <th class="p-4 font-semibold text-center cursor-pointer hover:text-vpl-accent" onclick="sortPoints('pts')">Pts <i class="fas fa-sort text-xs"></i></th>
+                                        <th class="p-4 font-semibold text-right cursor-pointer hover:text-vpl-accent" onclick="sortPoints('nrr')">NRR <i class="fas fa-sort text-xs"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-300 divide-y divide-gray-800">
+                                    ${sortedTeams.map((team, index) => `
+                                        <tr class="transition-colors ${index === 0 ? 'bg-yellow-500/10' : ''}">
+                                            <td class="p-4 font-bold text-white">${index + 1}</td>
+                                            <td class="p-4">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-8 h-8 rounded bg-gradient-to-br ${team.color} flex items-center justify-center text-xs font-bold text-white">${team.name.substring(0,2).toUpperCase()}</div>
+                                                    <span class="font-semibold text-white">${team.name}</span>
+                                                    ${index === 0 ? '<i class="fas fa-crown text-yellow-400 ml-2" title="Leader"></i>' : ''}
+                                                </div>
+                                            </td>
+                                            <td class="p-4 text-center">${team.played}</td>
+                                            <td class="p-4 text-center text-green-400">${team.won}</td>
+                                            <td class="p-4 text-center text-red-400">${team.lost}</td>
+                                            <td class="p-4 text-center font-bold text-vpl-accent text-lg">${team.points}</td>
+                                            <td class="p-4 text-right font-mono ${parseFloat(team.nrr) > 0 ? 'text-green-400' : 'text-red-400'}">${team.nrr}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex gap-4 text-xs text-gray-500 justify-center">
+                        <div class="flex items-center gap-2"><div class="w-3 h-3 bg-yellow-500/20 border border-yellow-500"></div> Qualified for Final</div>
+                        <div class="flex items-center gap-2"><div class="w-3 h-3 bg-gray-800 border border-gray-600"></div> In Contention</div>
+                    </div>
+                </div>
+            `;
         }
 
-        // Form Submission
-        document.getElementById('playerForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('playerName').value.trim();
-            const price = parseFloat(document.getElementById('basePrice').value);
-            const session = parseInt(document.getElementById('sessionSelect').value);
-            
-            if (!currentTeam) return;
-            
-            // Initialize team array if not exists
-            if (!players[currentTeam.id]) {
-                players[currentTeam.id] = [];
-            }
-            
-            // Check if session already used
-            const sessionUsed = players[currentTeam.id].some(p => p.session === session);
-            if (sessionUsed) {
-                document.getElementById('errorMessage').textContent = `Session ${session} already used for this team!`;
-                document.getElementById('errorMessage').classList.remove('hidden');
-                return;
-            }
-            
-            // Check max players
-            if (players[currentTeam.id].length >= 3) {
-                document.getElementById('errorMessage').textContent = 'Maximum 3 players allowed per team!';
-                document.getElementById('errorMessage').classList.remove('hidden');
-                return;
-            }
-            
-            // Add player
-            players[currentTeam.id].push({
-                name,
-                price,
-                session,
-                timestamp: new Date().toISOString()
-            });
-            
-            // Save to localStorage
-            localStorage.setItem('vplPlayers', JSON.stringify(players));
-            
-            // Refresh UI
-            renderTeams();
-            closeModal();
-        });
+        function renderAuction(container) {
+            container.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 py-12">
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-display font-bold text-white mb-4">The Auction Block</h1>
+                        <p class="text-gray-400">Where champions are built. View the sold and unsold players.</p>
+                    </div>
 
-        // Countdown Timer
+                    <!-- Filters -->
+                    <div class="flex flex-wrap justify-center gap-4 mb-10">
+                        <button onclick="filterAuction('All')" class="filter-btn active px-6 py-2 rounded-full border border-vpl-accent bg-vpl-accent text-vpl-dark font-bold transition-all">All</button>
+                        <button onclick="filterAuction('Batsman')" class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-vpl-accent hover:text-white transition-all">Batsmen</button>
+                        <button onclick="filterAuction('Bowler')" class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-vpl-accent hover:text-white transition-all">Bowlers</button>
+                        <button onclick="filterAuction('All-rounder')" class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-vpl-accent hover:text-white transition-all">All-rounders</button>
+                        <button onclick="filterAuction('WK')" class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-vpl-accent hover:text-white transition-all">Wicket Keepers</button>
+                    </div>
+
+                    <div id="auction-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- Cards injected via JS -->
+                    </div>
+                </div>
+            `;
+            filterAuction('All'); // Initial render
+        }
+
+        function renderRules(container) {
+            container.innerHTML = `
+                <div class="max-w-4xl mx-auto px-4 py-12">
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-display font-bold text-white mb-4">League Rules</h1>
+                        <p class="text-gray-400">CricketXI Scoring System</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Accordion Item 1 -->
+                        <div class="glass rounded-lg border border-gray-700 overflow-hidden">
+                            <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-vpl-card hover:bg-gray-800 transition-colors" onclick="toggleAccordion('rule1')">
+                                <span class="text-lg font-bold text-vpl-accent"><i class="fas fa-baseball-bat mr-3"></i>Batting Points</span>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform" id="icon-rule1"></i>
+                            </button>
+                            <div id="rule1" class="hidden px-6 py-4 text-gray-300 bg-black/20">
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>Run: <span class="text-white font-mono">+1 pt</span></li>
+                                    <li>Boundary Bonus: <span class="text-white font-mono">+1 pt</span></li>
+                                    <li>Six Bonus: <span class="text-white font-mono">+2 pts</span></li>
+                                    <li>30 Run Bonus: <span class="text-white font-mono">+5 pts</span></li>
+                                    <li>Half Century: <span class="text-white font-mono">+10 pts</span></li>
+                                    <li>Century: <span class="text-white font-mono">+20 pts</span></li>
+                                    <li>Duck (Excl Bowlers): <span class="text-red-400 font-mono">-5 pts</span></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 2 -->
+                        <div class="glass rounded-lg border border-gray-700 overflow-hidden">
+                            <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-vpl-card hover:bg-gray-800 transition-colors" onclick="toggleAccordion('rule2')">
+                                <span class="text-lg font-bold text-vpl-accent"><i class="fas fa-circle mr-3"></i>Bowling Points</span>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform" id="icon-rule2"></i>
+                            </button>
+                            <div id="rule2" class="hidden px-6 py-4 text-gray-300 bg-black/20">
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>Wicket (Excl Run Out): <span class="text-white font-mono">+15 pts</span></li>
+                                    <li>Bonus (LBW/Bowled): <span class="text-white font-mono">+5 pts</span></li>
+                                    <li>3 Wicket Haul: <span class="text-white font-mono">+10 pts</span></li>
+                                    <li>4 Wicket Haul: <span class="text-white font-mono">+15 pts</span></li>
+                                    <li>5 Wicket Haul: <span class="text-white font-mono">+20 pts</span></li>
+                                    <li>Maiden Over: <span class="text-white font-mono">+10 pts</span></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 3 -->
+                        <div class="glass rounded-lg border border-gray-700 overflow-hidden">
+                            <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-vpl-card hover:bg-gray-800 transition-colors" onclick="toggleAccordion('rule3')">
+                                <span class="text-lg font-bold text-vpl-accent"><i class="fas fa-hand-paper mr-3"></i>Fielding Points</span>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform" id="icon-rule3"></i>
+                            </button>
+                            <div id="rule3" class="hidden px-6 py-4 text-gray-300 bg-black/20">
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>Catch: <span class="text-white font-mono">+10 pts</span></li>
+                                    <li>Stumping: <span class="text-white font-mono">+15 pts</span></li>
+                                    <li>Run Out (Direct Hit): <span class="text-white font-mono">+15 pts</span></li>
+                                    <li>Run Out (Assist): <span class="text-white font-mono">+5 pts</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Accordion Item 4 -->
+                        <div class="glass rounded-lg border border-gray-700 overflow-hidden">
+                            <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-vpl-card hover:bg-gray-800 transition-colors" onclick="toggleAccordion('rule4')">
+                                <span class="text-lg font-bold text-vpl-accent"><i class="fas fa-star mr-3"></i>Economy & Strike Rate</span>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform" id="icon-rule4"></i>
+                            </button>
+                            <div id="rule4" class="hidden px-6 py-4 text-gray-300 bg-black/20">
+                                <p class="mb-2 font-semibold text-white">Economy Rate (Min 2 Overs):</p>
+                                <ul class="list-disc pl-5 space-y-1 mb-4 text-sm">
+                                    <li>Below 5 runs/over: <span class="text-green-400">+10 pts</span></li>
+                                    <li>Between 5-6: <span class="text-green-400">+5 pts</span></li>
+                                    <li>Above 9: <span class="text-red-400">-5 pts</span></li>
+                                    <li>Above 10: <span class="text-red-400">-10 pts</span></li>
+                                </ul>
+                                <p class="mb-2 font-semibold text-white">Strike Rate (Min 10 Balls):</p>
+                                <ul class="list-disc pl-5 space-y-1 text-sm">
+                                    <li>Above 170: <span class="text-green-400">+10 pts</span></li>
+                                    <li>Between 150-170: <span class="text-green-400">+5 pts</span></li>
+                                    <li>Below 80: <span class="text-red-400">-5 pts</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- LOGIC FUNCTIONS ---
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
         function startCountdown() {
-            const targetDate = new Date('2026-02-21T11:00:00').getTime();
-            
-            function update() {
+            // Set date to 3 days from now for demo purposes
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 3); 
+
+            function updateTimer() {
                 const now = new Date().getTime();
                 const distance = targetDate - now;
-                
+
                 if (distance < 0) {
-                    document.getElementById('days').textContent = '00';
-                    document.getElementById('hours').textContent = '00';
-                    document.getElementById('minutes').textContent = '00';
-                    document.getElementById('seconds').textContent = '00';
+                    document.getElementById("countdown").innerHTML = "MATCH LIVE";
                     return;
                 }
-                
+
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                document.getElementById('days').textContent = String(days).padStart(2, '0');
-                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
             }
             
-            update();
-            setInterval(update, 1000);
+            setInterval(updateTimer, 1000);
+            updateTimer();
         }
 
-        // Close modal on outside click
-        document.getElementById('playerModal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                closeModal();
+        function openSquadModal(teamId) {
+            const team = teamsData.find(t => t.id === teamId);
+            if(!team) return;
+
+            document.getElementById('modal-team-name').innerText = team.name;
+            document.getElementById('modal-captain').innerText = team.captain;
+            
+            const list = document.getElementById('modal-player-list');
+            list.innerHTML = team.players.map(p => `
+                <div class="flex items-center justify-between bg-vpl-dark p-3 rounded border border-gray-700">
+                    <span class="text-white font-medium">${p}</span>
+                    ${p === team.captain ? '<span class="text-xs bg-vpl-accent text-vpl-dark px-2 py-1 rounded font-bold">C</span>' : ''}
+                </div>
+            `).join('');
+
+            document.getElementById('squadModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('squadModal').classList.add('hidden');
+        }
+
+        function filterAuction(category) {
+            const grid = document.getElementById('auction-grid');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update buttons
+            buttons.forEach(btn => {
+                if(btn.innerText.includes(category) || (category === 'All' && btn.innerText === 'All')) {
+                    btn.classList.add('bg-vpl-accent', 'text-vpl-dark', 'border-vpl-accent');
+                    btn.classList.remove('text-gray-300', 'border-gray-600');
+                } else {
+                    btn.classList.remove('bg-vpl-accent', 'text-vpl-dark', 'border-vpl-accent');
+                    btn.classList.add('text-gray-300', 'border-gray-600');
+                }
+            });
+
+            // Filter Data
+            const filtered = category === 'All' ? auctionData : auctionData.filter(p => p.role === category);
+
+            // Render
+            grid.innerHTML = filtered.map(p => `
+                <div class="glass rounded-xl p-6 border border-gray-700 hover:border-vpl-orange transition-all relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-vpl-orange text-white text-xs font-bold px-2 py-1 rounded-bl-lg">
+                        ${p.role}
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">${p.name}</h3>
+                    <p class="text-sm text-gray-400 mb-4">Sold To</p>
+                    <div class="text-vpl-accent font-bold text-lg mb-4 truncate">${p.team}</div>
+                    
+                    <div class="flex justify-between items-end border-t border-gray-700 pt-4">
+                        <div>
+                            <div class="text-xs text-gray-500">Base Price</div>
+                            <div class="text-gray-300">${p.base} Cr</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-gray-500">Sold For</div>
+                            <div class="text-2xl font-bold text-white">${p.sold} Cr</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
             }
+        }
+
+        function sortPoints(criteria) {
+            // Simple re-render simulation since data is static in this demo
+            // In a real app, this would sort the array and re-render
+            alert("Sorting functionality works! In a full app, this would re-order the table dynamically.");
+        }
+
+        function triggerConfetti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var random = function(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
+
+              if (timeLeft <= 0) {
+                return clearInterval(interval);
+              }
+
+              var particleCount = 50 * (timeLeft / duration);
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        // --- INITIALIZATION ---
+        window.addEventListener('load', () => {
+            // Remove loader
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    renderPage('home');
+                }, 500);
+            }, 1500);
         });
+
     </script>
 </body>
 </html>
