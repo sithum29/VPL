@@ -5,724 +5,1247 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VPL - Virtual Premier League | Season 01</title>
     
-    <!-- Fonts -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Icons -->
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- GSAP for Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Canvas Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* ============================================
+           CSS VARIABLES - Easy to edit theme colors
+           ============================================ */
+        :root {
+            /* Primary Colors */
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #111827;
+            --card-bg: #1f2937;
+            
+            /* Accent Colors */
+            --accent-neon: #00ff88;
+            --accent-orange: #ff6b35;
+            --accent-gold: #ffd700;
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            --gradient-orange: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            --gradient-dark: linear-gradient(180deg, rgba(10,14,26,0.8) 0%, rgba(10,14,26,1) 100%);
+            
+            /* Shadows */
+            --glow-neon: 0 0 20px rgba(0, 255, 136, 0.3);
+            --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.4);
+            
+            /* Transitions */
+            --transition-fast: 0.3s ease;
+            --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        vpl: {
-                            dark: '#0f172a', // Slate 900
-                            card: '#1e293b', // Slate 800
-                            accent: '#39ff14', // Neon Green
-                            accentHover: '#2ebd0e',
-                            orange: '#ff6b00',
-                            text: '#e2e8f0'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                        display: ['Montserrat', 'sans-serif'],
-                    },
-                    backgroundImage: {
-                        'stadium': "linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 1)), url('https://png.pngtree.com/thumb_back/fh260/background/20250528/pngtree-a-vibrant-cricket-stadium-at-dusk-featuring-colorful-flags-on-the-image_17350703.jpg')",
-                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                    }
-                }
+        /* ============================================
+           RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           NAVIGATION BAR
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            transition: var(--transition-fast);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: var(--transition-fast);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: var(--transition-fast);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-neon);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent-neon);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: 
+                linear-gradient(135deg, rgba(10,14,26,0.9) 0%, rgba(17,24,39,0.8) 100%),
+                url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
+            padding: 6rem 5% 4rem;
+            overflow: hidden;
+        }
+
+        /* Animated Background Overlay */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, -20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .season-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--accent-neon);
+            border-radius: 50px;
+            color: var(--accent-neon);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-neon) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        /* Live Auction Banner */
+        .auction-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-orange);
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            animation: fadeInUp 0.8s ease 0.6s both, pulse 2s infinite;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .auction-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        .auction-banner i {
+            font-size: 1.5rem;
+            animation: hammer 1s ease-in-out infinite;
+        }
+
+        @keyframes hammer {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .auction-text {
+            text-align: left;
+        }
+
+        .auction-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .auction-status {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            background: rgba(31, 41, 55, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            text-align: center;
+        }
+
+        .time-value {
+            display: block;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: var(--accent-neon);
+            line-height: 1;
+            text-shadow: var(--glow-neon);
+            min-width: 80px;
+        }
+
+        .time-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* CTA Buttons */
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 1s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--primary-bg);
+            box-shadow: var(--glow-neon);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--accent-neon);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-    </script>
 
-    <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0f172a; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #39ff14; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2ebd0e; 
+        /* ============================================
+           TEAMS SECTION
+           ============================================ */
+        .teams-section {
+            padding: 5rem 5%;
+            background: var(--secondary-bg);
+            position: relative;
         }
 
-        /* Neon Glow Effects */
-        .neon-text {
-            text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
-        }
-        .neon-border {
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
-        }
-        
-        /* Glassmorphism */
-        .glass {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
         }
 
-        /* Loader */
-        .loader-overlay {
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .section-title span {
+            color: var(--accent-neon);
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: var(--transition-smooth);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-card);
+            border-color: rgba(0, 255, 136, 0.2);
+        }
+
+        .team-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .team-logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--card-bg) 0%, #2d3748 100%);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 3px solid rgba(0, 255, 136, 0.2);
+            transition: var(--transition-fast);
+        }
+
+        .team-card:hover .team-logo {
+            border-color: var(--accent-neon);
+            transform: scale(1.1);
+            box-shadow: var(--glow-neon);
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .team-captain {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-captain strong {
+            color: var(--accent-orange);
+        }
+
+        .team-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* ============================================
+           LEADERBOARD PREVIEW SECTION
+           ============================================ */
+        .leaderboard-section {
+            padding: 5rem 5%;
+            background: var(--primary-bg);
+        }
+
+        .leaderboard-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .leaderboard-header {
+            background: var(--gradient-primary);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .leaderboard-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-bg);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .view-all {
+            color: var(--primary-bg);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: var(--transition-fast);
+        }
+
+        .view-all:hover {
+            opacity: 1;
+        }
+
+        .leaderboard-list {
+            padding: 1rem;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .leaderboard-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .leaderboard-item.top-team {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, transparent 100%);
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .rank {
+            width: 40px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .leaderboard-item.top-team .rank {
+            color: var(--accent-gold);
+        }
+
+        .rank-1 { color: var(--accent-gold) !important; }
+        .rank-2 { color: #c0c0c0 !important; }
+        .rank-3 { color: #cd7f32 !important; }
+
+        .team-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .team-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .team-details h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .team-details span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .points {
+            text-align: right;
+        }
+
+        .points-value {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+        }
+
+        .points-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            background: var(--secondary-bg);
+            padding: 3rem 5%;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-neon);
+            color: var(--primary-bg);
+            transform: translateY(-3px);
+            box-shadow: var(--glow-neon);
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--secondary-bg);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-top: 1px solid rgba(0, 255, 136, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding-top: 5rem;
+            }
+
+            .countdown-timer {
+                gap: 1rem;
+            }
+
+            .time-value {
+                font-size: 2rem;
+                min-width: 60px;
+            }
+
+            .teams-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* ============================================
+           LOADING ANIMATION (Optional)
+           ============================================ */
+        .loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0f172a;
-            z-index: 9999;
+            background: var(--primary-bg);
             display: flex;
-            justify-content: center;
             align-items: center;
-            transition: opacity 0.5s ease;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        
-        /* Table Styling */
-        .custom-table tr:nth-child(even) {
-            background-color: rgba(255,255,255,0.05);
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
         }
-        .custom-table tr:hover {
-            background-color: rgba(57, 255, 20, 0.1);
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0, 255, 136, 0.1);
+            border-top-color: var(--accent-neon);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: var(--accent-neon);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
     </style>
 </head>
-<body class="bg-vpl-dark text-vpl-text font-sans overflow-x-hidden">
+<body>
 
-    <!-- Loading Screen -->
-    <div id="loader" class="loader-overlay">
-        <div class="text-center">
-            <i class="fas fa-cricket-bat-ball text-6xl text-vpl-accent animate-bounce mb-4"></i>
-            <h2 class="text-2xl font-display font-bold text-white tracking-widest">LOADING VPL...</h2>
+    <!-- Loading Screen (Optional) -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Loading VPL...</div>
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass border-b border-gray-800 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
-                <div class="flex-shrink-0 cursor-pointer" onclick="router.navigate('home')">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-vpl-accent flex items-center justify-center text-vpl-dark font-bold text-xl">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div>
-                            <h1 class="font-display font-bold text-xl tracking-tighter text-white">VPL</h1>
-                            <p class="text-xs text-vpl-accent uppercase tracking-widest">Season 01</p>
-                        </div>
-                    </div>
-                </div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-cricket-bat-ball"></i>
+                <span>VPL</span>
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="teams.html">Teams</a></li>
+                <li><a href="points.html">Points Table</a></li>
+                <li><a href="auction.html">Auction</a></li>
+                <li><a href="rules.html">Rules</a></li>
+            </ul>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <button onclick="router.navigate('home')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</button>
-                        <button onclick="router.navigate('teams')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Teams</button>
-                        <button onclick="router.navigate('points')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Points Table</button>
-                        <button onclick="router.navigate('auction')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Auction</button>
-                        <button onclick="router.navigate('rules')" class="nav-link hover:text-vpl-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Rules</button>
-                    </div>
-                </div>
-
-                <!-- Mobile menu button -->
-                <div class="-mr-2 flex md:hidden">
-                    <button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div class="md:hidden hidden bg-vpl-card border-b border-gray-700" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <button onclick="router.navigate('home')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Home</button>
-                <button onclick="router.navigate('teams')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Teams</button>
-                <button onclick="router.navigate('points')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Points Table</button>
-                <button onclick="router.navigate('auction')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Auction</button>
-                <button onclick="router.navigate('rules')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Rules</button>
-            </div>
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- Main Content Area -->
-    <main id="app" class="pt-20 min-h-screen">
-        <!-- Content injected via JS -->
-    </main>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <!-- Season Badge -->
+            <div class="season-badge">Season 01 • IPL 2026 Edition</div>
+            
+            <!-- Main Title -->
+            <h1 class="hero-title">Virtual Premier League</h1>
+            <p class="hero-subtitle">Fantasy Cricket League – Season 01</p>
+
+            <!-- Live Auction Banner -->
+            <div class="auction-banner" onclick="window.location.href='auction.html'">
+                <i class="fas fa-gavel"></i>
+                <div class="auction-text">
+                    <div class="auction-label">Live Now</div>
+                    <div class="auction-status">VPL MEGA AUCTION Underway</div>
+                </div>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="countdown-container">
+                <div class="countdown-label">IPL 2026 Starts In</div>
+                <div class="countdown-timer" id="countdown">
+                    <div class="time-unit">
+                        <span class="time-value" id="days">00</span>
+                        <div class="time-label">Days</div>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-value" id="hours">00</span>
+                        <div class="time-label">Hours</div>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-value" id="minutes">00</span>
+                        <div class="time-label">Minutes</div>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-value" id="seconds">00</span>
+                        <div class="time-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="hero-cta">
+                <a href="auction.html" class="btn btn-primary">
+                    <i class="fas fa-gavel"></i> Join Auction
+                </a>
+                <a href="teams.html" class="btn btn-secondary">
+                    <i class="fas fa-users"></i> View Teams
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teams Section -->
+    <section class="teams-section">
+        <div class="section-header">
+            <h2 class="section-title">The <span>Five</span> Contenders</h2>
+            <p class="section-subtitle">Meet the teams battling for glory in Season 01</p>
+        </div>
+
+        <div class="teams-grid" id="teamsGrid">
+            <!-- Teams will be injected by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Leaderboard Preview Section -->
+    <section class="leaderboard-section">
+        <div class="section-header">
+            <h2 class="section-title">Points <span>Table</span></h2>
+            <p class="section-subtitle">Current standings after latest matches</p>
+        </div>
+
+        <div class="leaderboard-card">
+            <div class="leaderboard-header">
+                <div class="leaderboard-title">
+                    <i class="fas fa-trophy"></i>
+                    Top Performers
+                </div>
+                <a href="points.html" class="view-all">View Full Table →</a>
+            </div>
+            <div class="leaderboard-list" id="leaderboardList">
+                <!-- Leaderboard items injected by JavaScript -->
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-black py-8 border-t border-gray-800 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="#" class="text-gray-400 hover:text-vpl-accent text-xl"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="text-gray-400 hover:text-vpl-accent text-xl"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-gray-400 hover:text-vpl-accent text-xl"><i class="fab fa-discord"></i></a>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fas fa-cricket-bat-ball"></i>
+                    <span>VPL 2026</span>
+                </div>
+                <p class="footer-text">Virtual Premier League Season 01</p>
             </div>
-            <p class="text-gray-500 text-sm">&copy; 2026 Virtual Premier League. All rights reserved.</p>
+
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+            </div>
+
+            <p class="footer-text">© 2026 VPL. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Squad Modal -->
-    <div id="squadModal" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-900 bg-opacity-90 transition-opacity" aria-hidden="true" onclick="closeModal()"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-vpl-card rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full border border-vpl-accent">
-                <div class="bg-vpl-card px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <h3 class="text-2xl leading-6 font-bold text-white mb-4 font-display" id="modal-team-name">Team Name</h3>
-                            <div class="mt-2">
-                                <p class="text-sm text-vpl-accent mb-4">Captain: <span id="modal-captain" class="text-white"></span></p>
-                                <div class="grid grid-cols-1 gap-2 max-h-60 overflow-y-auto pr-2" id="modal-player-list">
-                                    <!-- Players injected here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-vpl-accent text-base font-medium text-vpl-dark hover:bg-vpl-accentHover focus:outline-none sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Logic -->
+    <!-- JavaScript -->
     <script>
-        // --- DATA STORE ---
+        /* ============================================
+           DATA CONFIGURATION - Easy to edit
+           ============================================ */
+        
+        // Teams Data - Edit team details here
         const teamsData = [
-            { id: 1, name: "Jaffna Sharks", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-blue-600 to-blue-400"},
-            { id: 2, name: "Rajasthan Stallions", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-pink-600 to-pink-400"},
-            { id: 3, name: "Royal Challengers Galle", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-red-600 to-red-400"},
-            { id: 4, name: "Sunrisers Colombo", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-orange-500 to-yellow-400"},
-            { id: 5, name: "Apex Bolt Assassins", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-gray-700 to-gray-500"}
+            {
+                id: 1,
+                name: "Jaffna Sharks",
+                captain: "TBD",
+                icon: "🦈",
+                color: "#00ff88",
+                played: 0,
+                won: 0,
+                points: 0,
+                nrr: "+0.000"
+            },
+            {
+                id: 2,
+                name: "Rajasthan Stallions",
+                captain: "TBD",
+                icon: "🐴",
+                color: "#ff6b35",
+                played: 0,
+                won: 0,
+                points: 0,
+                nrr: "+0.000"
+            },
+            {
+                id: 3,
+                name: "Royal Challengers Galle",
+                captain: "TBD",
+                icon: "👑",
+                color: "#ff0000",
+                played: 0,
+                won: 0,
+                points: 0,
+                nrr: "+0.000"
+            },
+            {
+                id: 4,
+                name: "Sunrisers Colombo",
+                captain: "TBD",
+                icon: "☀️",
+                color: "#ff8c00",
+                played: 0,
+                won: 0,
+                points: 0,
+                nrr: "+0.000"
+            },
+            {
+                id: 5,
+                name: "Apex Bolt Assassins",
+                captain: "TBD",
+                icon: "⚡",
+                color: "#9400d3",
+                played: 0,
+                won: 0,
+                points: 0,
+                nrr: "+0.000"
+            }
         ];
 
-        const auctionData = [
-            { name: "Virat Kohli", role: "Batsman", base: 200, sold: 2400, team: "Royal Challengers Galle" },
-            { name: "Jasprit Bumrah", role: "Bowler", base: 200, sold: 2200, team: "Jaffna Sharks" },
-            { name: "Heinrich Klaasen", role: "WK", base: 150, sold: 1800, team: "Sunrisers Colombo" },
-            { name: "Andre Russell", role: "All-rounder", base: 200, sold: 1600, team: "Rajasthan Stallions" },
-            { name: "Shubman Gill", role: "Batsman", base: 200, sold: 2100, team: "Apex Bolt Assassins" },
-            { name: "Rashid Khan", role: "Bowler", base: 200, sold: 2300, team: "Apex Bolt Assassins" },
-            { name: "Rishabh Pant", role: "WK", base: 200, sold: 1900, team: "Royal Challengers Galle" },
-            { name: "Hardik Pandya", role: "All-rounder", base: 200, sold: 1700, team: "Sunrisers Colombo" },
-            { name: "KL Rahul", role: "WK", base: 200, sold: 1400, team: "Rajasthan Stallions" },
-            { name: "Trent Boult", role: "Bowler", base: 150, sold: 1200, team: "Jaffna Sharks" },
-            { name: "Rohit Sharma", role: "Batsman", base: 200, sold: 2000, team: "Jaffna Sharks" },
-            { name: "Sunil Narine", role: "All-rounder", base: 150, sold: 1100, team: "Rajasthan Stallions" }
+        // Leaderboard Data - Edit standings here
+        const leaderboardData = [
+            { rank: 1, team: "Jaffna Sharks", played: 0, won: 0, points: 0, icon: "🦈" },
+            { rank: 2, team: "Rajasthan Stallions", played: 0, won: 0, points: 0, icon: "🐴" },
+            { rank: 3, team: "Royal Challengers Galle", played: 0, won: 0, points: 0, icon: "👑" }
         ];
 
-        // --- ROUTER & VIEWS ---
-        const router = {
-            currentPage: 'home',
-            navigate: (pageId) => {
-                router.currentPage = pageId;
-                renderPage(pageId);
-                window.scrollTo(0, 0);
-                // Close mobile menu if open
-                document.getElementById('mobile-menu').classList.add('hidden');
-            }
-        };
-
-        function renderPage(pageId) {
-            const app = document.getElementById('app');
-            app.innerHTML = ''; // Clear current content
+        /* ============================================
+           COUNTDOWN TIMER
+           Target: IPL 2026 Start Date (March 28, 2026)
+           ============================================ */
+        function initCountdown() {
+            // Set target date: March 28, 2026
+            const targetDate = new Date('March 28, 2026 00:00:00').getTime();
             
-            // Update Active Nav State
-            document.querySelectorAll('.nav-link').forEach(el => {
-                el.classList.remove('text-vpl-accent');
-                if(el.getAttribute('onclick').includes(pageId)) {
-                    el.classList.add('text-vpl-accent');
-                }
-            });
-
-            switch(pageId) {
-                case 'home': renderHome(app); break;
-                case 'teams': renderTeams(app); break;
-                case 'points': renderPoints(app); break;
-                case 'auction': renderAuction(app); break;
-                case 'rules': renderRules(app); break;
-                default: renderHome(app);
-            }
-            
-            // Animate entry
-            gsap.from("#app > div", {opacity: 0, y: 20, duration: 0.5});
-        }
-
-        // --- VIEW RENDERERS ---
-
-        function renderHome(container) {
-            // Sort teams for leaderboard
-            const sortedTeams = [...teamsData].sort((a, b) => b.points - a.points || parseFloat(b.nrr) - parseFloat(a.nrr));
-            const top3 = sortedTeams.slice(0, 3);
-
-            container.innerHTML = `
-                <!-- Hero Section -->
-                <div class="relative h-[85vh] bg-stadium bg-cover bg-center bg-fixed flex items-center justify-center text-center px-4">
-                    <div class="absolute inset-0 bg-gradient-to-t from-vpl-dark via-transparent to-vpl-dark opacity-90"></div>
-                    <div class="relative z-10 max-w-4xl">
-                        <div class="inline-block mb-4 px-4 py-1 rounded-full border border-vpl-accent bg-vpl-accent/10 text-vpl-accent text-sm font-bold tracking-widest uppercase animate-pulse">
-                            IPL 2026 Edition
-                        </div>
-                        <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white mb-6 leading-tight">
-                            VIRTUAL PREMIER <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-vpl-accent to-emerald-400 neon-text">LEAGUE</span>
-                        </h1>
-                        <p class="text-xl md:text-2xl text-gray-300 mb-10 font-light">Fantasy Cricket League – Season 01</p>
-                        
-                        <!-- Countdown -->
-                        <div class="glass p-6 rounded-2xl inline-block mb-10 border border-gray-700">
-                            <p class="text-sm text-gray-400 uppercase tracking-widest mb-2">IPL 2026 Starts In</p>
-                            <div class="flex gap-4 justify-center text-white font-mono text-3xl md:text-5xl font-bold" id="countdown">
-                                <div><span id="days">00</span><span class="text-xs block text-gray-500 font-sans">DAYS</span></div>
-                                <div>:</div>
-                                <div><span id="hours">00</span><span class="text-xs block text-gray-500 font-sans">HRS</span></div>
-                                <div>:</div>
-                                <div><span id="minutes">00</span><span class="text-xs block text-gray-500 font-sans">MIN</span></div>
-                                <div>:</div>
-                                <div><span id="seconds">00</span><span class="text-xs block text-gray-500 font-sans">SEC</span></div>
-                            </div>
-                        </div>
-                        
-                        <div class="flex justify-center gap-4">
-                            <button onclick="router.navigate('points')" class="bg-vpl-accent text-vpl-dark font-bold py-3 px-8 rounded-full hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(57,255,20,0.4)]">
-                                View Points Table
-                            </button>
-                            <button onclick="router.navigate('auction')" class="border border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-vpl-dark transition-all">
-                                Auction Center
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Featured Match -->
-                <div class="bg-vpl-card py-20 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-full opacity-5 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-                    <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-                        <h2 class="text-3xl font-display font-bold text-white mb-8">Match of the Week</h2>
-                        <div class="glass p-8 md:p-12 rounded-2xl border border-gray-700 flex flex-col md:flex-row items-center justify-between gap-8">
-                            <div class="text-center">
-                                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 mx-auto mb-4 flex items-center justify-center text-3xl font-bold text-white shadow-lg">JS</div>
-                                <h3 class="text-xl font-bold">Jaffna Sharks</h3>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-4xl font-display font-bold text-vpl-accent mb-2">VS</div>
-                                <div class="text-sm text-gray-400">Tomorrow, 7:30 PM IST</div>
-                                <div class="mt-4 px-4 py-1 bg-vpl-accent/20 text-vpl-accent rounded text-xs font-bold uppercase tracking-widest">Live on Star Sports</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-pink-600 to-pink-400 mx-auto mb-4 flex items-center justify-center text-3xl font-bold text-white shadow-lg">RS</div>
-                                <h3 class="text-xl font-bold">Rajasthan Stallions</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            startCountdown();
-            if(top3[0]) triggerConfetti();
-        }
-
-        function renderTeams(container) {
-            container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 py-12">
-                    <div class="text-center mb-16">
-                        <h1 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">The Franchises</h1>
-                        <p class="text-gray-400 max-w-2xl mx-auto">Five elite teams battling for the ultimate glory in Season 01.</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        ${teamsData.map(team => `
-                            <div class="glass rounded-xl overflow-hidden border border-gray-800 hover:border-vpl-accent transition-all duration-300 group">
-                                <div class="h-32 bg-gradient-to-r ${team.color} relative">
-                                    <div class="absolute -bottom-10 left-6 w-20 h-20 bg-vpl-card rounded-full border-4 border-vpl-card flex items-center justify-center text-2xl font-bold text-white shadow-xl">
-                                        ${team.name.charAt(0)}
-                                    </div>
-                                </div>
-                                <div class="pt-12 pb-6 px-6">
-                                    <h3 class="text-2xl font-bold text-white mb-1">${team.name}</h3>
-                                    <p class="text-vpl-accent text-sm mb-6">Captain: ${team.captain}</p>
-                                    
-                                    <div class="grid grid-cols-2 gap-4 mb-6">
-                                        <div class="bg-vpl-dark p-3 rounded-lg text-center">
-                                            <div class="text-xs text-gray-500 uppercase">Points</div>
-                                            <div class="text-xl font-bold text-white">${team.points}</div>
-                                        </div>
-                                        <div class="bg-vpl-dark p-3 rounded-lg text-center">
-                                            <div class="text-xs text-gray-500 uppercase">NRR</div>
-                                            <div class="text-xl font-bold ${team.nrr > 0 ? 'text-green-400' : 'text-red-400'}">${team.nrr}</div>
-                                        </div>
-                                    </div>
-
-                                    <button onclick="openSquadModal(${team.id})" class="w-full py-3 rounded-lg border border-vpl-accent text-vpl-accent font-bold hover:bg-vpl-accent hover:text-vpl-dark transition-all">
-                                        View Squad
-                                    </button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderPoints(container) {
-            // Sort logic
-            const sortedTeams = [...teamsData].sort((a, b) => b.points - a.points || parseFloat(b.nrr) - parseFloat(a.nrr));
-
-            container.innerHTML = `
-                <div class="max-w-6xl mx-auto px-4 py-12">
-                    <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-                        <div>
-                            <h1 class="text-3xl md:text-4xl font-display font-bold text-white">Points Table</h1>
-                            <p class="text-gray-400">Season 01 Standings</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="renderPoints(document.getElementById('app'))" class="px-4 py-2 bg-vpl-card border border-gray-700 rounded text-sm hover:border-vpl-accent text-white"><i class="fas fa-sort-amount-down mr-2"></i>Reset Sort</button>
-                        </div>
-                    </div>
-
-                    <div class="glass rounded-xl overflow-hidden border border-gray-800 shadow-2xl">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse custom-table">
-                                <thead>
-                                    <tr class="bg-black/50 text-gray-400 text-sm uppercase tracking-wider border-b border-gray-700">
-                                        <th class="p-4 font-semibold">Pos</th>
-                                        <th class="p-4 font-semibold">Team</th>
-                                        <th class="p-4 font-semibold text-center">P</th>
-                                        <th class="p-4 font-semibold text-center">W</th>
-                                        <th class="p-4 font-semibold text-center">L</th>
-                                        <th class="p-4 font-semibold text-center cursor-pointer hover:text-vpl-accent" onclick="sortPoints('pts')">Pts <i class="fas fa-sort text-xs"></i></th>
-                                        <th class="p-4 font-semibold text-right cursor-pointer hover:text-vpl-accent" onclick="sortPoints('nrr')">NRR <i class="fas fa-sort text-xs"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-gray-300 divide-y divide-gray-800">
-                                    ${sortedTeams.map((team, index) => `
-                                        <tr class="transition-colors ${index === 0 ? 'bg-yellow-500/10' : ''}">
-                                            <td class="p-4 font-bold text-white">${index + 1}</td>
-                                            <td class="p-4">
-                                                <div class="flex items-center gap-3">
-                                                    <div class="w-8 h-8 rounded bg-gradient-to-br ${team.color} flex items-center justify-center text-xs font-bold text-white">${team.name.substring(0,2).toUpperCase()}</div>
-                                                    <span class="font-semibold text-white">${team.name}</span>
-                                                    ${index === 0 ? '<i class="fas fa-crown text-yellow-400 ml-2" title="Leader"></i>' : ''}
-                                                </div>
-                                            </td>
-                                            <td class="p-4 text-center">${team.played}</td>
-                                            <td class="p-4 text-center text-green-400">${team.won}</td>
-                                            <td class="p-4 text-center text-red-400">${team.lost}</td>
-                                            <td class="p-4 text-center font-bold text-vpl-accent text-lg">${team.points}</td>
-                                            <td class="p-4 text-right font-mono ${parseFloat(team.nrr) > 0 ? 'text-green-400' : 'text-red-400'}">${team.nrr}</td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-6 flex gap-4 text-xs text-gray-500 justify-center">
-                        <div class="flex items-center gap-2"><div class="w-3 h-3 bg-yellow-500/20 border border-yellow-500"></div> Qualified for Final</div>
-                        <div class="flex items-center gap-2"><div class="w-3 h-3 bg-gray-800 border border-gray-600"></div> In Contention</div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderAuction(container) {
-            container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 py-12">
-                    <div class="text-center mb-12">
-                        <h1 class="text-4xl font-display font-bold text-white mb-4">The Auction Block</h1>
-                        <p class="text-gray-400">Where champions are built. View the sold and unsold players.</p>
-                    </div>
-
-                    <!-- Filters -->
-                    <div class="flex flex-wrap justify-center gap-4 mb-10">
-                        <button onclick="filterAuction('JAFFNA SHARKS')" class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-vpl-accent hover:text-white transition-all">JAFFNA SHARKS</button>
-                        <button onclick="filterAuction('RAJASTHAN STALLIONS')" class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-vpl-accent hover:text-white transition-all">RAJASTHAN STALLIONS</button>
-                        <button onclick="filterAuction('ROYAL CHALLENGERS GALLE')" class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-vpl-accent hover:text-white transition-all">ROYAL CHALLENGERS GALLE</button>
-                        <button onclick="filterAuction('SUNRISERS COLOMBO')" class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-vpl-accent hover:text-white transition-all">SUNRISERS COLOMBO</button>
-                        <button onclick="filterAuction('APEX BOLT ASSASSINS')" class="filter-btn px-6 py-2 rounded-full border border-gray-600 text-gray-300 hover:border-vpl-accent hover:text-white transition-all">APEX BOLT ASSASSINS</button>
-                    </div>
-
-                    <div id="auction-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        <!-- Cards injected via JS -->
-                    </div>
-                </div>
-            `;
-            filterAuction('All'); // Initial render
-        }
-
-        function renderRules(container) {
-            container.innerHTML = `
-                <div class="max-w-4xl mx-auto px-4 py-12">
-                    <div class="text-center mb-12">
-                        <h1 class="text-4xl font-display font-bold text-white mb-4">League Rules</h1>
-                        <p class="text-gray-400">CricketXI Scoring System</p>
-                    </div>
-
-                    <div class="space-y-4">
-                        <!-- Accordion Item 1 -->
-                        <div class="glass rounded-lg border border-gray-700 overflow-hidden">
-                            <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-vpl-card hover:bg-gray-800 transition-colors" onclick="toggleAccordion('rule1')">
-                                <span class="text-lg font-bold text-vpl-accent"><i class="fas fa-baseball-bat mr-3"></i>Batting Points</span>
-                                <i class="fas fa-chevron-down text-gray-400 transition-transform" id="icon-rule1"></i>
-                            </button>
-                            <div id="rule1" class="hidden px-6 py-4 text-gray-300 bg-black/20">
-                                <ul class="list-disc pl-5 space-y-2">
-                                    <li>Run: <span class="text-white font-mono">+1 pt</span></li>
-                                    <li>Boundary Bonus: <span class="text-white font-mono">+1 pt</span></li>
-                                    <li>Six Bonus: <span class="text-white font-mono">+2 pts</span></li>
-                                    <li>30 Run Bonus: <span class="text-white font-mono">+5 pts</span></li>
-                                    <li>Half Century: <span class="text-white font-mono">+10 pts</span></li>
-                                    <li>Century: <span class="text-white font-mono">+20 pts</span></li>
-                                    <li>Duck (Excl Bowlers): <span class="text-red-400 font-mono">-5 pts</span></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Accordion Item 2 -->
-                        <div class="glass rounded-lg border border-gray-700 overflow-hidden">
-                            <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-vpl-card hover:bg-gray-800 transition-colors" onclick="toggleAccordion('rule2')">
-                                <span class="text-lg font-bold text-vpl-accent"><i class="fas fa-circle mr-3"></i>Bowling Points</span>
-                                <i class="fas fa-chevron-down text-gray-400 transition-transform" id="icon-rule2"></i>
-                            </button>
-                            <div id="rule2" class="hidden px-6 py-4 text-gray-300 bg-black/20">
-                                <ul class="list-disc pl-5 space-y-2">
-                                    <li>Wicket (Excl Run Out): <span class="text-white font-mono">+15 pts</span></li>
-                                    <li>Bonus (LBW/Bowled): <span class="text-white font-mono">+5 pts</span></li>
-                                    <li>3 Wicket Haul: <span class="text-white font-mono">+10 pts</span></li>
-                                    <li>4 Wicket Haul: <span class="text-white font-mono">+15 pts</span></li>
-                                    <li>5 Wicket Haul: <span class="text-white font-mono">+20 pts</span></li>
-                                    <li>Maiden Over: <span class="text-white font-mono">+10 pts</span></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Accordion Item 3 -->
-                        <div class="glass rounded-lg border border-gray-700 overflow-hidden">
-                            <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-vpl-card hover:bg-gray-800 transition-colors" onclick="toggleAccordion('rule3')">
-                                <span class="text-lg font-bold text-vpl-accent"><i class="fas fa-hand-paper mr-3"></i>Fielding Points</span>
-                                <i class="fas fa-chevron-down text-gray-400 transition-transform" id="icon-rule3"></i>
-                            </button>
-                            <div id="rule3" class="hidden px-6 py-4 text-gray-300 bg-black/20">
-                                <ul class="list-disc pl-5 space-y-2">
-                                    <li>Catch: <span class="text-white font-mono">+10 pts</span></li>
-                                    <li>Stumping: <span class="text-white font-mono">+15 pts</span></li>
-                                    <li>Run Out (Direct Hit): <span class="text-white font-mono">+15 pts</span></li>
-                                    <li>Run Out (Assist): <span class="text-white font-mono">+5 pts</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <!-- Accordion Item 4 -->
-                        <div class="glass rounded-lg border border-gray-700 overflow-hidden">
-                            <button class="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-vpl-card hover:bg-gray-800 transition-colors" onclick="toggleAccordion('rule4')">
-                                <span class="text-lg font-bold text-vpl-accent"><i class="fas fa-star mr-3"></i>Economy & Strike Rate</span>
-                                <i class="fas fa-chevron-down text-gray-400 transition-transform" id="icon-rule4"></i>
-                            </button>
-                            <div id="rule4" class="hidden px-6 py-4 text-gray-300 bg-black/20">
-                                <p class="mb-2 font-semibold text-white">Economy Rate (Min 2 Overs):</p>
-                                <ul class="list-disc pl-5 space-y-1 mb-4 text-sm">
-                                    <li>Below 5 runs/over: <span class="text-green-400">+10 pts</span></li>
-                                    <li>Between 5-6: <span class="text-green-400">+5 pts</span></li>
-                                    <li>Above 9: <span class="text-red-400">-5 pts</span></li>
-                                    <li>Above 10: <span class="text-red-400">-10 pts</span></li>
-                                </ul>
-                                <p class="mb-2 font-semibold text-white">Strike Rate (Min 10 Balls):</p>
-                                <ul class="list-disc pl-5 space-y-1 text-sm">
-                                    <li>Above 170: <span class="text-green-400">+10 pts</span></li>
-                                    <li>Between 150-170: <span class="text-green-400">+5 pts</span></li>
-                                    <li>Below 80: <span class="text-red-400">-5 pts</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // --- LOGIC FUNCTIONS ---
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        function startCountdown() {
-            // Set date to March 28
-            const targetDate = new Date("March 28, 2026").getTime();
-
-            function updateTimer() {
+            function updateCountdown() {
                 const now = new Date().getTime();
                 const distance = targetDate - now;
 
+                // Check if date has passed
                 if (distance < 0) {
-                    document.getElementById("countdown").innerHTML = "MATCH LIVE";
+                    document.getElementById('countdown').innerHTML = 
+                        '<div class="time-unit"><span class="time-value">IPL</span><div class="time-label">Started</div></div>';
                     return;
                 }
 
+                // Calculate time units
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+                // Update DOM with animation
+                updateTimeUnit('days', days);
+                updateTimeUnit('hours', hours);
+                updateTimeUnit('minutes', minutes);
+                updateTimeUnit('seconds', seconds);
             }
-            
-            setInterval(updateTimer, 1000);
-            updateTimer();
-        }
 
-        function openSquadModal(teamId) {
-            const team = teamsData.find(t => t.id === teamId);
-            if(!team) return;
-
-            document.getElementById('modal-team-name').innerText = team.name;
-            document.getElementById('modal-captain').innerText = team.captain;
-            
-            const list = document.getElementById('modal-player-list');
-            list.innerHTML = team.players.map(p => `
-                <div class="flex items-center justify-between bg-vpl-dark p-3 rounded border border-gray-700">
-                    <span class="text-white font-medium">${p}</span>
-                    ${p === team.captain ? '<span class="text-xs bg-vpl-accent text-vpl-dark px-2 py-1 rounded font-bold">C</span>' : ''}
-                </div>
-            `).join('');
-
-            document.getElementById('squadModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('squadModal').classList.add('hidden');
-        }
-
-        function filterAuction(category) {
-            const grid = document.getElementById('auction-grid');
-            const buttons = document.querySelectorAll('.filter-btn');
-            
-            // Update buttons
-            buttons.forEach(btn => {
-                if(btn.innerText.includes(category) || (category === 'All' && btn.innerText === 'All')) {
-                    btn.classList.add('bg-vpl-accent', 'text-vpl-dark', 'border-vpl-accent');
-                    btn.classList.remove('text-gray-300', 'border-gray-600');
-                } else {
-                    btn.classList.remove('bg-vpl-accent', 'text-vpl-dark', 'border-vpl-accent');
-                    btn.classList.add('text-gray-300', 'border-gray-600');
+            function updateTimeUnit(id, value) {
+                const element = document.getElementById(id);
+                const formatted = value.toString().padStart(2, '0');
+                if (element.textContent !== formatted) {
+                    element.textContent = formatted;
+                    element.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        element.style.transform = 'scale(1)';
+                    }, 200);
                 }
+            }
+
+            // Update immediately and then every second
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        /* ============================================
+           RENDER TEAMS
+           ============================================ */
+        function renderTeams() {
+            const grid = document.getElementById('teamsGrid');
+            
+            teamsData.forEach((team, index) => {
+                const card = document.createElement('div');
+                card.className = 'team-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="team-logo" style="border-color: ${team.color}40">
+                        <span style="font-size: 3rem;">${team.icon}</span>
+                    </div>
+                    <h3 class="team-name">${team.name}</h3>
+                    <p class="team-captain">Captain: <strong>${team.captain}</strong></p>
+                    <div class="team-stats">
+                        <div class="stat">
+                            <span class="stat-value">${team.played}</span>
+                            <div class="stat-label">Matches</div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">${team.won}</span>
+                            <div class="stat-label">Won</div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">${team.points}</span>
+                            <div class="stat-label">Points</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click handler for future modal
+                card.addEventListener('click', () => {
+                    // Future: Open team squad modal
+                    console.log(`View squad for ${team.name}`);
+                    // window.location.href = `teams.html?id=${team.id}`;
+                });
+                
+                grid.appendChild(card);
+            });
+        }
+
+        /* ============================================
+           RENDER LEADERBOARD
+           ============================================ */
+        function renderLeaderboard() {
+            const list = document.getElementById('leaderboardList');
+            
+            leaderboardData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = `leaderboard-item ${index === 0 ? 'top-team' : ''}`;
+                
+                const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : 'rank-3';
+                
+                div.innerHTML = `
+                    <div class="rank ${rankClass}">#${item.rank}</div>
+                    <div class="team-info">
+                        <div class="team-icon">${item.icon}</div>
+                        <div class="team-details">
+                            <h4>${item.team}</h4>
+                            <span>${item.played} Matches • ${item.won} Wins</span>
+                        </div>
+                    </div>
+                    <div class="points">
+                        <div class="points-value">${item.points}</div>
+                        <div class="points-label">Points</div>
+                    </div>
+                `;
+                
+                list.appendChild(div);
+            });
+        }
+
+        /* ============================================
+           MOBILE NAVIGATION TOGGLE
+           ============================================ */
+        function initMobileNav() {
+            const toggle = document.getElementById('mobileToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            toggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                const icon = toggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
             });
 
-            // Filter Data
-            const filtered = category === 'All' ? auctionData : auctionData.filter(p => p.role === category);
-
-            // Render
-            grid.innerHTML = filtered.map(p => `
-                <div class="glass rounded-xl p-6 border border-gray-700 hover:border-vpl-orange transition-all relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 bg-vpl-orange text-white text-xs font-bold px-2 py-1 rounded-bl-lg">
-                        ${p.role}
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-1">${p.name}</h3>
-                    <p class="text-sm text-gray-400 mb-4">Sold To</p>
-                    <div class="text-vpl-accent font-bold text-lg mb-4 truncate">${p.team}</div>
-                    
-                    <div class="flex justify-between items-end border-t border-gray-700 pt-4">
-                        <div>
-                            <div class="text-xs text-gray-500">Base Price</div>
-                            <div class="text-gray-300">${p.base} Cr</div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-xs text-gray-500">Sold For</div>
-                            <div class="text-2xl font-bold text-white">${p.sold} Cr</div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            // Close mobile menu when clicking on a link
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const icon = toggle.querySelector('i');
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                });
+            });
         }
 
-        function toggleAccordion(id) {
-            const content = document.getElementById(id);
-            const icon = document.getElementById('icon-' + id);
-            
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.style.transform = 'rotate(180deg)';
-            } else {
-                content.classList.add('hidden');
-                icon.style.transform = 'rotate(0deg)';
-            }
+        /* ============================================
+           SMOOTH SCROLLING
+           ============================================ */
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
         }
 
-        function sortPoints(criteria) {
-            // Simple re-render simulation since data is static in this demo
-            // In a real app, this would sort the array and re-render
-            alert("Sorting functionality works! In a full app, this would re-order the table dynamically.");
-        }
-
-        function triggerConfetti() {
-            var duration = 3 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            var random = function(min, max) {
-              return Math.random() * (max - min) + min;
-            }
-
-            var interval = setInterval(function() {
-              var timeLeft = animationEnd - Date.now();
-
-              if (timeLeft <= 0) {
-                return clearInterval(interval);
-              }
-
-              var particleCount = 50 * (timeLeft / duration);
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
-        }
-
-        // --- INITIALIZATION ---
-        window.addEventListener('load', () => {
-            // Remove loader
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                loader.style.opacity = '0';
+        /* ============================================
+           LOADING SCREEN
+           ============================================ */
+        function initLoader() {
+            window.addEventListener('load', () => {
                 setTimeout(() => {
-                    loader.style.display = 'none';
-                    renderPage('home');
-                }, 500);
-            }, 1500);
+                    document.getElementById('loader').classList.add('hidden');
+                }, 1000);
+            });
+        }
+
+        /* ============================================
+           NAVBAR SCROLL EFFECT
+           ============================================ */
+        function initNavbarScroll() {
+            const navbar = document.querySelector('.navbar');
+            let lastScroll = 0;
+
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100) {
+                    navbar.style.background = 'rgba(10, 14, 26, 0.98)';
+                    navbar.style.boxShadow = '0 5px 30px rgba(0,0,0,0.3)';
+                } else {
+                    navbar.style.background = 'rgba(10, 14, 26, 0.95)';
+                    navbar.style.boxShadow = 'none';
+                }
+                
+                lastScroll = currentScroll;
+            });
+        }
+
+        /* ============================================
+           INITIALIZE EVERYTHING
+           ============================================ */
+        document.addEventListener('DOMContentLoaded', () => {
+            initLoader();
+            initCountdown();
+            renderTeams();
+            renderLeaderboard();
+            initMobileNav();
+            initSmoothScroll();
+            initNavbarScroll();
         });
 
+        /* ============================================
+           UTILITY FUNCTIONS
+           ============================================ */
+        
+        // Confetti effect for future use (when team wins)
+        function launchConfetti() {
+            // Implementation for confetti animation
+            console.log('Confetti launched!');
+        }
+
+        // Dynamic data update function for admin use
+        function updateTeamData(teamId, newData) {
+            const team = teamsData.find(t => t.id === teamId);
+            if (team) {
+                Object.assign(team, newData);
+                // Re-render teams
+                document.getElementById('teamsGrid').innerHTML = '';
+                renderTeams();
+            }
+        }
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
