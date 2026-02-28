@@ -214,11 +214,11 @@
     <script>
         // --- DATA STORE ---
         const teamsData = [
-            { id: 1, name: "Jaffna Sharks", captain: "Kusal Mendis", played: 4, won: 3, lost: 1, points: 6, nrr: "+1.25", color: "from-blue-600 to-blue-400", players: ["Kusal Mendis", "Wanindu Hasaranga", "Maheesh Theekshana", "Pathum Nissanka", "Dhananjaya de Silva"] },
-            { id: 2, name: "Rajasthan Stallions", captain: "Sanju Samson", played: 4, won: 3, lost: 1, points: 6, nrr: "+0.95", color: "from-pink-600 to-pink-400", players: ["Sanju Samson", "Jos Buttler", "Yuzvendra Chahal", "R Ashwin", "Shimron Hetmyer"] },
-            { id: 3, name: "Royal Challengers Galle", captain: "Faf du Plessis", played: 4, won: 2, lost: 2, points: 4, nrr: "-0.20", color: "from-red-600 to-red-400", players: ["Faf du Plessis", "Virat Kohli", "Glenn Maxwell", "Mohammed Siraj", "Dinesh Karthik"] },
-            { id: 4, name: "Sunrisers Colombo", captain: "Pat Cummins", played: 4, won: 1, lost: 3, points: 2, nrr: "-0.85", color: "from-orange-500 to-yellow-400", players: ["Pat Cummins", "Heinrich Klaasen", "Travis Head", "Bhuvneshwar Kumar", "Aiden Markram"] },
-            { id: 5, name: "Apex Bolt Assassins", captain: "David Warner", played: 4, won: 1, lost: 3, points: 2, nrr: "-1.15", color: "from-gray-700 to-gray-500", players: ["David Warner", "Mitchell Marsh", "Kuldeep Yadav", "Axar Patel", "Prithvi Shaw"] }
+            { id: 1, name: "Jaffna Sharks", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-blue-600 to-blue-400"},
+            { id: 2, name: "Rajasthan Stallions", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-pink-600 to-pink-400"},
+            { id: 3, name: "Royal Challengers Galle", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-red-600 to-red-400"},
+            { id: 4, name: "Sunrisers Colombo", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-orange-500 to-yellow-400"},
+            { id: 5, name: "Apex Bolt Assassins", played: 0, won: 0, lost: 0, points: 0, nrr: "0.00", color: "from-gray-700 to-gray-500"}
         ];
 
         const auctionData = [
@@ -315,42 +315,6 @@
                                 Auction Center
                             </button>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Leaderboard Preview -->
-                <div class="max-w-7xl mx-auto px-4 py-20">
-                    <div class="flex justify-between items-end mb-10">
-                        <div>
-                            <h2 class="text-3xl font-display font-bold text-white">Top Performers</h2>
-                            <div class="h-1 w-20 bg-vpl-accent mt-2"></div>
-                        </div>
-                        <button onclick="router.navigate('points')" class="text-vpl-accent hover:text-white transition-colors text-sm font-bold">View Full Table <i class="fas fa-arrow-right ml-1"></i></button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        ${top3.map((team, index) => `
-                            <div class="glass p-6 rounded-xl border-t-4 ${index === 0 ? 'border-yellow-400' : (index === 1 ? 'border-gray-300' : 'border-orange-400')} relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
-                                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl font-display font-bold">${index + 1}</div>
-                                <div class="flex items-center gap-4 mb-4">
-                                    <div class="w-12 h-12 rounded-full bg-gradient-to-br ${team.color} flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                                        ${team.name.charAt(0)}
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-white">${team.name}</h3>
-                                        <p class="text-xs text-gray-400">Captain: ${team.captain}</p>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-700">
-                                    <span class="text-gray-400 text-sm">Points</span>
-                                    <span class="text-2xl font-bold text-vpl-accent">${team.points}</span>
-                                </div>
-                                <div class="flex justify-between items-center mt-2">
-                                    <span class="text-gray-400 text-sm">NRR</span>
-                                    <span class="font-mono ${team.nrr > 0 ? 'text-green-400' : 'text-red-400'}">${team.nrr}</span>
-                                </div>
-                            </div>
-                        `).join('')}
                     </div>
                 </div>
                 
@@ -755,6 +719,7 @@
     </script>
 </body>
 </html>
+
 
 
 
