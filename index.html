@@ -1075,7 +1075,7 @@
                 card.style.animationDelay = `${index * 0.1}s`;
                 card.innerHTML = `
                     <div class="team-logo" style="border-color: ${team.color}40">
-                        <span style="font-size: 3rem;">${team.icon}</span>
+                        <img src="${team.icon}" alt="${team.name}" style="width: 80%; height: 80%; object-fit: contain;">
                     </div>
                     <h3 class="team-name">${team.name}</h3>
                     <p class="team-captain">Captain: <strong>${team.captain}</strong></p>
@@ -1249,6 +1249,7 @@
     </script>
 </body>
 </html>
+
 
 
 
