@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction - VPL Season 01</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ============================================
+           CSS VARIABLES - Same as index.html
+           ============================================ */
+        :root {
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #111827;
+            --card-bg: #1f2937;
+            --accent-neon: #00ff88;
+            --accent-orange: #ff6b35;
+            --accent-gold: #ffd700;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           NAVIGATION - Same as index.html
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-neon);
+        }
+
+        /* ============================================
+           MAIN CONTENT
+           ============================================ */
+        .main-content {
+            padding: 6rem 5% 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           HEADER SECTION
+           ============================================ */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .day-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--accent-orange);
+            color: white;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* ============================================
+           STATS OVERVIEW CARDS
+           ============================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ============================================
+           TEAMS PURSE TABLE
+           ============================================ */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .teams-table-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .teams-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .teams-table th {
+            background: rgba(0, 255, 136, 0.1);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--accent-neon);
+        }
+
+        .teams-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .teams-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .team-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+        }
+
+        .team-logo-small {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* ============================================
+           FILTER BUTTONS
+           ============================================ */
+        .filter-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            color: var(--text-secondary);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-neon);
+            color: var(--primary-bg);
+            border-color: var(--accent-neon);
+        }
+
+        /* ============================================
+           PLAYERS TABLE
+           ============================================ */
+        .players-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .players-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .players-table th {
+            background: rgba(0, 255, 136, 0.1);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--accent-neon);
+            position: sticky;
+            top: 0;
+        }
+
+        .players-table td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        .players-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .player-name {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+        }
+
+        .role-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .role-bat { background: rgba(0, 255, 136, 0.2); color: var(--accent-neon); }
+        .role-bowl { background: rgba(255, 107, 53, 0.2); color: var(--accent-orange); }
+        .role-ar { background: rgba(255, 215, 0, 0.2); color: var(--accent-gold); }
+        .role-wk { background: rgba(0, 150, 255, 0.2); color: #0096ff; }
+
+        .price {
+            font-weight: 700;
+            color: var(--accent-neon);
+        }
+
+        .price-unsold {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .status-sold {
+            color: var(--accent-neon);
+            font-weight: 600;
+        }
+
+        .status-unsold {
+            color: var(--text-muted);
+        }
+
+        .team-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            
+            .players-table {
+                font-size: 0.85rem;
+            }
+            
+            .players-table th, .players-table td {
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .hide-mobile {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-cricket-bat-ball"></i>
+                <span>VPL</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="teams.html">Teams</a></li>
+                <li><a href="points.html">Points Table</a></li>
+                <li><a href="auction.html" class="active">Auction</a></li>
+                <li><a href="rules.html">Rules</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Header -->
+        <div class="page-header">
+            <div class="day-badge">End of Day 02</div>
+            <h1 class="page-title">VPL Mega Auction</h1>
+            <p class="page-subtitle">Season 01 • IPL 2026 Edition</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">125 CR</div>
+                <div class="stat-label">Initial Purse</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalPlayers">0</div>
+                <div class="stat-label">Players Sold</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="remainingSlots">0</div>
+                <div class="stat-label">Remaining Slots</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Days Completed</div>
+            </div>
+        </div>
+
+        <!-- Teams Purse Summary -->
+        <h2 class="section-title"><i class="fas fa-wallet"></i> Teams Purse Status</h2>
+        <div class="teams-table-container">
+            <table class="teams-table">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Owner</th>
+                        <th>Spent</th>
+                        <th>Remaining</th>
+                        <th>Players Bought</th>
+                        <th>Slots Left</th>
+                    </tr>
+                </thead>
+                <tbody id="teamsTableBody">
+                    <!-- Filled by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Player Filters -->
+        <h2 class="section-title"><i class="fas fa-users"></i> Players Auctioned</h2>
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterPlayers('all')">All Players</button>
+            <button class="filter-btn" onclick="filterPlayers('Batsman')">Batsmen</button>
+            <button class="filter-btn" onclick="filterPlayers('Bowler')">Bowlers</button>
+            <button class="filter-btn" onclick="filterPlayers('All-rounder')">All-rounders</button>
+            <button class="filter-btn" onclick="filterPlayers('WK')">Wicket Keepers</button>
+            <button class="filter-btn" onclick="filterPlayers('Sold')">Sold</button>
+            <button class="filter-btn" onclick="filterPlayers('Unsold')">Unsold</button>
+        </div>
+
+        <!-- Players Table -->
+        <div class="players-container">
+            <table class="players-table">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th class="hide-mobile">Role</th>
+                        <th>Base Price</th>
+                        <th>Sold At</th>
+                        <th>Sold To</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="playersTableBody">
+                    <!-- Filled by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script>
+        /* ============================================
+           CONFIGURATION - EASY TO EDIT FOR DAY 3
+           ============================================ */
+
+        // Team Data - Update after each day
+        const teamsData = [
+            { 
+                name: "Apex Bolt Assassins", 
+                owner: "Sithum", 
+                spent: 91.95,  // 125 - 33.05
+                remaining: 33.05, 
+                bought: 12, 
+                slotsLeft: 13,
+                logo: "⚡"
+            },
+            { 
+                name: "Jaffna Sharks", 
+                owner: "Anuhas", 
+                spent: 62.00,  // 125 - 63
+                remaining: 63.00, 
+                bought: 13, 
+                slotsLeft: 12,
+                logo: "🦈"
+            },
+            { 
+                name: "Sunrisers Colombo", 
+                owner: "Rishel", 
+                spent: 88.80,  // 125 - 36.2
+                remaining: 36.20, 
+                bought: 14, 
+                slotsLeft: 11,
+                logo: "☀️"
+            },
+            { 
+                name: "Rajasthan Stallions", 
+                owner: "Faith", 
+                spent: 82.65,  // 125 - 42.35
+                remaining: 42.35, 
+                bought: 15, 
+                slotsLeft: 10,
+                logo: "🐴"
+            },
+            { 
+                name: "Royal Challengers Galle", 
+                owner: "Kawidu", 
+                spent: 54.45,  // 125 - 70.55
+                remaining: 70.55, 
+                bought: 13, 
+                slotsLeft: 12,
+                logo: "👑"
+            }
+        ];
+
+        /* ============================================
+           PLAYER DATA - ALL PLAYERS FROM IMAGES
+           Format: name, role, basePrice, soldPrice, team, status
+           ============================================ */
+
+        const playersData = [
+            /* ------------------- WICKET KEEPERS ------------------- */
+            { name: "J. Buttler", role: "WK", basePrice: "200L", soldPrice: "200L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "J. Inglis", role: "WK", basePrice: "200L", soldPrice: "200L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "Q. de Kock", role: "WK", basePrice: "100L", soldPrice: "500L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "D. Miller", role: "WK", basePrice: "200L", soldPrice: "530L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "G. Phillips", role: "WK", basePrice: "200L", soldPrice: "200L", team: "Rajasthan Stallions", status: "Sold" },
+
+            /* ------------------- ALL-ROUNDERS ------------------- */
+            { name: "W. Hasaranga", role: "All-rounder", basePrice: "200L", soldPrice: "550L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "M. Pathirana", role: "All-rounder", basePrice: "200L", soldPrice: "450L", team: "Apex Bolt Assassins", status: "Sold" },
+            { name: "R. Bishnoi", role: "All-rounder", basePrice: "200L", soldPrice: "420L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "J. Holder", role: "All-rounder", basePrice: "200L", soldPrice: "1110L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "M. Henry", role: "All-rounder", basePrice: "200L", soldPrice: "390L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "C. Green", role: "All-rounder", basePrice: "200L", soldPrice: "310L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "L. Livingstone", role: "All-rounder", basePrice: "200L", soldPrice: "710L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "V. Iyer", role: "All-rounder", basePrice: "200L", soldPrice: "620L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "S. Hetmyer", role: "All-rounder", basePrice: "200L", soldPrice: "200L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "S. Yadav", role: "All-rounder", basePrice: "200L", soldPrice: "200L", team: "Apex Bolt Assassins", status: "Sold" },
+            { name: "S. Sudharsan", role: "All-rounder", basePrice: "200L", soldPrice: "1250L", team: "Apex Bolt Assassins", status: "Sold" },
+            { name: "P. Nissanka", role: "All-rounder", basePrice: "75L", soldPrice: "125L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "R. Singh", role: "All-rounder", basePrice: "200L", soldPrice: "350L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "A. Markram", role: "All-rounder", basePrice: "200L", soldPrice: "220L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "D. Brevis", role: "All-rounder", basePrice: "200L", soldPrice: "200L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "S. Rutherford", role: "All-rounder", basePrice: "200L", soldPrice: "240L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "D. Padikkal", role: "All-rounder", basePrice: "200L", soldPrice: "280L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "R. Gaikwad", role: "All-rounder", basePrice: "200L", soldPrice: "520L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "R. Powell", role: "All-rounder", basePrice: "150L", soldPrice: "150L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "R. Patidar", role: "All-rounder", basePrice: "200L", soldPrice: "350L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "S. Gill", role: "All-rounder", basePrice: "200L", soldPrice: "1050L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "T. Head", role: "All-rounder", basePrice: "200L", soldPrice: "810L", team: "Apex Bolt Assassins", status: "Sold" },
+            { name: "S. Iyer", role: "All-rounder", basePrice: "200L", soldPrice: "920L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "A. Rahane", role: "All-rounder", basePrice: "150L", soldPrice: "330L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "R. Tripathi", role: "All-rounder", basePrice: "75L", soldPrice: "75L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "A. Hosein", role: "All-rounder", basePrice: "200L", soldPrice: null, team: null, status: "Unsold" },
+            { name: "B. Duckett", role: "All-rounder", basePrice: "200L", soldPrice: null, team: null, status: "Unsold" },
+            { name: "P. Shaw", role: "All-rounder", basePrice: "75L", soldPrice: null, team: null, status: "Unsold" },
+            { name: "S. Khan", role: "All-rounder", basePrice: "75L", soldPrice: null, team: null, status: "Unsold" },
+            { name: "M. Pandey", role: "All-rounder", basePrice: "75L", soldPrice: null, team: null, status: "Unsold" },
+
+            /* ------------------- BATSMEN ------------------- */
+            { name: "V. Kohli", role: "Batsman", basePrice: "200L", soldPrice: "200L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "R. Sharma", role: "Batsman", basePrice: "200L", soldPrice: "200L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "F. Allen", role: "Batsman", basePrice: "200L", soldPrice: "1230L", team: "Sunrisers Colombo", status: "Sold" },
+
+            /* ------------------- BOWLERS ------------------- */
+            { name: "A. Singh", role: "Bowler", basePrice: "200L", soldPrice: "200L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "R. Khan", role: "Bowler", basePrice: "200L", soldPrice: "200L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "B. Kumar", role: "Bowler", basePrice: "200L", soldPrice: "200L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "J. Bumrah", role: "Bowler", basePrice: "200L", soldPrice: "200L", team: "Apex Bolt Assassins", status: "Sold" },
+            { name: "T. Boult", role: "Bowler", basePrice: "200L", soldPrice: "1230L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "A. Khan", role: "Bowler", basePrice: "200L", soldPrice: "200L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "K. Sen", role: "Bowler", basePrice: "75L", soldPrice: "75L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "J. Archer", role: "Bowler", basePrice: "200L", soldPrice: "320L", team: "Royal Challengers Galle", status: "Sold" },
+            { name: "M. Shami", role: "Bowler", basePrice: "200L", soldPrice: "370L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "S. Narine", role: "Bowler", basePrice: "200L", soldPrice: "1700L", team: "Apex Bolt Assassins", status: "Sold" },
+            { name: "M. Yadav", role: "Bowler", basePrice: "200L", soldPrice: "220L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "J. Unadkat", role: "Bowler", basePrice: "100L", soldPrice: "120L", team: "Apex Bolt Assassins", status: "Sold" },
+            { name: "D. Chahar", role: "Bowler", basePrice: "200L", soldPrice: "410L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "U. Malik", role: "Bowler", basePrice: "75L", soldPrice: "115L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "T. Natarajan", role: "Bowler", basePrice: "200L", soldPrice: "270L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "K. Ahmed", role: "Bowler", basePrice: "200L", soldPrice: "200L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "P. Krishna", role: "Bowler", basePrice: "200L", soldPrice: "530L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "J. Hazlewood", role: "Bowler", basePrice: "200L", soldPrice: "460L", team: "Rajasthan Stallions", status: "Sold" },
+            { name: "M. Starc", role: "Bowler", basePrice: "200L", soldPrice: "200L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "K. Yadav", role: "Bowler", basePrice: "200L", soldPrice: "1150L", team: "Apex Bolt Assassins", status: "Sold" },
+            { name: "V. Chakravarthy", role: "Bowler", basePrice: "200L", soldPrice: "1520L", team: "Sunrisers Colombo", status: "Sold" },
+            { name: "N. Ahmad", role: "Bowler", basePrice: "200L", soldPrice: "1040L", team: "Jaffna Sharks", status: "Sold" },
+            { name: "A. Deep", role: "Bowler", basePrice: "100L", soldPrice: null, team: null, status: "Unsold" },
+            { name: "N. Burger", role: "Bowler", basePrice: "200L", soldPrice: null, team: null, status: "Unsold" },
+            { name: "A. Ghazanfar", role: "Bowler", basePrice: "200L", soldPrice: null, team: null, status: "Unsold" },
+            { name: "A. Milne", role: "Bowler", basePrice: "200L", soldPrice: null, team: null, status: "Unsold" },
+            { name: "K. Maphaka", role: "Bowler", basePrice: "150L", soldPrice: null, team: null, status: "Unsold" }
+        ];
+
+        /* ============================================
+           FUNCTIONS
+           ============================================ */
+
+        // Render Teams Table
+        function renderTeams() {
+            const tbody = document.getElementById('teamsTableBody');
+            tbody.innerHTML = teamsData.map(team => `
+                <tr>
+                    <td>
+                        <div class="team-cell">
+                            <span style="font-size: 1.5rem;">${team.logo}</span>
+                            ${team.name}
+                        </div>
+                    </td>
+                    <td>${team.owner}</td>
+                    <td class="price">${team.spent.toFixed(2)} CR</td>
+                    <td style="color: var(--accent-neon); font-weight: 600;">${team.remaining.toFixed(2)} CR</td>
+                    <td>${team.bought}/25</td>
+                    <td>${team.slotsLeft}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Get Role Icon
+        function getRoleIcon(role) {
+            const icons = {
+                'Batsman': '<i class="fas fa-baseball-bat"></i>',
+                'Bowler': '<i class="fas fa-circle"></i>',
+                'All-rounder': '<i class="fas fa-star"></i>',
+                'WK': '<i class="fas fa-hand-paper"></i>'
+            };
+            return icons[role] || '';
+        }
+
+        // Get Role Class
+        function getRoleClass(role) {
+            const classes = {
+                'Batsman': 'role-bat',
+                'Bowler': 'role-bowl',
+                'All-rounder': 'role-ar',
+                'WK': 'role-wk'
+            };
+            return classes[role] || '';
+        }
+
+        // Render Players Table
+        function renderPlayers(filter = 'all') {
+            const tbody = document.getElementById('playersTableBody');
+            
+            let filtered = playersData;
+            
+            // Apply filters
+            if (filter === 'Sold') {
+                filtered = playersData.filter(p => p.status === 'Sold');
+            } else if (filter === 'Unsold') {
+                filtered = playersData.filter(p => p.status === 'Unsold');
+            } else if (filter !== 'all') {
+                filtered = playersData.filter(p => p.role === filter);
+            }
+
+            tbody.innerHTML = filtered.map(player => `
+                <tr>
+                    <td>
+                        <div class="player-name">
+                            <div class="role-icon ${getRoleClass(player.role)}">
+                                ${getRoleIcon(player.role)}
+                            </div>
+                            ${player.name}
+                        </div>
+                    </td>
+                    <td class="hide-mobile">${player.role}</td>
+                    <td>${player.basePrice}</td>
+                    <td class="${player.soldPrice ? 'price' : 'price-unsold'}">
+                        ${player.soldPrice || '-'}
+                    </td>
+                    <td>
+                        ${player.team ? `<span class="team-tag">${player.team}</span>` : '-'}
+                    </td>
+                    <td class="${player.status === 'Sold' ? 'status-sold' : 'status-unsold'}">
+                        ${player.status}
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update stats
+            updateStats();
+        }
+
+        // Filter Players
+        function filterPlayers(type) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(type) || (type === 'all' && btn.textContent === 'All Players')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            renderPlayers(type);
+        }
+
+        // Update Statistics
+        function updateStats() {
+            const sold = playersData.filter(p => p.status === 'Sold').length;
+            const totalSlots = 125; // 5 teams × 25 players
+            const filled = teamsData.reduce((sum, t) => sum + t.bought, 0);
+            
+            document.getElementById('totalPlayers').textContent = sold;
+            document.getElementById('remainingSlots').textContent = totalSlots - filled;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTeams();
+            renderPlayers();
+        });
+    </script>
+</body>
+</html>
