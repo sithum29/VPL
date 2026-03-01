@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams - VPL Season 01</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ============================================
+           CSS VARIABLES
+           ============================================ */
+        :root {
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #111827;
+            --card-bg: #1f2937;
+            --accent-neon: #00ff88;
+            --accent-orange: #ff6b35;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-neon);
+        }
+
+        /* ============================================
+           MAIN CONTENT
+           ============================================ */
+        .main-content {
+            padding: 6rem 5% 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+        }
+
+        /* ============================================
+           TEAM SELECTOR (For switching between teams)
+           ============================================ */
+        .team-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .team-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            color: var(--text-secondary);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .team-btn:hover, .team-btn.active {
+            border-color: var(--accent-neon);
+            color: var(--accent-neon);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        /* ============================================
+           TEAM HEADER SECTION
+           ============================================ */
+        .team-header {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        /* Team Logo Container - Replace src with your logo */
+        .team-logo-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 20px;
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+        }
+
+        .team-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* Captain Section - Replace src with captain image */
+        .captain-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .captain-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-neon);
+            margin-bottom: 0.75rem;
+        }
+
+        .captain-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent-neon);
+            letter-spacing: 1px;
+        }
+
+        .captain-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* ============================================
+           SQUAD SECTION
+           ============================================ */
+        .squad-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .squad-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .squad-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .squad-filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-tag:hover, .filter-tag.active {
+            background: var(--accent-neon);
+            color: var(--primary-bg);
+        }
+
+        /* Players Grid */
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .player-card {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Player Image - Replace src with player photo from iplt20.com */
+        .player-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 0.75rem;
+            border: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .player-card:hover .player-image {
+            border-color: var(--accent-neon);
+        }
+
+        /* Foreign player indicator */
+        .foreign-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-orange);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .player-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .player-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Role colors */
+        .role-bat { color: #00ff88; }
+        .role-bowl { color: #ff6b35; }
+        .role-ar { color: #ffd700; }
+        .role-wk { color: #0096ff; }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .team-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .team-logo-large {
+                margin: 0 auto;
+            }
+
+            .captain-card {
+                margin: 0 auto;
+            }
+
+            .players-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-cricket-bat-ball"></i>
+                <span>VPL</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="teams.html" class="active">Teams</a></li>
+                <li><a href="points.html">Points Table</a></li>
+                <li><a href="auction.html">Auction</a></li>
+                <li><a href="rules.html">Rules</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Team Squads</h1>
+            <p class="page-subtitle">Season 01 • IPL 2026 Edition</p>
+        </div>
+
+        <!-- Team Selector Buttons -->
+        <div class="team-selector">
+            <button class="team-btn active" onclick="showTeam('jaffna')">Jaffna Sharks</button>
+            <button class="team-btn" onclick="showTeam('rajasthan')">Rajasthan Stallions</button>
+            <button class="team-btn" onclick="showTeam('rcg')">Royal Challengers Galle</button>
+            <button class="team-btn" onclick="showTeam('sunrisers')">Sunrisers Colombo</button>
+            <button class="team-btn" onclick="showTeam('apex')">Apex Bolt Assassins</button>
+        </div>
+
+        <!-- JAFFNA SHARKS TEAM SECTION -->
+        <div id="jaffna-sharks" class="team-section">
+            
+            <!-- Team Header -->
+            <div class="team-header">
+                <!-- Team Logo - Replace the src with your logo image path -->
+                <img src="images/jaffna-sharks-logo.png" alt="Jaffna Sharks" class="team-logo-large" id="teamLogo">
+                
+                <div class="team-info">
+                    <h1>Jaffna Sharks</h1>
+                    <p style="color: var(--text-secondary);">Owned by Anuhas</p>
+                    
+                    <div class="team-stats">
+                        <div class="stat">
+                            <div class="stat-number">25</div>
+                            <div class="stat-label">Players</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">Foreign</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">17</div>
+                            <div class="stat-label">Local</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">63.0</div>
+                            <div class="stat-label">Purse Left (CR)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Captain - Replace src with captain photo and update name -->
+                <div class="captain-card">
+                    <img src="https://www.iplt20.com/assets/images/players/headshots/107.png" alt="Captain" class="captain-image" id="captainImage">
+                    <div class="captain-label">Captain</div>
+                    <div class="captain-name" id="captainName">Rohit Sharma</div>
+                </div>
+            </div>
+
+            <!-- Squad Section -->
+            <div class="squad-section">
+                <div class="squad-header">
+                    <h2 class="squad-title">Squad</h2>
+                    <div class="squad-filters">
+                        <span class="filter-tag active" onclick="filterSquad('all')">All</span>
+                        <span class="filter-tag" onclick="filterSquad('Batter')">Batters</span>
+                        <span class="filter-tag" onclick="filterSquad('Bowler')">Bowlers</span>
+                        <span class="filter-tag" onclick="filterSquad('WK')">Wicket Keepers</span>
+                        <span class="filter-tag" onclick="filterSquad('All-rounder')">All Rounders</span>
+                    </div>
+                </div>
+
+                <!-- Players Grid - All 25 players -->
+                <div class="players-grid" id="playersGrid">
+                    <!-- Players will be loaded by JavaScript -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Other team sections will be added here later -->
+        <div id="other-teams" style="display: none;">
+            <!-- Rajasthan Stallions, RCG, Sunrisers, Apex will go here -->
+        </div>
+
+    </main>
+
+    <script>
+        /* ============================================
+           JAFFNA SHARKS SQUAD DATA
+           Update player images with URLs from iplt20.com
+           Format: https://www.iplt20.com/assets/images/players/headshots/{player-id}.png
+           ============================================ */
+
+        const jaffnaSharksSquad = [
+            /* ------------------- BATTERS (5) ------------------- */
+            {
+                name: "Rohit Sharma",
+                role: "Batter",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/107.png"  // Captain
+            },
+            {
+                name: "Sherfane Rutherford",
+                role: "Batter",
+                isForeign: true,  // West Indies
+                image: "https://www.iplt20.com/assets/images/players/headshots/2973.png"
+            },
+            {
+                name: "Ruturaj Gaikwad",
+                role: "Batter",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/5443.png"
+            },
+            {
+                name: "Shubman Gill",
+                role: "Batter",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/3761.png"
+            },
+            {
+                name: "Priyansh Arya",
+                role: "Batter",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/0.png"  // Update with correct ID
+            },
+
+            /* ------------------- BOWLERS (7) ------------------- */
+            {
+                name: "Avesh Khan",
+                role: "Bowler",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/1561.png"
+            },
+            {
+                name: "Prasidh Krishna",
+                role: "Bowler",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/3825.png"
+            },
+            {
+                name: "Mitchell Starc",
+                role: "Bowler",
+                isForeign: true,  // Australia
+                image: "https://www.iplt20.com/assets/images/players/headshots/100.png"
+            },
+            {
+                name: "Noor Ahmad",
+                role: "Bowler",
+                isForeign: true,  // Afghanistan
+                image: "https://www.iplt20.com/assets/images/players/headshots/3180.png"
+            },
+            {
+                name: "Yuzvendra Chahal",
+                role: "Bowler",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/111.png"
+            },
+            {
+                name: "Digvesh Rathi",
+                role: "Bowler",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/0.png"  // Update with correct ID
+            },
+            {
+                name: "Suyash Sharma",
+                role: "Bowler",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/0.png"  // Update with correct ID
+            },
+
+            /* ------------------- WICKET KEEPERS (4) ------------------- */
+            {
+                name: "Nicholas Pooran",
+                role: "WK",
+                isForeign: true,  // West Indies
+                image: "https://www.iplt20.com/assets/images/players/headshots/1703.png"
+            },
+            {
+                name: "KL Rahul",
+                role: "WK",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/1125.png"
+            },
+            {
+                name: "Quinton de Kock",
+                role: "WK",
+                isForeign: true,  // South Africa
+                image: "https://www.iplt20.com/assets/images/players/headshots/834.png"
+            },
+            {
+                name: "Rishabh Pant",
+                role: "WK",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/1312.png"
+            },
+
+            /* ------------------- ALL ROUNDERS (9) ------------------- */
+            {
+                name: "Harshal Patel",
+                role: "All-rounder",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/157.png"
+            },
+            {
+                name: "Sam Curran",
+                role: "All-rounder",
+                isForeign: true,  // England
+                image: "https://www.iplt20.com/assets/images/players/headshots/2939.png"
+            },
+            {
+                name: "Marcus Stoinis",
+                role: "All-rounder",
+                isForeign: true,  // Australia
+                image: "https://www.iplt20.com/assets/images/players/headshots/964.png"
+            },
+            {
+                name: "Ashutosh Sharma",
+                role: "All-rounder",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/0.png"  // Update with correct ID
+            },
+            {
+                name: "Vipraj Nigam",
+                role: "All-rounder",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/0.png"  // Update with correct ID
+            },
+            {
+                name: "Ramandeep Singh",
+                role: "All-rounder",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/0.png"  // Update with correct ID
+            },
+            {
+                name: "Shardul Thakur",
+                role: "All-rounder",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/1745.png"
+            },
+            {
+                name: "Prashant Veer",
+                role: "All-rounder",
+                isForeign: false,
+                image: "https://www.iplt20.com/assets/images/players/headshots/0.png"  // Update with correct ID
+            },
+            {
+                name: "Cooper Connolly",
+                role: "All-rounder",
+                isForeign: true,  // Australia
+                image: "https://www.iplt20.com/assets/images/players/headshots/0.png"  // Update with correct ID
+            }
+        ];
+
+        /* ============================================
+           FUNCTIONS
+           ============================================ */
+
+        // Render Players Grid
+        function renderPlayers(players) {
+            const grid = document.getElementById('playersGrid');
+            
+            grid.innerHTML = players.map(player => `
+                <div class="player-card" data-role="${player.role}">
+                    ${player.isForeign ? '<span class="foreign-badge">OS</span>' : ''}
+                    <img src="${player.image}" 
+                         alt="${player.name}" 
+                         class="player-image"
+                         onerror="this.src='https://www.iplt20.com/assets/images/players/headshots/0.png'">
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-role role-${player.role.toLowerCase().replace('-', '')}">${player.role}</div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Squad by Role
+        function filterSquad(role) {
+            // Update active filter button
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+                if (tag.textContent.includes(role) || (role === 'all' && tag.textContent === 'All')) {
+                    tag.classList.add('active');
+                }
+            });
+
+            // Filter players
+            if (role === 'all') {
+                renderPlayers(jaffnaSharksSquad);
+            } else {
+                const filtered = jaffnaSharksSquad.filter(p => p.role === role);
+                renderPlayers(filtered);
+            }
+        }
+
+        // Switch Teams (for future use)
+        function showTeam(teamName) {
+            // Update active button
+            document.querySelectorAll('.team-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // For now, only Jaffna Sharks is implemented
+            if (teamName !== 'jaffna') {
+                alert('Squad coming soon! Only Jaffna Sharks is available currently.');
+                // Reset to active state
+                document.querySelectorAll('.team-btn')[0].classList.add('active');
+                event.target.classList.remove('active');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPlayers(jaffnaSharksSquad);
+        });
+
+        /* ============================================
+           INSTRUCTIONS FOR ADDING OTHER TEAMS:
+           
+           1. Create similar squad array for each team:
+              const rajasthanSquad = [...];
+              const rcgSquad = [...];
+              etc.
+           
+           2. Add HTML sections for each team with display:none
+           
+           3. Update showTeam() function to toggle visibility
+           
+           4. Update team logo path in HTML (line ~267):
+              <img src="images/YOUR-LOGO.png" ...>
+           
+           5. Update captain info in HTML (lines ~286-289):
+              - Captain image URL
+              - Captain name
+           ============================================ */
+    </script>
+
+</body>
+</html>
