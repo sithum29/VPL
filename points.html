@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Points Table - VPL Season 01</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #111827;
+            --card-bg: rgba(31, 41, 55, 0.9);
+            --accent-neon: #00ff88;
+            --accent-orange: #ff6b35;
+            --accent-gold: #ffd700;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           ANIMATED CRICKET STADIUM BACKGROUND
+           ============================================ */
+        .stadium-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a2332 50%, #0d1421 100%);
+        }
+
+        /* Stadium Lights Animation */
+        .stadium-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(0, 255, 136, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+            animation: lightPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes lightPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* Cricket Field Pattern */
+        .field-pattern {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: 
+                radial-gradient(ellipse at center bottom, rgba(0, 255, 136, 0.1) 0%, transparent 70%),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(0, 255, 136, 0.03) 50px,
+                    rgba(0, 255, 136, 0.03) 51px
+                );
+            animation: fieldGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes fieldGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Floating Cricket Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-neon);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 10s infinite;
+            box-shadow: 0 0 10px var(--accent-neon);
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 6s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 7s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 8s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Stadium Crowd Effect */
+        .crowd {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: 
+                radial-gradient(circle at 10% 30%, rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+                radial-gradient(circle at 20% 40%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 30% 35%, rgba(255, 255, 255, 0.04) 2px, transparent 2px),
+                radial-gradient(circle at 40% 45%, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+                radial-gradient(circle at 60% 40%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 70% 35%, rgba(255, 255, 255, 0.04) 2px, transparent 2px),
+                radial-gradient(circle at 80% 45%, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                radial-gradient(circle at 90% 30%, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
+            background-size: 100px 100px;
+            animation: crowdCheer 4s ease-in-out infinite;
+        }
+
+        @keyframes crowdCheer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-neon);
+        }
+
+        /* ============================================
+           MAIN CONTENT
+           ============================================ */
+        .main-content {
+            padding: 7rem 5% 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================
+           PAGE HEADER
+           ============================================ */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-neon) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* ============================================
+           QUALIFICATION BANNER
+           ============================================ */
+        .qualification-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 2px solid var(--accent-gold);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.4); }
+        }
+
+        .qualification-banner h2 {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .qualification-banner p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ============================================
+           POINTS TABLE CONTAINER
+           ============================================ */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 255, 136, 0.05) 100%);
+            padding: 1.5rem;
+            border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .table-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-neon);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* ============================================
+           TABLE STYLES
+           ============================================ */
+        .points-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .points-table thead {
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .points-table th {
+            padding: 1.2rem 1rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-neon);
+            border-bottom: 2px solid rgba(0, 255, 136, 0.2);
+            white-space: nowrap;
+        }
+
+        .points-table th:first-child {
+            text-align: left;
+            padding-left: 2rem;
+        }
+
+        .points-table td {
+            padding: 1.2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .points-table tbody tr {
+            transition: 0.3s;
+        }
+
+        .points-table tbody tr:hover {
+            background: rgba(0, 255, 136, 0.05);
+            transform: scale(1.01);
+        }
+
+        .points-table td:first-child {
+            text-align: left;
+            padding-left: 2rem;
+        }
+
+        /* Team Cell */
+        .team-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .team-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px;
+            transition: 0.3s;
+        }
+
+        .points-table tr:hover .team-logo {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .team-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .team-short {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Position Badges */
+        .position {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .position.top4 {
+            background: var(--accent-gold);
+            color: #0a0e1a;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Stats Styling */
+        .stat-value {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .stat-value.zero {
+            color: var(--text-secondary);
+            opacity: 0.5;
+        }
+
+        .points {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+        }
+
+        .percentage {
+            font-size: 1rem;
+            color: var(--accent-orange);
+        }
+
+        /* Qualified Badge */
+        .qualified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid var(--accent-gold);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ============================================
+           TABLE FOOTER
+           ============================================ */
+        .table-footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .table-footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .table-footer i {
+            color: var(--accent-neon);
+            margin-right: 0.5rem;
+        }
+
+        /* ============================================
+           LEGEND
+           ============================================ */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+        }
+
+        .legend-color.qualified {
+            background: var(--accent-gold);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .legend-color.not-qualified {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1024px) {
+            .points-table {
+                font-size: 0.85rem;
+            }
+
+            .points-table th,
+            .points-table td {
+                padding: 1rem 0.5rem;
+            }
+
+            .team-logo {
+                width: 35px;
+                height: 35px;
+            }
+
+            .team-name {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .points-table {
+                min-width: 800px;
+            }
+
+            .legend {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="stadium-bg">
+        <div class="stadium-lights"></div>
+        <div class="field-pattern"></div>
+        <div class="crowd"></div>
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-cricket-bat-ball"></i>
+                <span>VPL</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="teams.html">Teams</a></li>
+                <li><a href="points.html" class="active">Points Table</a></li>
+                <li><a href="matches.html">Matches</a></li>
+                <li><a href="auction.html">Auction</a></li>
+                <li><a href="rules.html">Rules</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Points Table</h1>
+            <p class="page-subtitle">Season 01 • IPL 2026 Edition</p>
+        </div>
+
+        <!-- Qualification Banner -->
+        <div class="qualification-banner">
+            <h2><i class="fas fa-trophy"></i> Road to Playoffs</h2>
+            <p>Top 4 Teams Qualify for Knockouts • 14 Rounds • 35 Matches</p>
+        </div>
+
+        <!-- Points Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <div class="table-title">
+                    <i class="fas fa-list-ol"></i>
+                    VPL Season 01 Standings
+                </div>
+            </div>
+
+            <table class="points-table">
+                <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th>Team</th>
+                        <th>Played</th>
+                        <th>Won</th>
+                        <th>Draw</th>
+                        <th>Lost</th>
+                        <th>PF</th>
+                        <th>PA</th>
+                        <th>%</th>
+                        <th>Pts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Team 1: Jaffna Sharks -->
+                    <tr>
+                        <td><span class="position top4">1</span></td>
+                        <td>
+                            <div class="team-cell">
+                                <img src="JS.png" alt="Jaffna Sharks" class="team-logo">
+                                <div class="team-info">
+                                    <span class="team-name">Jaffna Sharks</span>
+                                    <span class="team-short">JS</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="percentage">0.00</td>
+                        <td class="points">0</td>
+                    </tr>
+
+                    <!-- Team 2: Rajasthan Stallions -->
+                    <tr>
+                        <td><span class="position top4">2</span></td>
+                        <td>
+                            <div class="team-cell">
+                                <img src="RS.png" alt="Rajasthan Stallions" class="team-logo">
+                                <div class="team-info">
+                                    <span class="team-name">Rajasthan Stallions</span>
+                                    <span class="team-short">RS</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="percentage">0.00</td>
+                        <td class="points">0</td>
+                    </tr>
+
+                    <!-- Team 3: Royal Challengers Galle -->
+                    <tr>
+                        <td><span class="position top4">3</span></td>
+                        <td>
+                            <div class="team-cell">
+                                <img src="RCG.jpeg" alt="Royal Challengers Galle" class="team-logo">
+                                <div class="team-info">
+                                    <span class="team-name">Royal Challengers Galle</span>
+                                    <span class="team-short">RCG</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="percentage">0.00</td>
+                        <td class="points">0</td>
+                    </tr>
+
+                    <!-- Team 4: Sunrisers Colombo -->
+                    <tr>
+                        <td><span class="position top4">4</span></td>
+                        <td>
+                            <div class="team-cell">
+                                <img src="SRC.jpeg" alt="Sunrisers Colombo" class="team-logo">
+                                <div class="team-info">
+                                    <span class="team-name">Sunrisers Colombo</span>
+                                    <span class="team-short">SRC</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="percentage">0.00</td>
+                        <td class="points">0</td>
+                    </tr>
+
+                    <!-- Team 5: Apex Bolt Assassins -->
+                    <tr>
+                        <td><span class="position">5</span></td>
+                        <td>
+                            <div class="team-cell">
+                                <img src="ABA.jpeg" alt="Apex Bolt Assassins" class="team-logo">
+                                <div class="team-info">
+                                    <span class="team-name">Apex Bolt Assassins</span>
+                                    <span class="team-short">ABA</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="stat-value zero">0</td>
+                        <td class="percentage">0.00</td>
+                        <td class="points">0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="table-footer">
+                <p><i class="fas fa-info-circle"></i> Tournament starts March 28, 2026 • All stats will be updated after each match</p>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color qualified"></div>
+                <span>Qualified for Knockouts</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color not-qualified"></div>
+                <span>Eliminated</span>
+            </div>
+            <div class="legend-item">
+                <i class="fas fa-info-circle" style="color: var(--accent-neon);"></i>
+                <span>PF: Points For | PA: Points Against | %: Percentage</span>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Add subtle animation to table rows on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const rows = document.querySelectorAll('.points-table tbody tr');
+            rows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    row.style.transition = 'all 0.5s ease';
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Hover effect enhancement
+        document.querySelectorAll('.points-table tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.background = 'rgba(0, 255, 136, 0.08)';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.background = 'transparent';
+            });
+        });
+    </script>
+
+</body>
+</html>
