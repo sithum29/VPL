@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matches - VPL Season 01</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ============================================
+           CSS VARIABLES
+           ============================================ */
+        :root {
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #111827;
+            --card-bg: #1f2937;
+            --accent-neon: #00ff88;
+            --accent-orange: #ff6b35;
+            --accent-gold: #ffd700;
+            --accent-red: #ff3333;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-neon);
+        }
+
+        /* ============================================
+           MAIN CONTENT
+           ============================================ */
+        .main-content {
+            padding: 6rem 5% 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           IPL REDIRECT BANNER
+           ============================================ */
+        .ipl-banner {
+            background: linear-gradient(90deg, #1a237e 0%, #0d47a1 50%, #1a237e 100%);
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            color: white;
+        }
+
+        .ipl-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(13, 71, 161, 0.3);
+        }
+
+        .ipl-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ipl-logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a237e;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .ipl-text h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .ipl-text p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .ipl-arrow {
+            font-size: 1.5rem;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        /* ============================================
+           PAGE HEADER
+           ============================================ */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ============================================
+           QUALIFICATION BANNER
+           ============================================ */
+        .qualification-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 1px solid var(--accent-gold);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .qualification-banner h2 {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .qualification-banner p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ============================================
+           STAGE HEADERS
+           ============================================ */
+        .stage-header {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            margin: 3rem 0 2rem;
+            border-left: 5px solid var(--accent-neon);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stage-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stage-title i {
+            color: var(--accent-neon);
+            margin-right: 0.5rem;
+        }
+
+        .stage-info {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ============================================
+           ROUND CONTAINER
+           ============================================ */
+        .round-container {
+            margin-bottom: 2rem;
+        }
+
+        .round-header {
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .round-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-neon);
+        }
+
+        .round-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ============================================
+           MATCH CARDS
+           ============================================ */
+        .matches-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .match-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .match-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-neon);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+        }
+
+        .match-number {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .match-teams {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .team-away {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        .team-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px;
+        }
+
+        .team-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .team-score {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+        }
+
+        .vs-divider {
+            padding: 0 1.5rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .match-details {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .match-result {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .match-status {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--accent-neon);
+        }
+
+        .match-status.completed {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--accent-orange);
+        }
+
+        /* ============================================
+           KNOCKOUT STYLES
+           ============================================ */
+        .knockout-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+
+        .knockout-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 1px solid var(--accent-gold);
+        }
+
+        .knockout-card .match-number {
+            color: var(--accent-gold);
+        }
+
+        /* ============================================
+           FINAL STYLES
+           ============================================ */
+        .final-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .final-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 215, 0, 0.1) 100%);
+            border: 2px solid var(--accent-gold);
+            padding: 2rem;
+        }
+
+        .final-card .team-logo {
+            width: 80px;
+            height: 80px;
+        }
+
+        .final-card .team-score {
+            font-size: 2rem;
+        }
+
+        .trophy-icon {
+            text-align: center;
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .matches-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .match-teams {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .team-away {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            .vs-divider {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-cricket-bat-ball"></i>
+                <span>VPL</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="teams.html">Teams</a></li>
+                <li><a href="points.html">Points Table</a></li>
+                <li><a href="matches.html" class="active">Matches</a></li>
+                <li><a href="auction.html">Auction</a></li>
+                <li><a href="rules.html">Rules</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- IPL Redirect Banner -->
+        <a href="https://www.iplt20.com" target="_blank" class="ipl-banner">
+            <div class="ipl-left">
+                <div class="ipl-logo">IPL</div>
+                <div class="ipl-text">
+                    <h3>Official IPL Website</h3>
+                    <p>Click to visit IPLT20.com for real-time updates</p>
+                </div>
+            </div>
+            <i class="fas fa-external-link-alt ipl-arrow"></i>
+        </a>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Match Center</h1>
+            <p class="page-subtitle">Season 01 • IPL 2026 Edition</p>
+        </div>
+
+        <!-- Qualification Banner -->
+        <div class="qualification-banner">
+            <h2><i class="fas fa-trophy"></i> Road to Glory</h2>
+            <p>Top 4 Teams Qualify for Knockouts • 14 Rounds • 28 Matches • 1 Champion</p>
+        </div>
+
+        <!-- ============================================
+             GROUP STAGE - 14 ROUNDS (28 MATCHES)
+             ============================================ -->
+        
+        <div class="stage-header">
+            <div>
+                <div class="stage-title"><i class="fas fa-calendar-alt"></i> Group Stage</div>
+            </div>
+            <div class="stage-info">14 Rounds • 28 Matches</div>
+        </div>
+
+        <!-- ROUND 1 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 1</span>
+                <span class="round-date">March 28, 2026</span>
+            </div>
+            <div class="matches-row">
+                <!-- Match 1 -->
+                <a href="m1s1.html" class="match-card">
+                    <div class="match-number">Match 1</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team1-logo.png" alt="Team 1" class="team-logo">
+                            <div>
+                                <div class="team-name">Team A</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team2-logo.png" alt="Team 2" class="team-logo">
+                            <div>
+                                <div class="team-name">Team B</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <!-- Match 2 -->
+                <a href="m2s1.html" class="match-card">
+                    <div class="match-number">Match 2</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team3-logo.png" alt="Team 3" class="team-logo">
+                            <div>
+                                <div class="team-name">Team C</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team4-logo.png" alt="Team 4" class="team-logo">
+                            <div>
+                                <div class="team-name">Team D</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 2 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 2</span>
+                <span class="round-date">March 29, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m3s1.html" class="match-card">
+                    <div class="match-number">Match 3</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m4s1.html" class="match-card">
+                    <div class="match-number">Match 4</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 3 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 3</span>
+                <span class="round-date">March 30, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m5s1.html" class="match-card">
+                    <div class="match-number">Match 5</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m6s1.html" class="match-card">
+                    <div class="match-number">Match 6</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 4 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 4</span>
+                <span class="round-date">March 31, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m7s1.html" class="match-card">
+                    <div class="match-number">Match 7</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m8s1.html" class="match-card">
+                    <div class="match-number">Match 8</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 5 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 5</span>
+                <span class="round-date">April 1, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m9s1.html" class="match-card">
+                    <div class="match-number">Match 9</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m10s1.html" class="match-card">
+                    <div class="match-number">Match 10</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 6 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 6</span>
+                <span class="round-date">April 2, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m11s1.html" class="match-card">
+                    <div class="match-number">Match 11</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m12s1.html" class="match-card">
+                    <div class="match-number">Match 12</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 7 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 7</span>
+                <span class="round-date">April 3, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m13s1.html" class="match-card">
+                    <div class="match-number">Match 13</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m14s1.html" class="match-card">
+                    <div class="match-number">Match 14</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 8 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 8</span>
+                <span class="round-date">April 4, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m15s1.html" class="match-card">
+                    <div class="match-number">Match 15</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m16s1.html" class="match-card">
+                    <div class="match-number">Match 16</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 9 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 9</span>
+                <span class="round-date">April 5, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m17s1.html" class="match-card">
+                    <div class="match-number">Match 17</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m18s1.html" class="match-card">
+                    <div class="match-number">Match 18</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 10 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 10</span>
+                <span class="round-date">April 6, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m19s1.html" class="match-card">
+                    <div class="match-number">Match 19</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m20s1.html" class="match-card">
+                    <div class="match-number">Match 20</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 11 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 11</span>
+                <span class="round-date">April 7, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m21s1.html" class="match-card">
+                    <div class="match-number">Match 21</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m22s1.html" class="match-card">
+                    <div class="match-number">Match 22</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 12 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 12</span>
+                <span class="round-date">April 8, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m23s1.html" class="match-card">
+                    <div class="match-number">Match 23</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m24s1.html" class="match-card">
+                    <div class="match-number">Match 24</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 13 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 13</span>
+                <span class="round-date">April 9, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m25s1.html" class="match-card">
+                    <div class="match-number">Match 25</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m26s1.html" class="match-card">
+                    <div class="match-number">Match 26</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ROUND 14 -->
+        <div class="round-container">
+            <div class="round-header">
+                <span class="round-title">Round 14</span>
+                <span class="round-date">April 10, 2026</span>
+            </div>
+            <div class="matches-row">
+                <a href="m27s1.html" class="match-card">
+                    <div class="match-number">Match 27</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+
+                <a href="m28s1.html" class="match-card">
+                    <div class="match-number">Match 28</div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-away">
+                            <img src="images/team-logo.png" alt="Team" class="team-logo">
+                            <div>
+                                <div class="team-name">TBD</div>
+                                <div class="team-score">000/0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-details">
+                        <span class="match-result">Winner: TBD</span>
+                        <span class="match-status">Upcoming</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ============================================
+             KNOCKOUT STAGE
+             ============================================ -->
+        
+        <div class="stage-header" style="border-left-color: var(--accent-gold);">
+            <div>
+                <div class="stage-title" style="color: var(--accent-gold);">
+                    <i class="fas fa-trophy"></i> Knockout Stage
+                </div>
+            </div>
+            <div class="stage-info">Qualifier 1 & Eliminator</div>
+        </div>
+
+        <div class="knockout-grid">
+            <!-- Qualifier 1 -->
+            <a href="k1s1.html" class="match-card knockout-card">
+                <div class="match-number">Qualifier 1</div>
+                <div class="match-teams">
+                    <div class="team">
+                        <img src="images/team-logo.png" alt="Team" class="team-logo">
+                        <div>
+                            <div class="team-name">Rank 1</div>
+                            <div class="team-score">TBD</div>
+                        </div>
+                    </div>
+                    <div class="vs-divider">VS</div>
+                    <div class="team team-away">
+                        <img src="images/team-logo.png" alt="Team" class="team-logo">
+                        <div>
+                            <div class="team-name">Rank 2</div>
+                            <div class="team-score">TBD</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="match-details">
+                    <span class="match-result">Winner → Final</span>
+                    <span class="match-status">April 12, 2026</span>
+                </div>
+            </a>
+
+            <!-- Eliminator -->
+            <a href="k2s1.html" class="match-card knockout-card">
+                <div class="match-number">Eliminator</div>
+                <div class="match-teams">
+                    <div class="team">
+                        <img src="images/team-logo.png" alt="Team" class="team-logo">
+                        <div>
+                            <div class="team-name">Rank 3</div>
+                            <div class="team-score">TBD</div>
+                        </div>
+                    </div>
+                    <div class="vs-divider">VS</div>
+                    <div class="team team-away">
+                        <img src="images/team-logo.png" alt="Team" class="team-logo">
+                        <div>
+                            <div class="team-name">Rank 4</div>
+                            <div class="team-score">TBD</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="match-details">
+                    <span class="match-result">Winner → Qualifier 2</span>
+                    <span class="match-status">April 13, 2026</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- ============================================
+             FINAL
+             ============================================ -->
+        
+        <div class="stage-header" style="border-left-color: var(--accent-gold); background: linear-gradient(90deg, rgba(255,215,0,0.1) 0%, transparent 100%);">
+            <div>
+                <div class="stage-title" style="color: var(--accent-gold);">
+                    <i class="fas fa-crown"></i> The Final
+                </div>
+            </div>
+            <div class="stage-info">VPL Season 01 Champion</div>
+        </div>
+
+        <div class="final-container">
+            <a href="f1s1.html" class="match-card final-card">
+                <div class="trophy-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="match-number" style="text-align: center; font-size: 1.2rem; margin-bottom: 1.5rem;">VPL FINAL</div>
+                <div class="match-teams" style="margin-bottom: 1.5rem;">
+                    <div class="team">
+                        <img src="images/team-logo.png" alt="Team" class="team-logo">
+                        <div>
+                            <div class="team-name">TBD</div>
+                            <div class="team-score">TBD</div>
+                        </div>
+                    </div>
+                    <div class="vs-divider" style="font-size: 1.5rem; color: var(--accent-gold);">VS</div>
+                    <div class="team team-away">
+                        <img src="images/team-logo.png" alt="Team" class="team-logo">
+                        <div>
+                            <div class="team-name">TBD</div>
+                            <div class="team-score">TBD</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="match-details" style="justify-content: center;">
+                    <span class="match-result" style="font-size: 1.1rem; color: var(--accent-gold);">
+                        <i class="fas fa-crown"></i> Champion: TBD
+                    </span>
+                </div>
+                <div style="text-align: center; margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                    April 15, 2026 • 7:30 PM IST
+                </div>
+            </a>
+        </div>
+
+    </main>
+
+</body>
+</html>
