@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules - VPL Season 01</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ============================================
+           CSS VARIABLES
+           ============================================ */
+        :root {
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #111827;
+            --card-bg: #1f2937;
+            --accent-neon: #00ff88;
+            --accent-orange: #ff6b35;
+            --accent-gold: #ffd700;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-neon);
+        }
+
+        /* ============================================
+           MAIN CONTENT
+           ============================================ */
+        .main-content {
+            padding: 6rem 5% 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           PAGE HEADER
+           ============================================ */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* ============================================
+           TAB NAVIGATION
+           ============================================ */
+        .tab-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid transparent;
+            color: var(--text-secondary);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--accent-neon);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .tab-btn.active {
+            border-color: var(--accent-neon);
+            color: var(--accent-neon);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        /* ============================================
+           CONTENT SECTIONS
+           ============================================ */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           ACCORDION CARDS
+           ============================================ */
+        .rules-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            overflow: hidden;
+        }
+
+        .rules-header {
+            padding: 1.5rem;
+            background: rgba(0, 255, 136, 0.05);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .rules-header:hover {
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .rules-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-neon);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .rules-icon {
+            font-size: 1.2rem;
+        }
+
+        .toggle-icon {
+            color: var(--text-secondary);
+            transition: 0.3s;
+        }
+
+        .rules-header.active .toggle-icon {
+            transform: rotate(180deg);
+            color: var(--accent-neon);
+        }
+
+        .rules-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .rules-content.active {
+            padding: 1.5rem;
+            max-height: 2000px;
+        }
+
+        /* ============================================
+           POINTS TABLE STYLES
+           ============================================ */
+        .points-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .point-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            align-items: start;
+        }
+
+        @media (max-width: 600px) {
+            .point-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+
+        .point-label {
+            font-weight: 600;
+            color: var(--accent-neon);
+            font-size: 0.95rem;
+        }
+
+        .point-value {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .point-value strong {
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           RULES LIST STYLES
+           ============================================ */
+        .rules-list {
+            list-style: none;
+        }
+
+        .rules-list li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .rules-list li:last-child {
+            border-bottom: none;
+        }
+
+        .rules-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-neon);
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .highlight {
+            color: var(--accent-neon);
+            font-weight: 600;
+        }
+
+        .warning {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        /* ============================================
+           BONUS INFO BOX
+           ============================================ */
+        .info-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .info-box i {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+        }
+
+        .info-box p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* ============================================
+           EXAMPLE CALCULATION
+           ============================================ */
+        .example-box {
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .example-title {
+            color: var(--accent-neon);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-calc {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .calc-result {
+            color: var(--accent-neon);
+            font-weight: 700;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-cricket-bat-ball"></i>
+                <span>VPL</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="teams.html">Teams</a></li>
+                <li><a href="points.html">Points Table</a></li>
+                <li><a href="matches.html">Matches</a></li>
+                <li><a href="auction.html">Auction</a></li>
+                <li><a href="rules.html" class="active">Rules</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Rules & Scoring</h1>
+            <p class="page-subtitle">Everything you need to know about VPL Season 01</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="showTab('scoring')">
+                <i class="fas fa-calculator"></i> Points Scoring
+            </button>
+            <button class="tab-btn" onclick="showTab('league')">
+                <i class="fas fa-book"></i> League Rules
+            </button>
+        </div>
+
+        <!-- ============================================
+             POINTS SCORING SECTION
+             ============================================ -->
+        <div id="scoring" class="content-section active">
+
+            <!-- Batting Points -->
+            <div class="rules-card">
+                <div class="rules-header" onclick="toggleAccordion(this)">
+                    <div class="rules-title">
+                        <i class="fas fa-baseball-bat-ball rules-icon"></i>
+                        Batting Points
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="rules-content active">
+                    <div class="points-grid">
+                        <div class="point-item">
+                            <div class="point-label">Runs</div>
+                            <div class="point-value"><strong>1 point</strong> per run</div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Runs Bonus</div>
+                            <div class="point-value"><strong>5 points</strong> for 25, <strong>10 more points</strong> for reaching 50, <strong>15 more points</strong> for reaching 75, and so on.</div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Strike Rate</div>
+                            <div class="point-value">Number of runs <strong>minus</strong> Number of balls faced. <strong>Doubled</strong> if positive, <strong>halved</strong> if negative.</div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Boundaries</div>
+                            <div class="point-value"><strong>One</strong> additional point per four. <strong>Three</strong> additional points per six.</div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Duck</div>
+                            <div class="point-value"><span class="warning">Minus twenty</span> for getting out for a duck.</div>
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">
+                            <i class="fas fa-lightbulb"></i> Example Calculation
+                        </div>
+                        <div class="example-calc">
+                            Player scores: 60 runs (45 balls), 4 fours, 2 sixes<br>
+                            Runs: 60 × 1 = 60 pts<br>
+                            Bonus (50): 5 + 10 = 15 pts<br>
+                            Strike Rate: (60 - 45) × 2 = 30 pts<br>
+                            Boundaries: (4 × 1) + (2 × 3) = 10 pts<br>
+                            <div class="calc-result">Total: 60 + 15 + 30 + 10 = 115 points</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bowling Points -->
+            <div class="rules-card">
+                <div class="rules-header" onclick="toggleAccordion(this)">
+                    <div class="rules-title">
+                        <i class="fas fa-circle rules-icon"></i>
+                        Bowling Points
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="rules-content">
+                    <div class="points-grid">
+                        <div class="point-item">
+                            <div class="point-label">Wickets</div>
+                            <div class="point-value"><strong>30 points</strong> per wicket</div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Wicket Bonus</div>
+                            <div class="point-value"><strong>5 points</strong> for taking 2 wickets, <strong>10 additional points</strong> for a third wicket, <strong>15 additional points</strong> for a fourth wicket, and so on.</div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Economy Rate</div>
+                            <div class="point-value">The difference between the number of overs bowled, at <strong>8.5 Runs per Over</strong>, and the number of runs conceded. <strong>Double</strong> if positive.</div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Dot Balls</div>
+                            <div class="point-value"><strong>1 point</strong> each</div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Maidens</div>
+                            <div class="point-value"><strong>15 points</strong> for a maiden over</div>
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">
+                            <i class="fas fa-lightbulb"></i> Example Calculation
+                        </div>
+                        <div class="example-calc">
+                            Bowler: 4 overs, 2 maidens, 24 runs, 3 wickets, 12 dot balls<br>
+                            Wickets: 3 × 30 = 90 pts<br>
+                            Bonus (3 wkts): 5 + 10 = 15 pts<br>
+                            Economy: (4 × 8.5 - 24) × 2 = (34 - 24) × 2 = 20 pts<br>
+                            Dot Balls: 12 × 1 = 12 pts<br>
+                            Maidens: 2 × 15 = 30 pts<br>
+                            <div class="calc-result">Total: 90 + 15 + 20 + 12 + 30 = 167 points</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fielding Points -->
+            <div class="rules-card">
+                <div class="rules-header" onclick="toggleAccordion(this)">
+                    <div class="rules-title">
+                        <i class="fas fa-hand-paper rules-icon"></i>
+                        Fielding Points
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="rules-content">
+                    <div class="points-grid">
+                        <div class="point-item">
+                            <div class="point-label">Catches</div>
+                            <div class="point-value"><strong>15 points</strong></div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Run Outs</div>
+                            <div class="point-value"><strong>15 points</strong></div>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-label">Stumpings</div>
+                            <div class="point-value"><strong>20 points</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================
+             LEAGUE RULES SECTION
+             ============================================ -->
+        <div id="league" class="content-section">
+
+            <!-- Trades -->
+            <div class="rules-card">
+                <div class="rules-header" onclick="toggleAccordion(this)">
+                    <div class="rules-title">
+                        <i class="fas fa-exchange-alt rules-icon"></i>
+                        Squad Changes
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="rules-content active">
+                    <ul class="rules-list">
+                        <li>In between regular season rounds, team owners are allowed to complete <span class="highlight">unlimited</span> number of changes.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Captains -->
+            <div class="rules-card">
+                <div class="rules-header" onclick="toggleAccordion(this)">
+                    <div class="rules-title">
+                        <i class="fas fa-crown rules-icon"></i>
+                        Captains
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="rules-content">
+                    <ul class="rules-list">
+                        <li>You are able to select a Captain who will earn you <span class="highlight">double points</span>.</li>
+                        <li>If your captain scores negative points, that will still be <span class="warning">doubled</span>.</li>
+                    </ul>
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Choose your captain wisely! A good captain can make the difference between winning and losing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergencies -->
+            <div class="rules-card">
+                <div class="rules-header" onclick="toggleAccordion(this)">
+                    <div class="rules-title">
+                        <i class="fas fa-plus-circle rules-icon"></i>
+                        Emergencies
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="rules-content">
+                    <ul class="rules-list">
+                        <li>You have an extra player per playing position, who will act as an emergency if a player in your starting XI for that position doesn't play.</li>
+                        <li>The emergency player's points will only count to your score after a player in that position has not played in their team's match for that round.</li>
+                        <li>Players that are listed in the team when the game starts will count, even if they score 0 points or they never get the chance to take to the field due to rain, so long as a ball has been bowled in that match.</li>
+                        <li>If a game is abandoned before the toss or before a ball has been bowled, those players are not considered to have played a game.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- League Structure -->
+            <div class="rules-card">
+                <div class="rules-header" onclick="toggleAccordion(this)">
+                    <div class="rules-title">
+                        <i class="fas fa-sitemap rules-icon"></i>
+                        League Structure
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="rules-content">
+                    <ul class="rules-list">
+                        <li>Each round you will play head-to-head against another team or teams in your League, with teams ranked on a ladder based off those results.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Ladder -->
+            <div class="rules-card">
+                <div class="rules-header" onclick="toggleAccordion(this)">
+                    <div class="rules-title">
+                        <i class="fas fa-list-ol rules-icon"></i>
+                        Ladder
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="rules-content">
+                    <ul class="rules-list">
+                        <li>You get <span class="highlight">4 points</span> for a win, <span class="highlight">2</span> for a draw, and <span class="highlight">no points</span> for a loss.</li>
+                        <li>Teams are then ordered by most points, then by percentage (points scored in matches as a percentage of points conceded).</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Toggle between tabs
+        function showTab(tabName) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.tab-btn').classList.add('active');
+
+            // Show/hide sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Toggle accordion
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isActive = content.classList.contains('active');
+            
+            // Close all in this section
+            header.parentElement.parentElement.querySelectorAll('.rules-content').forEach(c => {
+                c.classList.remove('active');
+            });
+            header.parentElement.parentElement.querySelectorAll('.rules-header').forEach(h => {
+                h.classList.remove('active');
+            });
+
+            // Open clicked if it was closed
+            if (!isActive) {
+                content.classList.add('active');
+                header.classList.add('active');
+            }
+        }
+
+        // Initialize - open first accordion in each section
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.content-section').forEach(section => {
+                const firstHeader = section.querySelector('.rules-header');
+                if (firstHeader) {
+                    firstHeader.classList.add('active');
+                    firstHeader.nextElementSibling.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
