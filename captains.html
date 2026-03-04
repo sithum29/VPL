@@ -3,258 +3,458 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPL - Captain Election (Debug Mode)</title>
+    <title>VPL - Captain Election</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* [Same CSS as before - keeping it shorter for focus on the fix] */
         :root {
             --bg-dark: #0a0a0a;
             --bg-card: #111111;
+            --bg-hover: #1a1a1a;
             --neon-green: #00ff88;
             --neon-orange: #ff6b35;
             --text-primary: #ffffff;
             --text-secondary: #b0b0b0;
-            --danger: #ff4444;
+            --text-muted: #666666;
+            --border-color: #222222;
+            --shadow-glow: 0 0 20px rgba(0, 255, 136, 0.3);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg-dark); color: var(--text-primary); min-height: 100vh; }
-        .navbar { background: #111; padding: 1rem 2rem; border-bottom: 1px solid #222; }
-        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: var(--neon-green); }
-        .header { text-align: center; padding: 2rem 1rem; }
-        .league-title { font-size: 2rem; background: linear-gradient(135deg, var(--neon-green), var(--neon-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* DEBUG PANEL */
-        .debug-panel {
-            background: #1a1a1a;
-            border: 2px solid var(--neon-orange);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 800px;
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
         }
-        .debug-title { color: var(--neon-orange); margin-bottom: 1rem; font-size: 1.2rem; }
-        .debug-info { 
-            background: #0a0a0a; 
-            padding: 1rem; 
-            border-radius: 5px; 
-            font-family: monospace; 
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
+
+        .navbar {
+            background: linear-gradient(180deg, #111 0%, var(--bg-dark) 100%);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .debug-info.error { color: var(--danger); border-left: 3px solid var(--danger); }
-        .debug-info.success { color: var(--neon-green); border-left: 3px solid var(--neon-green); }
-        .key-display { 
-            background: #000; 
-            padding: 0.5rem; 
-            border-radius: 3px; 
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--neon-green);
-            word-break: break-all;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
         }
-        .test-btn {
-            background: var(--neon-orange);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
+
+        .nav-home {
+            background: transparent;
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
             font-weight: 600;
-            margin-right: 1rem;
+            transition: all 0.3s ease;
         }
-        .test-btn:hover { opacity: 0.9; }
-        
-        /* MAIN CONTENT */
-        .main-container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
-        .captains-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .captain-card { background: var(--bg-card); border: 2px solid #333; border-radius: 15px; padding: 1.5rem; text-align: center; }
-        .captain-card.elected { border-color: var(--neon-green); }
-        .team-card { background: var(--bg-card); border-radius: 15px; margin-bottom: 2rem; overflow: hidden; }
-        .team-header { background: linear-gradient(135deg, #1a1a2e, #0f0f1e); padding: 1.5rem; border-bottom: 2px solid var(--neon-green); }
-        .players-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; padding: 1.5rem; }
-        .player-card { background: #1a1a1a; border-radius: 10px; padding: 1rem; text-align: center; }
-        .player-image { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
-        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--bg-card); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--neon-green); transform: translateX(400px); transition: transform 0.3s; }
-        .toast.show { transform: translateX(0); }
-        .toast.error { border-left-color: var(--danger); }
-        .hidden { display: none !important; }
-        
-        .mode-badge {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            padding: 0.5rem 1rem;
+
+        .nav-home:hover {
+            background: var(--neon-green);
+            color: var(--bg-dark);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, var(--bg-dark) 70%);
+        }
+
+        .league-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .season-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .countdown-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-card);
+        }
+
+        .countdown-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .time-unit { text-align: center; }
+
+        .time-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--neon-orange);
+            display: block;
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .captains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .captain-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .captain-card.elected {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .captain-card.pending {
+            border-color: var(--neon-orange);
+            opacity: 0.7;
+        }
+
+        .team-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--neon-green);
+            margin-bottom: 1rem;
+        }
+
+        .captain-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid var(--neon-green);
+        }
+
+        .captain-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .captain-role { color: var(--text-secondary); font-size: 0.9rem; }
+
+        .pending-text { color: var(--neon-orange); font-style: italic; }
+
+        .elected-badge {
+            display: inline-block;
+            background: var(--neon-green);
+            color: var(--bg-dark);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .teams-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-card);
+        }
+
+        .team-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--neon-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .team-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .player-count {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--neon-green);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .captain-form {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .select-captain {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .select-captain:focus {
+            outline: none;
+            border-color: var(--neon-green);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, var(--neon-green), #00cc6a);
+            border: none;
+            border-radius: 8px;
+            color: var(--bg-dark);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .submit-btn:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .players-container { padding: 1.5rem; }
+
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .player-card {
+            background: var(--bg-hover);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .player-card:hover {
+            border-color: var(--neon-green);
+            transform: translateY(-3px);
+        }
+
+        .player-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+            border: 2px solid var(--border-color);
+        }
+
+        .player-name {
             font-size: 0.8rem;
             font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .mode-online { background: rgba(0, 255, 136, 0.2); color: var(--neon-green); border: 1px solid var(--neon-green); }
-        .mode-offline { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid #ffc107; }
+
+        .player-role {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            padding: 0.2rem 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .foreign-badge {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--neon-orange);
+            border-radius: 50%;
+            margin-left: 4px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            border-left: 4px solid var(--neon-green);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-card);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show { transform: translateX(0); }
+        .toast.error { border-left-color: #ff4444; }
+
+        @media (max-width: 768px) {
+            .league-title { font-size: 1.8rem; }
+            .time-value { font-size: 1.8rem; }
+            .players-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .team-header { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">🏏 VPL Debug Mode</div>
-            <a href="index.html" style="color: var(--neon-green); text-decoration: none;">Home</a>
+            <div class="logo">🏏 VPL</div>
+            <a href="index.html" class="nav-home">Home</a>
         </div>
     </nav>
 
-    <div class="mode-badge mode-offline" id="modeBadge">● Checking...</div>
-
     <header class="header">
-        <h1 class="league-title">VPL Captain Election</h1>
-        <p style="color: var(--text-secondary);">Debug & Setup Mode</p>
+        <h1 class="league-title">VPL – Virtual Premier League</h1>
+        <p class="season-subtitle">Season 01 – IPL 2026 Edition</p>
+        
+        <div class="countdown-container">
+            <div class="countdown-label">Captain Submission Deadline</div>
+            <div class="countdown-timer" id="countdown">
+                <div class="time-unit">
+                    <span class="time-value" id="days">00</span>
+                    <span class="time-label">Days</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="hours">00</span>
+                    <span class="time-label">Hours</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="minutes">00</span>
+                    <span class="time-label">Minutes</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="seconds">00</span>
+                    <span class="time-label">Seconds</span>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.9rem;">Deadline: March 15, 2026 at 11:59 PM IST</p>
+        </div>
     </header>
 
-    <!-- DEBUG PANEL -->
-    <div class="debug-panel" id="debugPanel">
-        <h3 class="debug-title">🔧 API Configuration Check</h3>
-        <div id="debugContent">
-            <div class="debug-info">
-                <strong>Current API Key:</strong><br>
-                <span class="key-display" id="keyDisplay">Not set</span>
-            </div>
-            <div class="debug-info" id="keyValidation">
-                Validating key format...
-            </div>
-            <button class="test-btn" onclick="testConnection()">Test API Connection</button>
-            <button class="test-btn" onclick="useOfflineMode()" style="background: #666;">Use Offline Mode</button>
-        </div>
-    </div>
-
     <main class="main-container">
-        <div class="captains-grid" id="captainsDisplay"></div>
-        <div id="teamsContainer"></div>
+        <section>
+            <h2 class="section-title">🎯 Elected Captains</h2>
+            <div class="captains-grid" id="captainsDisplay"></div>
+        </section>
+
+        <section class="teams-section" id="teamsContainer"></section>
     </main>
 
     <div class="toast" id="toast"></div>
 
     <script>
         // =========================================
-        // CONFIGURATION - PASTE YOUR KEY HERE
+        // CONFIGURATION - EDIT THIS ONLY
         // =========================================
         
-        // ⚠️ PASTE YOUR KEY BETWEEN THE QUOTES BELOW
-        // Make sure there are no spaces before or after!
-        const JSONBIN_KEY = '$2a$10$GCoIdBRqefYiQosxyKyiSey3iA6IUSQMOLuqI3jDiRUM7cxt9eNKe';
+        // ⚠️ PASTE YOUR FORMSPREE URL HERE
+        // Get it from: https://formspree.io/ after creating a form
+        const FORMSPREE_URL = 'https://formspree.io/f/mwvreelq';
         
-        // If the above doesn't work, try uncommenting this line and commenting the one above:
-        // const JSONBIN_KEY = "$2a$10$GCoIdBRqefYiQosxyKyiSey3iA6IUSQMOLuqI3jDiRUM7cxt9eNKe";
-        
-        const BIN_ID = 'vpl-captains-2026';
-        const USE_OFFLINE = false; // Set to true to skip JSONBin entirely
-
         // =========================================
-        // DEBUG FUNCTIONS
+        // TEAM DATA
         // =========================================
-
-        function analyzeKey() {
-            const keyDisplay = document.getElementById('keyDisplay');
-            const validation = document.getElementById('keyValidation');
-            
-            // Clean the key (remove any accidental whitespace)
-            const cleanKey = JSONBIN_KEY.trim();
-            
-            // Show masked version
-            if (cleanKey && cleanKey.length > 10) {
-                const masked = cleanKey.substring(0, 10) + '...' + cleanKey.substring(cleanKey.length - 5);
-                keyDisplay.textContent = masked;
-            } else {
-                keyDisplay.textContent = 'INVALID: ' + cleanKey;
-            }
-            
-            // Validate format
-            let issues = [];
-            
-            if (!cleanKey.startsWith('$2a$10$')) {
-                issues.push('Key should start with $2a$10$');
-            }
-            if (cleanKey.length < 50) {
-                issues.push('Key seems too short (' + cleanKey.length + ' chars)');
-            }
-            if (cleanKey.includes(' ')) {
-                issues.push('Key contains spaces - remove them!');
-            }
-            if (cleanKey.includes('"') || cleanKey.includes("'")) {
-                issues.push('Key contains quotes - remove them!');
-            }
-            
-            // Check for common copy-paste errors
-            const hasWeirdQuotes = /[""''']/.test(JSONBIN_KEY);
-            if (hasWeirdQuotes) {
-                issues.push('WARNING: Detected smart/curly quotes in key!');
-            }
-            
-            if (issues.length === 0) {
-                validation.innerHTML = '<span style="color: var(--neon-green);">✓ Key format looks correct</span><br>Length: ' + cleanKey.length + ' characters';
-                validation.className = 'debug-info success';
-                return true;
-            } else {
-                validation.innerHTML = '<span style="color: var(--danger);">✗ Issues found:</span><br>' + issues.join('<br>');
-                validation.className = 'debug-info error';
-                return false;
-            }
-        }
-
-        async function testConnection() {
-            const debugPanel = document.getElementById('debugContent');
-            
-            // Add loading message
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'debug-info';
-            loadingDiv.innerHTML = 'Testing connection to JSONBin...';
-            debugPanel.appendChild(loadingDiv);
-            
-            try {
-                // Try the /me endpoint first
-                const response = await fetch('https://api.jsonbin.io/v3/me', {
-                    method: 'GET',
-                    headers: {
-                        'X-Master-Key': JSONBIN_KEY.trim()
-                    }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    loadingDiv.innerHTML = '<span style="color: var(--neon-green);">✓ API Key is VALID!</span><br>User: ' + (data.record?.username || 'Unknown');
-                    loadingDiv.className = 'debug-info success';
-                    document.getElementById('modeBadge').textContent = '● Online Mode';
-                    document.getElementById('modeBadge').className = 'mode-badge mode-online';
-                    showToast('API Key working! Refreshing data...');
-                    await initApp();
-                } else {
-                    const errorText = await response.text();
-                    loadingDiv.innerHTML = '<span style="color: var(--danger);">✗ API Error:</span><br>Status: ' + response.status + '<br>' + errorText;
-                    loadingDiv.className = 'debug-info error';
-                    
-                    if (response.status === 401) {
-                        loadingDiv.innerHTML += '<br><br><strong>Fix:</strong> Your key is invalid. Go to jsonbin.io and generate a new key.';
-                    }
-                }
-            } catch (error) {
-                loadingDiv.innerHTML = '<span style="color: var(--danger);">✗ Network Error:</span><br>' + error.message;
-                loadingDiv.className = 'debug-info error';
-                
-                if (error.message.includes('Failed to fetch')) {
-                    loadingDiv.innerHTML += '<br><br>This might be a CORS issue or you\'re offline.<br>Try "Use Offline Mode" button.';
-                }
-            }
-        }
-
-        function useOfflineMode() {
-            window.OFFLINE_MODE = true;
-            document.getElementById('modeBadge').textContent = '● Offline Mode';
-            document.getElementById('modeBadge').className = 'mode-badge mode-offline';
-            document.getElementById('debugPanel').style.display = 'none';
-            showToast('Using Offline Mode - data saves locally only');
-            initApp();
-        }
-
-        // =========================================
-        // APP LOGIC (Simplified for debug)
-        // =========================================
-
         const teamsData = {
             "Jaffna Sharks": [
                 { name: "Rohit Sharma", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png" },
@@ -393,105 +593,212 @@
             ]
         };
 
+        // =========================================
+        // STATE
+        // =========================================
         let electedCaptains = {};
-        const LOCAL_KEY = 'vpl_captains_backup';
+        const CAPTAINS_KEY = 'vpl_captains_data';
 
-        function initApp() {
-            // Load from localStorage first
-            const local = localStorage.getItem(LOCAL_KEY);
-            if (local) {
-                electedCaptains = JSON.parse(local);
+        // =========================================
+        // EMAIL FUNCTION
+        // =========================================
+
+        async function sendEmailNotification(teamName, player) {
+            if (!FORMSPREE_URL || FORMSPREE_URL.includes('YOUR_FORM_ID')) {
+                console.log('Formspree URL not configured');
+                return false;
             }
-            renderCaptains();
-            renderTeams();
+
+            const formData = new FormData();
+            formData.append('team', teamName);
+            formData.append('captain', player.name);
+            formData.append('role', player.role);
+            formData.append('timestamp', new Date().toLocaleString());
+            formData.append('_subject', `VPL Captain Elected: ${teamName}`);
+            formData.append('_template', 'table');
+
+            try {
+                const response = await fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                return response.ok;
+            } catch (error) {
+                console.error('Email error:', error);
+                return false;
+            }
         }
+
+        // =========================================
+        // UI FUNCTIONS
+        // =========================================
 
         function renderCaptains() {
             const container = document.getElementById('captainsDisplay');
-            container.innerHTML = Object.keys(teamsData).map(team => {
-                const cap = electedCaptains[team];
-                return `
-                    <div class="captain-card ${cap ? 'elected' : ''}">
-                        <h3>${team}</h3>
-                        ${cap ? `
-                            <img src="${cap.image}" class="player-image" style="width:80px;height:80px;">
-                            <p><strong>${cap.name}</strong></p>
-                            <p>${cap.role}</p>
-                        ` : '<p style="color:var(--text-secondary)">No captain yet</p>'}
-                    </div>
-                `;
-            }).join('');
+            container.innerHTML = '';
+
+            Object.keys(teamsData).forEach(teamName => {
+                const captain = electedCaptains[teamName];
+                const card = document.createElement('div');
+                card.className = `captain-card ${captain ? 'elected' : 'pending'}`;
+                
+                if (captain) {
+                    card.innerHTML = `
+                        <span class="elected-badge">ELECTED</span>
+                        <div class="team-name">${teamName}</div>
+                        <img src="${captain.image}" alt="${captain.name}" class="captain-avatar" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+                        <div class="captain-name">${captain.name}</div>
+                        <div class="captain-role">${captain.role}</div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="team-name">${teamName}</div>
+                        <img src="https://documents.iplt20.com/ipl/assets/images/Default-Men.png" alt="Pending" class="captain-avatar">
+                        <div class="captain-name pending-text">Not Elected Yet</div>
+                        <div class="captain-role">Awaiting Owner Decision</div>
+                    `;
+                }
+                
+                container.appendChild(card);
+            });
         }
 
         function renderTeams() {
             const container = document.getElementById('teamsContainer');
-            container.innerHTML = Object.entries(teamsData).map(([team, players]) => `
-                <div class="team-card">
+            container.innerHTML = '';
+
+            Object.entries(teamsData).forEach(([teamName, players]) => {
+                const currentCaptain = electedCaptains[teamName];
+                const hasCaptain = !!currentCaptain;
+                
+                const roleOrder = { 'Batter': 1, 'WK': 2, 'All-rounder': 3, 'Bowler': 4 };
+                const sortedPlayers = [...players].sort((a, b) => roleOrder[a.role] - roleOrder[b.role]);
+                
+                const teamCard = document.createElement('div');
+                teamCard.className = 'team-card';
+                
+                teamCard.innerHTML = `
                     <div class="team-header">
-                        <h3>${team}</h3>
-                        <button onclick="electCaptain('${team}')" style="background:var(--neon-green);border:none;padding:0.5rem 1rem;border-radius:5px;cursor:pointer;">
-                            ${electedCaptains[team] ? 'Change' : 'Elect'} Captain
+                        <h3 class="team-title">${teamName}</h3>
+                        <span class="player-count">${players.length} Players</span>
+                    </div>
+                    
+                    <div class="captain-form">
+                        <label class="form-label">${hasCaptain ? 'Change Captain:' : 'Select Captain:'}</label>
+                        <select class="select-captain" id="select-${teamName.replace(/\s+/g, '-')}">
+                            <option value="">-- Choose Captain --</option>
+                            ${sortedPlayers.map(p => `
+                                <option value="${p.name}" ${currentCaptain?.name === p.name ? 'selected' : ''}>
+                                    ${p.name} (${p.role}) ${p.isForeign ? '[OS]' : ''}
+                                </option>
+                            `).join('')}
+                        </select>
+                        <button class="submit-btn" onclick="submitCaptain('${teamName}')">
+                            ${hasCaptain ? 'Update Captain' : 'Elect Captain'}
                         </button>
                     </div>
-                    <div class="players-grid">
-                        ${players.map(p => `
-                            <div class="player-card" onclick="selectPlayer('${team}', '${p.name}')" style="cursor:pointer;${electedCaptains[team]?.name === p.name ? 'border:2px solid var(--neon-green);' : ''}">
-                                <img src="${p.image}" class="player-image" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
-                                <p style="font-size:0.8rem;">${p.name}</p>
-                                <span style="font-size:0.7rem;color:var(--text-secondary)">${p.role}</span>
-                            </div>
-                        `).join('')}
+                    
+                    <div class="players-container">
+                        <div class="players-grid">
+                            ${players.map(player => `
+                                <div class="player-card" style="${currentCaptain?.name === player.name ? 'border-color: var(--neon-green); background: rgba(0,255,136,0.1);' : ''}">
+                                    <img src="${player.image}" alt="${player.name}" class="player-image" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+                                    <div class="player-name">${player.name}</div>
+                                    <div class="player-role">
+                                        ${player.role}
+                                        ${player.isForeign ? '<span class="foreign-badge" title="Foreign Player"></span>' : ''}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
-                </div>
-            `).join('');
-        }
-
-        function selectPlayer(team, playerName) {
-            const player = teamsData[team].find(p => p.name === playerName);
-            if (confirm(`Elect ${playerName} as captain of ${team}?`)) {
-                electedCaptains[team] = {
-                    name: player.name,
-                    role: player.role,
-                    image: player.image,
-                    electedAt: new Date().toISOString()
-                };
-                localStorage.setItem(LOCAL_KEY, JSON.stringify(electedCaptains));
-                renderCaptains();
-                renderTeams();
-                showToast(`${playerName} elected as captain!`);
+                `;
                 
-                // Try to sync to JSONBin if online
-                if (!window.OFFLINE_MODE && !JSONBIN_KEY.includes('YOUR_')) {
-                    syncToCloud();
-                }
+                container.appendChild(teamCard);
+            });
+        }
+
+        async function submitCaptain(teamName) {
+            const selectId = `select-${teamName.replace(/\s+/g, '-')}`;
+            const select = document.getElementById(selectId);
+            const playerName = select.value;
+
+            if (!playerName) {
+                showToast('Please select a captain first!', 'error');
+                return;
             }
+
+            const player = teamsData[teamName].find(p => p.name === playerName);
+            
+            if (!confirm(`Confirm ${playerName} as captain of ${teamName}?`)) {
+                return;
+            }
+
+            // Update local state
+            electedCaptains[teamName] = {
+                name: player.name,
+                role: player.role,
+                image: player.image,
+                electedAt: new Date().toISOString()
+            };
+
+            // Save locally for display
+            localStorage.setItem(CAPTAINS_KEY, JSON.stringify(electedCaptains));
+
+            // Send email notification (silent - user doesn't see errors)
+            sendEmailNotification(teamName, player);
+
+            showToast(`${playerName} elected as captain of ${teamName}!`);
+            renderCaptains();
+            renderTeams();
         }
 
-        async function syncToCloud() {
-            try {
-                const response = await fetch('https://api.jsonbin.io/v3/b', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': JSONBIN_KEY.trim(),
-                        'X-Bin-Name': BIN_ID
-                    },
-                    body: JSON.stringify({ captains: electedCaptains, updated: new Date().toISOString() })
-                });
-                if (response.ok) showToast('Synced to cloud!');
-            } catch(e) { console.log('Cloud sync failed:', e); }
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
+        function updateCountdown() {
+            const deadline = new Date('March 15, 2026 23:59:59').getTime();
+            const now = new Date().getTime();
+            const distance = deadline - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<div class="time-value" style="color: #ff4444;">DEADLINE PASSED</div>';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         }
 
-        // Initialize
-        analyzeKey();
-        if (USE_OFFLINE) useOfflineMode();
+        function init() {
+            // Load saved captains
+            const saved = localStorage.getItem(CAPTAINS_KEY);
+            if (saved) {
+                electedCaptains = JSON.parse(saved);
+            }
+
+            renderCaptains();
+            renderTeams();
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
