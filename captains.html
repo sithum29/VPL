@@ -169,6 +169,12 @@
             border: 1px solid var(--neon-orange);
         }
 
+        .sync-status.offline {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid #ffc107;
+        }
+
         /* MAIN CONTAINER */
         .main-container {
             max-width: 1400px;
@@ -226,8 +232,8 @@
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--neon-green);
             margin-bottom: 1rem;
+            border: 3px solid var(--neon-green);
         }
 
         .captain-name {
@@ -593,8 +599,10 @@
         // JSONBIN.IO CONFIGURATION - EDIT THIS!
         // =========================================
         
-        const JSONBIN_KEY = '$2a$10$oMANFOmo91xhaZyzfWvjDOK6vTPfNU6d4YhUxsH3Y.hYLRCqPdrY.';  // Get from jsonbin.io
-        const BIN_ID = 'vpl-captains';            // Your bin name (creates automatically)
+        // IMPORTANT: Get your API key from https://jsonbin.io/app/app/api-keys
+        // The current key might be invalid - replace with your own!
+        const JSONBIN_KEY = '$2a$10$GCoIdBRqefYiQosxyKyiSey3iA6IUSQMOLuqI3jDiRUM7cxt9eNKe';
+        const BIN_ID = 'vpl-captains-2026';  // Changed to ensure fresh bin
         
         // =========================================
         // TEAM DATA
@@ -755,36 +763,89 @@
         let electedCaptains = {};
         let currentTeamUnlock = null;
         let binUrl = null;
+        let binId = BIN_ID; // Track the actual bin ID (may change if created new)
 
         // =========================================
-        // JSONBIN.IO FUNCTIONS
+        // LOCALSTORAGE BACKUP (Fallback when JSONBin fails)
         // =========================================
-
-        // Get or create bin
-        async function getOrCreateBin() {
+        
+        const LOCAL_STORAGE_KEY = 'vpl_captains_backup';
+        
+        function saveToLocalBackup() {
             try {
-                // Try to get existing bin
-                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                    headers: {
-                        'X-Master-Key': JSONBIN_KEY
-                    }
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(electedCaptains));
+                console.log('Saved to local backup');
+            } catch (e) {
+                console.error('Local backup failed:', e);
+            }
+        }
+        
+        function loadFromLocalBackup() {
+            try {
+                const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+                return data ? JSON.parse(data) : {};
+            } catch (e) {
+                console.error('Local backup load failed:', e);
+                return {};
+            }
+        }
+
+        // =========================================
+        // JSONBIN.IO FUNCTIONS - FIXED VERSION
+        // =========================================
+
+        // Test if API key is valid
+        async function testApiKey() {
+            try {
+                const response = await fetch('https://api.jsonbin.io/v3/me', {
+                    headers: { 'X-Master-Key': JSONBIN_KEY }
+                });
+                return response.ok;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Get or create bin with better error handling
+        async function getOrCreateBin() {
+            // First, try to find existing bin by name
+            try {
+                const response = await fetch('https://api.jsonbin.io/v3/collections', {
+                    headers: { 'X-Master-Key': JSONBIN_KEY }
                 });
                 
-                if (response.status === 404) {
-                    // Bin doesn't exist, create it
-                    return await createBin();
+                if (response.ok) {
+                    const collections = await response.json();
+                    // Look through bins to find ours
+                    for (const collection of collections) {
+                        // Check bins in this collection
+                        const binsRes = await fetch(`https://api.jsonbin.io/v3/c/${collection.id}/bins`, {
+                            headers: { 'X-Master-Key': JSONBIN_KEY }
+                        });
+                        if (binsRes.ok) {
+                            const bins = await binsRes.json();
+                            const ourBin = bins.find(b => b.name === BIN_ID);
+                            if (ourBin) {
+                                binId = ourBin.id;
+                                binUrl = `https://api.jsonbin.io/v3/b/${binId}`;
+                                // Fetch the actual data
+                                const dataRes = await fetch(binUrl, {
+                                    headers: { 'X-Master-Key': JSONBIN_KEY }
+                                });
+                                if (dataRes.ok) {
+                                    const data = await dataRes.json();
+                                    return data.record || { captains: {} };
+                                }
+                            }
+                        }
+                    }
                 }
-                
-                if (!response.ok) throw new Error('Failed to fetch bin');
-                
-                const data = await response.json();
-                binUrl = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-                return data.record || {};
-            } catch (error) {
-                console.error('Bin error:', error);
-                // Create new bin if fetch fails
-                return await createBin();
+            } catch (e) {
+                console.log('Search for existing bin failed:', e);
             }
+            
+            // If we get here, create new bin
+            return await createBin();
         }
 
         // Create new bin
@@ -799,74 +860,146 @@
                     },
                     body: JSON.stringify({
                         captains: {},
-                        created: new Date().toISOString()
+                        created: new Date().toISOString(),
+                        version: '1.0'
                     })
                 });
                 
-                if (!response.ok) throw new Error('Failed to create bin');
+                if (!response.ok) {
+                    const error = await response.text();
+                    throw new Error(`Failed to create bin: ${error}`);
+                }
                 
                 const data = await response.json();
-                binUrl = `https://api.jsonbin.io/v3/b/${data.metadata.id}`;
+                binId = data.metadata.id;
+                binUrl = `https://api.jsonbin.io/v3/b/${binId}`;
                 
-                // Update BIN_ID for future requests
-                Object.defineProperty(window, 'BIN_ID', {
-                    value: data.metadata.id,
-                    writable: true
-                });
-                
-                showToast('Cloud storage created!');
+                console.log('Created new bin:', binId);
+                showToast('Cloud storage initialized!');
                 return { captains: {} };
             } catch (error) {
-                console.error('Create error:', error);
-                showToast('Using offline mode', 'error');
-                return { captains: {} };
+                console.error('Create bin error:', error);
+                throw error;
             }
         }
 
-        // Fetch captains from JSONBin
+        // Fetch captains from JSONBin - FIXED to not overwrite local data
         async function fetchCaptains() {
             try {
                 updateSyncStatus('syncing');
                 
+                // Check if API key is configured
+                if (JSONBIN_KEY.includes('YOUR_') || JSONBIN_KEY.length < 20) {
+                    throw new Error('JSONBin API key not configured');
+                }
+                
+                // Test API key first
+                const keyValid = await testApiKey();
+                if (!keyValid) {
+                    throw new Error('Invalid API key');
+                }
+                
                 const data = await getOrCreateBin();
-                electedCaptains = data.captains || {};
+                
+                // CRITICAL FIX: Only update if we got valid data with captains
+                // Don't overwrite if server returns empty but we have local data
+                if (data && data.captains && Object.keys(data.captains).length > 0) {
+                    electedCaptains = data.captains;
+                    // Also save to local backup
+                    saveToLocalBackup();
+                    updateSyncStatus('online');
+                } else if (Object.keys(electedCaptains).length === 0) {
+                    // Only use empty data if we don't have anything locally
+                    electedCaptains = {};
+                    updateSyncStatus('online');
+                } else {
+                    // We have local data but server is empty - keep local, save to server
+                    console.log('Local data exists but server empty, syncing up...');
+                    await syncUpToServer();
+                    updateSyncStatus('online');
+                }
                 
                 renderCaptainsDisplay();
                 renderTeams();
-                updateSyncStatus('online');
                 
                 return true;
             } catch (error) {
                 console.error('Fetch error:', error);
                 updateSyncStatus('error');
+                
+                // CRITICAL FIX: Try to load from local backup if cloud fails
+                const localData = loadFromLocalBackup();
+                if (Object.keys(localData).length > 0) {
+                    console.log('Loaded from local backup');
+                    electedCaptains = localData;
+                    renderCaptainsDisplay();
+                    renderTeams();
+                    updateSyncStatus('offline');
+                    showToast('Using offline mode (cloud unavailable)', 'error');
+                } else {
+                    showToast('Error: ' + error.message, 'error');
+                }
+                
                 return false;
             }
         }
 
-        // Save captain to JSONBin
+        // Sync local data up to server
+        async function syncUpToServer() {
+            if (!binUrl || Object.keys(electedCaptains).length === 0) return;
+            
+            try {
+                const response = await fetch(binUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': JSONBIN_KEY
+                    },
+                    body: JSON.stringify({
+                        captains: electedCaptains,
+                        updated: new Date().toISOString()
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Sync up failed');
+                console.log('Synced local data to server');
+            } catch (e) {
+                console.error('Sync up failed:', e);
+            }
+        }
+
+        // Save captain to JSONBin - FIXED VERSION
         async function saveCaptain(teamName, player) {
-            if (JSONBIN_KEY.includes('YOUR_')) {
-                showToast('Please configure JSONBin key first!', 'error');
+            // Check API key
+            if (JSONBIN_KEY.includes('YOUR_') || JSONBIN_KEY.length < 20) {
+                showToast('Please configure JSONBin API key first!', 'error');
                 return false;
             }
 
             try {
+                // Update local state FIRST
+                electedCaptains[teamName] = {
+                    name: player.name,
+                    role: player.role,
+                    image: player.image,
+                    electedAt: new Date().toISOString()
+                };
+                
+                // Save to local backup immediately
+                saveToLocalBackup();
+                
+                // Prepare data for server
                 const newData = {
-                    captains: {
-                        ...electedCaptains,
-                        [teamName]: {
-                            name: player.name,
-                            role: player.role,
-                            image: player.image,
-                            electedAt: new Date().toISOString()
-                        }
-                    },
+                    captains: electedCaptains,
                     updated: new Date().toISOString()
                 };
 
-                const url = binUrl || `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+                // Ensure we have a bin URL
+                if (!binUrl) {
+                    await getOrCreateBin();
+                }
                 
-                const response = await fetch(url, {
+                const response = await fetch(binUrl, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -875,17 +1008,24 @@
                     body: JSON.stringify(newData)
                 });
 
-                if (!response.ok) throw new Error('Save failed');
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Save failed: ${errorText}`);
+                }
                 
-                electedCaptains = newData.captains;
+                // Verify save by fetching back (with delay to allow propagation)
+                setTimeout(async () => {
+                    await fetchCaptains();
+                }, 500);
+                
                 showToast(`${player.name} elected as captain of ${teamName}!`);
-                await fetchCaptains(); // Refresh display
-                
                 return true;
+                
             } catch (error) {
                 console.error('Save error:', error);
-                showToast('Error saving. Check your JSONBin key.', 'error');
-                return false;
+                showToast('Error saving to cloud, saved locally', 'error');
+                // Data is already saved locally, so return true
+                return true;
             }
         }
 
@@ -896,11 +1036,14 @@
         function updateSyncStatus(status) {
             const el = document.getElementById('syncStatus');
             if (status === 'syncing') {
-                el.textContent = '● Loading...';
+                el.textContent = '● Syncing...';
                 el.className = 'sync-status syncing';
             } else if (status === 'online') {
-                el.textContent = '● Live';
+                el.textContent = '● Live Sync';
                 el.className = 'sync-status syncing';
+            } else if (status === 'offline') {
+                el.textContent = '● Offline Mode';
+                el.className = 'sync-status offline';
             } else {
                 el.textContent = '● Error';
                 el.className = 'sync-status error';
@@ -908,6 +1051,13 @@
         }
 
         function showPasswordModal(teamName) {
+            // If already elected, show confirmation
+            if (electedCaptains[teamName]) {
+                if (!confirm(`Change captain for ${teamName}? Current: ${electedCaptains[teamName].name}`)) {
+                    return;
+                }
+            }
+            
             currentTeamUnlock = teamName;
             document.getElementById('modalTeamName').textContent = teamName;
             document.getElementById('passwordModal').classList.remove('hidden');
@@ -1010,12 +1160,18 @@
             Object.entries(teamsData).forEach(([teamName, players]) => {
                 const currentCaptain = electedCaptains[teamName];
                 
-                const selectOptions = players.map(p => 
-                    `<option value="${p.name}" ${currentCaptain && currentCaptain.name === p.name ? 'selected' : ''}>${p.name} (${p.role})</option>`
+                // Sort players by role for better organization
+                const roleOrder = { 'Batter': 1, 'WK': 2, 'All-rounder': 3, 'Bowler': 4 };
+                const sortedPlayers = [...players].sort((a, b) => roleOrder[a.role] - roleOrder[b.role]);
+                
+                const selectOptions = sortedPlayers.map(p => 
+                    `<option value="${p.name}" ${currentCaptain && currentCaptain.name === p.name ? 'selected' : ''}>${p.name} (${p.role}) ${p.isForeign ? '[OS]' : ''}</option>`
                 ).join('');
 
                 const teamCard = document.createElement('div');
                 teamCard.className = 'team-card';
+                
+                const hasCaptain = !!currentCaptain;
                 
                 teamCard.innerHTML = `
                     <div class="team-header">
@@ -1024,13 +1180,13 @@
                     </div>
                     
                     <div class="captain-form">
-                        <label class="form-label">🔒 Select Team Captain (Password Required):</label>
+                        <label class="form-label">${hasCaptain ? '✓ Captain Elected' : '🔒 Select Team Captain:'}</label>
                         <select class="select-captain" id="select-${teamName.replace(/\s+/g, '-')}" disabled>
                             <option value="">-- Choose Captain --</option>
                             ${selectOptions}
                         </select>
                         <button class="submit-btn" id="btn-${teamName.replace(/\s+/g, '-')}" onclick="showPasswordModal('${teamName}')">
-                            ${currentCaptain ? '🔒 Change Captain' : '🔓 Unlock to Elect'}
+                            ${hasCaptain ? '🔒 Change Captain' : '🔓 Unlock to Elect'}
                         </button>
                     </div>
                     
@@ -1072,9 +1228,18 @@
             btn.classList.add('loading');
             btn.textContent = 'Saving...';
 
-            await saveCaptain(teamName, player);
+            const success = await saveCaptain(teamName, player);
             
             btn.classList.remove('loading');
+            
+            if (success) {
+                // Re-render to show updated state
+                renderCaptainsDisplay();
+                renderTeams();
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'Try Again';
+            }
         }
 
         function showToast(message, type = 'success') {
@@ -1092,24 +1257,39 @@
         // =========================================
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Initial render
-            renderCaptainsDisplay();
-            renderTeams();
+            // First try to load from local backup for immediate display
+            const localData = loadFromLocalBackup();
+            if (Object.keys(localData).length > 0) {
+                electedCaptains = localData;
+                renderCaptainsDisplay();
+                renderTeams();
+            }
             
-            // Fetch from JSONBin
+            // Then fetch from cloud
             fetchCaptains();
             
-            // Auto-refresh every 30 seconds
-            setInterval(fetchCaptains, 30000);
+            // Auto-refresh every 10 seconds (was 30, reduced for better sync)
+            setInterval(fetchCaptains, 10000);
             
             // Countdown
             updateCountdown();
             setInterval(updateCountdown, 1000);
+            
+            // Debug info
+            console.log('VPL Captain Election loaded');
+            console.log('API Key configured:', !JSONBIN_KEY.includes('YOUR_'));
         });
 
         // Close modal on Enter
         document.getElementById('passwordInput')?.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') verifyPassword();
+        });
+        
+        // Close modal on Escape or overlay click
+        document.getElementById('passwordModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'passwordModal') {
+                document.getElementById('passwordModal').classList.add('hidden');
+            }
         });
     </script>
 </body>
