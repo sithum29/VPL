@@ -445,13 +445,27 @@
 
     <script>
         // =========================================
-        // CONFIGURATION - EDIT THIS ONLY
+        // ELECTED CAPTAINS - EDIT THIS SECTION
         // =========================================
+        // When you receive an email with a captain submission,
+        // add it here following this format:
+        // "Team Name": { name: "Player Name", role: "Player Role" },
         
-        // ⚠️ PASTE YOUR FORMSPREE URL HERE
-        // Get it from: https://formspree.io/ after creating a form
-        const FORMSPREE_URL = 'https://formspree.io/f/mwvreelq';
-        
+        const ELECTED_CAPTAINS = {
+            "Apex Bolt Assassins": { name: "Sunil Narine", role: "Bowler" },
+            // Example (remove // to activate):
+            // "Jaffna Sharks": { name: "Rohit Sharma", role: "Batter" },
+            // "Rajasthan Stallions": { name: "Jos Buttler", role: "WK" },
+            // "Royal Challengers Galle": { name: "Virat Kohli", role: "Batter" },
+            // "Sunrisers Colombo": { name: "Rashid Khan", role: "Bowler" },
+            // "Apex Bolt Assassins": { name: "Jasprit Bumrah", role: "Bowler" },
+        };
+
+        // =========================================
+        // FORMSPREE CONFIG - FOR EMAIL NOTIFICATIONS
+        // =========================================
+        const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID_HERE';
+
         // =========================================
         // TEAM DATA
         // =========================================
@@ -594,62 +608,31 @@
         };
 
         // =========================================
-        // STATE
-        // =========================================
-        let electedCaptains = {};
-        const CAPTAINS_KEY = 'vpl_captains_data';
-
-        // =========================================
-        // EMAIL FUNCTION
+        // FUNCTIONS
         // =========================================
 
-        async function sendEmailNotification(teamName, player) {
-            if (!FORMSPREE_URL || FORMSPREE_URL.includes('YOUR_FORM_ID')) {
-                console.log('Formspree URL not configured');
-                return false;
-            }
-
-            const formData = new FormData();
-            formData.append('team', teamName);
-            formData.append('captain', player.name);
-            formData.append('role', player.role);
-            formData.append('timestamp', new Date().toLocaleString());
-            formData.append('_subject', `VPL Captain Elected: ${teamName}`);
-            formData.append('_template', 'table');
-
-            try {
-                const response = await fetch(FORMSPREE_URL, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                return response.ok;
-            } catch (error) {
-                console.error('Email error:', error);
-                return false;
-            }
+        function getPlayerImage(teamName, playerName) {
+            const team = teamsData[teamName];
+            if (!team) return "https://documents.iplt20.com/ipl/assets/images/Default-Men.png";
+            const player = team.find(p => p.name === playerName);
+            return player ? player.image : "https://documents.iplt20.com/ipl/assets/images/Default-Men.png";
         }
-
-        // =========================================
-        // UI FUNCTIONS
-        // =========================================
 
         function renderCaptains() {
             const container = document.getElementById('captainsDisplay');
             container.innerHTML = '';
 
             Object.keys(teamsData).forEach(teamName => {
-                const captain = electedCaptains[teamName];
+                const captain = ELECTED_CAPTAINS[teamName];
                 const card = document.createElement('div');
                 card.className = `captain-card ${captain ? 'elected' : 'pending'}`;
                 
                 if (captain) {
+                    const image = getPlayerImage(teamName, captain.name);
                     card.innerHTML = `
                         <span class="elected-badge">ELECTED</span>
                         <div class="team-name">${teamName}</div>
-                        <img src="${captain.image}" alt="${captain.name}" class="captain-avatar" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+                        <img src="${image}" alt="${captain.name}" class="captain-avatar" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
                         <div class="captain-name">${captain.name}</div>
                         <div class="captain-role">${captain.role}</div>
                     `;
@@ -671,7 +654,7 @@
             container.innerHTML = '';
 
             Object.entries(teamsData).forEach(([teamName, players]) => {
-                const currentCaptain = electedCaptains[teamName];
+                const currentCaptain = ELECTED_CAPTAINS[teamName];
                 const hasCaptain = !!currentCaptain;
                 
                 const roleOrder = { 'Batter': 1, 'WK': 2, 'All-rounder': 3, 'Bowler': 4 };
@@ -687,17 +670,17 @@
                     </div>
                     
                     <div class="captain-form">
-                        <label class="form-label">${hasCaptain ? 'Change Captain:' : 'Select Captain:'}</label>
-                        <select class="select-captain" id="select-${teamName.replace(/\s+/g, '-')}">
+                        <label class="form-label">${hasCaptain ? '✓ Captain Elected' : 'Submit Captain:'}</label>
+                        <select class="select-captain" id="select-${teamName.replace(/\s+/g, '-')}" ${hasCaptain ? 'disabled' : ''}>
                             <option value="">-- Choose Captain --</option>
                             ${sortedPlayers.map(p => `
-                                <option value="${p.name}" ${currentCaptain?.name === p.name ? 'selected' : ''}>
+                                <option value="${p.name}">
                                     ${p.name} (${p.role}) ${p.isForeign ? '[OS]' : ''}
                                 </option>
                             `).join('')}
                         </select>
-                        <button class="submit-btn" onclick="submitCaptain('${teamName}')">
-                            ${hasCaptain ? 'Update Captain' : 'Elect Captain'}
+                        <button class="submit-btn" onclick="submitCaptain('${teamName}')" ${hasCaptain ? 'disabled' : ''}>
+                            ${hasCaptain ? 'Captain Already Elected' : 'Elect Captain'}
                         </button>
                     </div>
                     
@@ -737,23 +720,30 @@
                 return;
             }
 
-            // Update local state
-            electedCaptains[teamName] = {
-                name: player.name,
-                role: player.role,
-                image: player.image,
-                electedAt: new Date().toISOString()
-            };
+            // Send email notification
+            if (FORMSPREE_URL && !FORMSPREE_URL.includes('YOUR_FORM_ID')) {
+                const formData = new FormData();
+                formData.append('team', teamName);
+                formData.append('captain', player.name);
+                formData.append('role', player.role);
+                formData.append('timestamp', new Date().toLocaleString());
+                formData.append('_subject', `VPL Captain Elected: ${teamName}`);
 
-            // Save locally for display
-            localStorage.setItem(CAPTAINS_KEY, JSON.stringify(electedCaptains));
+                try {
+                    await fetch(FORMSPREE_URL, {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                } catch (e) {
+                    console.log('Email notification failed');
+                }
+            }
 
-            // Send email notification (silent - user doesn't see errors)
-            sendEmailNotification(teamName, player);
-
-            showToast(`${playerName} elected as captain of ${teamName}!`);
-            renderCaptains();
-            renderTeams();
+            showToast(`${playerName} submitted! Admin will update the page shortly.`);
+            select.disabled = true;
+            document.querySelector(`button[onclick="submitCaptain('${teamName}')"]`).disabled = true;
+            document.querySelector(`button[onclick="submitCaptain('${teamName}')"]`).textContent = 'Submission Received';
         }
 
         function showToast(message, type = 'success') {
@@ -784,21 +774,16 @@
             document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         }
 
-        function init() {
-            // Load saved captains
-            const saved = localStorage.getItem(CAPTAINS_KEY);
-            if (saved) {
-                electedCaptains = JSON.parse(saved);
-            }
+        // =========================================
+        // INITIALIZATION
+        // =========================================
 
+        document.addEventListener('DOMContentLoaded', () => {
             renderCaptains();
             renderTeams();
-            
             updateCountdown();
             setInterval(updateCountdown, 1000);
-        }
-
-        document.addEventListener('DOMContentLoaded', init);
+        });
     </script>
 </body>
 </html>
