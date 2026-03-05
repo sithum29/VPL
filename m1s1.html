@@ -3,732 +3,667 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Match 1 - VPL Season 01</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Match 1 - Jaffna Sharks vs Rajasthan Stallions | VPL 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* =========================================
+           CSS VARIABLES - Easy to edit theme
+           ========================================= */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-hover: #1a1a1a;
+            --neon-green: #00ff88;
+            --neon-orange: #ff6b35;
+            --neon-blue: #00d4ff;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #666666;
+            --border-color: #222222;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
-            background: #0a0e1a;
-            color: #fff;
+            background: var(--bg-dark);
+            color: var(--text-primary);
             line-height: 1.6;
         }
 
+        /* Navigation */
         .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 5%;
-            background: rgba(10,14,26,0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,255,136,0.1);
+            background: #111;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        .logo {
-            color: #00ff88;
-            font-size: 1.5rem;
-            font-weight: 800;
+        .back-btn {
+            color: var(--neon-green);
             text-decoration: none;
-        }
-
-        .nav-links a {
-            color: #9ca3af;
-            text-decoration: none;
-            margin-left: 2rem;
             font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .main-content {
-            padding: 6rem 5% 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
+        /* Match Header */
         .match-header {
-            background: #1f2937;
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
             text-align: center;
-            border: 1px solid rgba(0,255,136,0.1);
+            padding: 2rem 1rem;
+            background: linear-gradient(180deg, #1a1a2e 0%, var(--bg-dark) 100%);
         }
 
         .match-title {
-            font-size: 0.9rem;
-            color: #9ca3af;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 1rem;
         }
 
         .teams-display {
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 3rem;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
             margin-bottom: 1rem;
         }
 
-        .team-display { text-align: center; }
-
-        .team-logo-large {
-            width: 100px;
-            height: 100px;
-            border-radius: 20px;
-            object-fit: contain;
-            background: rgba(255,255,255,0.05);
-            padding: 10px;
-            margin-bottom: 0.5rem;
+        .team-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 3px solid var(--neon-green);
         }
 
-        .team-name-display {
+        .vs {
             font-size: 1.5rem;
             font-weight: 700;
+            color: var(--neon-orange);
         }
 
-        .vs-text {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #00ff88;
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
         .match-date {
-            color: #00ff88;
+            color: var(--neon-blue);
             font-size: 1.1rem;
-            font-weight: 600;
+            margin-top: 0.5rem;
         }
 
-        .match-grid {
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Squad Selection Section */
+        .squads-section {
             display: grid;
-            grid-template-columns: 1fr 1fr 300px;
+            grid-template-columns: 1fr 1fr;
             gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        @media (max-width: 1200px) {
-            .match-grid { grid-template-columns: 1fr; }
+        @media (max-width: 900px) {
+            .squads-section { grid-template-columns: 1fr; }
         }
 
-        .squad-section {
-            background: #1f2937;
+        .squad-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 15px;
             padding: 1.5rem;
-            border: 1px solid rgba(0,255,136,0.1);
+        }
+
+        .squad-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--neon-green);
         }
 
         .squad-title {
             font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #00ff88;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            color: var(--neon-green);
         }
 
-        .dropdown-block {
-            background: rgba(255,255,255,0.03);
+        /* Form Blocks */
+        .form-block {
+            background: var(--bg-hover);
             border-radius: 10px;
+            padding: 1rem;
             margin-bottom: 1rem;
-            overflow: hidden;
         }
 
-        .dropdown-header {
-            padding: 1rem;
-            background: rgba(0,255,136,0.1);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
+        .block-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
         }
 
-        .dropdown-header:hover { background: rgba(0,255,136,0.2); }
-
-        .dropdown-content {
-            padding: 1rem;
-            display: none;
-        }
-
-        .dropdown-content.active { display: block; }
-
-        .player-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .player-option {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            background: #0a0e1a;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .player-option:hover {
-            border-color: rgba(0,255,136,0.3);
-            background: rgba(0,255,136,0.05);
-        }
-
-        .player-option.selected {
-            border-color: #00ff88;
-            background: rgba(0,255,136,0.1);
-        }
-
-        .player-option input[type="checkbox"] {
-            margin-right: 0.75rem;
-            width: 18px;
-            height: 18px;
-            accent-color: #00ff88;
-            cursor: pointer;
-        }
-
-        .player-details {
-            flex: 1;
-        }
-
-        .player-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .ipl-team {
-            font-size: 0.8rem;
-            color: #9ca3af;
-            background: rgba(255,255,255,0.1);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            display: inline-block;
-            margin-top: 0.25rem;
-        }
-
-        .selected-count {
-            background: #ff3333;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
-
-        .selected-count.complete {
-            background: #00ff88;
-            color: #0a0e1a;
-        }
-
-        .selected-players {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: rgba(0,255,136,0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(0,255,136,0.2);
-        }
-
-        .selected-player {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            margin: 0.25rem;
-            background: rgba(0,255,136,0.2);
-            border-radius: 50px;
-            font-size: 0.85rem;
-        }
-
-        /* CAPTAIN SECTION - FIXED */
-        .captain-section {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background: rgba(255,215,0,0.1);
-            border: 2px solid rgba(255,215,0,0.3);
-            border-radius: 15px;
-        }
-
-        .captain-title {
-            color: #ffd700;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .captain-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .captain-option {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background: #0a0e1a;
-            border: 2px solid transparent;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .captain-option:hover {
-            border-color: rgba(255,215,0,0.5);
-            background: rgba(255,215,0,0.05);
-        }
-
-        .captain-option.selected {
-            border-color: #ffd700;
-            background: rgba(255,215,0,0.15);
-        }
-
-        .captain-option input[type="radio"] {
-            margin-right: 1rem;
-            width: 20px;
-            height: 20px;
-            accent-color: #ffd700;
-        }
-
-        .captain-info {
-            flex: 1;
-        }
-
-        .captain-name {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .captain-team {
-            font-size: 0.85rem;
-            color: #9ca3af;
-        }
-
-        .captain-display {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255,215,0,0.05);
-            border-radius: 15px;
-            border: 2px solid #ffd700;
-        }
-
-        .captain-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #ffd700;
-            margin-bottom: 1rem;
-            box-shadow: 0 0 20px rgba(255,215,0,0.3);
-        }
-
-        .captain-display-name {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #ffd700;
+        select {
+            width: 100%;
+            padding: 0.7rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
             margin-bottom: 0.5rem;
         }
 
-        .captain-display-team {
-            font-size: 1rem;
-            color: #9ca3af;
+        select:focus {
+            outline: none;
+            border-color: var(--neon-green);
         }
 
         .submit-btn {
             width: 100%;
-            padding: 1.2rem;
-            margin-top: 1.5rem;
-            background: #00ff88;
-            color: #0a0e1a;
-            border: none;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-
-        .submit-btn:hover { 
-            background: #00cc6a;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,255,136,0.3);
-        }
-
-        .edit-btn {
-            background: #ff6b35;
-            color: white;
-        }
-
-        .edit-btn:hover { 
-            background: #e55a2b;
-            box-shadow: 0 10px 30px rgba(255,107,53,0.3);
-        }
-
-        .stats-section {
-            background: #1f2937;
-            border-radius: 15px;
-            padding: 1.5rem;
-            border: 1px solid rgba(0,255,136,0.1);
-        }
-
-        .stats-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #00ff88;
-        }
-
-        .stat-card {
-            background: rgba(255,255,255,0.03);
             padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: #9ca3af;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--neon-green), #00cc6a);
+            border: none;
+            border-radius: 8px;
+            color: var(--bg-dark);
             font-weight: 700;
-            color: #00ff88;
-        }
-
-        .points-table {
-            width: 100%;
+            font-size: 1rem;
+            cursor: pointer;
             margin-top: 1rem;
         }
 
-        .points-table th {
-            text-align: left;
-            padding: 0.5rem;
-            color: #9ca3af;
-            font-size: 0.85rem;
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
         }
 
-        .points-table td {
-            padding: 0.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        /* Captains Section */
+        .captains-section {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .captain-display {
+            display: inline-block;
+            margin: 1rem;
+            padding: 1rem 2rem;
+            background: var(--bg-hover);
+            border-radius: 10px;
+            border: 2px solid var(--neon-green);
+        }
+
+        .captain-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .captain-name {
+            font-size: 1.2rem;
+            color: var(--neon-green);
+            font-weight: 700;
+        }
+
+        /* Scorecard Section */
+        .scorecard-section {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--neon-orange);
+        }
+
+        .team-scorecard {
+            margin-bottom: 2rem;
+        }
+
+        .team-scorecard h3 {
+            color: var(--neon-green);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats-table th {
+            background: var(--bg-hover);
+            padding: 0.7rem;
+            text-align: left;
+            color: var(--neon-blue);
+            font-weight: 600;
+        }
+
+        .stats-table td {
+            padding: 0.7rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-table tr:hover {
+            background: var(--bg-hover);
         }
 
         .total-row {
             font-weight: 700;
-            color: #ffd700;
+            color: var(--neon-green);
         }
 
-        .read-only .dropdown-content,
-        .read-only .captain-list {
-            display: none !important;
-        }
+        .hidden { display: none; }
 
-        .limit-reached {
-            opacity: 0.4;
-            pointer-events: none;
-        }
-
-        .empty-message {
-            color: #666;
-            text-align: center;
-            padding: 2rem;
-            font-style: italic;
-        }
-
-        .xi-complete {
-            background: rgba(0,255,136,0.1);
-            border: 1px solid #00ff88;
-            border-radius: 10px;
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            border-left: 4px solid var(--neon-green);
             padding: 1rem;
-            margin-bottom: 1rem;
-            text-align: center;
-            color: #00ff88;
-            font-weight: 600;
+            border-radius: 8px;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1000;
         }
+
+        .toast.show { transform: translateX(0); }
     </style>
 </head>
 <body>
 
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo"><i class="fas fa-cricket-bat-ball"></i> VPL</a>
-            <div class="nav-links">
-                <a href="matches.html">Back to Matches</a>
-            </div>
+            <a href="index.html" class="back-btn">← Back</a>
         </div>
     </nav>
 
-    <main class="main-content">
-
-        <div class="match-header">
-            <div class="match-title">VPL Season 01 • Match 1</div>
-            <div class="teams-display">
-                <div class="team-display">
-                    <img src="images/jaffna-sharks-logo.png" alt="Jaffna Sharks" class="team-logo-large">
-                    <div class="team-name-display">Jaffna Sharks</div>
-                </div>
-                <div class="vs-text">VS</div>
-                <div class="team-display">
-                    <img src="images/rajasthan-stallions-logo.png" alt="Rajasthan Stallions" class="team-logo-large">
-                    <div class="team-name-display">Rajasthan Stallions</div>
-                </div>
+    <!-- Match Header -->
+    <header class="match-header">
+        <div class="match-title">VPL Season 01 - Match 1</div>
+        <div class="teams-display">
+            <div>
+                <div class="team-logo">🦈</div>
+                <div class="team-name">Jaffna Sharks</div>
             </div>
-            <div class="match-date">March 28, 2026 • 7:30 PM IST</div>
+            <div class="vs">VS</div>
+            <div>
+                <div class="team-logo">🐴</div>
+                <div class="team-name">Rajasthan Stallions</div>
+            </div>
         </div>
+        <div class="match-date">March 22, 2026 | 7:30 PM IST</div>
+    </header>
 
-        <div class="match-grid">
+    <div class="container">
 
-            <!-- TEAM 1 SQUAD -->
-            <div class="squad-section" id="team1Section">
-                <div class="squad-title">
-                    <i class="fas fa-users"></i>
-                    Jaffna Sharks Squad
+        <!-- Squad Selection Forms -->
+        <section class="squads-section">
+            
+            <!-- Team 1 Squad Form -->
+            <div class="squad-card">
+                <div class="squad-header">
+                    <h2 class="squad-title">Jaffna Sharks Squad</h2>
                 </div>
-
-                <!-- Batters (4) -->
-                <div class="dropdown-block">
-                    <div class="dropdown-header" onclick="toggleDropdown('t1-batters-dropdown')">
-                        <span><i class="fas fa-baseball-bat"></i> Batters</span>
-                        <span class="selected-count" id="t1-batters-badge">0/4</span>
-                    </div>
-                    <div class="dropdown-content" id="t1-batters-dropdown">
-                        <div class="player-list" id="t1-batters-list">
-                            <label class="player-option">
-                                <input type="checkbox" value="Rohit Sharma|MI" onchange="togglePlayer('team1', 'batters', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Rohit Sharma</div>
-                                    <span class="ipl-team">MI</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Shubman Gill|GT" onchange="togglePlayer('team1', 'batters', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Shubman Gill</div>
-                                    <span class="ipl-team">GT</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Ruturaj Gaikwad|CSK" onchange="togglePlayer('team1', 'batters', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Ruturaj Gaikwad</div>
-                                    <span class="ipl-team">CSK</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Sherfane Rutherford|KKR" onchange="togglePlayer('team1', 'batters', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Sherfane Rutherford</div>
-                                    <span class="ipl-team">KKR</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Priyansh Arya|PBKS" onchange="togglePlayer('team1', 'batters', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Priyansh Arya</div>
-                                    <span class="ipl-team">PBKS</span>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="selected-players" id="t1-batters-selected" style="display: none;"></div>
-                    </div>
-                </div>
-
-                <!-- All Rounders (2) -->
-                <div class="dropdown-block">
-                    <div class="dropdown-header" onclick="toggleDropdown('t1-allrounders-dropdown')">
-                        <span><i class="fas fa-star"></i> All Rounders</span>
-                        <span class="selected-count" id="t1-allrounders-badge">0/2</span>
-                    </div>
-                    <div class="dropdown-content" id="t1-allrounders-dropdown">
-                        <div class="player-list" id="t1-allrounders-list">
-                            <label class="player-option">
-                                <input type="checkbox" value="Harshal Patel|PBKS" onchange="togglePlayer('team1', 'allrounders', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Harshal Patel</div>
-                                    <span class="ipl-team">PBKS</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Sam Curran|CSK" onchange="togglePlayer('team1', 'allrounders', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Sam Curran</div>
-                                    <span class="ipl-team">CSK</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Marcus Stoinis|LSG" onchange="togglePlayer('team1', 'allrounders', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Marcus Stoinis</div>
-                                    <span class="ipl-team">LSG</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Shardul Thakur|LSG" onchange="togglePlayer('team1', 'allrounders', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Shardul Thakur</div>
-                                    <span class="ipl-team">LSG</span>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="selected-players" id="t1-allrounders-selected" style="display: none;"></div>
-                    </div>
-                </div>
-
-                <!-- Wicket Keeper (1) -->
-                <div class="dropdown-block">
-                    <div class="dropdown-header" onclick="toggleDropdown('t1-wk-dropdown')">
-                        <span><i class="fas fa-hand-paper"></i> Wicket Keeper</span>
-                        <span class="selected-count" id="t1-wk-badge">0/1</span>
-                    </div>
-                    <div class="dropdown-content" id="t1-wk-dropdown">
-                        <div class="player-list" id="t1-wk-list">
-                            <label class="player-option">
-                                <input type="checkbox" value="KL Rahul|DC" onchange="togglePlayer('team1', 'wk', this)">
-                                <div class="player-details">
-                                    <div class="player-name">KL Rahul</div>
-                                    <span class="ipl-team">DC</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Rishabh Pant|LSG" onchange="togglePlayer('team1', 'wk', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Rishabh Pant</div>
-                                    <span class="ipl-team">LSG</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Quinton de Kock|KKR" onchange="togglePlayer('team1', 'wk', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Quinton de Kock</div>
-                                    <span class="ipl-team">KKR</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Nicholas Pooran|LSG" onchange="togglePlayer('team1', 'wk', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Nicholas Pooran</div>
-                                    <span class="ipl-team">LSG</span>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="selected-players" id="t1-wk-selected" style="display: none;"></div>
-                    </div>
-                </div>
-
-                <!-- Bowlers (4) -->
-                <div class="dropdown-block">
-                    <div class="dropdown-header" onclick="toggleDropdown('t1-bowlers-dropdown')">
-                        <span><i class="fas fa-circle"></i> Bowlers</span>
-                        <span class="selected-count" id="t1-bowlers-badge">0/4</span>
-                    </div>
-                    <div class="dropdown-content" id="t1-bowlers-dropdown">
-                        <div class="player-list" id="t1-bowlers-list">
-                            <label class="player-option">
-                                <input type="checkbox" value="Mitchell Starc|DC" onchange="togglePlayer('team1', 'bowlers', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Mitchell Starc</div>
-                                    <span class="ipl-team">DC</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Yuzvendra Chahal|PBKS" onchange="togglePlayer('team1', 'bowlers', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Yuzvendra Chahal</div>
-                                    <span class="ipl-team">PBKS</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Prasidh Krishna|GT" onchange="togglePlayer('team1', 'bowlers', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Prasidh Krishna</div>
-                                    <span class="ipl-team">GT</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Noor Ahmad|CSK" onchange="togglePlayer('team1', 'bowlers', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Noor Ahmad</div>
-                                    <span class="ipl-team">CSK</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Avesh Khan|LSG" onchange="togglePlayer('team1', 'bowlers', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Avesh Khan</div>
-                                    <span class="ipl-team">LSG</span>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="selected-players" id="t1-bowlers-selected" style="display: none;"></div>
-                    </div>
-                </div>
-
-                <!-- Emergencies (4) -->
-                <div class="dropdown-block">
-                    <div class="dropdown-header" onclick="toggleDropdown('t1-emergencies-dropdown')">
-                        <span><i class="fas fa-plus-circle"></i> Emergencies</span>
-                        <span class="selected-count" id="t1-emergencies-badge">0/4</span>
-                    </div>
-                    <div class="dropdown-content" id="t1-emergencies-dropdown">
-                        <div class="player-list" id="t1-emergencies-list">
-                            <label class="player-option">
-                                <input type="checkbox" value="Ashutosh Sharma|DC" onchange="togglePlayer('team1', 'emergencies', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Ashutosh Sharma</div>
-                                    <span class="ipl-team">DC</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Vipraj Nigam|DC" onchange="togglePlayer('team1', 'emergencies', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Vipraj Nigam</div>
-                                    <span class="ipl-team">DC</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Ramandeep Singh|KKR" onchange="togglePlayer('team1', 'emergencies', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Ramandeep Singh</div>
-                                    <span class="ipl-team">KKR</span>
-                                </div>
-                            </label>
-                            <label class="player-option">
-                                <input type="checkbox" value="Prashant Veer|LSG" onchange="togglePlayer('team1', 'emergencies', this)">
-                                <div class="player-details">
-                                    <div class="player-name">Prashant Veer</div>
-                                    <span class="ipl-team">LSG</span>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="selected-players" id="t1-emergencies-selected" style="display: none;"></div>
-                    </div>
-                </div>
-
-                <!-- CAPTAIN SELECTION - FIXED VERSION -->
-                <div class="captain-section">
-                    <div class="captain-title">
-                        <i class="fas fa-crown"></i> Choose Your Captain
-                    </div>
+                
+                <form id="formTeam1" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <input type="hidden" name="team" value="Jaffna Sharks">
+                    <input type="hidden" name="match" value="Match 1">
                     
-                    <!-- Message when XI not complete -->
-                    <div id="t1-captain-message" class="empty-message">
-                        <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
-                        Complete your Playing XI (11 players) to select captain
+                    <div class="form-block">
+                        <div class="block-title">4 Batters (Select 4)</div>
+                        <select name="batter1" required><option value="">Batter 1</option></select>
+                        <select name="batter2" required><option value="">Batter 2</option></select>
+                        <select name="batter3" required><option value="">Batter 3</option></select>
+                        <select name="batter4" required><option value="">Batter 4</option></select>
                     </div>
 
-                    <!-- Success message when XI complete -->
-                    <div id="t1-xi-complete" class="xi-complete" style="display: none;">
-                        <i class="fas
+                    <div class="form-block">
+                        <div class="block-title">2 All-Rounders (Select 2)</div>
+                        <select name="allrounder1" required><option value="">All-Rounder 1</option></select>
+                        <select name="allrounder2" required><option value="">All-Rounder 2</option></select>
+                    </div>
+
+                    <div class="form-block">
+                        <div class="block-title">1 Wicket-Keeper (Select 1)</div>
+                        <select name="wk" required><option value="">Wicket-Keeper</option></select>
+                    </div>
+
+                    <div class="form-block">
+                        <div class="block-title">4 Bowlers (Select 4)</div>
+                        <select name="bowler1" required><option value="">Bowler 1</option></select>
+                        <select name="bowler2" required><option value="">Bowler 2</option></select>
+                        <select name="bowler3" required><option value="">Bowler 3</option></select>
+                        <select name="bowler4" required><option value="">Bowler 4</option></select>
+                    </div>
+
+                    <div class="form-block">
+                        <div class="block-title">4 Emergencies (Select 4)</div>
+                        <select name="emergency1" required><option value="">Emergency 1</option></select>
+                        <select name="emergency2" required><option value="">Emergency 2</option></select>
+                        <select name="emergency3" required><option value="">Emergency 3</option></select>
+                        <select name="emergency4" required><option value="">Emergency 4</option></select>
+                    </div>
+
+                    <div class="form-block">
+                        <div class="block-title">Captain</div>
+                        <select name="captain" required><option value="">Select Captain</option></select>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Squad</button>
+                </form>
+            </div>
+
+            <!-- Team 2 Squad Form -->
+            <div class="squad-card">
+                <div class="squad-header">
+                    <h2 class="squad-title">Rajasthan Stallions Squad</h2>
+                </div>
+                
+                <form id="formTeam2" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <input type="hidden" name="team" value="Rajasthan Stallions">
+                    <input type="hidden" name="match" value="Match 1">
+                    
+                    <div class="form-block">
+                        <div class="block-title">4 Batters (Select 4)</div>
+                        <select name="batter1" required><option value="">Batter 1</option></select>
+                        <select name="batter2" required><option value="">Batter 2</option></select>
+                        <select name="batter3" required><option value="">Batter 3</option></select>
+                        <select name="batter4" required><option value="">Batter 4</option></select>
+                    </div>
+
+                    <div class="form-block">
+                        <div class="block-title">2 All-Rounders (Select 2)</div>
+                        <select name="allrounder1" required><option value="">All-Rounder 1</option></select>
+                        <select name="allrounder2" required><option value="">All-Rounder 2</option></select>
+                    </div>
+
+                    <div class="form-block">
+                        <div class="block-title">1 Wicket-Keeper (Select 1)</div>
+                        <select name="wk" required><option value="">Wicket-Keeper</option></select>
+                    </div>
+
+                    <div class="form-block">
+                        <div class="block-title">4 Bowlers (Select 4)</div>
+                        <select name="bowler1" required><option value="">Bowler 1</option></select>
+                        <select name="bowler2" required><option value="">Bowler 2</option></select>
+                        <select name="bowler3" required><option value="">Bowler 3</option></select>
+                        <select name="bowler4" required><option value="">Bowler 4</option></select>
+                    </div>
+
+                    <div class="form-block">
+                        <div class="block-title">4 Emergencies (Select 4)</div>
+                        <select name="emergency1" required><option value="">Emergency 1</option></select>
+                        <select name="emergency2" required><option value="">Emergency 2</option></select>
+                        <select name="emergency3" required><option value="">Emergency 3</option></select>
+                        <select name="emergency4" required><option value="">Emergency 4</option></select>
+                    </div>
+
+                    <div class="form-block">
+                        <div class="block-title">Captain</div>
+                        <select name="captain" required><option value="">Select Captain</option></select>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Squad</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Captains Display (Edit manually after receiving email) -->
+        <section class="captains-section">
+            <h2 class="section-title">Match Captains</h2>
+            <div class="captain-display">
+                <div class="captain-label">Jaffna Sharks Captain</div>
+                <div class="captain-name" id="captain1">Not Announced</div>
+            </div>
+            <div class="captain-display">
+                <div class="captain-label">Rajasthan Stallions Captain</div>
+                <div class="captain-name" id="captain2">Not Announced</div>
+            </div>
+        </section>
+
+        <!-- Scorecard Section (Edit manually after match) -->
+        <section class="scorecard-section">
+            <h2 class="section-title">📊 Match Scorecard</h2>
+            
+            <!-- Team 1 Scorecard -->
+            <div class="team-scorecard">
+                <h3>Jaffna Sharks</h3>
+                <table class="stats-table" id="scorecard1">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Batting</th>
+                            <th>Bowling</th>
+                            <th>Fielding</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Add 15 rows manually after receiving squad -->
+                        <tr><td colspan="5" style="text-align:center;color:var(--text-muted)">Squad not submitted yet</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Team 2 Scorecard -->
+            <div class="team-scorecard">
+                <h3>Rajasthan Stallions</h3>
+                <table class="stats-table" id="scorecard2">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Batting</th>
+                            <th>Bowling</th>
+                            <th>Fielding</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Add 15 rows manually after receiving squad -->
+                        <tr><td colspan="5" style="text-align:center;color:var(--text-muted)">Squad not submitted yet</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // =========================================
+        // PLAYER DATA - EDIT THESE FOR EACH MATCH
+        // =========================================
+
+        // Team 1 Players (Jaffna Sharks)
+        const team1Players = {
+            batters: [
+                { name: "Rohit Sharma", iplTeam: "MI" },
+                { name: "Sherfane Rutherford", iplTeam: "KKR" },
+                { name: "Ruturaj Gaikwad", iplTeam: "CSK" },
+                { name: "Shubman Gill", iplTeam: "GT" }
+            ],
+            allRounders: [
+                { name: "Priyansh Arya", iplTeam: "PBKS" },
+                { name: "Harshal Patel", iplTeam: "SRH" },
+                { name: "Sam Curran", iplTeam: "CSK" },
+                { name: "Marcus Stoinis", iplTeam: "LSG" },
+                { name: "Ashutosh Sharma", iplTeam: "DC" },
+                { name: "Vipraj Nigam", iplTeam: "DC" },
+                { name: "Ramandeep Singh", iplTeam: "KKR" },
+                { name: "Shardul Thakur", iplTeam: "CSK" },
+                { name: "Prashant Veer", iplTeam: "RR" },
+                { name: "Cooper Connolly", iplTeam: "MI" }
+            ],
+            wk: [
+                { name: "KL Rahul", iplTeam: "DC" },
+                { name: "Nicholas Pooran", iplTeam: "LSG" },
+                { name: "Quinton de Kock", iplTeam: "KKR" },
+                { name: "Rishabh Pant", iplTeam: "LSG" }
+            ],
+            bowlers: [
+                { name: "Avesh Khan", iplTeam: "RR" },
+                { name: "Prasidh Krishna", iplTeam: "GT" },
+                { name: "Mitchell Starc", iplTeam: "DC" },
+                { name: "Noor Ahmad", iplTeam: "CSK" },
+                { name: "Yuzvendra Chahal", iplTeam: "PBKS" },
+                { name: "Digvesh Rathi", iplTeam: "LSG" },
+                { name: "Suyash Sharma", iplTeam: "RCB" }
+            ]
+        };
+
+        // Team 2 Players (Rajasthan Stallions)
+        const team2Players = {
+            batters: [
+                { name: "Riyan Parag", iplTeam: "RR" },
+                { name: "Shimron Hetmyer", iplTeam: "RR" },
+                { name: "Rinku Singh", iplTeam: "KKR" },
+                { name: "Glenn Phillips", iplTeam: "GT" },
+                { name: "Ajinkya Rahane", iplTeam: "KKR" },
+                { name: "Rahul Tripathi", iplTeam: "CSK" },
+                { name: "Prithvi Shaw", iplTeam: "DC" },
+                { name: "Manish Pandey", iplTeam: "KKR" }
+            ],
+            allRounders: [
+                { name: "Jason Holder", iplTeam: "RR" },
+                { name: "Liam Livingstone", iplTeam: "RCB" },
+                { name: "Washington Sundar", iplTeam: "GT" },
+                { name: "Mitchell Santner", iplTeam: "MI" },
+                { name: "Shahbaz Ahmed", iplTeam: "LSG" },
+                { name: "Nitish Rana", iplTeam: "RR" }
+            ],
+            wk: [
+                { name: "Jos Buttler", iplTeam: "GT" },
+                { name: "Ishan Kishan", iplTeam: "SRH" },
+                { name: "Prabhsimran Singh", iplTeam: "PBKS" }
+            ],
+            bowlers: [
+                { name: "Ravi Bishnoi", iplTeam: "LSG" },
+                { name: "Trent Boult", iplTeam: "MI" },
+                { name: "Mohammad Shami", iplTeam: "SRH" },
+                { name: "Deepak Chahar", iplTeam: "MI" },
+                { name: "Josh Hazlewood", iplTeam: "RCB" },
+                { name: "Ishant Sharma", iplTeam: "GT" },
+                { name: "Tushar Deshpande", iplTeam: "RR" },
+                { name: "Rahul Tewatia", iplTeam: "GT" }
+            ]
+        };
+
+        // =========================================
+        // HELPER FUNCTIONS
+        // =========================================
+
+        function createOption(player) {
+            return `<option value="${player.name}">${player.name} (${player.iplTeam})</option>`;
+        }
+
+        function populateSelect(formId, name, players) {
+            const select = document.querySelector(`#${formId} select[name="${name}"]`);
+            if (select) {
+                select.innerHTML = '<option value="">Select Player</option>' + 
+                    players.map(createOption).join('');
+            }
+        }
+
+        function populateForm(formId, players) {
+            // Batters
+            for (let i = 1; i <= 4; i++) {
+                populateSelect(formId, `batter${i}`, players.batters);
+            }
+            // All-rounders
+            for (let i = 1; i <= 2; i++) {
+                populateSelect(formId, `allrounder${i}`, players.allRounders);
+            }
+            // WK
+            populateSelect(formId, 'wk', players.wk);
+            // Bowlers
+            for (let i = 1; i <= 4; i++) {
+                populateSelect(formId, `bowler${i}`, players.bowlers);
+            }
+            // Emergencies (all players combined)
+            const allPlayers = [...players.batters, ...players.allRounders, ...players.wk, ...players.bowlers];
+            for (let i = 1; i <= 4; i++) {
+                populateSelect(formId, `emergency${i}`, allPlayers);
+            }
+            // Captain (all players)
+            populateSelect(formId, 'captain', allPlayers);
+        }
+
+        // =========================================
+        // INITIALIZATION
+        // =========================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate forms
+            populateForm('formTeam1', team1Players);
+            populateForm('formTeam2', team2Players);
+
+            // Form submission handling
+            document.getElementById('formTeam1').addEventListener('submit', handleSubmit);
+            document.getElementById('formTeam2').addEventListener('submit', handleSubmit);
+        });
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // Show toast
+            showToast('Squad submitted successfully! Admin will verify shortly.');
+            
+            // Submit to formspree
+            fetch(e.target.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(() => {
+                // Disable form after submission (can be re-enabled by refreshing)
+                e.target.querySelectorAll('select, button').forEach(el => el.disabled = true);
+            }).catch(err => {
+                console.log('Email sent (or demo mode)');
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // =========================================
+        // EDIT CAPTAINS MANUALLY HERE
+        // After receiving email, update these lines:
+        // document.getElementById('captain1').textContent = "Player Name";
+        // document.getElementById('captain2').textContent = "Player Name";
+        // =========================================
+    </script>
+</body>
+</html>
