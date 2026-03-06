@@ -156,7 +156,7 @@
         }
 
         /* ============================================
-           HERO SECTION
+           HERO SECTION WITH SLIDESHOW
            ============================================ */
         .hero {
             min-height: 100vh;
@@ -164,15 +164,40 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            background: 
-                url('captains.png') center/cover;
             padding: 6rem 5% 4rem;
             overflow: hidden;
         }
-
-        /* Animated Background Overlay */
-        .hero::before {
-            content: '';
+        
+        /* Background Slideshow Container */
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        /* Individual Slide */
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        /* Active Slide */
+        .hero-slide.active {
+            opacity: 1;
+        }
+        
+        /* Dark Overlay for better text readability */
+        .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -181,55 +206,16 @@
             background: 
                 radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+            z-index: 1;
             animation: float 10s ease-in-out infinite;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-20px, -20px); }
-        }
-
+        
+        /* Ensure content stays above slideshow */
         .hero-content {
             position: relative;
             z-index: 2;
             text-align: center;
             max-width: 900px;
-        }
-
-        .season-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--accent-neon);
-            border-radius: 50px;
-            color: var(--accent-neon);
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero-title {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #ffffff 0%, var(--accent-neon) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-weight: 300;
-            animation: fadeInUp 0.8s ease 0.4s both;
         }
 
         /* Live Auction Banner */
@@ -830,60 +816,71 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <!-- Season Badge -->
-            <div class="season-badge">Season 01 • IPL 2026 Edition</div>
-            
-            <!-- Main Title -->
-            <h1 class="hero-title">Virtual Premier League</h1>
-            <p class="hero-subtitle">Fantasy Cricket League – Season 01</p>
+<!-- Hero Section -->
+<section class="hero">
+    <!-- Background Slideshow -->
+    <div class="hero-slideshow" id="heroSlideshow">
+        <div class="hero-slide active" style="background-image: url('captains.png');"></div>
+        <div class="hero-slide" style="background-image: url('captain1.png');"></div>
+        <div class="hero-slide" style="background-image: url('image3.png');"></div>
+        <div class="hero-slide" style="background-image: url('image4.png');"></div>
+    </div>
+    
+    <!-- Overlay Effects -->
+    <div class="hero-overlay"></div>
 
-            <!-- Live Auction Banner -->
-            <div class="auction-banner" onclick="window.location.href='captains.html'">
-                <i class="fas fa-gavel"></i>
-                <div class="auction-text">
-                    <div class="auction-label">LIVE</div>
-                    <div class="auction-status">CAPTAINS ELECTION</div>
-                </div>
-                <i class="fas fa-arrow-right"></i>
+    <div class="hero-content">
+        <!-- Season Badge -->
+        <div class="season-badge">Season 01 • IPL 2026 Edition</div>
+        
+        <!-- Main Title -->
+        <h1 class="hero-title">Virtual Premier League</h1>
+        <p class="hero-subtitle">Fantasy Cricket League – Season 01</p>
+
+        <!-- Live Auction Banner -->
+        <div class="auction-banner" onclick="window.location.href='captains.html'">
+            <i class="fas fa-gavel"></i>
+            <div class="auction-text">
+                <div class="auction-label">LIVE</div>
+                <div class="auction-status">CAPTAINS ELECTION</div>
             </div>
+            <i class="fas fa-arrow-right"></i>
+        </div>
 
-            <!-- Countdown Timer -->
-            <div class="countdown-container">
-                <div class="countdown-label">IPL 2026 Starts In</div>
-                <div class="countdown-timer" id="countdown">
-                    <div class="time-unit">
-                        <span class="time-value" id="days">00</span>
-                        <div class="time-label">Days</div>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-value" id="hours">00</span>
-                        <div class="time-label">Hours</div>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-value" id="minutes">00</span>
-                        <div class="time-label">Minutes</div>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-value" id="seconds">00</span>
-                        <div class="time-label">Seconds</div>
-                    </div>
+        <!-- Countdown Timer -->
+        <div class="countdown-container">
+            <div class="countdown-label">IPL 2026 Starts In</div>
+            <div class="countdown-timer" id="countdown">
+                <div class="time-unit">
+                    <span class="time-value" id="days">00</span>
+                    <div class="time-label">Days</div>
                 </div>
-            </div>
-
-            <!-- CTA Buttons -->
-            <div class="hero-cta">
-                <a href="auction.html" class="btn btn-primary">
-                    <i class="fas fa-gavel"></i> Join Auction
-                </a>
-                <a href="teams.html" class="btn btn-secondary">
-                    <i class="fas fa-users"></i> View Teams
-                </a>
+                <div class="time-unit">
+                    <span class="time-value" id="hours">00</span>
+                    <div class="time-label">Hours</div>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="minutes">00</span>
+                    <div class="time-label">Minutes</div>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="seconds">00</span>
+                    <div class="time-label">Seconds</div>
+                </div>
             </div>
         </div>
-    </section>
+
+        <!-- CTA Buttons -->
+        <div class="hero-cta">
+            <a href="auction.html" class="btn btn-primary">
+                <i class="fas fa-gavel"></i> Join Auction
+            </a>
+            <a href="teams.html" class="btn btn-secondary">
+                <i class="fas fa-users"></i> View Teams
+            </a>
+        </div>
+    </div>
+</section>
 
     <!-- Teams Section -->
     <section class="teams-section">
@@ -1244,9 +1241,44 @@
                 renderTeams();
             }
         }
+                /* ============================================
+           HERO BACKGROUND SLIDESHOW
+           ============================================ */
+        function initHeroSlideshow() {
+            const slides = document.querySelectorAll('.hero-slide');
+            let currentSlide = 0;
+            const slideInterval = 5000; // Change every 5 seconds (adjust as needed)
+            
+            function nextSlide() {
+                // Remove active class from current slide
+                slides[currentSlide].classList.remove('active');
+                
+                // Move to next slide
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                // Add active class to new slide
+                slides[currentSlide].classList.add('active');
+            }
+            
+            // Start slideshow
+            setInterval(nextSlide, slideInterval);
+        }
+        
+        // Initialize in your DOMContentLoaded event
+        document.addEventListener('DOMContentLoaded', () => {
+            initLoader();
+            initCountdown();
+            initHeroSlideshow(); // Add this line
+            renderTeams();
+            renderLeaderboard();
+            initMobileNav();
+            initSmoothScroll();
+            initNavbarScroll();
+        });
     </script>
 </body>
 </html>
+
 
 
 
