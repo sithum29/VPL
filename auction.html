@@ -3,2469 +3,1649 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPL Auction 2026</title>
+    <title>Auction - VPL Virtual Premier League</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #121829;
+            --card-bg: #1a1f35;
+            --accent-green: #00ff88;
+            --accent-orange: #ff6b35;
+            --accent-blue: #00d4ff;
+            --accent-purple: #9d4edd;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #64748b;
+            --border-color: #2d3748;
+            --gradient-1: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+            --gradient-2: linear-gradient(135deg, #ff6b35 0%, #ff006e 100%);
+            --gradient-3: linear-gradient(135deg, #9d4edd 0%, #ff006e 100%);
+            --team-jaffna: #e74c3c;
+            --team-rajasthan: #f39c12;
+            --team-rcg: #9b59b6;
+            --team-sunrisers: #e67e22;
+            --team-apex: #1abc9c;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #000000 100%);
-            color: #333;
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #000b3d 100%);
-            color: white;
-            margin-bottom: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .section {
-            background: white;
-            margin-bottom: 30px;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-        
-        .section h2 {
-            color: #2c3e50;
-            font-size: 2em;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #3498db;
-        }
-        
-        .pre-mini-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .team-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 12px;
-            padding: 20px;
-            border-left: 5px solid #3498db;
-            transition: transform 0.3s ease;
-        }
-        
-        .team-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        
-        .team-card h3 {
-            color: #2c3e50;
-            font-size: 1.3em;
-            margin-bottom: 15px;
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-bg);
             display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .team-card .team-icon {
-            width: 30px;
-            height: 30px;
-            background: #3498db;
-            border-radius: 50%;
-            display: inline-flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        
-        .player-list {
-            list-style: none;
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
         }
-        
-        .player-list li {
-            padding: 8px 0;
-            border-bottom: 1px dashed #bdc3c7;
+
+        .cricket-ball {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff0000 0%, #8b0000 100%);
+            border-radius: 50%;
+            position: relative;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+        }
+
+        .cricket-ball::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: white;
+            transform: translateY(-50%);
+        }
+
+        .cricket-ball::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: white;
+            transform: translateX(-50%);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-screen h2 {
+            margin-top: 20px;
+            color: var(--accent-green);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .player-list li:last-child {
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--accent-green);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 70px;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                var(--secondary-bg);
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .glitch-text {
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            text-shadow: 
+                0 0 10px var(--accent-green),
+                0 0 20px var(--accent-green),
+                0 0 40px var(--accent-green);
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0 0 10px var(--accent-green), 0 0 20px var(--accent-green); }
+            50% { text-shadow: 0 0 20px var(--accent-orange), 0 0 40px var(--accent-orange); }
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            min-width: 120px;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+
+        /* Pre-Auction Section */
+        .pre-auction {
+            background: var(--secondary-bg);
+        }
+
+        .pre-auction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .team-retention-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .team-retention-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
+        }
+
+        .team-retention-card[data-team="jaffna"] { border-top: 4px solid var(--team-jaffna); }
+        .team-retention-card[data-team="rajasthan"] { border-top: 4px solid var(--team-rajasthan); }
+        .team-retention-card[data-team="rcg"] { border-top: 4px solid var(--team-rcg); }
+        .team-retention-card[data-team="sunrisers"] { border-top: 4px solid var(--team-sunrisers); }
+        .team-retention-card[data-team="apex"] { border-top: 4px solid var(--team-apex); }
+
+        .retention-header {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .retention-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .retention-count {
+            background: var(--gradient-1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .retention-players {
+            padding: 20px;
+        }
+
+        .retention-player {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .retention-player:last-child {
             border-bottom: none;
         }
-        
-        .player-name {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
+
         .player-role {
-            font-size: 0.85em;
-            color: #7f8c8d;
-            background: #ecf0f1;
-            padding: 2px 8px;
+            padding: 4px 12px;
             border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
         }
-        
+
+        .role-bat { background: rgba(0, 212, 255, 0.2); color: var(--accent-blue); }
+        .role-bowl { background: rgba(255, 107, 53, 0.2); color: var(--accent-orange); }
+        .role-all { background: rgba(157, 78, 221, 0.2); color: var(--accent-purple); }
+        .role-wk { background: rgba(0, 255, 136, 0.2); color: var(--accent-green); }
+
         .player-price {
-            color: #27ae60;
-            font-weight: bold;
-            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--accent-green);
         }
-        
+
+        /* Mega Auction Section */
         .mega-auction {
-            margin-top: 30px;
+            background: var(--primary-bg);
         }
-        
-        .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
+
+        /* Highlight Card */
+        .highlight-card {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 40px;
             text-align: center;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            overflow: hidden;
         }
-        
-        .stat-box h4 {
-            font-size: 0.9em;
-            opacity: 0.9;
-            margin-bottom: 5px;
+
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 25px;
+            padding: 2px;
+            background: var(--gradient-2);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
         }
-        
-        .stat-box .number {
-            font-size: 2em;
-            font-weight: bold;
+
+        .highlight-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: var(--accent-orange);
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: pulse 3s infinite;
         }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            text-align: center;
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.2); }
         }
-        
-        .highlight-box h3 {
-            font-size: 1.5em;
+
+        .highlight-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .highlight-badge {
+            display: inline-block;
+            background: var(--gradient-2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .highlight-card h3 {
+            font-size: 2.5rem;
             margin-bottom: 10px;
         }
-        
-        .highlight-box .price {
-            font-size: 2.5em;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+
+        .highlight-price {
+            font-size: 4rem;
+            font-weight: 800;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
         }
-        
-        .auction-table {
+
+        /* Filters */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--gradient-1);
+            color: var(--primary-bg);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Search */
+        .search-bar {
+            max-width: 500px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .search-bar input {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 0.95em;
+            padding: 15px 50px 15px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
         }
-        
-        .auction-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
+
+        .search-bar input:focus {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
         }
-        
-        .auction-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ecf0f1;
-        }
-        
-        .auction-table tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .auction-table tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-        
-        .auction-table tr:nth-child(even):hover {
-            background: #e9ecef;
-        }
-        
-        .status-sold {
-            background: #27ae60;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-        
-        .status-unsold {
-            background: #e74c3c;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-        
-        .role-icon {
-            display: inline-flex;
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gradient-1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            font-size: 1.2rem;
         }
-        
-        .icon-bat::before { content: "🏏"; }
-        .icon-ball::before { content: "⚾"; }
-        .icon-all::before { content: "⭐"; }
-        .icon-wk::before { content: "🧤"; }
-        
+
+        /* Players Grid */
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .player-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .player-card.sold {
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .player-card.unsold {
+            border-left: 4px solid var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .player-card.expensive {
+            border: 2px solid var(--accent-orange);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.2);
+        }
+
+        .player-card-header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .player-role-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .role-wk { background: rgba(0, 255, 136, 0.2); color: var(--accent-green); }
+        .role-bat { background: rgba(0, 212, 255, 0.2); color: var(--accent-blue); }
+        .role-all-rounder { background: rgba(157, 78, 221, 0.2); color: var(--accent-purple); }
+        .role-bowl { background: rgba(255, 107, 53, 0.2); color: var(--accent-orange); }
+
+        .overseas-badge {
+            font-size: 1.2rem;
+        }
+
+        .expensive-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--gradient-2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--accent-orange); }
+            50% { box-shadow: 0 0 20px var(--accent-orange), 0 0 40px var(--accent-orange); }
+        }
+
+        .player-card-body {
+            padding: 20px;
+        }
+
+        .player-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-prices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .price-row {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .price-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .price-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .price-value.base {
+            color: var(--text-secondary);
+        }
+
+        .price-value.sold {
+            color: var(--accent-green);
+        }
+
+        .player-team {
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .player-team.jaffna-sharks { background: rgba(231, 76, 60, 0.2); color: var(--team-jaffna); }
+        .player-team.rajasthan-stallions { background: rgba(243, 156, 18, 0.2); color: var(--team-rajasthan); }
+        .player-team.royal-challengers-galle { background: rgba(155, 89, 182, 0.2); color: var(--team-rcg); }
+        .player-team.sunrisers-colombo { background: rgba(230, 126, 34, 0.2); color: var(--team-sunrisers); }
+        .player-team.apex-bolt-assassins { background: rgba(26, 188, 156, 0.2); color: var(--team-apex); }
+
+        .player-card-footer {
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            text-align: center;
+        }
+
+        .status-badge {
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-badge.sold {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--accent-green);
+        }
+
+        .status-badge.unsold {
+            background: rgba(100, 116, 139, 0.2);
+            color: var(--text-muted);
+        }
+
+        /* Purse Section */
         .purse-section {
-            margin-top: 30px;
+            background: var(--secondary-bg);
         }
-        
+
         .purse-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            gap: 25px;
+            margin-top: 40px;
         }
-        
+
         .purse-card {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
         }
-        
-        .purse-card h4 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            opacity: 0.95;
+
+        .purse-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
         }
-        
-        .purse-card .amount {
-            font-size: 2.2em;
-            font-weight: bold;
-        }
-        
-        .team-jafrna { border-left-color: #e74c3c; }
-        .team-rajasthan { border-left-color: #f39c12; }
-        .team-rcg { border-left-color: #9b59b6; }
-        .team-sunrisers { border-left-color: #e67e22; }
-        .team-apex { border-left-color: #1abc9c; }
-        
-        .filter-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .filter-btn {
-            padding: 10px 20px;
-            border: none;
-            background: #ecf0f1;
-            color: #2c3e50;
-            border-radius: 25px;
-            cursor: pointer;
+
+        .purse-card.jaffna::before { background: var(--team-jaffna); }
+        .purse-card.rajasthan::before { background: var(--team-rajasthan); }
+        .purse-card.rcg::before { background: var(--team-rcg); }
+        .purse-card.sunrisers::before { background: var(--team-sunrisers); }
+        .purse-card.apex::before { background: var(--team-apex); }
+
+        .purse-team {
+            font-size: 1.1rem;
             font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        .purse-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .purse-card.jaffna .purse-amount { color: var(--team-jaffna); }
+        .purse-card.rajasthan .purse-amount { color: var(--team-rajasthan); }
+        .purse-card.rcg .purse-amount { color: var(--team-rcg); }
+        .purse-card.sunrisers .purse-amount { color: var(--team-sunrisers); }
+        .purse-card.apex .purse-amount { color: var(--team-apex); }
+
+        .purse-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .purse-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .purse-card.jaffna .purse-fill { background: var(--team-jaffna); }
+        .purse-card.rajasthan .purse-fill { background: var(--team-rajasthan); }
+        .purse-card.rcg .purse-fill { background: var(--team-rcg); }
+        .purse-card.sunrisers .purse-fill { background: var(--team-sunrisers); }
+        .purse-card.apex .purse-fill { background: var(--team-apex); }
+
+        .purse-spent {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 60px 20px 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .footer-links h4,
+        .footer-social h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--secondary-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.3rem;
             transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
         }
-        
-        .filter-btn:hover, .filter-btn.active {
-            background: #3498db;
-            color: white;
+
+        .social-icon:hover {
+            background: var(--gradient-1);
+            transform: translateY(-3px);
         }
-        
-        .team-header {
-            background: #34495e;
-            color: white;
-            padding: 10px 15px;
-            margin-top: 20px;
-            border-radius: 8px;
-            font-weight: bold;
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
-        
+
+        /* Responsive */
         @media (max-width: 768px) {
-            header h1 { font-size: 2em; }
-            .auction-table { font-size: 0.85em; }
-            .auction-table th, .auction-table td { padding: 8px 10px; }
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--secondary-bg);
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 0;
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .glitch-text {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            .stat-item {
+                min-width: 100px;
+                padding: 15px 20px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .players-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-bar {
+                gap: 10px;
+            }
+
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .highlight-price {
+                font-size: 3rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-green);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🏏 VPL Auction 2026</h1>
-            <p>Virtual Premier League - Player Auction Details</p>
-        </header>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="cricket-ball"></div>
+        <h2>Loading VPL...</h2>
+    </div>
 
-        <!-- VPL Pre-Mini Auction Section -->
-        <section class="section">
-            <h2>🎯 VPL Pre-Mini Auction</h2>
-            <p style="margin-bottom: 20px; color: #7f8c8d;">Three marquee players bought by each team before the mega auction</p>
-            
-            <div class="pre-mini-grid">
-                <div class="team-card team-jafrna">
-                    <h3><span class="team-icon">JS</span> Jaffna Sharks</h3>
-                    <ul class="player-list">
-                        <li>
-                            <span><span class="player-name">Rohit Sharma</span> <span class="player-role">Batter</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">Nicholas Pooran</span> <span class="player-role">Wicketkeeper</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">KL Rahul</span> <span class="player-role">Wicketkeeper</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                    </ul>
+    <!-- Navigation - Update href attributes with your links -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🏏</span>
+                <span class="logo-text">VPL</span>
+            </a>
+            <button class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Teams</a></li>
+                <li><a href="#">Points Table</a></li>
+                <li><a href="#" class="active">Auction</a></li>
+                <li><a href="#">Rules</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="hero-content">
+            <h1 class="glitch-text">PLAYER AUCTION</h1>
+            <p>Season 01 • IPL 2026 Edition</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalPlayers">249</span>
+                    <span class="stat-label">Total Players</span>
                 </div>
-
-                <div class="team-card team-rajasthan">
-                    <h3><span class="team-icon">RS</span> Rajasthan Stallions</h3>
-                    <ul class="player-list">
-                        <li>
-                            <span><span class="player-name">Shimron Hetmyer</span> <span class="player-role">Batter</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">Jos Buttler</span> <span class="player-role">Wicketkeeper</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">Riyan Parag</span> <span class="player-role">Batter</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                    </ul>
+                <div class="stat-item">
+                    <span class="stat-number" id="soldPlayers">154</span>
+                    <span class="stat-label">Sold</span>
                 </div>
-
-                <div class="team-card team-rcg">
-                    <h3><span class="team-icon">RC</span> Royal Challengers Galle</h3>
-                    <ul class="player-list">
-                        <li>
-                            <span><span class="player-name">Bhuvneshwar Kumar</span> <span class="player-role">Bowler</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">Virat Kohli</span> <span class="player-role">Batter</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">Krunal Pandya</span> <span class="player-role">All Rounder</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="team-card team-sunrisers">
-                    <h3><span class="team-icon">SC</span> Sunrisers Colombo</h3>
-                    <ul class="player-list">
-                        <li>
-                            <span><span class="player-name">Abhishek Sharma</span> <span class="player-role">All Rounder</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">Rashid Khan</span> <span class="player-role">Bowler</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">Arshdeep Singh</span> <span class="player-role">Bowler</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="team-card team-apex">
-                    <h3><span class="team-icon">AB</span> Apex Bolt Assassins</h3>
-                    <ul class="player-list">
-                        <li>
-                            <span><span class="player-name">Jasprit Bumrah</span> <span class="player-role">Bowler</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">Hardik Pandya</span> <span class="player-role">All Rounder</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                        <li>
-                            <span><span class="player-name">Suryakumar Yadav</span> <span class="player-role">Batter</span></span>
-                            <span class="player-price">2 CR</span>
-                        </li>
-                    </ul>
+                <div class="stat-item">
+                    <span class="stat-number" id="unsoldPlayers">95</span>
+                    <span class="stat-label">Unsold</span>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- VPL Mega Auction Section -->
-        <section class="section mega-auction">
-            <h2>🔨 VPL Mega Auction</h2>
+    <!-- Pre-Mini Auction Section -->
+    <section class="section pre-auction">
+        <div class="container">
+            <h2 class="section-title">🎯 VPL Pre-Mini Auction</h2>
+            <p class="section-subtitle">Marquee players retained before the mega auction</p>
             
-            <div class="stats-bar">
-                <div class="stat-box">
-                    <h4>Total Players</h4>
-                    <div class="number">249</div>
+            <div class="pre-auction-grid">
+                <div class="team-retention-card" data-team="jaffna">
+                    <div class="retention-header">
+                        <h3>Jaffna Sharks</h3>
+                        <span class="retention-count">3 Players</span>
+                    </div>
+                    <div class="retention-players">
+                        <div class="retention-player">
+                            <span class="player-name">Rohit Sharma</span>
+                            <span class="player-role role-bat">BAT</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">Nicholas Pooran</span>
+                            <span class="player-role role-wk">WK</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">KL Rahul</span>
+                            <span class="player-role role-wk">WK</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-box">
-                    <h4>Players Sold</h4>
-                    <div class="number">154</div>
+
+                <div class="team-retention-card" data-team="rajasthan">
+                    <div class="retention-header">
+                        <h3>Rajasthan Stallions</h3>
+                        <span class="retention-count">3 Players</span>
+                    </div>
+                    <div class="retention-players">
+                        <div class="retention-player">
+                            <span class="player-name">Shimron Hetmyer</span>
+                            <span class="player-role role-bat">BAT</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">Jos Buttler</span>
+                            <span class="player-role role-wk">WK</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">Riyan Parag</span>
+                            <span class="player-role role-bat">BAT</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-box">
-                    <h4>Players Unsold</h4>
-                    <div class="number">95</div>
+
+                <div class="team-retention-card" data-team="rcg">
+                    <div class="retention-header">
+                        <h3>Royal Challengers Galle</h3>
+                        <span class="retention-count">3 Players</span>
+                    </div>
+                    <div class="retention-players">
+                        <div class="retention-player">
+                            <span class="player-name">Bhuvneshwar Kumar</span>
+                            <span class="player-role role-bowl">BOWL</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">Virat Kohli</span>
+                            <span class="player-role role-bat">BAT</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">Krunal Pandya</span>
+                            <span class="player-role role-all">ALL</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-box">
-                    <h4>Initial Purse</h4>
-                    <div class="number">125 CR</div>
+
+                <div class="team-retention-card" data-team="sunrisers">
+                    <div class="retention-header">
+                        <h3>Sunrisers Colombo</h3>
+                        <span class="retention-count">3 Players</span>
+                    </div>
+                    <div class="retention-players">
+                        <div class="retention-player">
+                            <span class="player-name">Abhishek Sharma</span>
+                            <span class="player-role role-all">ALL</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">Rashid Khan</span>
+                            <span class="player-role role-bowl">BOWL</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">Arshdeep Singh</span>
+                            <span class="player-role role-bowl">BOWL</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-retention-card" data-team="apex">
+                    <div class="retention-header">
+                        <h3>Apex Bolt Assassins</h3>
+                        <span class="retention-count">3 Players</span>
+                    </div>
+                    <div class="retention-players">
+                        <div class="retention-player">
+                            <span class="player-name">Jasprit Bumrah</span>
+                            <span class="player-role role-bowl">BOWL</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">Hardik Pandya</span>
+                            <span class="player-role role-all">ALL</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                        <div class="retention-player">
+                            <span class="player-name">Suryakumar Yadav</span>
+                            <span class="player-role role-bat">BAT</span>
+                            <span class="player-price">2 CR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mega Auction Section -->
+    <section class="section mega-auction">
+        <div class="container">
+            <h2 class="section-title">🔨 VPL Mega Auction</h2>
+            
+            <!-- Most Expensive Player Highlight -->
+            <div class="highlight-card">
+                <div class="highlight-glow"></div>
+                <div class="highlight-content">
+                    <span class="highlight-badge">👑 Most Expensive</span>
+                    <h3>Ishan Kishan</h3>
+                    <div class="highlight-price">19.2 CR</div>
+                    <p>bought by <strong>Rajasthan Stallions</strong></p>
                 </div>
             </div>
 
-            <div class="highlight-box">
-                <h3>👑 Most Expensive Player</h3>
-                <div style="font-size: 1.3em; margin: 10px 0;">Ishan Kishan</div>
-                <div class="price">19.2 CR</div>
-                <div style="margin-top: 10px; opacity: 0.9;">bought by Rajasthan Stallions</div>
+            <!-- Filters -->
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">All Players</button>
+                <button class="filter-btn" data-filter="wk">Wicketkeepers</button>
+                <button class="filter-btn" data-filter="bat">Batters</button>
+                <button class="filter-btn" data-filter="all-rounder">All Rounders</button>
+                <button class="filter-btn" data-filter="bowl">Bowlers</button>
+                <button class="filter-btn" data-filter="sold">Sold Only</button>
+                <button class="filter-btn" data-filter="unsold">Unsold Only</button>
             </div>
 
-            <h3 style="margin-bottom: 20px; color: #2c3e50;">Complete Player List</h3>
-            
-            <table class="auction-table">
-                <thead>
-                    <tr>
-                        <th>Player Name</th>
-                        <th>Role</th>
-                        <th>Base Price</th>
-                        <th>Sold Price</th>
-                        <th>Team</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- WICKETKEEPERS -->
-                    <tr><td colspan="6" class="team-header">WICKETKEEPERS</td></tr>
-                    <tr>
-                        <td><strong>Jos Buttler</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Josh Inglis</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Finn Allen</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>1230L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Quinton de Kock</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>100L</td>
-                        <td>500L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nicholas Pooran</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>KL Rahul</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Josh Sharma</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>280L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rishabh Pant</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>890L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tristan Stubbs</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Phil Salt</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ishan Kishan</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>1920L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sanju Samson</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>1040L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Dhruv Jurel</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Heinrich Klaasen</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>MS Dhoni</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>1510L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Anuj Rawat</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Prabhsimran Singh</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tom Seifert</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>150L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Donovan Ferreira</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>100L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tom Banton</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Lhuan-dre Pretorius</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rachin Ravindra</strong> ✈️</td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Aiden Sharma</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Robin Minz</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>50L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kushagra</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>50L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Anuj Rawat</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Choudhary</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Thamsyn Dahiya</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vinayak Sinha</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Krishnan Sharma</strong></td>
-                        <td><span class="role-icon icon-wk">Wicketkeeper</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
+            <!-- Search -->
+            <div class="search-bar">
+                <input type="text" id="playerSearch" placeholder="Search players...">
+                <button class="search-btn">🔍</button>
+            </div>
 
-                    <!-- BATTERS -->
-                    <tr><td colspan="6" class="team-header">BATTERS</td></tr>
-                    <tr>
-                        <td><strong>Virat Kohli</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rohit Sharma</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shimron Hetmyer</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Suryakumar Yadav</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Pathum Nissanka</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>75L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rinku Singh</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>350L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Glenn Phillips</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Aiden Markram</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>220L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Dewald Brevis</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sherfane Rutherford</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>240L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Devdutt Padikkal</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>280L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ruturaj Gaikwad</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>520L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rovman Powell</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>150L</td>
-                        <td>150L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rajat Patidar</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>350L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shubman Gill</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>1050L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Travis Head</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>810L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shreyas Iyer</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>920L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ajinkya Rahane</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>150L</td>
-                        <td>330L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rahul Tripathi</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>75L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Yashasvi Jaiswal</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>1060L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Prithvi Shaw</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>75L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Manish Pandey</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>75L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Riyan Parag</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sarfaraz Khan</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Aiden Sharma</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mitchell Marsh</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>240L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sam Curran</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Marcus Stoinis</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>220L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Washington Sundar</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>350L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nitish Kumar Reddy</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>390L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tilak Varma</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>340L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Will Jacks</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mitchell Santner</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shakib Al Hasan</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Romario Shepherd</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>150L</td>
-                        <td>1260L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Marco Jansen</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nitish Rana</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>1250L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rinku Singh</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shardul Thakur</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tim David</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Cameron Connolly</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sai Sudharsan</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>1250L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Corbin Bosch</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jacob Bethell</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Zaman Foulkes</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mitchell Owen</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Bryce Dwarshuis</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>100L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jamie Overton</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>150L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Azmatullah Omarzai</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Brydon Carse</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>100L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kamindu Mendis</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Matthew Short</strong> ✈️</td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>150L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Aaron Roy</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Abhishek Raghuvanshi</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>480L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vijaykumar Sooryavanshi</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>100L</td>
-                        <td>1880L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Karun Nair</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>50L</td>
-                        <td>140L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shashank Singh</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>50L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nitish Wadhera</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>230L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vignesh Nigam</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>50L</td>
-                        <td>70L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Abhinav Sharma</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ayush Badoni</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Abdul Samad</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Praveen Veer</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>30L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Pranav Arya</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rahul Tewatia</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Arjun Tendulkar</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Arshin Mhatre</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kartik Tyagi</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vaibhav Arora</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>150L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Soham Shedge</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nehal Sindhu</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vyshak Vijay</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>150L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Harpreet Singh</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sudharsan Kumar</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sahil Parakh</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Yadav</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rohit Sharma</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shivam Ranjan</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Naman Dhir</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Amogh Rao</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohit Rawat</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Divyam Kamra</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vishal Malhotra</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Himanshu Singh</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tarun Vijay</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Yuvraj Singh</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Samarth Deswal</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rohit Singh</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ramakrishna Ghosh</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Manan Tiwari</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Devansh Malewar</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akshay Kumar</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Virendra Ostwal</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sahil Sharma</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Arshin Ankolekar</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kunal Chouhan</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sudhanshu Dubey</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Shahrukh Khan</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akshat Raghuwanshi</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Samarth Arora</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sachin Rizvi</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ankush Mandal</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Arshin Verma</strong></td>
-                        <td><span class="role-icon icon-bat">Batter</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
+            <!-- Players Grid -->
+            <div class="players-grid" id="playersGrid">
+                <!-- Players populated by JavaScript -->
+            </div>
+        </div>
+    </section>
 
-                    <!-- ALL ROUNDERS -->
-                    <tr><td colspan="6" class="team-header">ALL ROUNDERS</td></tr>
-                    <tr>
-                        <td><strong>Wanindu Hasaranga</strong> ✈️</td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>550L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jason Holder</strong> ✈️</td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>1110L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Liam Livingstone</strong> ✈️</td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>710L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Venkatesh Iyer</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>620L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>David Miller</strong> ✈️</td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>530L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Chris Green</strong> ✈️</td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>310L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akeal Hosein</strong> ✈️</td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ben Duckett</strong> ✈️</td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Abhishek Sharma</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Krunal Pandya</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Hardik Pandya</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shivam Dube</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>450L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Harshal Patel</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>260L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shivam Kishore</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jaydev Unadkat</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>100L</td>
-                        <td>120L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ravindra Jadeja</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>1860L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akash Kamboj</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shubham Gopal</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>30L</td>
-                        <td>30L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Dhananjaya Rathi</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>30L</td>
-                        <td>30L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shivam Sharma</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>240L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Himanshu Rana</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shivam Singh</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>400L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Abhishek Sharma</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>590L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Yudhvir Dayal</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Harpreet Brar</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>150L</td>
-                        <td>150L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Zaheer Ansari</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>30L</td>
-                        <td>30L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Himanshu Dubey</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>30L</td>
-                        <td>30L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Gurjot Singh</strong></td>
-                        <td><span class="role-icon icon-all">All Rounder</span></td>
-                        <td>100L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-
-                    <!-- BOWLERS -->
-                    <tr><td colspan="6" class="team-header">BOWLERS</td></tr>
-                    <tr>
-                        <td><strong>Matheesha Pathirana</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>450L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ravi Bishnoi</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>420L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Matthew Henry</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>390L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Arshdeep Singh</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rashid Khan</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Bhuvneshwar Kumar</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jasprit Bumrah</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Trent Boult</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>1230L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akeal Khan</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kuldeep Sen</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>75L</td>
-                        <td>75L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jofra Archer</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>320L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Shami</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>370L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sunil Narine</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>1700L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mukesh Yadav</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Deepak Chahar</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>410L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Umran Malik</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>75L</td>
-                        <td>115L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>T Natarajan</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>270L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Khaleel Ahmed</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Prasidh Krishna</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>530L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Josh Hazlewood</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>460L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mitchell Starc</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kuldeep Yadav</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>1150L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Varun Chakravarthy</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>1520L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Noor Ahmad</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>1040L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mukesh Kumar</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>260L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ishant Sharma</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>75L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rahul Chahar</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>100L</td>
-                        <td>240L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Pat Cummins</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>890L</td>
-                        <td>Royal Challengers Galle</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Siraj</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>1010L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shivam Mavi</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>75L</td>
-                        <td>75L</td>
-                        <td>Sunrisers Colombo</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kagiso Rabada</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Apex Bolt Assassins</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Yuzvendra Chahal</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>960L</td>
-                        <td>Jaffna Sharks</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tushar Deshpande</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>200L</td>
-                        <td>Rajasthan Stallions</td>
-                        <td><span class="status-sold">SOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Abhishek Deep</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>100L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nandre Burger</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Abrar Ghazanfar</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Adam Milne</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kwena Maphaka</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>150L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kyle Jamieson</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Anrich Nortje</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Dushmantha Chameera</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Lockie Ferguson</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nuwan Thushara</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>150L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nathan Ellis</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Xavier Bartlett</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Lungi Ngidi</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jacob Duffy</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Luke Wood</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shivam Mishra</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Harmeet Singh</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Eshan Malinga</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>100L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Izhar</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vijay Nishad</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Bhawik Sharma</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Gurnoor Singh</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Yash Raj Punja</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Pradeep Dubey</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Markande</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Utkarsh Patel</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Khan</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Siddharth</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>75L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sarfaraz Hussain</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Om Tarmale</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rohan Bawa</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akash Khan</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Khan</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jack Edwards</strong> ✈️</td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>50L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Prashant Avinash</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Prashant Raj</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Naman Tiwari</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akash Sharma</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>200L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Karan Fuletra</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Prashant Hinge</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akash Nabi</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akash Kulkarni</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Rohit Smaran</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akash Khan</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>100L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Akash Singh</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Prashant Yadav</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Choudhary</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Yash Thakur</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>150L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mohammed Suthar</strong></td>
-                        <td><span class="role-icon icon-ball">Bowler</span></td>
-                        <td>30L</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><span class="status-unsold">UNSOLD</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <!-- Purse Remaining Section -->
-        <section class="section purse-section">
-            <h2>💰 Purse Remaining After Auction</h2>
-            <p style="margin-bottom: 20px; color: #7f8c8d;">Initial purse for each team: <strong>125 CR</strong></p>
+    <!-- Purse Section -->
+    <section class="section purse-section">
+        <div class="container">
+            <h2 class="section-title">💰 Purse Remaining</h2>
+            <p class="section-subtitle">Initial purse: 125 CR per team</p>
             
             <div class="purse-grid">
-                <div class="purse-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
-                    <h4>Jaffna Sharks</h4>
-                    <div class="amount">33.2 CR</div>
+                <div class="purse-card jaffna">
+                    <div class="purse-team">Jaffna Sharks</div>
+                    <div class="purse-amount">33.2 CR</div>
+                    <div class="purse-bar">
+                        <div class="purse-fill" style="width: 26.56%"></div>
+                    </div>
+                    <div class="purse-spent">Spent: 91.8 CR</div>
                 </div>
-                <div class="purse-card" style="background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);">
-                    <h4>Rajasthan Stallions</h4>
-                    <div class="amount">15.15 CR</div>
+                <div class="purse-card rajasthan">
+                    <div class="purse-team">Rajasthan Stallions</div>
+                    <div class="purse-amount">15.15 CR</div>
+                    <div class="purse-bar">
+                        <div class="purse-fill" style="width: 12.12%"></div>
+                    </div>
+                    <div class="purse-spent">Spent: 109.85 CR</div>
                 </div>
-                <div class="purse-card" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
-                    <h4>Royal Challengers Galle</h4>
-                    <div class="amount">3.45 CR</div>
+                <div class="purse-card rcg">
+                    <div class="purse-team">Royal Challengers Galle</div>
+                    <div class="purse-amount">3.45 CR</div>
+                    <div class="purse-bar">
+                        <div class="purse-fill" style="width: 2.76%"></div>
+                    </div>
+                    <div class="purse-spent">Spent: 121.55 CR</div>
                 </div>
-                <div class="purse-card" style="background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);">
-                    <h4>Sunrisers Colombo</h4>
-                    <div class="amount">10.75 CR</div>
+                <div class="purse-card sunrisers">
+                    <div class="purse-team">Sunrisers Colombo</div>
+                    <div class="purse-amount">10.75 CR</div>
+                    <div class="purse-bar">
+                        <div class="purse-fill" style="width: 8.6%"></div>
+                    </div>
+                    <div class="purse-spent">Spent: 114.25 CR</div>
                 </div>
-                <div class="purse-card" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">
-                    <h4>Apex Bolt Assassins</h4>
-                    <div class="amount">13.05 CR</div>
+                <div class="purse-card apex">
+                    <div class="purse-team">Apex Bolt Assassins</div>
+                    <div class="purse-amount">13.05 CR</div>
+                    <div class="purse-bar">
+                        <div class="purse-fill" style="width: 10.44%"></div>
+                    </div>
+                    <div class="purse-spent">Spent: 111.95 CR</div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <footer style="text-align: center; padding: 30px; color: white; opacity: 0.8;">
-            <p>&copy; 2026 Victory Premier League. All rights reserved.</p>
-        </footer>
-    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>🏏 VPL</h3>
+                <p>Virtual Premier League<br>Season 01 - IPL 2026 Edition</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Teams</a></li>
+                    <li><a href="#">Points Table</a></li>
+                    <li><a href="#">Auction</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">📘</a>
+                    <a href="#" class="social-icon">🐦</a>
+                    <a href="#" class="social-icon">📸</a>
+                    <a href="#" class="social-icon">▶️</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 VPL - Virtual Premier League. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileToggle').addEventListener('click', () => {
+            document.getElementById('navMenu').classList.toggle('active');
+        });
+
+        // Player Data - All 249 players from the images
+        const playersData = [
+            // WICKETKEEPERS - SOLD
+            { name: "Jos Buttler", role: "wk", base: "200L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: true },
+            { name: "Josh Inglis", role: "wk", base: "200L", sold: "200L", team: "Royal Challengers Galle", status: "sold", overseas: true },
+            { name: "Finn Allen", role: "wk", base: "200L", sold: "1230L", team: "Sunrisers Colombo", status: "sold", overseas: true },
+            { name: "Quinton de Kock", role: "wk", base: "100L", sold: "500L", team: "Jaffna Sharks", status: "sold", overseas: true },
+            { name: "Nicholas Pooran", role: "wk", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: true },
+            { name: "KL Rahul", role: "wk", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Josh Sharma", role: "wk", base: "200L", sold: "280L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Rishabh Pant", role: "wk", base: "200L", sold: "890L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Tristan Stubbs", role: "wk", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: true },
+            { name: "Phil Salt", role: "wk", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: true },
+            { name: "Ishan Kishan", role: "wk", base: "200L", sold: "1920L", team: "Rajasthan Stallions", status: "sold", overseas: false, expensive: true },
+            { name: "Sanju Samson", role: "wk", base: "200L", sold: "1040L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Dhruv Jurel", role: "wk", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Heinrich Klaasen", role: "wk", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: true },
+            { name: "MS Dhoni", role: "wk", base: "200L", sold: "1510L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Anuj Rawat", role: "wk", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Prabhsimran Singh", role: "wk", base: "200L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            
+            // WICKETKEEPERS - UNSOLD
+            { name: "Tom Seifert", role: "wk", base: "150L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Donovan Ferreira", role: "wk", base: "100L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Tom Banton", role: "wk", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Lhuan-dre Pretorius", role: "wk", base: "30L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Rachin Ravindra", role: "wk", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Aiden Sharma", role: "wk", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Robin Minz", role: "wk", base: "50L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Kushagra", role: "wk", base: "50L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Anuj Rawat", role: "wk", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohammed Choudhary", role: "wk", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Thamsyn Dahiya", role: "wk", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Vinayak Sinha", role: "wk", base: "75L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Krishnan Sharma", role: "wk", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+
+            // BATTERS - SOLD
+            { name: "Virat Kohli", role: "bat", base: "200L", sold: "200L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Rohit Sharma", role: "bat", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Shimron Hetmyer", role: "bat", base: "200L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: true },
+            { name: "Suryakumar Yadav", role: "bat", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Pathum Nissanka", role: "bat", base: "75L", sold: "75L", team: "Apex Bolt Assassins", status: "sold", overseas: true },
+            { name: "Rinku Singh", role: "bat", base: "200L", sold: "350L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Glenn Phillips", role: "bat", base: "200L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: true },
+            { name: "Aiden Markram", role: "bat", base: "200L", sold: "220L", team: "Sunrisers Colombo", status: "sold", overseas: true },
+            { name: "Dewald Brevis", role: "bat", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: true },
+            { name: "Sherfane Rutherford", role: "bat", base: "200L", sold: "240L", team: "Jaffna Sharks", status: "sold", overseas: true },
+            { name: "Devdutt Padikkal", role: "bat", base: "200L", sold: "280L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Ruturaj Gaikwad", role: "bat", base: "200L", sold: "520L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Rovman Powell", role: "bat", base: "150L", sold: "150L", team: "Royal Challengers Galle", status: "sold", overseas: true },
+            { name: "Rajat Patidar", role: "bat", base: "200L", sold: "350L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Shubman Gill", role: "bat", base: "200L", sold: "1050L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Travis Head", role: "bat", base: "200L", sold: "810L", team: "Apex Bolt Assassins", status: "sold", overseas: true },
+            { name: "Shreyas Iyer", role: "bat", base: "200L", sold: "920L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Ajinkya Rahane", role: "bat", base: "150L", sold: "330L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Rahul Tripathi", role: "bat", base: "75L", sold: "75L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Yashasvi Jaiswal", role: "bat", base: "200L", sold: "1060L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Prithvi Shaw", role: "bat", base: "75L", sold: "75L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Manish Pandey", role: "bat", base: "75L", sold: "75L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Riyan Parag", role: "bat", base: "200L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Aiden Sharma", role: "bat", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Mitchell Marsh", role: "bat", base: "200L", sold: "240L", team: "Royal Challengers Galle", status: "sold", overseas: true },
+            { name: "Sam Curran", role: "bat", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: true },
+            { name: "Marcus Stoinis", role: "bat", base: "200L", sold: "220L", team: "Jaffna Sharks", status: "sold", overseas: true },
+            { name: "Washington Sundar", role: "bat", base: "200L", sold: "350L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Nitish Kumar Reddy", role: "bat", base: "200L", sold: "390L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Tilak Varma", role: "bat", base: "200L", sold: "340L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Will Jacks", role: "bat", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: true },
+            { name: "Mitchell Santner", role: "bat", base: "200L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: true },
+            { name: "Shakib Al Hasan", role: "bat", base: "200L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Romario Shepherd", role: "bat", base: "150L", sold: "1260L", team: "Sunrisers Colombo", status: "sold", overseas: true },
+            { name: "Marco Jansen", role: "bat", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: true },
+            { name: "Nitish Rana", role: "bat", base: "200L", sold: "1250L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Rinku Singh", role: "bat", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Shardul Thakur", role: "bat", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Cameron Connolly", role: "bat", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: true },
+            { name: "Sai Sudharsan", role: "bat", base: "200L", sold: "1250L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Abhishek Raghuvanshi", role: "bat", base: "200L", sold: "480L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Vijaykumar Sooryavanshi", role: "bat", base: "100L", sold: "1880L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Karun Nair", role: "bat", base: "50L", sold: "140L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Nitish Wadhera", role: "bat", base: "200L", sold: "230L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Vignesh Nigam", role: "bat", base: "50L", sold: "70L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Abhishek Sharma", role: "bat", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Ayush Badoni", role: "bat", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Abdul Samad", role: "bat", base: "200L", sold: "200L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Praveen Veer", role: "bat", base: "30L", sold: "30L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Pranav Arya", role: "bat", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Rahul Tewatia", role: "bat", base: "200L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+
+            // BATTERS - UNSOLD
+            { name: "Sarfaraz Khan", role: "bat", base: "75L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Tim David", role: "bat", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Corbin Bosch", role: "bat", base: "75L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Jacob Bethell", role: "bat", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Zaman Foulkes", role: "bat", base: "75L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Mitchell Owen", role: "bat", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Bryce Dwarshuis", role: "bat", base: "100L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Jamie Overton", role: "bat", base: "150L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Azmatullah Omarzai", role: "bat", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Brydon Carse", role: "bat", base: "100L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Kamindu Mendis", role: "bat", base: "75L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Matthew Short", role: "bat", base: "150L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Aaron Roy", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Shashank Singh", role: "bat", base: "50L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Arjun Tendulkar", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Arshin Mhatre", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Kartik Tyagi", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Vaibhav Arora", role: "bat", base: "150L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Soham Shedge", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Nehal Sindhu", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Vyshak Vijay", role: "bat", base: "150L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Harpreet Singh", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Sudharsan Kumar", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Sahil Parakh", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohammed Yadav", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Rohit Sharma", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Shivam Ranjan", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Naman Dhir", role: "bat", base: "200L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Amogh Rao", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohit Rawat", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Divyam Kamra", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Vishal Malhotra", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Himanshu Singh", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Tarun Vijay", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Yuvraj Singh", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Samarth Deswal", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Rohit Singh", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Ramakrishna Ghosh", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Manan Tiwari", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Devansh Malewar", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Akshay Kumar", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Virendra Ostwal", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Sahil Sharma", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Arshin Ankolekar", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Kunal Chouhan", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Sudhanshu Dubey", role: "bat", base: "75L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohammed Shahrukh Khan", role: "bat", base: "200L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Akshat Raghuwanshi", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Samarth Arora", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Sachin Rizvi", role: "bat", base: "75L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Ankush Mandal", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Arshin Verma", role: "bat", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+
+            // ALL ROUNDERS - SOLD
+            { name: "Wanindu Hasaranga", role: "all-rounder", base: "200L", sold: "550L", team: "Royal Challengers Galle", status: "sold", overseas: true },
+            { name: "Jason Holder", role: "all-rounder", base: "200L", sold: "1110L", team: "Rajasthan Stallions", status: "sold", overseas: true },
+            { name: "Liam Livingstone", role: "all-rounder", base: "200L", sold: "710L", team: "Rajasthan Stallions", status: "sold", overseas: true },
+            { name: "Venkatesh Iyer", role: "all-rounder", base: "200L", sold: "620L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "David Miller", role: "all-rounder", base: "200L", sold: "530L", team: "Sunrisers Colombo", status: "sold", overseas: true },
+            { name: "Chris Green", role: "all-rounder", base: "200L", sold: "310L", team: "Royal Challengers Galle", status: "sold", overseas: true },
+            { name: "Abhishek Sharma", role: "all-rounder", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Krunal Pandya", role: "all-rounder", base: "200L", sold: "200L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Hardik Pandya", role: "all-rounder", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Shivam Dube", role: "all-rounder", base: "200L", sold: "450L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Harshal Patel", role: "all-rounder", base: "200L", sold: "260L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Shivam Kishore", role: "all-rounder", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Jaydev Unadkat", role: "all-rounder", base: "100L", sold: "120L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Ravindra Jadeja", role: "all-rounder", base: "200L", sold: "1860L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Shubham Gopal", role: "all-rounder", base: "30L", sold: "30L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Dhananjaya Rathi", role: "all-rounder", base: "30L", sold: "30L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Shivam Sharma", role: "all-rounder", base: "200L", sold: "240L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Himanshu Rana", role: "all-rounder", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Shivam Singh", role: "all-rounder", base: "200L", sold: "400L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Abhishek Sharma", role: "all-rounder", base: "200L", sold: "590L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Yudhvir Dayal", role: "all-rounder", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Harpreet Brar", role: "all-rounder", base: "150L", sold: "150L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Zaheer Ansari", role: "all-rounder", base: "30L", sold: "30L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Himanshu Dubey", role: "all-rounder", base: "30L", sold: "30L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+
+            // ALL ROUNDERS - UNSOLD
+            { name: "Akeal Hosein", role: "all-rounder", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Ben Duckett", role: "all-rounder", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Akash Kamboj", role: "all-rounder", base: "200L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Gurjot Singh", role: "all-rounder", base: "100L", sold: "-", team: "-", status: "unsold", overseas: false },
+
+            // BOWLERS - SOLD
+            { name: "Matheesha Pathirana", role: "bowl", base: "200L", sold: "450L", team: "Apex Bolt Assassins", status: "sold", overseas: true },
+            { name: "Ravi Bishnoi", role: "bowl", base: "200L", sold: "420L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Matthew Henry", role: "bowl", base: "200L", sold: "390L", team: "Royal Challengers Galle", status: "sold", overseas: true },
+            { name: "Arshdeep Singh", role: "bowl", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Rashid Khan", role: "bowl", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: true },
+            { name: "Bhuvneshwar Kumar", role: "bowl", base: "200L", sold: "200L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Jasprit Bumrah", role: "bowl", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Trent Boult", role: "bowl", base: "200L", sold: "1230L", team: "Rajasthan Stallions", status: "sold", overseas: true },
+            { name: "Akeal Khan", role: "bowl", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Kuldeep Sen", role: "bowl", base: "75L", sold: "75L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Jofra Archer", role: "bowl", base: "200L", sold: "320L", team: "Royal Challengers Galle", status: "sold", overseas: true },
+            { name: "Mohammed Shami", role: "bowl", base: "200L", sold: "370L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Sunil Narine", role: "bowl", base: "200L", sold: "1700L", team: "Apex Bolt Assassins", status: "sold", overseas: true },
+            { name: "Deepak Chahar", role: "bowl", base: "200L", sold: "410L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Umran Malik", role: "bowl", base: "75L", sold: "115L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "T Natarajan", role: "bowl", base: "200L", sold: "270L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Khaleel Ahmed", role: "bowl", base: "200L", sold: "200L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Prasidh Krishna", role: "bowl", base: "200L", sold: "530L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Josh Hazlewood", role: "bowl", base: "200L", sold: "460L", team: "Rajasthan Stallions", status: "sold", overseas: true },
+            { name: "Mitchell Starc", role: "bowl", base: "200L", sold: "200L", team: "Jaffna Sharks", status: "sold", overseas: true },
+            { name: "Kuldeep Yadav", role: "bowl", base: "200L", sold: "1150L", team: "Apex Bolt Assassins", status: "sold", overseas: false },
+            { name: "Varun Chakravarthy", role: "bowl", base: "200L", sold: "1520L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Noor Ahmad", role: "bowl", base: "200L", sold: "1040L", team: "Jaffna Sharks", status: "sold", overseas: true },
+            { name: "Mukesh Kumar", role: "bowl", base: "200L", sold: "260L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Ishant Sharma", role: "bowl", base: "75L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+            { name: "Rahul Chahar", role: "bowl", base: "100L", sold: "240L", team: "Royal Challengers Galle", status: "sold", overseas: false },
+            { name: "Pat Cummins", role: "bowl", base: "200L", sold: "890L", team: "Royal Challengers Galle", status: "sold", overseas: true },
+            { name: "Mohammed Siraj", role: "bowl", base: "200L", sold: "1010L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Shivam Mavi", role: "bowl", base: "75L", sold: "75L", team: "Sunrisers Colombo", status: "sold", overseas: false },
+            { name: "Kagiso Rabada", role: "bowl", base: "200L", sold: "200L", team: "Apex Bolt Assassins", status: "sold", overseas: true },
+            { name: "Yuzvendra Chahal", role: "bowl", base: "200L", sold: "960L", team: "Jaffna Sharks", status: "sold", overseas: false },
+            { name: "Tushar Deshpande", role: "bowl", base: "200L", sold: "200L", team: "Rajasthan Stallions", status: "sold", overseas: false },
+
+            // BOWLERS - UNSOLD
+            { name: "Mukesh Yadav", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Abhishek Deep", role: "bowl", base: "100L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Nandre Burger", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Abrar Ghazanfar", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Adam Milne", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Kwena Maphaka", role: "bowl", base: "150L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Kyle Jamieson", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Anrich Nortje", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Dushmantha Chameera", role: "bowl", base: "75L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Lockie Ferguson", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Nuwan Thushara", role: "bowl", base: "150L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Nathan Ellis", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Xavier Bartlett", role: "bowl", base: "75L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Lungi Ngidi", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Jacob Duffy", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Luke Wood", role: "bowl", base: "75L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Shivam Mishra", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Harmeet Singh", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Eshan Malinga", role: "bowl", base: "100L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Mohammed Izhar", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Vijay Nishad", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Bhawik Sharma", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Gurnoor Singh", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Yash Raj Punja", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Pradeep Dubey", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohammed Markande", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Utkarsh Patel", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohammed Khan", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohammed Siddharth", role: "bowl", base: "75L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Sarfaraz Hussain", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Om Tarmale", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Rohan Bawa", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Akash Khan", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohammed Khan", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Jack Edwards", role: "bowl", base: "50L", sold: "-", team: "-", status: "unsold", overseas: true },
+            { name: "Prashant Avinash", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Prashant Raj", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Naman Tiwari", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Akash Sharma", role: "bowl", base: "200L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Karan Fuletra", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Prashant Hinge", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Akash Nabi", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Akash Kulkarni", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Rohit Smaran", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Akash Khan", role: "bowl", base: "100L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Akash Singh", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Prashant Yadav", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohammed Choudhary", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Yash Thakur", role: "bowl", base: "150L", sold: "-", team: "-", status: "unsold", overseas: false },
+            { name: "Mohammed Suthar", role: "bowl", base: "30L", sold: "-", team: "-", status: "unsold", overseas: false }
+        ];
+
+        // Render Players Function
+        function renderPlayers(filter = 'all', searchTerm = '') {
+            const grid = document.getElementById('playersGrid');
+            grid.innerHTML = '';
+
+            let filteredPlayers = playersData;
+
+            // Apply role filter
+            if (filter !== 'all') {
+                if (filter === 'sold') {
+                    filteredPlayers = filteredPlayers.filter(p => p.status === 'sold');
+                } else if (filter === 'unsold') {
+                    filteredPlayers = filteredPlayers.filter(p => p.status === 'unsold');
+                } else {
+                    filteredPlayers = filteredPlayers.filter(p => p.role === filter);
+                }
+            }
+
+            // Apply search filter
+            if (searchTerm) {
+                filteredPlayers = filteredPlayers.filter(p => 
+                    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    p.team.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+
+            filteredPlayers.forEach(player => {
+                const card = document.createElement('div');
+                card.className = `player-card ${player.status} ${player.expensive ? 'expensive' : ''}`;
+                
+                const roleClass = `role-${player.role}`;
+                const overseasBadge = player.overseas ? '<span class="overseas-badge">✈️</span>' : '';
+                const expensiveBadge = player.expensive ? '<span class="expensive-badge">👑 TOP BUY</span>' : '';
+                const teamClass = player.team !== '-' ? player.team.toLowerCase().replace(/\s+/g, '-') : '';
+                
+                card.innerHTML = `
+                    <div class="player-card-header">
+                        <div class="player-role-badge ${roleClass}">${player.role.toUpperCase()}</div>
+                        ${overseasBadge}
+                        ${expensiveBadge}
+                    </div>
+                    <div class="player-card-body">
+                        <h4 class="player-name">${player.name}</h4>
+                        <div class="player-prices">
+                            <div class="price-row">
+                                <span class="price-label">Base</span>
+                                <span class="price-value base">${player.base}</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="price-label">Sold</span>
+                                <span class="price-value sold">${player.sold}</span>
+                            </div>
+                        </div>
+                        <div class="player-team ${teamClass}">
+                            ${player.team !== '-' ? player.team : 'Unsold'}
+                        </div>
+                    </div>
+                    <div class="player-card-footer">
+                        <span class="status-badge ${player.status}">${player.status.toUpperCase()}</span>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+
+            // Update counts
+            document.getElementById('totalPlayers').textContent = filteredPlayers.length;
+            document.getElementById('soldPlayers').textContent = filteredPlayers.filter(p => p.status === 'sold').length;
+            document.getElementById('unsoldPlayers').textContent = filteredPlayers.filter(p => p.status === 'unsold').length;
+        }
+
+        // Filter button click handlers
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const filter = this.getAttribute('data-filter');
+                const searchTerm = document.getElementById('playerSearch').value;
+                renderPlayers(filter, searchTerm);
+            });
+        });
+
+        // Search functionality
+        document.getElementById('playerSearch').addEventListener('input', function() {
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            renderPlayers(activeFilter, this.value);
+        });
+
+        // Initial render
+        renderPlayers();
+    </script>
 </body>
 </html>
