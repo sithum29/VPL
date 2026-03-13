@@ -3,1256 +3,496 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPL - Virtual Premier League | Season 01</title>
+    <title>VPL Season 01 | Virtual Premier League 2026</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* ============================================
-           CSS VARIABLES - Easy to edit theme colors
-           ============================================ */
-        :root {
-            /* Primary Colors */
-            --primary-bg: #0a0e1a;
-            --secondary-bg: #111827;
-            --card-bg: #1f2937;
-            
-            /* Accent Colors */
-            --accent-neon: #00ff88;
-            --accent-orange: #ff6b35;
-            --accent-gold: #ffd700;
-            
-            /* Text Colors */
-            --text-primary: #ffffff;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
-            
-            /* Gradients */
-            --gradient-primary: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
-            --gradient-orange: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            --gradient-dark: linear-gradient(180deg, rgba(10,14,26,0.8) 0%, rgba(10,14,26,1) 100%);
-            
-            /* Shadows */
-            --glow-neon: 0 0 20px rgba(0, 255, 136, 0.3);
-            --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.4);
-            
-            /* Transitions */
-            --transition-fast: 0.3s ease;
-            --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
 
-        /* ============================================
-           RESET & BASE STYLES
-           ============================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <style>
+        /* 
+         * CUSTOM STYLES & VARIABLES 
+         * Edit these colors to change the theme easily
+         */
+        :root {
+            --vpl-blue: #0f172a;      /* Deep Navy Background */
+            --vpl-gold: #fbbf24;      /* Gold Accent */
+            --vpl-red: #ef4444;       /* Action Red */
+            --team-sharks: #004ba0;   /* Jaffna Sharks Blue */
+            --team-stallions: #f59e0b;/* Rajasthan Stallions Yellow/Orange */
+            --team-rcg: #dc2626;      /* Royal Challengers Red */
+            --team-sunrisers: #f97316;/* Sunrisers Orange */
+            --team-apex: #7c3aed;     /* Apex Bolt Purple */
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--vpl-blue);
+            color: white;
             overflow-x: hidden;
         }
 
-        /* ============================================
-           NAVIGATION BAR
-           ============================================ */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 5%;
-            background: rgba(10, 14, 26, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
-            transition: var(--transition-fast);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent-neon);
-            text-decoration: none;
+        h1, h2, h3, .brand-font {
+            font-family: 'Teko', sans-serif;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .logo i {
-            font-size: 2rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        /* Navigation Hover Effects */
+        .nav-link {
             position: relative;
-            transition: var(--transition-fast);
+            transition: color 0.3s;
         }
-
-        .nav-links a::after {
+        .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
             width: 0;
             height: 2px;
-            background: var(--gradient-primary);
-            transition: var(--transition-fast);
+            bottom: -4px;
+            left: 0;
+            background-color: var(--vpl-gold);
+            transition: width 0.3s;
         }
-
-        .nav-links a:hover {
-            color: var(--accent-neon);
-        }
-
-        .nav-links a:hover::after {
+        .nav-link:hover::after {
             width: 100%;
         }
 
-        /* Mobile Menu Toggle */
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--accent-neon);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* ============================================
-           HERO SECTION
-           ============================================ */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: 
-                url('captains.png') center/cover;
-            padding: 6rem 5% 4rem;
-            overflow: hidden;
-        }
-
-        /* Animated Background Overlay */
-        .hero::before {
-            content: '';
+        /* Carousel Fade Animation */
+        .carousel-item {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
-            animation: float 10s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-20px, -20px); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 900px;
-        }
-
-        .season-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--accent-neon);
-            border-radius: 50px;
-            color: var(--accent-neon);
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero-title {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #ffffff 0%, var(--accent-neon) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-weight: 300;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        /* Live Auction Banner */
-        .auction-banner {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 2rem;
-            background: var(--gradient-orange);
-            border-radius: 12px;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
-            animation: fadeInUp 0.8s ease 0.6s both, pulse 2s infinite;
-            cursor: pointer;
-            transition: var(--transition-fast);
-        }
-
-        .auction-banner:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
-        }
-
-        .auction-banner i {
-            font-size: 1.5rem;
-            animation: hammer 1s ease-in-out infinite;
-        }
-
-        @keyframes hammer {
-            0%, 100% { transform: rotate(-10deg); }
-            50% { transform: rotate(10deg); }
-        }
-
-        .auction-text {
-            text-align: left;
-        }
-
-        .auction-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.9;
-        }
-
-        .auction-status {
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        /* Countdown Timer */
-        .countdown-container {
-            background: rgba(31, 41, 55, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            animation: fadeInUp 0.8s ease 0.8s both;
-        }
-
-        .countdown-label {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .countdown-timer {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .time-unit {
-            text-align: center;
-        }
-
-        .time-value {
-            display: block;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            color: var(--accent-neon);
-            line-height: 1;
-            text-shadow: var(--glow-neon);
-            min-width: 80px;
-        }
-
-        .time-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-        }
-
-        /* CTA Buttons */
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease 1s both;
-        }
-
-        .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-decoration: none;
-            transition: var(--transition-smooth);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: var(--primary-bg);
-            box-shadow: var(--glow-neon);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 2px solid var(--accent-neon);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(0, 255, 136, 0.1);
-            transform: translateY(-3px);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ============================================
-           TEAMS SECTION
-           ============================================ */
-        .teams-section {
-            padding: 5rem 5%;
-            background: var(--secondary-bg);
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        .section-title span {
-            color: var(--accent-neon);
-        }
-
-        .section-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .teams-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .team-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .team-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-primary);
-            transform: scaleX(0);
-            transition: var(--transition-smooth);
-        }
-
-        .team-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-card);
-            border-color: rgba(0, 255, 136, 0.2);
-        }
-
-        .team-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .team-logo {
-            width: 100px;
-            height: 100px;
-            background: transparent;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            transition: var(--transition-fast);
-        }
-
-        .team-card:hover .team-logo {
-            transform: scale(1.1);
-            box-shadow: var(--glow-neon);
-        }
-
-        .team-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .team-captain {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .team-captain strong {
-            color: var(--accent-orange);
-        }
-
-        .team-stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent-neon);
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
-
-        /* ============================================
-           LEADERBOARD PREVIEW SECTION
-           ============================================ */
-        .leaderboard-section {
-            padding: 5rem 5%;
-            background: var(--primary-bg);
-        }
-
-        .leaderboard-card {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(0, 255, 136, 0.1);
-        }
-
-        .leaderboard-header {
-            background: var(--gradient-primary);
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .leaderboard-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-bg);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .view-all {
-            color: var(--primary-bg);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            transition: var(--transition-fast);
-        }
-
-        .view-all:hover {
-            opacity: 1;
-        }
-
-        .leaderboard-list {
-            padding: 1rem;
-        }
-
-        .leaderboard-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 0.5rem;
-            transition: var(--transition-fast);
-            cursor: pointer;
-        }
-
-        .leaderboard-item:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .leaderboard-item.top-team {
-            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, transparent 100%);
-            border-left: 4px solid var(--accent-gold);
-        }
-
-        .rank {
-            width: 40px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-muted);
-        }
-
-        .leaderboard-item.top-team .rank {
-            color: var(--accent-gold);
-        }
-
-        .rank-1 { color: var(--accent-gold) !important; }
-        .rank-2 { color: #c0c0c0 !important; }
-        .rank-3 { color: #cd7f32 !important; }
-
-        .team-info {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .team-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--secondary-bg);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .team-details h4 {
-            font-size: 1rem;
-            margin-bottom: 0.2rem;
-        }
-
-        .team-details span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .points {
-            text-align: right;
-        }
-
-        .points-value {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--accent-neon);
-        }
-
-        .points-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        /* ============================================
-           FOOTER
-           ============================================ */
-        footer {
-            background: var(--secondary-bg);
-            padding: 3rem 5%;
-            border-top: 1px solid rgba(0, 255, 136, 0.1);
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--accent-neon);
-        }
-
-        .footer-text {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: var(--card-bg);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition-fast);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .social-links a:hover {
-            background: var(--accent-neon);
-            color: var(--primary-bg);
-            transform: translateY(-3px);
-            box-shadow: var(--glow-neon);
-        }
-
-        /* ============================================
-           RESPONSIVE DESIGN
-           ============================================ */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--secondary-bg);
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1.5rem;
-                border-top: 1px solid rgba(0, 255, 136, 0.1);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-toggle {
-                display: block;
-            }
-
-            .hero {
-                padding-top: 5rem;
-            }
-
-            .countdown-timer {
-                gap: 1rem;
-            }
-
-            .time-value {
-                font-size: 2rem;
-                min-width: 60px;
-            }
-
-            .teams-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        /* ============================================
-           LOADING ANIMATION (Optional)
-           ============================================ */
-        .loader {
-            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--primary-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            z-index: 0;
+        }
+        .carousel-item.active {
+            opacity: 1;
+            z-index: 10;
         }
 
-        .loader.hidden {
-            opacity: 0;
-            visibility: hidden;
+        /* Gradient Overlay for Carousel Text Readability */
+        .hero-overlay {
+            background: linear-gradient(to top, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0.2) 100%);
         }
 
-        .loader-content {
-            text-align: center;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        .loader-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(0, 255, 136, 0.1);
-            border-top-color: var(--accent-neon);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loader-text {
-            color: var(--accent-neon);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        ::-webkit-scrollbar-thumb {
+            background: var(--vpl-gold);
+            border-radius: 4px;
         }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <!-- Loading Screen (Optional) -->
-    <div class="loader" id="loader">
-        <div class="loader-content">
-            <div class="loader-spinner"></div>
-            <div class="loader-text">Loading VPL...</div>
-        </div>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <i class="fas fa-cricket-bat-ball"></i>
-                <span>VPL</span>
-            </a>
+    <!-- ================= HEADER SECTION ================= -->
+    <!-- Edit the Logo URL below in the img src -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="captains.html" class="active">Captains Election</a></li>
-                <li><a href="matches.html" class="active">Matches</a></li>
-                <li><a href="points.html">Points Table</a></li>
-                <li><a href="teams.html">Teams</a></li>
-                <li><a href="auction.html">Auction</a></li>
-                <li><a href="rules.html">Rules</a></li>
-            </ul>
+            <!-- Logo Area -->
+            <div class="flex items-center gap-3">
+                <!-- CHANGE LOGO URL HERE -->
+                <img src="logo.png" alt="VPL Logo" class="h-12 w-12 rounded-full border-2 border-yellow-400">
+                <div>
+                    <h1 class="text-3xl font-bold text-white leading-none">VPL <span class="text-yellow-400">2026</span></h1>
+                    <p class="text-xs text-slate-400 tracking-widest">VIRTUAL PREMIER LEAGUE</p>
+                </div>
+            </div>
 
-            <button class="mobile-toggle" id="mobileToggle">
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex gap-8 text-sm font-bold tracking-wide">
+                <a href="index.html" class="nav-link text-yellow-400">Home</a>
+                <a href="matches.html" class="nav-link text-slate-300 hover:text-white">Matches</a>
+                <a href="teams.html" class="nav-link text-slate-300 hover:text-white">Teams</a>
+                <a href="points.html" class="nav-link text-slate-300 hover:text-white">Points Table</a>
+                <a href="auction.html" class="nav-link text-slate-300 hover:text-white">Auction</a>
+                <a href="rules.html" class="nav-link text-slate-300 hover:text-white">Rules</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-2xl text-yellow-400" onclick="toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <!-- Season Badge -->
-            <div class="season-badge">Season 01 • IPL 2026 Edition</div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-t border-slate-700">
+            <a href="index.html" class="block px-4 py-3 text-yellow-400 border-b border-slate-700">Home</a>
+            <a href="matches.html" class="block px-4 py-3 text-white border-b border-slate-700">Matches</a>
+            <a href="teams.html" class="block px-4 py-3 text-white border-b border-slate-700">Teams</a>
+            <a href="points.html" class="block px-4 py-3 text-white border-b border-slate-700">Points Table</a>
+            <a href="auction.html" class="block px-4 py-3 text-white">Auction</a>
+            <a href="rules.html" class="block px-4 py-3 text-white">Rules</a>
+        </div>
+    </header>
+
+    <!-- ================= HERO CAROUSEL SECTION ================= -->
+    <!-- Edit the image URLs inside the .carousel-item divs below -->
+    <section class="relative h-[600px] w-full overflow-hidden bg-black">
+        
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+            <!-- CHANGE IMAGE URL HERE (Slide 1) -->
+            <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=2070&auto=format&fit=crop" alt="Cricket Action" class="w-full h-full object-cover opacity-60">
+            <div class="absolute inset-0 hero-overlay flex flex-col justify-end pb-20 px-6 md:px-20">
+                <span class="bg-yellow-500 text-black font-bold px-3 py-1 w-max mb-4 rounded text-sm">SEASON 01</span>
+                <h2 class="text-5xl md:text-7xl font-bold mb-2 text-white drop-shadow-lg">The Battle Begins</h2>
+                <p class="text-xl text-slate-200 max-w-2xl">Five Teams. One Dream. Experience the ultimate fantasy cricket showdown in the Virtual Premier League.</p>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+            <!-- CHANGE IMAGE URL HERE (Slide 2) -->
+            <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=2005&auto=format&fit=crop" alt="Stadium Crowd" class="w-full h-full object-cover opacity-60">
+            <div class="absolute inset-0 hero-overlay flex flex-col justify-end pb-20 px-6 md:px-20">
+                <span class="bg-blue-600 text-white font-bold px-3 py-1 w-max mb-4 rounded text-sm">ANNOUNCEMENT</span>
+                <h2 class="text-5xl md:text-7xl font-bold mb-2 text-white drop-shadow-lg">Teams Finalized</h2>
+                <p class="text-xl text-slate-200 max-w-2xl">The auction is complete. Squads are locked. Prepare your strategies for the ultimate glory.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+            <!-- CHANGE IMAGE URL HERE (Slide 3) -->
+            <img src="https://images.unsplash.com/photo-1624523278528-375424553458?q=80&w=2070&auto=format&fit=crop" alt="Cricket Bat Ball" class="w-full h-full object-cover opacity-60">
+            <div class="absolute inset-0 hero-overlay flex flex-col justify-end pb-20 px-6 md:px-20">
+                <span class="bg-red-600 text-white font-bold px-3 py-1 w-max mb-4 rounded text-sm">JOIN NOW</span>
+                <h2 class="text-5xl md:text-7xl font-bold mb-2 text-white drop-shadow-lg">Join The Community</h2>
+                <p class="text-xl text-slate-200 max-w-2xl">Get real-time updates on WhatsApp. Don't miss a single boundary or wicket.</p>
+            </div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-yellow-500 hover:text-black text-white p-3 rounded-full transition z-20">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-yellow-500 hover:text-black text-white p-3 rounded-full transition z-20">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </section>
+
+    <!-- ================= COUNTDOWN & QUICK STATS ================= -->
+    <section class="bg-slate-800 py-10 border-b border-slate-700">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                
+                <!-- Countdown -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl text-yellow-400 mb-2">IPL 2026 Starts In</h3>
+                    <div class="flex gap-4 justify-center md:justify-start font-mono text-3xl md:text-4xl font-bold">
+                        <div class="text-center">
+                            <span id="days">00</span>
+                            <div class="text-xs text-slate-400 font-sans uppercase">Days</div>
+                        </div>
+                        <span class="text-yellow-500">:</span>
+                        <div class="text-center">
+                            <span id="hours">00</span>
+                            <div class="text-xs text-slate-400 font-sans uppercase">Hrs</div>
+                        </div>
+                        <span class="text-yellow-500">:</span>
+                        <div class="text-center">
+                            <span id="minutes">00</span>
+                            <div class="text-xs text-slate-400 font-sans uppercase">Mins</div>
+                        </div>
+                        <span class="text-yellow-500">:</span>
+                        <div class="text-center">
+                            <span id="seconds">00</span>
+                            <div class="text-xs text-slate-400 font-sans uppercase">Secs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Fact / Auction Highlight -->
+                <div class="bg-slate-900 p-6 rounded-lg border-l-4 border-yellow-500 shadow-xl max-w-md w-full">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-yellow-500/20 p-3 rounded-full text-yellow-400">
+                            <i class="fas fa-gavel text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold text-white">Auction Update</h4>
+                            <p class="text-sm text-slate-400">Most Expensive Player</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-between items-end">
+                        <div>
+                            <p class="text-2xl font-bold text-white">Ishan Kishan</p>
+                            <p class="text-sm text-yellow-500">Rajasthan Stallions</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-3xl font-bold text-white">19.2 <span class="text-sm text-slate-400">CR</span></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TEAMS SHOWCASE ================= -->
+    <section class="py-16 container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-5xl font-bold text-white mb-2">The Franchises</h2>
+            <div class="h-1 w-24 bg-yellow-500 mx-auto"></div>
+        </div>
+
+        <!-- Grid for 5 Teams -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             
-            <!-- Main Title -->
-            <h1 class="hero-title">Virtual Premier League</h1>
-            <p class="hero-subtitle">Fantasy Cricket League – Season 01</p>
-
-            <!-- Live Auction Banner -->
-            <div class="auction-banner" onclick="window.location.href='captains.html'">
-                <i class="fas fa-gavel"></i>
-                <div class="auction-text">
-                    <div class="auction-label">LIVE</div>
-                    <div class="auction-status">CAPTAINS ELECTION</div>
+            <!-- Team 1: Jaffna Sharks -->
+            <!-- CHANGE LOGO URL IN src -->
+            <div class="group relative bg-slate-800 rounded-xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-slate-700 hover:border-blue-500">
+                <div class="h-32 bg-gradient-to-b from-blue-900 to-slate-800 flex items-center justify-center">
+                    <img src="JS.png">
                 </div>
-                <i class="fas fa-arrow-right"></i>
-            </div>
-
-            <!-- Countdown Timer -->
-            <div class="countdown-container">
-                <div class="countdown-label">IPL 2026 Starts In</div>
-                <div class="countdown-timer" id="countdown">
-                    <div class="time-unit">
-                        <span class="time-value" id="days">00</span>
-                        <div class="time-label">Days</div>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-value" id="hours">00</span>
-                        <div class="time-label">Hours</div>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-value" id="minutes">00</span>
-                        <div class="time-label">Minutes</div>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-value" id="seconds">00</span>
-                        <div class="time-label">Seconds</div>
-                    </div>
+                <div class="p-4 text-center">
+                    <h3 class="text-xl font-bold text-white">Jaffna Sharks</h3>
+                    <p class="text-xs text-blue-400 mt-1">The Deep Sea Dominators</p>
                 </div>
             </div>
 
-            <!-- CTA Buttons -->
-            <div class="hero-cta">
-                <a href="auction.html" class="btn btn-primary">
-                    <i class="fas fa-gavel"></i> Join Auction
-                </a>
-                <a href="teams.html" class="btn btn-secondary">
-                    <i class="fas fa-users"></i> View Teams
-                </a>
+            <!-- Team 2: Rajasthan Stallions -->
+            <div class="group relative bg-slate-800 rounded-xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-slate-700 hover:border-yellow-500">
+                <div class="h-32 bg-gradient-to-b from-yellow-900 to-slate-800 flex items-center justify-center">
+                    <img src="RS.png">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="text-xl font-bold text-white">Rajasthan Stallions</h3>
+                    <p class="text-xs text-yellow-400 mt-1">The Desert Warriors</p>
+                </div>
+            </div>
+
+            <!-- Team 3: Royal Challengers Galle -->
+            <div class="group relative bg-slate-800 rounded-xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-slate-700 hover:border-red-500">
+                <div class="h-32 bg-gradient-to-b from-red-900 to-slate-800 flex items-center justify-center">
+                    <img src="RCG.jpeg">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="text-xl font-bold text-white">Royal Challengers Galle</h3>
+                    <p class="text-xs text-red-400 mt-1">The Fortress Fighters</p>
+                </div>
+            </div>
+
+            <!-- Team 4: Sunrisers Colombo -->
+            <div class="group relative bg-slate-800 rounded-xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-slate-700 hover:border-orange-500">
+                <div class="h-32 bg-gradient-to-b from-orange-900 to-slate-800 flex items-center justify-center">
+                    <img src="SRC.jpeg">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="text-xl font-bold text-white">Sunrisers Colombo</h3>
+                    <p class="text-xs text-orange-400 mt-1">Rising from the East</p>
+                </div>
+            </div>
+
+            <!-- Team 5: Apex Bolt Assassins -->
+            <div class="group relative bg-slate-800 rounded-xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-slate-700 hover:border-purple-500">
+                <div class="h-32 bg-gradient-to-b from-purple-900 to-slate-800 flex items-center justify-center">
+                    <img src="ABA.jpeg">
+                </div>
+                <div class="p-4 text-center">
+                    <h3 class="text-xl font-bold text-white">Apex Bolt Assassins</h3>
+                    <p class="text-xs text-purple-400 mt-1">Strike with Precision</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= LATEST ANNOUNCEMENTS ================= -->
+    <section class="bg-slate-900 py-16 border-t border-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-4xl font-bold text-white">Latest News</h2>
+                    <p class="text-slate-400 mt-1">Stay updated with the league</p>
+                </div>
+                <a href="#" class="text-yellow-500 hover:text-white font-bold text-sm uppercase tracking-wider">View All <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- News Item 1 -->
+                <!-- CHANGE IMAGE URL HERE -->
+                <article class="bg-slate-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition group cursor-pointer">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1629285483231-20d056224e74?q=80&w=2070&auto=format&fit=crop" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-yellow-500 uppercase mb-2 block">13 Mar, 2026</span>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition">Teams Finalized After Mega Auction</h3>
+                        <p class="text-slate-400 text-sm line-clamp-2">The squads are set. Managers have strategized. The final list of players for all five franchises is now locked in.</p>
+                    </div>
+                </article>
+
+                <!-- News Item 2 -->
+                <!-- CHANGE IMAGE URL HERE -->
+                <article class="bg-slate-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition group cursor-pointer">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1593766821405-f605e0f9535f?q=80&w=2070&auto=format&fit=crop" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-yellow-500 uppercase mb-2 block">12 Mar, 2026</span>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition">CricketXI Points System Explained</h3>
+                        <p class="text-slate-400 text-sm line-clamp-2">Understanding how your favorite players earn points. A deep dive into the scoring mechanics for VPL Season 01.</p>
+                    </div>
+                </article>
+
+                <!-- News Item 3 -->
+                <!-- CHANGE IMAGE URL HERE -->
+                <article class="bg-slate-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition group cursor-pointer">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1511406020329-e3921c995997?q=80&w=2070&auto=format&fit=crop" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-yellow-500 uppercase mb-2 block">10 Mar, 2026</span>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition">Welcome to Virtual Premier League</h3>
+                        <p class="text-slate-400 text-sm line-clamp-2">The inaugural season kicks off soon. Join the WhatsApp group for live match updates and trash talk.</p>
+                    </div>
+                </article>
+
             </div>
         </div>
     </section>
 
-    <!-- Teams Section -->
-    <section class="teams-section">
-        <div class="section-header">
-            <h2 class="section-title">The <span>Five</span> Contenders</h2>
-            <p class="section-subtitle">Meet the teams battling for glory in Season 01</p>
-        </div>
-
-        <div class="teams-grid" id="teamsGrid">
-            <!-- Teams will be injected by JavaScript -->
-        </div>
-    </section>
-
-    <!-- Leaderboard Preview Section -->
-    <section class="leaderboard-section">
-        <div class="section-header">
-            <h2 class="section-title">Points <span>Table</span></h2>
-            <p class="section-subtitle">Current standings after latest matches</p>
-        </div>
-
-        <div class="leaderboard-card">
-            <div class="leaderboard-header">
-                <div class="leaderboard-title">
-                    <i class="fas fa-trophy"></i>
-                    Top Performers
-                </div>
-                <a href="points.html" class="view-all">View Full Table →</a>
-            </div>
-            <div class="leaderboard-list" id="leaderboardList">
-                <!-- Leaderboard items injected by JavaScript -->
-            </div>
+    <!-- ================= WHATSAPP CTA SECTION ================= -->
+    <section class="py-20 relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-gradient-to-r from-green-900 to-slate-900 opacity-90 z-0"></div>
+        <div class="absolute inset-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px; opacity: 0.05;"></div>
+        
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <i class="fab fa-whatsapp text-6xl text-green-500 mb-6 animate-bounce"></i>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Join the VPL WhatsApp Group</h2>
+            <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">Get instant updates on match results, points table changes, and auction news directly on your phone. Be part of the community!</p>
+            
+            <!-- EDIT THIS LINK: Replace href with your actual WhatsApp Group Link -->
+            <a href="https://chat.whatsapp.com/YOUR_GROUP_LINK_HERE" target="_blank" class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg transition transform hover:scale-105 shadow-lg border-2 border-green-400">
+                <i class="fab fa-whatsapp mr-2"></i> Join Group Now
+            </a>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <div class="footer-logo">
-                    <i class="fas fa-cricket-bat-ball"></i>
-                    <span>VPL 2026</span>
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-black text-slate-400 py-12 border-t border-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-white text-xl font-bold mb-4 brand-font">VPL 2026</h4>
+                    <p class="text-sm">The ultimate virtual cricket experience. Compete, Strategize, Win.</p>
                 </div>
-                <p class="footer-text">Virtual Premier League Season 01</p>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-yellow-400">Home</a></li>
+                        <li><a href="#" class="hover:text-yellow-400">Matches</a></li>
+                        <li><a href="#" class="hover:text-yellow-400">Points Table</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Teams</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-blue-400">Jaffna Sharks</a></li>
+                        <li><a href="#" class="hover:text-yellow-500">Rajasthan Stallions</a></li>
+                        <li><a href="#" class="hover:text-red-500">Royal Challengers Galle</a></li>
+                        <li><a href="#" class="hover:text-orange-500">Sunrisers Colombo</a></li>
+                        <li><a href="#" class="hover:text-purple-500">Apex Bolt Assassins</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-sky-500 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
             </div>
-
-            <div class="social-links">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+            <div class="border-t border-slate-800 pt-8 text-center text-xs">
+                <p>&copy; 2026 Virtual Premier League. All rights reserved. Not affiliated with BCCI/IPL.</p>
             </div>
-
-            <p class="footer-text">© 2026 VPL. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
     <script>
-        /* ============================================
-           DATA CONFIGURATION - Easy to edit
-           ============================================ */
-        
-        // Teams Data - Edit team details here
-        const teamsData = [
-            {
-                id: 1,
-                name: "Jaffna Sharks",
-                captain: "TBD",
-                icon: "JS.png",
-                color: "#00ff88",
-                played: 0,
-                won: 0,
-                points: 0,
-                nrr: "+0.000"
-            },
-            {
-                id: 2,
-                name: "Rajasthan Stallions",
-                captain: "TBD",
-                icon: "RS.png",
-                color: "#ff6b35",
-                played: 0,
-                won: 0,
-                points: 0,
-                nrr: "+0.000"
-            },
-            {
-                id: 3,
-                name: "Royal Challengers Galle",
-                captain: "TBD",
-                icon: "RCG.jpeg",
-                color: "#ff0000",
-                played: 0,
-                won: 0,
-                points: 0,
-                nrr: "+0.000"
-            },
-            {
-                id: 4,
-                name: "Sunrisers Colombo",
-                captain: "TBD",
-                icon: "SRC.jpeg",
-                color: "#ff8c00",
-                played: 0,
-                won: 0,
-                points: 0,
-                nrr: "+0.000"
-            },
-            {
-                id: 5,
-                name: "Apex Bolt Assassins",
-                captain: "TBD",
-                icon: "ABA.jpeg",
-                color: "#9400d3",
-                played: 0,
-                won: 0,
-                points: 0,
-                nrr: "+0.000"
-            }
-        ];
+        // --- 1. Mobile Menu Toggle ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
 
-        // Leaderboard Data - Edit standings here
-        const leaderboardData = [
-            { rank: 1, team: "Jaffna Sharks", played: 0, won: 0, points: 0, icon: "🦈" },
-            { rank: 2, team: "Rajasthan Stallions", played: 0, won: 0, points: 0, icon: "🐴" },
-            { rank: 3, team: "Royal Challengers Galle", played: 0, won: 0, points: 0, icon: "👑" }
-        ];
+        // --- 2. Carousel Logic ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        const totalSlides = slides.length;
 
-        /* ============================================
-           COUNTDOWN TIMER
-           Target: IPL 2026 Start Date (March 28, 2026)
-           ============================================ */
-        function initCountdown() {
-            // Set target date: March 28, 2026
-            const targetDate = new Date('March 28, 2026 00:00:00').getTime();
-            
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const distance = targetDate - now;
-
-                // Check if date has passed
-                if (distance < 0) {
-                    document.getElementById('countdown').innerHTML = 
-                        '<div class="time-unit"><span class="time-value">IPL</span><div class="time-label">Started</div></div>';
-                    return;
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
                 }
+            });
+        }
 
-                // Calculate time units
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
 
-                // Update DOM with animation
-                updateTimeUnit('days', days);
-                updateTimeUnit('hours', hours);
-                updateTimeUnit('minutes', minutes);
-                updateTimeUnit('seconds', seconds);
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Auto advance slides every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // --- 3. Countdown Timer Logic ---
+        // Set the date we're counting down to: March 28, 2026
+        const countDownDate = new Date("Mar 28, 2026 00:00:00").getTime();
+
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            // Calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                // Optional: Display a message
+                // document.querySelector(".timer-container").innerHTML = "<h2>IPL 2026 HAS STARTED!</h2>";
             }
-
-            function updateTimeUnit(id, value) {
-                const element = document.getElementById(id);
-                const formatted = value.toString().padStart(2, '0');
-                if (element.textContent !== formatted) {
-                    element.textContent = formatted;
-                    element.style.transform = 'scale(1.2)';
-                    setTimeout(() => {
-                        element.style.transform = 'scale(1)';
-                    }, 200);
-                }
-            }
-
-            // Update immediately and then every second
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-        }
-
-        /* ============================================
-           RENDER TEAMS
-           ============================================ */
-        function renderTeams() {
-            const grid = document.getElementById('teamsGrid');
-            
-            teamsData.forEach((team, index) => {
-                const card = document.createElement('div');
-                card.className = 'team-card';
-                card.style.animationDelay = `${index * 0.1}s`;
-                card.innerHTML = `
-                    <div class="team-logo" style="border-color: ${team.color}40">
-                        <img src="${team.icon}" alt="${team.name}" style="width: 80%; height: 80%; object-fit: contain;">
-                    </div>
-                    <h3 class="team-name">${team.name}</h3>
-                    <p class="team-captain">Captain: <strong>${team.captain}</strong></p>
-                    <div class="team-stats">
-                        <div class="stat">
-                            <span class="stat-value">${team.played}</span>
-                            <div class="stat-label">Matches</div>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value">${team.won}</span>
-                            <div class="stat-label">Won</div>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value">${team.points}</span>
-                            <div class="stat-label">Points</div>
-                        </div>
-                    </div>
-                `;
-                
-                // Add click handler for future modal
-                card.addEventListener('click', () => {
-                    // Future: Open team squad modal
-                    console.log(`View squad for ${team.name}`);
-                    // window.location.href = `teams.html?id=${team.id}`;
-                });
-                
-                grid.appendChild(card);
-            });
-        }
-
-        /* ============================================
-           RENDER LEADERBOARD
-           ============================================ */
-        function renderLeaderboard() {
-            const list = document.getElementById('leaderboardList');
-            
-            leaderboardData.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = `leaderboard-item ${index === 0 ? 'top-team' : ''}`;
-                
-                const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : 'rank-3';
-                
-                div.innerHTML = `
-                    <div class="rank ${rankClass}">#${item.rank}</div>
-                    <div class="team-info">
-                        <div class="team-icon">${item.icon}</div>
-                        <div class="team-details">
-                            <h4>${item.team}</h4>
-                            <span>${item.played} Matches • ${item.won} Wins</span>
-                        </div>
-                    </div>
-                    <div class="points">
-                        <div class="points-value">${item.points}</div>
-                        <div class="points-label">Points</div>
-                    </div>
-                `;
-                
-                list.appendChild(div);
-            });
-        }
-
-        /* ============================================
-           MOBILE NAVIGATION TOGGLE
-           ============================================ */
-        function initMobileNav() {
-            const toggle = document.getElementById('mobileToggle');
-            const navLinks = document.getElementById('navLinks');
-            
-            toggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                const icon = toggle.querySelector('i');
-                icon.classList.toggle('fa-bars');
-                icon.classList.toggle('fa-times');
-            });
-
-            // Close mobile menu when clicking on a link
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    const icon = toggle.querySelector('i');
-                    icon.classList.add('fa-bars');
-                    icon.classList.remove('fa-times');
-                });
-            });
-        }
-
-        /* ============================================
-           SMOOTH SCROLLING
-           ============================================ */
-        function initSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        }
-
-        /* ============================================
-           LOADING SCREEN
-           ============================================ */
-        function initLoader() {
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    document.getElementById('loader').classList.add('hidden');
-                }, 1000);
-            });
-        }
-
-        /* ============================================
-           NAVBAR SCROLL EFFECT
-           ============================================ */
-        function initNavbarScroll() {
-            const navbar = document.querySelector('.navbar');
-            let lastScroll = 0;
-
-            window.addEventListener('scroll', () => {
-                const currentScroll = window.pageYOffset;
-                
-                if (currentScroll > 100) {
-                    navbar.style.background = 'rgba(10, 14, 26, 0.98)';
-                    navbar.style.boxShadow = '0 5px 30px rgba(0,0,0,0.3)';
-                } else {
-                    navbar.style.background = 'rgba(10, 14, 26, 0.95)';
-                    navbar.style.boxShadow = 'none';
-                }
-                
-                lastScroll = currentScroll;
-            });
-        }
-
-        /* ============================================
-           INITIALIZE EVERYTHING
-           ============================================ */
-        document.addEventListener('DOMContentLoaded', () => {
-            initLoader();
-            initCountdown();
-            renderTeams();
-            renderLeaderboard();
-            initMobileNav();
-            initSmoothScroll();
-            initNavbarScroll();
-        });
-
-        /* ============================================
-           UTILITY FUNCTIONS
-           ============================================ */
-        
-        // Confetti effect for future use (when team wins)
-        function launchConfetti() {
-            // Implementation for confetti animation
-            console.log('Confetti launched!');
-        }
-
-        // Dynamic data update function for admin use
-        function updateTeamData(teamId, newData) {
-            const team = teamsData.find(t => t.id === teamId);
-            if (team) {
-                Object.assign(team, newData);
-                // Re-render teams
-                document.getElementById('teamsGrid').innerHTML = '';
-                renderTeams();
-            }
-        }
+        }, 1000);
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
