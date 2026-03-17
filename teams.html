@@ -3,47 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teams - VPL Season 01</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Teams - VPL Season 01 | Virtual Premier League</title>
     
+    <!-- Google Fonts: 'Bebas Neue' for headings (IPL style) and 'Roboto' for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         /* ============================================
-           CSS VARIABLES
+           GLOBAL RESET & VARIABLES
            ============================================ */
         :root {
-            --primary-bg: #0a0e1a;
-            --secondary-bg: #111827;
-            --card-bg: #1f2937;
-            --accent-neon: #00ff88;
-            --accent-orange: #ff6b35;
-            --text-primary: #ffffff;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
+            /* Generic VPL Colors */
+            --vpl-blue: #0f172a;
+            --vpl-gold: #fbbf24;
+            
+            /* Team Specific Colors (Used for dynamic backgrounds) */
+            --js-blue: #004ba0;
+            --rs-yellow: #f59e0b;
+            --rcg-red: #dc2626;
+            --sc-orange: #f97316;
+            --aba-purple: #7c3aed;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6; /* Light gray background like IPL site */
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
         }
 
         /* ============================================
-           NAVIGATION
+           NAVIGATION BAR
            ============================================ */
         .navbar {
-            position: fixed;
+            background-color: #1a1a1a;
+            padding: 0 5%;
+            position: sticky;
             top: 0;
-            width: 100%;
-            padding: 1rem 5%;
-            background: rgba(10, 14, 26, 0.95);
-            backdrop-filter: blur(10px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .nav-container {
@@ -52,197 +66,220 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 70px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent-neon);
+            gap: 10px;
             text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: 40px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: white;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .logo-text span {
+            color: var(--vpl-gold);
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
             list-style: none;
+            gap: 2rem;
+            height: 100%;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: #ccc;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
+            font-weight: 500;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            transition: 0.3s;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
         }
 
         .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-neon);
+            color: white;
+            border-bottom-color: var(--vpl-gold);
         }
 
         /* ============================================
-           MAIN CONTENT
+           TEAM SELECTOR (Sticky Sub-header)
            ============================================ */
-        .main-content {
-            padding: 6rem 5% 2rem;
+        .team-selector-bar {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 70px; /* Below main nav */
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .selector-container {
             max-width: 1400px;
             margin: 0 auto;
-        }
-
-        .page-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .page-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-subtitle {
-            color: var(--text-secondary);
-        }
-
-        /* ============================================
-           TEAM SELECTOR
-           ============================================ */
-        .team-selector {
             display: flex;
-            justify-content: center;
             gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .selector-container::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
         }
 
-        .team-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--card-bg);
-            border: 2px solid transparent;
-            color: var(--text-secondary);
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .team-btn:hover, .team-btn.active {
-            border-color: var(--accent-neon);
-            color: var(--accent-neon);
-            background: rgba(0, 255, 136, 0.1);
-        }
-
-        /* ============================================
-           TEAM SECTIONS (Hidden by default)
-           ============================================ */
-        .team-container {
-            display: none;
-        }
-
-        .team-container.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ============================================
-           TEAM HEADER
-           ============================================ */
-        .team-header {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(0, 255, 136, 0.1);
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 3rem;
+        .team-tab {
+            display: flex;
             align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 30px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #4b5563;
         }
 
-        .team-logo-large {
-            width: 150px;
-            height: 150px;
-            border-radius: 20px;
+        .team-tab:hover {
+            background: #e5e7eb;
+        }
+
+        .team-tab.active {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        .team-tab img {
+            width: 24px;
+            height: 24px;
             object-fit: contain;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem;
         }
 
-        .team-info h1 {
-            font-size: 2.5rem;
+        /* ============================================
+           TEAM HERO SECTION
+           ============================================ */
+        .team-hero {
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: flex-end;
+            color: white;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        /* Dynamic Backgrounds for Teams */
+        .bg-js { background: linear-gradient(135deg, #004ba0 0%, #002a5c 100%); }
+        .bg-rs { background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); }
+        .bg-rcg { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }
+        .bg-sc { background: linear-gradient(135deg, #f97316 0%, #c2410c 100%); }
+        .bg-aba { background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%); }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); /* Subtle texture */
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 3rem 5%;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .hero-logo {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: 50%;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .hero-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .hero-text h1 {
+            font-size: 5rem;
+            line-height: 1;
             margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .team-stats {
+        .hero-text p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .hero-stats {
             display: flex;
             gap: 2rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
-        .stat {
+        .stat-box {
             text-align: center;
         }
 
         .stat-number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent-neon);
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
         }
 
         .stat-label {
             font-size: 0.8rem;
-            color: var(--text-secondary);
             text-transform: uppercase;
-        }
-
-        .captain-card {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(0, 255, 136, 0.05);
-            border-radius: 15px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-        }
-
-        .captain-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--accent-neon);
-            margin-bottom: 0.75rem;
-        }
-
-        .captain-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--accent-neon);
-            letter-spacing: 1px;
-        }
-
-        .captain-name {
-            font-weight: 700;
-            font-size: 1.1rem;
+            opacity: 0.8;
         }
 
         /* ============================================
-           SQUAD SECTION
+           MAIN SQUAD SECTION
            ============================================ */
         .squad-section {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(0, 255, 136, 0.1);
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 5%;
         }
 
-        .squad-header {
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -251,588 +288,677 @@
             gap: 1rem;
         }
 
-        .squad-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .section-title {
+            font-size: 2.5rem;
+            color: #1f2937;
+            position: relative;
+            padding-bottom: 10px;
         }
 
-        .squad-filters {
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--vpl-gold);
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
             display: flex;
             gap: 0.5rem;
-            flex-wrap: wrap;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .filter-tag {
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50px;
-            font-size: 0.85rem;
+        .filter-btn {
+            padding: 8px 20px;
+            border: none;
+            background: transparent;
             cursor: pointer;
-            transition: 0.3s;
+            font-weight: 600;
+            color: #6b7280;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            text-transform: uppercase;
         }
 
-        .filter-tag:hover, .filter-tag.active {
-            background: var(--accent-neon);
-            color: var(--primary-bg);
+        .filter-btn:hover {
+            color: #111;
         }
 
+        .filter-btn.active {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        /* ============================================
+           PLAYERS GRID
+           ============================================ */
         .players-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 1.5rem;
         }
 
         .player-card {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            transition: 0.3s;
-            position: relative;
+            background: white;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
 
         .player-card:hover {
             transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .player-image-container {
+            height: 260px;
+            background: linear-gradient(to bottom, #e5e7eb, #f3f4f6);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
         }
 
         .player-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            margin-bottom: 0.75rem;
-            border: 3px solid transparent;
-            transition: 0.3s;
+            object-position: top center;
+            transition: transform 0.3s;
         }
 
         .player-card:hover .player-image {
-            border-color: var(--accent-neon);
+            transform: scale(1.05);
         }
 
+        /* Foreign Badge */
         .foreign-badge {
             position: absolute;
             top: 10px;
             right: 10px;
-            background: var(--accent-orange);
+            background: #1a1a1a;
             color: white;
-            font-size: 0.65rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 50px;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
             font-weight: 700;
-            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        .player-info {
+            padding: 1rem;
+            text-align: center;
         }
 
         .player-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 4px;
         }
 
         .player-role {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            font-size: 0.85rem;
+            color: #6b7280;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .role-bat { color: #00ff88; }
-        .role-bowl { color: #ff6b35; }
-        .role-ar { color: #ffd700; }
-        .role-wk { color: #0096ff; }
+        /* Role Colors */
+        .role-batter { color: #dc2626; }
+        .role-bowler { color: #2563eb; }
+        .role-all-rounder { color: #d97706; }
+        .role-wk { color: #059669; }
 
         /* ============================================
-           RESPONSIVE
+           RESPONSIVE DESIGN
            ============================================ */
-        @media (max-width: 768px) {
-            .team-header {
-                grid-template-columns: 1fr;
+        @media (max-width: 968px) {
+            .hero-content {
+                flex-direction: column;
                 text-align: center;
+                gap: 1.5rem;
+                padding-bottom: 2rem;
             }
-
-            .team-logo-large {
-                margin: 0 auto;
+            
+            .hero-logo {
+                width: 120px;
+                height: 120px;
             }
-
-            .captain-card {
-                margin: 0 auto;
+            
+            .hero-text h1 {
+                font-size: 3rem;
             }
-
-            .players-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                display: none; /* Simplified for mobile */
+            }
+            
+            .players-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            .player-image-container {
+                height: 200px;
+            }
+        }
+        
+        /* Utility for hiding/showing sections */
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
+    <!-- ============================================
+         NAVIGATION BAR
+         ============================================ -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <i class="fas fa-cricket-bat-ball"></i>
-                <span>VPL</span>
+                <!-- VPL Logo Placeholder -->
+                <i class="fas fa-cricket-bat-ball" style="color: var(--vpl-gold); font-size: 2rem;"></i>
+                <span class="logo-text">VPL <span>2026</span></span>
             </a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="matches.html">Matches</a></li>
                 <li><a href="teams.html" class="active">Teams</a></li>
                 <li><a href="points.html">Points Table</a></li>
-                <li><a href="matches.html">Matches</a></li>
-                <li><a href="auction.html">Auction</a></li>
-                <li><a href="rules.html">Rules</a></li>
+                <li><a href="auction.html">Auction Rules</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">Team Squads</h1>
-            <p class="page-subtitle">Season 01 • IPL 2026 Edition</p>
+    <!-- ============================================
+         TEAM SELECTOR TABS
+         ============================================ -->
+    <div class="team-selector-bar">
+        <div class="selector-container">
+            <button class="team-tab active" onclick="switchTeam('jaffna')">
+                <span style="display:inline-block; width:24px; height:24px; background:var(--js-blue); border-radius:50%;"></span>
+                Jaffna Sharks
+            </button>
+            <button class="team-tab" onclick="switchTeam('rajasthan')">
+                <span style="display:inline-block; width:24px; height:24px; background:var(--rs-yellow); border-radius:50%;"></span>
+                Rajasthan Stallions
+            </button>
+            <button class="team-tab" onclick="switchTeam('rcg')">
+                <span style="display:inline-block; width:24px; height:24px; background:var(--rcg-red); border-radius:50%;"></span>
+                Royal Challengers Galle
+            </button>
+            <button class="team-tab" onclick="switchTeam('sunrisers')">
+                <span style="display:inline-block; width:24px; height:24px; background:var(--sc-orange); border-radius:50%;"></span>
+                Sunrisers Colombo
+            </button>
+            <button class="team-tab" onclick="switchTeam('apex')">
+                <span style="display:inline-block; width:24px; height:24px; background:var(--aba-purple); border-radius:50%;"></span>
+                Apex Bolt Assassins
+            </button>
         </div>
+    </div>
 
-        <!-- Team Selector Buttons -->
-        <div class="team-selector">
-            <button class="team-btn active" onclick="showTeam('jaffna')">Jaffna Sharks</button>
-            <button class="team-btn" onclick="showTeam('rajasthan')">Rajasthan Stallions</button>
-            <button class="team-btn" onclick="showTeam('rcg')">Royal Challengers Galle</button>
-            <button class="team-btn" onclick="showTeam('sunrisers')">Sunrisers Colombo</button>
-            <button class="team-btn" onclick="showTeam('apex')">Apex Bolt Assassins</button>
-        </div>
-
-        <!-- ============================================
-             TEAM 1: JAFFNA SHARKS
-             ============================================ -->
-        <div id="jaffna" class="team-container active">
-            <div class="team-header">
-                <img src="JS.png" alt="Jaffna Sharks" class="team-logo-large">
-                <div class="team-info">
+    <!-- ============================================
+         TEAM 1: JAFFNA SHARKS
+         ============================================ -->
+    <div id="jaffna" class="team-view">
+        <!-- Hero Section -->
+        <div class="team-hero bg-js">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <!-- EDIT: Replace with Jaffna Sharks Logo URL -->
+                    <img src="JS.png" alt="Jaffna Sharks Logo">
+                </div>
+                <div class="hero-text">
                     <h1>Jaffna Sharks</h1>
-                    <p style="color: var(--text-secondary);">Owned by Anuhas</p>
-                    <div class="team-stats">
-                        <div class="stat"><div class="stat-number">25</div><div class="stat-label">Players</div></div>
-                        <div class="stat"><div class="stat-number">8</div><div class="stat-label">Foreign</div></div>
-                        <div class="stat"><div class="stat-number">17</div><div class="stat-label">Local</div></div>
+                    <p>Owned by Anuhas | Captain: Rohit Sharma</p>
+                    <div class="hero-stats">
+                        <div class="stat-box">
+                            <span class="stat-number">25</span>
+                            <span class="stat-label">Players</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">8</span>
+                            <span class="stat-label">Foreign</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">17</span>
+                            <span class="stat-label">Indian</span>
+                        </div>
                     </div>
                 </div>
-                <div class="captain-card">
-                    <img src="https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png" alt="Captain" class="captain-image">
-                    <div class="captain-label">Captain</div>
-                    <div class="captain-name">Rohit Sharma</div>
-                </div>
-            </div>
-            <div class="squad-section">
-                <div class="squad-header">
-                    <h2 class="squad-title">Squad</h2>
-                    <div class="squad-filters" id="filters-jaffna">
-                        <span class="filter-tag active" onclick="filterSquad('jaffna', 'all')">All</span>
-                        <span class="filter-tag" onclick="filterSquad('jaffna', 'Batter')">Batters</span>
-                        <span class="filter-tag" onclick="filterSquad('jaffna', 'Bowler')">Bowlers</span>
-                        <span class="filter-tag" onclick="filterSquad('jaffna', 'WK')">Wicket Keepers</span>
-                        <span class="filter-tag" onclick="filterSquad('jaffna', 'All-rounder')">All Rounders</span>
-                    </div>
-                </div>
-                <div class="players-grid" id="grid-jaffna"></div>
             </div>
         </div>
 
-        <!-- ============================================
-             TEAM 2: RAJASTHAN STALLIONS
-             ============================================ -->
-        <div id="rajasthan" class="team-container">
-            <div class="team-header">
-                <img src="RS.png" alt="Rajasthan Stallions" class="team-logo-large">
-                <div class="team-info">
+        <!-- Squad Section -->
+        <div class="squad-section">
+            <div class="section-header">
+                <h2 class="section-title">Squad 2026</h2>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="filterPlayers('jaffna', 'all')">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'Batter')">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'Bowler')">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'WK')">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'All-rounder')">All Rounders</button>
+                </div>
+            </div>
+            <div class="players-grid" id="grid-jaffna">
+                <!-- Players injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         TEAM 2: RAJASTHAN STALLIONS
+         ============================================ -->
+    <div id="rajasthan" class="team-view hidden">
+        <div class="team-hero bg-rs">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="RS.png" alt="Rajasthan Stallions Logo">
+                </div>
+                <div class="hero-text">
                     <h1>Rajasthan Stallions</h1>
-                    <p style="color: var(--text-secondary);">Owned by Faith</p>
-                    <div class="team-stats">
-                        <div class="stat"><div class="stat-number">25</div><div class="stat-label">Players</div></div>
-                        <div class="stat"><div class="stat-number">8</div><div class="stat-label">Foreign</div></div>
-                        <div class="stat"><div class="stat-number">17</div><div class="stat-label">Local</div></div>
+                    <p>Owned by Faith | Captain: Washington Sundar</p>
+                    <div class="hero-stats">
+                        <div class="stat-box"><span class="stat-number">25</span><span class="stat-label">Players</span></div>
+                        <div class="stat-box"><span class="stat-number">8</span><span class="stat-label">Foreign</span></div>
+                        <div class="stat-box"><span class="stat-number">17</span><span class="stat-label">Indian</span></div>
                     </div>
                 </div>
-                <div class="captain-card">
-                    <img src="https://documents.iplt20.com/ipl/IPLHeadshot2025/20.png" alt="Captain" class="captain-image">
-                    <div class="captain-label">Captain</div>
-                    <div class="captain-name">Washington Sundar</div>
-                </div>
-            </div>
-            <div class="squad-section">
-                <div class="squad-header">
-                    <h2 class="squad-title">Squad</h2>
-                    <div class="squad-filters" id="filters-rajasthan">
-                        <span class="filter-tag active" onclick="filterSquad('rajasthan', 'all')">All</span>
-                        <span class="filter-tag" onclick="filterSquad('rajasthan', 'Batter')">Batters</span>
-                        <span class="filter-tag" onclick="filterSquad('rajasthan', 'Bowler')">Bowlers</span>
-                        <span class="filter-tag" onclick="filterSquad('rajasthan', 'WK')">Wicket Keepers</span>
-                        <span class="filter-tag" onclick="filterSquad('rajasthan', 'All-rounder')">All Rounders</span>
-                    </div>
-                </div>
-                <div class="players-grid" id="grid-rajasthan"></div>
             </div>
         </div>
+        <div class="squad-section">
+            <div class="section-header">
+                <h2 class="section-title">Squad 2026</h2>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="filterPlayers('rajasthan', 'all')">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'Batter')">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'Bowler')">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'WK')">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'All-rounder')">All Rounders</button>
+                </div>
+            </div>
+            <div class="players-grid" id="grid-rajasthan"></div>
+        </div>
+    </div>
 
-        <!-- ============================================
-             TEAM 3: ROYAL CHALLENGERS GALLE
-             ============================================ -->
-        <div id="rcg" class="team-container">
-            <div class="team-header">
-                <img src="RCG.jpeg" alt="Royal Challengers Galle" class="team-logo-large">
-                <div class="team-info">
+    <!-- ============================================
+         TEAM 3: ROYAL CHALLENGERS GALLE
+         ============================================ -->
+    <div id="rcg" class="team-view hidden">
+        <div class="team-hero bg-rcg">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="RCG.jpeg" alt="RCG Logo">
+                </div>
+                <div class="hero-text">
                     <h1>Royal Challengers Galle</h1>
-                    <p style="color: var(--text-secondary);">Owned by Kawidu</p>
-                    <div class="team-stats">
-                        <div class="stat"><div class="stat-number">25</div><div class="stat-label">Players</div></div>
-                        <div class="stat"><div class="stat-number">8</div><div class="stat-label">Foreign</div></div>
-                        <div class="stat"><div class="stat-number">17</div><div class="stat-label">Local</div></div>
+                    <p>Owned by Kawidu | Captain: Rajat Patidar</p>
+                    <div class="hero-stats">
+                        <div class="stat-box"><span class="stat-number">25</span><span class="stat-label">Players</span></div>
+                        <div class="stat-box"><span class="stat-number">8</span><span class="stat-label">Foreign</span></div>
+                        <div class="stat-box"><span class="stat-number">17</span><span class="stat-label">Indian</span></div>
                     </div>
                 </div>
-                <div class="captain-card">
-                    <img src="https://documents.iplt20.com/ipl/IPLHeadshot2025/597.png" alt="Captain" class="captain-image">
-                    <div class="captain-label">Captain</div>
-                    <div class="captain-name">Rajat Patidar</div>
-                </div>
-            </div>
-            <div class="squad-section">
-                <div class="squad-header">
-                    <h2 class="squad-title">Squad</h2>
-                    <div class="squad-filters" id="filters-rcg">
-                        <span class="filter-tag active" onclick="filterSquad('rcg', 'all')">All</span>
-                        <span class="filter-tag" onclick="filterSquad('rcg', 'Batter')">Batters</span>
-                        <span class="filter-tag" onclick="filterSquad('rcg', 'Bowler')">Bowlers</span>
-                        <span class="filter-tag" onclick="filterSquad('rcg', 'WK')">Wicket Keepers</span>
-                        <span class="filter-tag" onclick="filterSquad('rcg', 'All-rounder')">All Rounders</span>
-                    </div>
-                </div>
-                <div class="players-grid" id="grid-rcg"></div>
             </div>
         </div>
+        <div class="squad-section">
+            <div class="section-header">
+                <h2 class="section-title">Squad 2026</h2>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="filterPlayers('rcg', 'all')">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('rcg', 'Batter')">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('rcg', 'Bowler')">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('rcg', 'WK')">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('rcg', 'All-rounder')">All Rounders</button>
+                </div>
+            </div>
+            <div class="players-grid" id="grid-rcg"></div>
+        </div>
+    </div>
 
-        <!-- ============================================
-             TEAM 4: SUNRISERS COLOMBO
-             ============================================ -->
-        <div id="sunrisers" class="team-container">
-            <div class="team-header">
-                <img src="SRC.jpeg" alt="Sunrisers Colombo" class="team-logo-large">
-                <div class="team-info">
+    <!-- ============================================
+         TEAM 4: SUNRISERS COLOMBO
+         ============================================ -->
+    <div id="sunrisers" class="team-view hidden">
+        <div class="team-hero bg-sc">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="SRC.jpeg" alt="Sunrisers Colombo Logo">
+                </div>
+                <div class="hero-text">
                     <h1>Sunrisers Colombo</h1>
-                    <p style="color: var(--text-secondary);">Owned by Rishel</p>
-                    <div class="team-stats">
-                        <div class="stat"><div class="stat-number">25</div><div class="stat-label">Players</div></div>
-                        <div class="stat"><div class="stat-number">8</div><div class="stat-label">Foreign</div></div>
-                        <div class="stat"><div class="stat-number">17</div><div class="stat-label">Local</div></div>
+                    <p>Owned by Rishel | Captain: TBD</p>
+                    <div class="hero-stats">
+                        <div class="stat-box"><span class="stat-number">25</span><span class="stat-label">Players</span></div>
+                        <div class="stat-box"><span class="stat-number">8</span><span class="stat-label">Foreign</span></div>
+                        <div class="stat-box"><span class="stat-number">17</span><span class="stat-label">Indian</span></div>
                     </div>
                 </div>
-                <div class="captain-card">
-                    <img src="https://cdn-icons-png.flaticon.com/512/166/166364.png" alt="Captain" class="captain-image">
-                    <div class="captain-label">Captain</div>
-                    <div class="captain-name">TBD</div>
-                </div>
-            </div>
-            <div class="squad-section">
-                <div class="squad-header">
-                    <h2 class="squad-title">Squad</h2>
-                    <div class="squad-filters" id="filters-sunrisers">
-                        <span class="filter-tag active" onclick="filterSquad('sunrisers', 'all')">All</span>
-                        <span class="filter-tag" onclick="filterSquad('sunrisers', 'Batter')">Batters</span>
-                        <span class="filter-tag" onclick="filterSquad('sunrisers', 'Bowler')">Bowlers</span>
-                        <span class="filter-tag" onclick="filterSquad('sunrisers', 'WK')">Wicket Keepers</span>
-                        <span class="filter-tag" onclick="filterSquad('sunrisers', 'All-rounder')">All Rounders</span>
-                    </div>
-                </div>
-                <div class="players-grid" id="grid-sunrisers"></div>
             </div>
         </div>
+        <div class="squad-section">
+            <div class="section-header">
+                <h2 class="section-title">Squad 2026</h2>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="filterPlayers('sunrisers', 'all')">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'Batter')">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'Bowler')">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'WK')">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'All-rounder')">All Rounders</button>
+                </div>
+            </div>
+            <div class="players-grid" id="grid-sunrisers"></div>
+        </div>
+    </div>
 
-        <!-- ============================================
-             TEAM 5: APEX BOLT ASSASSINS
-             ============================================ -->
-        <div id="apex" class="team-container">
-            <div class="team-header">
-                <img src="ABA.jpeg" alt="Apex Bolt Assassins" class="team-logo-large">
-                <div class="team-info">
+    <!-- ============================================
+         TEAM 5: APEX BOLT ASSASSINS
+         ============================================ -->
+    <div id="apex" class="team-view hidden">
+        <div class="team-hero bg-aba">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="ABA.jpeg" alt="Apex Bolt Assassins Logo">
+                </div>
+                <div class="hero-text">
                     <h1>Apex Bolt Assassins</h1>
-                    <p style="color: var(--text-secondary);">Owned by Sithum</p>
-                    <div class="team-stats">
-                        <div class="stat"><div class="stat-number">25</div><div class="stat-label">Players</div></div>
-                        <div class="stat"><div class="stat-number">8</div><div class="stat-label">Foreign</div></div>
-                        <div class="stat"><div class="stat-number">17</div><div class="stat-label">Local</div></div>
+                    <p>Owned by Sithum | Captain: Sunil Narine</p>
+                    <div class="hero-stats">
+                        <div class="stat-box"><span class="stat-number">25</span><span class="stat-label">Players</span></div>
+                        <div class="stat-box"><span class="stat-number">8</span><span class="stat-label">Foreign</span></div>
+                        <div class="stat-box"><span class="stat-number">17</span><span class="stat-label">Indian</span></div>
                     </div>
                 </div>
-                <div class="captain-card">
-                    <img src="https://documents.iplt20.com/ipl/IPLHeadshot2025/156.png" alt="Captain" class="captain-image">
-                    <div class="captain-label">Captain</div>
-                    <div class="captain-name">Sunil Narine</div>
-                </div>
-            </div>
-            <div class="squad-section">
-                <div class="squad-header">
-                    <h2 class="squad-title">Squad</h2>
-                    <div class="squad-filters" id="filters-apex">
-                        <span class="filter-tag active" onclick="filterSquad('apex', 'all')">All</span>
-                        <span class="filter-tag" onclick="filterSquad('apex', 'Batter')">Batters</span>
-                        <span class="filter-tag" onclick="filterSquad('apex', 'Bowler')">Bowlers</span>
-                        <span class="filter-tag" onclick="filterSquad('apex', 'WK')">Wicket Keepers</span>
-                        <span class="filter-tag" onclick="filterSquad('apex', 'All-rounder')">All Rounders</span>
-                    </div>
-                </div>
-                <div class="players-grid" id="grid-apex"></div>
             </div>
         </div>
+        <div class="squad-section">
+            <div class="section-header">
+                <h2 class="section-title">Squad 2026</h2>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="filterPlayers('apex', 'all')">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('apex', 'Batter')">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('apex', 'Bowler')">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('apex', 'WK')">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('apex', 'All-rounder')">All Rounders</button>
+                </div>
+            </div>
+            <div class="players-grid" id="grid-apex"></div>
+        </div>
+    </div>
 
-    </main>
-
+    <!-- ============================================
+         JAVASCRIPT LOGIC
+         ============================================ -->
     <script>
-        /* ============================================
-           ALL TEAMS SQUAD DATA
-           ============================================ */
-
-        // Team 1: Jaffna Sharks
-        const jaffnaSharksSquad = [
-            /* BATTERS (4) */
-            { name: "Rohit Sharma", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png" },
-            { name: "Ruturaj Gaikwad", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/102.png" },
-            { name: "Shubman Gill", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/62.png" },
-            /* BOWLERS (7) */
-            { name: "Avesh Khan", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/109.png" },
-            { name: "Prasidh Krishna", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/150.png" },
-            { name: "Mitchell Starc", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/31.png" },
-            { name: "Noor Ahmad", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/975.png" },
-            { name: "Yuzvendra Chahal", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/10.png" },
-            { name: "Digvesh Rathi", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3565.png" },
-            { name: "Suyash Sharma", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1932.png" },
-            /* WICKET KEEPERS (3) */
-            { name: "KL Rahul", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/19.png" },
-            { name: "Nicholas Pooran", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/136.png" },
-            { name: "Quinton de Kock", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Dhruv Jurel", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1004.png" },
-            /* ALL ROUNDERS (10) */
-            { name: "Priyansh Arya", role: "Al-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3571.png" },
-            { name: "Harshal Patel", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/114.png" },
-            { name: "Romario Shepherd", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/371.png" },
-            { name: "Liam Livingstone", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Sam Curran", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Ashutosh Sharma", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3109.png" },
-            { name: "Vipraj Nigam", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3560.png" },
-            { name: "Ramandeep Singh", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/991.png" },
-            { name: "Shardul Thakur", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Prashant Veer", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Cooper Connolly", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" }
-        ];
-
-        // Team 2: Rajasthan Stallions
-        const rajasthanStallionsSquad = [
-            /* BATTERS (8) */
-            { name: "Riyan Parag", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/189.png" },
-            { name: "Shimron Hetmyer", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/210.png" },
-            { name: "Rinku Singh", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/152.png" },
-            { name: "Glenn Phillips", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/635.png" },
-            { name: "Ajinkya Rahane", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/44.png" },
-            { name: "Rahul Tripathi", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Prithvi Shaw", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/51.png" },
-            { name: "Manish Pandey", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/16.png" },
-            /* BOWLERS (8) */
-            { name: "Ravi Bishnoi", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Trent Boult", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/66.png" },
-            { name: "Mohammad Shami", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Deepak Chahar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/91.png" },
-            { name: "Josh Hazlewood", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/36.png" },
-            { name: "Ishant Sharma", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/50.png" },
-            { name: "Tushar Deshpande", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/539.png" },
-            { name: "Rahul Tewatia", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/120.png" },
-            /* WICKET KEEPERS (4) */
-            { name: "Jos Buttler", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/182.png" },
-            { name: "Ishan Kishan", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/164.png" },
-            { name: "Prabhsimran Singh", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/137.png" },
-            /* ALL ROUNDERS (6) */
-            { name: "Jason Holder", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Marcus Stoinis", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/23.png" },
-            { name: "Washington Sundar", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/20.png" },
-            { name: "Mitchell Santner", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/75.png" },
-            { name: "Shahbaz Ahmed", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/523.png" },
-            { name: "Nitish Rana", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-        ];
-
-        // Team 3: Royal Challengers Galle
-        const rcgSquad = [
-            /* BATTERS (8) */
-            { name: "Virat Kohli", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/2.png" },
-            { name: "Devdutt Padikkal", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/200.png" },
-            { name: "Rovman Powell", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/329.png" },
-            { name: "Rajat Patidar", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/597.png" },
-            { name: "Shreyas Iyer", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/12.png" },
-            { name: "Angkrish Raghuvanshi", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/787.png" },
-            { name: "Vaibhav Suryavanshi", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3498.png" },
-            { name: "Cameron Green", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            /* BOWLERS (7) */
-            { name: "Bhuvneshwar Kumar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/15.png" },
-            { name: "Matt Henry", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Jofra Archer", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/181.png" },
-            { name: "Mukesh Kumar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1462.png" },
-            { name: "Rahul Chahar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Pat Cummins", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/33.png" },
-            { name: "Shreyas Gopal", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/192.png" },
-            /* WICKET KEEPERS (3) */
-            { name: "Josh Inglis", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Sanju Samson", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "MS Dhoni", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/57.png" },
-            /* ALL ROUNDERS (9) */
-            { name: "Krunal Pandya", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/17.png" },
-            { name: "Wanindu Hasaranga", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Venkatesh Iyer", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Mitchell Marsh", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/40.png" },
-            { name: "Nitish Kumar Reddy", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1944.png" },
-            { name: "Harsh Dubey", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1494.png" },
-            { name: "Abdul Samad", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/525.png" },
-        ];
-
-        // Team 4: Sunrisers Colombo
-        const sunrisersSquad = [
-            /* BATTERS (5) */
-            { name: "David Miller", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Aiden Markram", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/287.png" },
-            { name: "Sherfane Rutherford", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Dewald Brevis", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/797.png" },
-            { name: "N. Tilak Varma", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/993.png" },
-            { name: "Shashank Singh", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/191.png" },
-            /* BOWLERS (10) */
-            { name: "Arshdeep Singh", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/125.png" },
-            { name: "Rashid Khan", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/218.png" },
-            { name: "Kuldeep Sen", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/1005.png" },
-            { name: "Umran Malik", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "T. Natarajan", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/224.png" },
-            { name: "Khaleel Ahmed", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/8.png" },
-            { name: "Varun Chakaravarthy", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/140.png" },
-            { name: "Mohammed Siraj", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/63.png" },
-            { name: "Shivam Mavi", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Zeeshan Ansari", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3575.png" },
-            /* WICKET KEEPERS (4) */
-            { name: "Finn Allen", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Rishabh Pant", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/18.png" },
-            { name: "Jitesh Sharma", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1000.png" },
-            { name: "Tristan Stubbs", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1017.png" },
-            /* ALL ROUNDERS (9) */
-            { name: "Abhishek Sharma", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/212.png" },
-            { name: "Will Jacks", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Ravindra Jadeja", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Harpreet Brar", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/130.png" },
-            { name: "Ayush Badoni", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/985.png" },
-        ];
-
-        // Team 5: Apex Bolt Assassins
-        const apexSquad = [
-            /* BATTERS (6) */
-            { name: "Surya Kumar Yadav", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/174.png" },
-            { name: "Travis Head", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/37.png" },
-            { name: "Karun Nair", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/131.png" },
-            { name: "Nehal Wadhera", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1541.png" },
-            { name: "Yashasvi Jaiswal", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/533.png" },
-            { name: "Pathum Nissanka", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            /* BOWLERS (9) */
-            { name: "Jasprit Bumrah", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/9.png" },
-            { name: "Matheesha Pathirana", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-            { name: "Sunil Narine", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/156.png" },
-            { name: "Jaydev Unadkat", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/180.png" },
-            { name: "Kuldeep Yadav", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/14.png" },
-            { name: "Kagiso Rabada", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/116.png" },
-            { name: "Harshit Rana", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1013.png" },
-            { name: "Yash Dayal", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/978.png" },
-            { name: "Sandeep Sharma", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/220.png" },
-            /* WICKET KEEPERS (3) */
-            { name: "Phil Salt", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1220.png" },
-            { name: "Heinrich Klaasen", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/202.png" },
-            { name: "Abishek Porel", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1580.png" },
-            /* ALL ROUNDERS (9) */
-            { name: "Hardik Pandya", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/54.png" },
-            { name: "Shivam Dube", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/211.png" },
-            { name: "Sai Kishore", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/544.png" },
-            { name: "Jayant Yadav", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/165.png" },
-            { name: "Axar Patel", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/110.png" },
-            { name: "Marco Jansen", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/586.png" },
-            { name: "Sai Sudharsan", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/976.png" },
-        ];
-
-        /* ============================================
-           ALL TEAMS OBJECT
-           ============================================ */
-        const allTeams = {
-            jaffna: jaffnaSharksSquad,
-            rajasthan: rajasthanStallionsSquad,
-            rcg: rcgSquad,
-            sunrisers: sunrisersSquad,
-            apex: apexSquad
+        // ==========================================
+        // 1. SQUAD DATA (Copied from your original file)
+        // ==========================================
+        const squads = {
+            jaffna: [
+                { name: "Rohit Sharma", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png" },
+                { name: "Ruturaj Gaikwad", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/102.png" },
+                { name: "Shubman Gill", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/62.png" },
+                { name: "Avesh Khan", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/109.png" },
+                { name: "Prasidh Krishna", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/150.png" },
+                { name: "Mitchell Starc", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/31.png" },
+                { name: "Noor Ahmad", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/975.png" },
+                { name: "Yuzvendra Chahal", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/10.png" },
+                { name: "Digvesh Rathi", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3565.png" },
+                { name: "Suyash Sharma", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1932.png" },
+                { name: "KL Rahul", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/19.png" },
+                { name: "Nicholas Pooran", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/136.png" },
+                { name: "Quinton de Kock", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Dhruv Jurel", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1004.png" },
+                { name: "Priyansh Arya", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3571.png" },
+                { name: "Harshal Patel", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/114.png" },
+                { name: "Romario Shepherd", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/371.png" },
+                { name: "Liam Livingstone", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Sam Curran", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Ashutosh Sharma", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3109.png" },
+                { name: "Vipraj Nigam", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3560.png" },
+                { name: "Ramandeep Singh", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/991.png" },
+                { name: "Shardul Thakur", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Prashant Veer", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Cooper Connolly", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" }
+            ],
+            rajasthan: [
+                { name: "Riyan Parag", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/189.png" },
+                { name: "Shimron Hetmyer", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/210.png" },
+                { name: "Rinku Singh", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/152.png" },
+                { name: "Glenn Phillips", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/635.png" },
+                { name: "Ajinkya Rahane", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/44.png" },
+                { name: "Rahul Tripathi", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Prithvi Shaw", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/51.png" },
+                { name: "Manish Pandey", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/16.png" },
+                { name: "Ravi Bishnoi", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Trent Boult", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/66.png" },
+                { name: "Mohammad Shami", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Deepak Chahar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/91.png" },
+                { name: "Josh Hazlewood", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/36.png" },
+                { name: "Ishant Sharma", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/50.png" },
+                { name: "Tushar Deshpande", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/539.png" },
+                { name: "Rahul Tewatia", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/120.png" },
+                { name: "Jos Buttler", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/182.png" },
+                { name: "Ishan Kishan", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/164.png" },
+                { name: "Prabhsimran Singh", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/137.png" },
+                { name: "Jason Holder", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Marcus Stoinis", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/23.png" },
+                { name: "Washington Sundar", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/20.png" },
+                { name: "Mitchell Santner", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/75.png" },
+                { name: "Shahbaz Ahmed", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/523.png" },
+                { name: "Nitish Rana", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" }
+            ],
+            rcg: [
+                { name: "Virat Kohli", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/2.png" },
+                { name: "Devdutt Padikkal", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/200.png" },
+                { name: "Rovman Powell", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/329.png" },
+                { name: "Rajat Patidar", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/597.png" },
+                { name: "Shreyas Iyer", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/12.png" },
+                { name: "Angkrish Raghuvanshi", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/787.png" },
+                { name: "Vaibhav Suryavanshi", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3498.png" },
+                { name: "Cameron Green", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Bhuvneshwar Kumar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/15.png" },
+                { name: "Matt Henry", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Jofra Archer", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/181.png" },
+                { name: "Mukesh Kumar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1462.png" },
+                { name: "Rahul Chahar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Pat Cummins", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/33.png" },
+                { name: "Shreyas Gopal", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/192.png" },
+                { name: "Josh Inglis", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Sanju Samson", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "MS Dhoni", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/57.png" },
+                { name: "Krunal Pandya", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/17.png" },
+                { name: "Wanindu Hasaranga", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Venkatesh Iyer", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Mitchell Marsh", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/40.png" },
+                { name: "Nitish Kumar Reddy", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1944.png" },
+                { name: "Harsh Dubey", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1494.png" },
+                { name: "Abdul Samad", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/525.png" }
+            ],
+            sunrisers: [
+                { name: "David Miller", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Aiden Markram", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/287.png" },
+                { name: "Sherfane Rutherford", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Dewald Brevis", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/797.png" },
+                { name: "N. Tilak Varma", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/993.png" },
+                { name: "Shashank Singh", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/191.png" },
+                { name: "Arshdeep Singh", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/125.png" },
+                { name: "Rashid Khan", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/218.png" },
+                { name: "Kuldeep Sen", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/1005.png" },
+                { name: "Umran Malik", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "T. Natarajan", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/224.png" },
+                { name: "Khaleel Ahmed", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/8.png" },
+                { name: "Varun Chakaravarthy", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/140.png" },
+                { name: "Mohammed Siraj", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/63.png" },
+                { name: "Shivam Mavi", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Zeeshan Ansari", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3575.png" },
+                { name: "Finn Allen", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Rishabh Pant", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/18.png" },
+                { name: "Jitesh Sharma", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1000.png" },
+                { name: "Tristan Stubbs", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1017.png" },
+                { name: "Abhishek Sharma", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/212.png" },
+                { name: "Will Jacks", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Ravindra Jadeja", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Harpreet Brar", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/130.png" },
+                { name: "Ayush Badoni", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/985.png" }
+            ],
+            apex: [
+                { name: "Surya Kumar Yadav", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/174.png" },
+                { name: "Travis Head", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/37.png" },
+                { name: "Karun Nair", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/131.png" },
+                { name: "Nehal Wadhera", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1541.png" },
+                { name: "Yashasvi Jaiswal", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/533.png" },
+                { name: "Pathum Nissanka", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Jasprit Bumrah", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/9.png" },
+                { name: "Matheesha Pathirana", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Sunil Narine", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/156.png" },
+                { name: "Jaydev Unadkat", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/180.png" },
+                { name: "Kuldeep Yadav", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/14.png" },
+                { name: "Kagiso Rabada", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/116.png" },
+                { name: "Harshit Rana", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1013.png" },
+                { name: "Yash Dayal", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/978.png" },
+                { name: "Sandeep Sharma", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/220.png" },
+                { name: "Phil Salt", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1220.png" },
+                { name: "Heinrich Klaasen", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/202.png" },
+                { name: "Abishek Porel", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1580.png" },
+                { name: "Hardik Pandya", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/54.png" },
+                { name: "Shivam Dube", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/211.png" },
+                { name: "Sai Kishore", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/544.png" },
+                { name: "Jayant Yadav", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/165.png" },
+                { name: "Axar Patel", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/110.png" },
+                { name: "Marco Jansen", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/586.png" },
+                { name: "Sai Sudharsan", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/976.png" }
+            ]
         };
 
-        /* ============================================
-           FUNCTIONS
-           ============================================ */
-
-        // Switch between teams
-        function showTeam(teamId) {
-            // Update buttons
-            document.querySelectorAll('.team-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Hide all teams
-            document.querySelectorAll('.team-container').forEach(container => {
-                container.classList.remove('active');
-            });
-
-            // Show selected team
-            document.getElementById(teamId).classList.add('active');
-
-            // Render players for this team
-            renderPlayers(teamId, 'all');
-        }
-
-        // Render players grid
-        function renderPlayers(teamId, filter) {
-            const grid = document.getElementById(`grid-${teamId}`);
-            const squad = allTeams[teamId];
-            
-            let players = squad;
-            if (filter !== 'all') {
-                players = squad.filter(p => p.role === filter);
-            }
-
-            grid.innerHTML = players.map(player => `
-                <div class="player-card" data-role="${player.role}">
-                    ${player.isForeign ? '<span class="foreign-badge">OS</span>' : ''}
-                    <img src="${player.image}" 
-                         alt="${player.name}" 
-                         class="player-image"
-                         onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
-                    <div class="player-name">${player.name}</div>
-                    <div class="player-role role-${player.role.toLowerCase().replace('-', '')}">${player.role}</div>
-                </div>
-            `).join('');
-        }
-
-        // Filter squad by role
-        function filterSquad(teamId, role) {
-            // Update filter buttons
-            const filterContainer = document.getElementById(`filters-${teamId}`);
-            filterContainer.querySelectorAll('.filter-tag').forEach(tag => {
-                tag.classList.remove('active');
-                if (tag.textContent.includes(role) || (role === 'all' && tag.textContent === 'All')) {
-                    tag.classList.add('active');
-                }
-            });
-
-            // Render filtered players
-            renderPlayers(teamId, role);
-        }
+        // ==========================================
+        // 2. FUNCTIONS
+        // ==========================================
+        
+        let currentTeam = 'jaffna';
+        let currentFilter = 'all';
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            // Render initial team (Jaffna Sharks)
             renderPlayers('jaffna', 'all');
         });
-    </script>
 
+        // Switch Team View
+        function switchTeam(teamId) {
+            currentTeam = teamId;
+            currentFilter = 'all';
+            
+            // Update Tab Styles
+            document.querySelectorAll('.team-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.closest('.team-tab').classList.add('active');
+            
+            // Hide all team views
+            document.querySelectorAll('.team-view').forEach(view => {
+                view.classList.add('hidden');
+            });
+            
+            // Show selected team
+            document.getElementById(teamId).classList.remove('hidden');
+            
+            // Reset filter buttons visual state
+            const activeTeamContainer = document.getElementById(teamId);
+            activeTeamContainer.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.textContent === 'All') btn.classList.add('active');
+            });
+            
+            // Render players
+            renderPlayers(teamId, 'all');
+            
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Filter Players
+        function filterPlayers(teamId, role) {
+            currentFilter = role;
+            
+            // Update button styles
+            const container = document.getElementById(teamId);
+            container.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                // Simple check based on text content vs role
+                if(role === 'all' && btn.textContent === 'All') btn.classList.add('active');
+                if(role === 'Batter' && btn.textContent === 'Batters') btn.classList.add('active');
+                if(role === 'Bowler' && btn.textContent === 'Bowlers') btn.classList.add('active');
+                if(role === 'WK' && btn.textContent === 'WKs') btn.classList.add('active');
+                if(role === 'All-rounder' && btn.textContent === 'All Rounders') btn.classList.add('active');
+            });
+            
+            renderPlayers(teamId, role);
+        }
+
+        // Render Player Cards
+        function renderPlayers(teamId, role) {
+            const grid = document.getElementById(`grid-${teamId}`);
+            const squad = squads[teamId];
+            
+            let players = squad;
+            if (role !== 'all') {
+                players = squad.filter(p => p.role === role);
+            }
+            
+            grid.innerHTML = players.map(player => {
+                // Determine role class for color coding
+                let roleClass = '';
+                if(player.role === 'Batter') roleClass = 'role-batter';
+                else if(player.role === 'Bowler') roleClass = 'role-bowler';
+                else if(player.role === 'All-rounder') roleClass = 'role-all-rounder';
+                else if(player.role === 'WK') roleClass = 'role-wk';
+                
+                return `
+                <div class="player-card">
+                    <div class="player-image-container">
+                        ${player.isForeign ? '<span class="foreign-badge">OVERSEAS</span>' : ''}
+                        <img src="${player.image}" 
+                             alt="${player.name}" 
+                             class="player-image"
+                             onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">${player.name}</div>
+                        <div class="player-role ${roleClass}">${player.role}</div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+    </script>
 </body>
 </html>
