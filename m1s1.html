@@ -366,14 +366,83 @@
         }
 
         /* ============================================
-           SQUAD SECTION
+           TAB NAVIGATION STYLES
            ============================================ */
-        .squad-section {
+        .tabs-section {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 2rem;
         }
 
+        .tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0;
+            background: var(--vpl-white);
+            padding: 1rem 1rem 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            box-shadow: var(--box-shadow);
+            border-bottom: 3px solid var(--vpl-gray);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            border: none;
+            background: #f8f9fa;
+            color: var(--vpl-dark-gray);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            bottom: -3px;
+        }
+
+        .tab-btn:hover {
+            background: #e9ecef;
+            color: var(--vpl-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--vpl-primary);
+            color: var(--vpl-white);
+            border-bottom: 3px solid var(--vpl-accent);
+        }
+
+        .tab-btn i {
+            font-size: 1.1rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-panel {
+            background: var(--vpl-white);
+            padding: 2rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+            min-height: 400px;
+        }
+
+        /* ============================================
+           SQUAD SECTION (INSIDE TAB)
+           ============================================ */
         .team-squad {
             background: var(--vpl-white);
             border-radius: var(--border-radius);
@@ -485,19 +554,12 @@
         .role-all-rounder { background: #6f42c1; }
 
         /* ============================================
-           SCORECARD SECTION
+           SCORECARD SECTION (INSIDE TAB)
            ============================================ */
-        .scorecard-section {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
         .scorecard-container {
             background: var(--vpl-white);
             border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: var(--box-shadow);
         }
 
         .innings-header {
@@ -574,20 +636,21 @@
             font-style: italic;
         }
 
-        /* ============================================
-           TEAM SELECTION FORM SECTION
-           ============================================ */
-        .selection-section {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+        .scorecard-note {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--js-color);
         }
 
+        /* ============================================
+           TEAM SELECTION FORM (INSIDE TAB)
+           ============================================ */
         .selection-container {
             background: var(--vpl-white);
             border-radius: var(--border-radius);
             padding: 2rem;
-            box-shadow: var(--box-shadow);
         }
 
         .team-selector {
@@ -736,6 +799,22 @@
                 grid-template-columns: 1fr;
             }
             
+            .tab-buttons {
+                flex-direction: column;
+                padding: 0.5rem;
+            }
+            
+            .tab-btn {
+                width: 100%;
+                border-radius: var(--border-radius);
+                margin-bottom: 0.5rem;
+            }
+            
+            .tab-btn.active {
+                border-bottom: none;
+                border-left: 4px solid var(--vpl-accent);
+            }
+            
             .players-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
                 padding: 1rem;
@@ -877,138 +956,160 @@
     </section>
 
     <!-- ============================================
-         SQUAD SECTION
-         Edit player data in JavaScript below
+         TABBED SECTION: SQUADS | SCORECARD | SELECTION
          ============================================ -->
-    <section class="squad-section">
-        <h2 class="section-title">Team Squads</h2>
-
-        <!-- Jaffna Sharks Squad -->
-        <div class="team-squad">
-            <div class="squad-header js-header">
-                <div class="squad-logo-small js-logo">JS</div>
-                <div class="squad-title">Jaffna Sharks Squad</div>
-            </div>
-            <div class="players-grid" id="jsSquadContainer">
-                <!-- Players injected via JavaScript -->
-            </div>
+    <section class="tabs-section">
+        <!-- Tab Buttons -->
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab('squads')" id="tab-squads">
+                👥 Team Squads
+            </button>
+            <button class="tab-btn" onclick="switchTab('scorecard')" id="tab-scorecard">
+                📊 Scorecard
+            </button>
+            <button class="tab-btn" onclick="switchTab('selection')" id="tab-selection">
+                📝 Team Selection
+            </button>
         </div>
 
-        <!-- Rajasthan Stallions Squad -->
-        <div class="team-squad">
-            <div class="squad-header rs-header">
-                <div class="squad-logo-small rs-logo">RS</div>
-                <div class="squad-title">Rajasthan Stallions Squad</div>
-            </div>
-            <div class="players-grid" id="rsSquadContainer">
-                <!-- Players injected via JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================
-         SCORECARD SECTION
-         Edit playing 11 and stats after submission
-         ============================================ -->
-    <section class="scorecard-section">
-        <h2 class="section-title">Detailed Scorecard</h2>
-        
-        <div class="scorecard-container">
-            <!-- JS Innings -->
-            <div class="innings-header">
-                <span>Jaffna Sharks - Playing XI & Points</span>
-                <span id="jsInningsTotal">Total: 0 pts</span>
-            </div>
-            <div class="scorecard-table-wrapper">
-                <table class="scorecard-table" id="jsScorecard">
-                    <thead>
-                        <tr>
-                            <th>Player</th>
-                            <th>Runs</th>
-                            <th>Balls</th>
-                            <th>4s</th>
-                            <th>6s</th>
-                            <th>SR</th>
-                            <th>Balls<br>Bowled</th>
-                            <th>Runs<br>Conc.</th>
-                            <th>Wkts</th>
-                            <th>Dots</th>
-                            <th>Maidens</th>
-                            <th>Econ</th>
-                            <th>Catches</th>
-                            <th>RO</th>
-                            <th>Stump</th>
-                            <th>Points</th>
-                        </tr>
-                    </thead>
-                    <tbody id="jsScorecardBody">
-                        <!-- JS playing 11 injected here -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- RS Innings -->
-            <div class="innings-header" style="margin-top: 2rem;">
-                <span>Rajasthan Stallions - Playing XI & Points</span>
-                <span id="rsInningsTotal">Total: 0 pts</span>
-            </div>
-            <div class="scorecard-table-wrapper">
-                <table class="scorecard-table" id="rsScorecard">
-                    <thead>
-                        <tr>
-                            <th>Player</th>
-                            <th>Runs</th>
-                            <th>Balls</th>
-                            <th>4s</th>
-                            <th>6s</th>
-                            <th>SR</th>
-                            <th>Balls<br>Bowled</th>
-                            <th>Runs<br>Conc.</th>
-                            <th>Wkts</th>
-                            <th>Dots</th>
-                            <th>Maidens</th>
-                            <th>Econ</th>
-                            <th>Catches</th>
-                            <th>RO</th>
-                            <th>Stump</th>
-                            <th>Points</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rsScorecardBody">
-                        <!-- RS playing 11 injected here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================
-         TEAM SELECTION FORM
-         Owners submit squads here
-         ============================================ -->
-    <section class="selection-section">
-        <h2 class="section-title">Team Selection</h2>
-        
-        <div class="selection-container">
-            <form id="squadForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <!-- Tab Content Container -->
+        <div class="tab-panel">
+            
+            <!-- TAB 1: TEAM SQUADS -->
+            <div id="content-squads" class="tab-content active">
+                <h2 class="section-title">Team Squads</h2>
                 
-                <!-- Team Selection -->
-                <div class="team-selector">
-                    <label for="teamSelect">Select Your Team:</label>
-                    <select name="team" id="teamSelect" required>
-                        <option value="">-- Select Team --</option>
-                        <option value="JS">Jaffna Sharks</option>
-                        <option value="RS">Rajasthan Stallions</option>
-                    </select>
+                <!-- Jaffna Sharks Squad -->
+                <div class="team-squad">
+                    <div class="squad-header js-header">
+                        <div class="squad-logo-small js-logo">JS</div>
+                        <div class="squad-title">Jaffna Sharks Squad</div>
+                    </div>
+                    <div class="players-grid" id="jsSquadContainer">
+                        <!-- Players injected via JavaScript -->
+                    </div>
                 </div>
 
-                <!-- Dynamic Selection Grid -->
-                <div class="selection-grid" id="selectionGrid">
-                    <!-- Populated by JavaScript based on team selection -->
+                <!-- Rajasthan Stallions Squad -->
+                <div class="team-squad">
+                    <div class="squad-header rs-header">
+                        <div class="squad-logo-small rs-logo">RS</div>
+                        <div class="squad-title">Rajasthan Stallions Squad</div>
+                    </div>
+                    <div class="players-grid" id="rsSquadContainer">
+                        <!-- Players injected via JavaScript -->
+                    </div>
                 </div>
+            </div>
 
-                <button type="submit" class="submit-btn">Submit Squad</button>
-            </form>
+            <!-- TAB 2: SCORECARD -->
+            <div id="content-scorecard" class="tab-content">
+                <h2 class="section-title">Detailed Scorecard</h2>
+                
+                <div class="scorecard-note">
+                    <strong>Note:</strong> Scorecard will be updated after team owners submit their playing XI. 
+                    Each player shows stats row followed by points row.
+                </div>
+                
+                <div class="scorecard-container">
+                    <!-- JS Innings -->
+                    <div class="innings-header">
+                        <span>Jaffna Sharks - Playing XI & Points</span>
+                        <span id="jsInningsTotal">Total: 0 pts</span>
+                    </div>
+                    <div class="scorecard-table-wrapper">
+                        <table class="scorecard-table" id="jsScorecard">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Runs</th>
+                                    <th>Balls</th>
+                                    <th>4s</th>
+                                    <th>6s</th>
+                                    <th>SR</th>
+                                    <th>Balls<br>Bowled</th>
+                                    <th>Runs<br>Conc.</th>
+                                    <th>Wkts</th>
+                                    <th>Dots</th>
+                                    <th>Maidens</th>
+                                    <th>Econ</th>
+                                    <th>Catches</th>
+                                    <th>RO</th>
+                                    <th>Stump</th>
+                                    <th>Points</th>
+                                </tr>
+                            </thead>
+                            <tbody id="jsScorecardBody">
+                                <!-- JS playing 11 injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- RS Innings -->
+                    <div class="innings-header" style="margin-top: 2rem;">
+                        <span>Rajasthan Stallions - Playing XI & Points</span>
+                        <span id="rsInningsTotal">Total: 0 pts</span>
+                    </div>
+                    <div class="scorecard-table-wrapper">
+                        <table class="scorecard-table" id="rsScorecard">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Runs</th>
+                                    <th>Balls</th>
+                                    <th>4s</th>
+                                    <th>6s</th>
+                                    <th>SR</th>
+                                    <th>Balls<br>Bowled</th>
+                                    <th>Runs<br>Conc.</th>
+                                    <th>Wkts</th>
+                                    <th>Dots</th>
+                                    <th>Maidens</th>
+                                    <th>Econ</th>
+                                    <th>Catches</th>
+                                    <th>RO</th>
+                                    <th>Stump</th>
+                                    <th>Points</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rsScorecardBody">
+                                <!-- RS playing 11 injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: TEAM SELECTION -->
+            <div id="content-selection" class="tab-content">
+                <h2 class="section-title">Team Selection</h2>
+                
+                <div class="selection-container">
+                    <form id="squadForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                        
+                        <!-- Team Selection -->
+                        <div class="team-selector">
+                            <label for="teamSelect">Select Your Team:</label>
+                            <select name="team" id="teamSelect" required>
+                                <option value="">-- Select Team --</option>
+                                <option value="JS">Jaffna Sharks</option>
+                                <option value="RS">Rajasthan Stallions</option>
+                            </select>
+                        </div>
+
+                        <!-- Dynamic Selection Grid -->
+                        <div class="selection-grid" id="selectionGrid">
+                            <!-- Populated by JavaScript based on team selection -->
+                            <p style="color: #666; text-align: center; grid-column: 1 / -1; padding: 2rem;">
+                                Please select a team above to view squad selection options.
+                            </p>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Submit Squad</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -1149,6 +1250,29 @@
         ];
 
         // ==========================================
+        // TAB SWITCHING FUNCTION
+        // ==========================================
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const allContents = document.querySelectorAll('.tab-content');
+            allContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            const allButtons = document.querySelectorAll('.tab-btn');
+            allButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById('content-' + tabName).classList.add('active');
+            
+            // Add active class to selected button
+            document.getElementById('tab-' + tabName).classList.add('active');
+        }
+
+        // ==========================================
         // FUNCTION: Render Squad Cards
         // ==========================================
         function renderSquad(containerId, squadData) {
@@ -1258,7 +1382,7 @@
             teamSelect.addEventListener('change', function() {
                 const team = this.value;
                 if (!team) {
-                    selectionGrid.innerHTML = '';
+                    selectionGrid.innerHTML = '<p style="color: #666; text-align: center; grid-column: 1 / -1; padding: 2rem;">Please select a team above to view squad selection options.</p>';
                     return;
                 }
                 
@@ -1396,6 +1520,9 @@
         //
         // 5. FOR NEW MATCH: Copy this file, update MATCH_CONFIG, squad arrays,
         //    and clear the playing 11 arrays for new submissions.
+        //
+        // 6. TABS: The page loads with "Team Squads" tab active by default.
+        //    Users can click tabs to switch between sections.
         // ==========================================
     </script>
 </body>
