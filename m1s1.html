@@ -771,7 +771,142 @@
         .text-center { text-align: center; }
         .mt-2 { margin-top: 2rem; }
         .mb-2 { margin-bottom: 2rem; }
-    </style>
+        
+            /* ============================================
+               PLAYER OF THE MATCH STYLES
+               ============================================ */
+            .potm-section {
+                max-width: 1200px;
+                margin: 3rem auto;
+                padding: 0 2rem;
+            }
+            
+            .potm-container {
+                background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 140, 0, 0.1));
+                border: 3px solid #ffd700;
+                border-radius: 20px;
+                padding: 3rem;
+                position: relative;
+                overflow: hidden;
+                box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+            }
+            
+            .potm-container::before {
+                content: '★';
+                position: absolute;
+                top: 20px;
+                right: 30px;
+                font-size: 8rem;
+                color: rgba(255, 215, 0, 0.1);
+                line-height: 1;
+            }
+            
+            .potm-badge {
+                display: inline-block;
+                background: linear-gradient(135deg, #ffd700, #ff8c00);
+                color: #000;
+                padding: 0.8rem 2rem;
+                font-weight: 900;
+                font-size: 1rem;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                border-radius: 50px;
+                margin-bottom: 2rem;
+                box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+            }
+            
+            .potm-content {
+                display: flex;
+                align-items: center;
+                gap: 3rem;
+            }
+            
+            .potm-image {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 5px solid #ffd700;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+                background: #1a1a2e;
+            }
+            
+            .potm-info {
+                flex: 1;
+            }
+            
+            .potm-name {
+                font-size: 2.5rem;
+                font-weight: 900;
+                margin-bottom: 0.5rem;
+                background: linear-gradient(45deg, #ffd700, #ff8c00);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            
+            .potm-team {
+                font-size: 1.3rem;
+                color: var(--vpl-accent);
+                margin-bottom: 1.5rem;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+            
+            .potm-stats {
+                display: flex;
+                gap: 2rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .stat-box {
+                background: rgba(0, 0, 0, 0.4);
+                padding: 1.5rem;
+                border-radius: 12px;
+                text-align: center;
+                min-width: 100px;
+                border: 1px solid rgba(255, 215, 0, 0.3);
+            }
+            
+            .stat-value {
+                font-size: 2rem;
+                font-weight: 900;
+                color: #ffd700;
+            }
+            
+            .stat-label {
+                font-size: 0.9rem;
+                color: #aaa;
+                text-transform: uppercase;
+                margin-top: 0.5rem;
+            }
+            
+            .potm-desc {
+                font-size: 1.1rem;
+                line-height: 1.8;
+                color: #ccc;
+                font-style: italic;
+                border-left: 4px solid #ffd700;
+                padding-left: 1.5rem;
+            }
+            
+            @media (max-width: 768px) {
+                .potm-content {
+                    flex-direction: column;
+                    text-align: center;
+                }
+                
+                .potm-stats {
+                    justify-content: center;
+                }
+                
+                .potm-desc {
+                    border-left: none;
+                    border-top: 4px solid #ffd700;
+                    padding-left: 0;
+                    padding-top: 1rem;
+                }
+            }
+            </style>
 </head>
 <body>
 
@@ -853,6 +988,49 @@
             Match in Progress
         </div>
     </section>
+    <!-- ============================================
+     PLAYER OF THE MATCH SECTION
+     EDIT THIS AFTER MATCH COMPLETION
+     ============================================ -->
+<section class="potm-section" id="potm-section" style="display: none;">
+    <div class="potm-container">
+        <div class="potm-badge">PLAYER OF THE MATCH</div>
+        
+        <div class="potm-content">
+            <!-- EDIT: Update image URL below -->
+            <img src="" alt="Player of the Match" class="potm-image" id="potm-image">
+            
+            <div class="potm-info">
+                <!-- EDIT: Update player name below -->
+                <h2 class="potm-name" id="potm-name">Player Name</h2>
+                
+                <!-- EDIT: Update team name below -->
+                <div class="potm-team" id="potm-team">Team Name</div>
+                
+                <!-- EDIT: Update performance stats below -->
+                <div class="potm-stats" id="potm-stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="potm-points">0</div>
+                        <div class="stat-label">Points</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="potm-batting">0</div>
+                        <div class="stat-label">Runs</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="potm-wickets">0</div>
+                        <div class="stat-label">Wickets</div>
+                    </div>
+                </div>
+                
+                <!-- EDIT: Update brief performance description -->
+                <p class="potm-desc" id="potm-desc">
+                    Match winning performance description here
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- ============================================
          FEATURED PLAYERS SECTION
@@ -1591,6 +1769,40 @@
                 }
             });
         });
+
+            // ============================================
+            // PLAYER OF THE MATCH UPDATE FUNCTION
+            // Call this to reveal and populate POTM section
+            // ============================================
+            
+            function setPlayerOfTheMatch(imageUrl, playerName, teamName, points, runs, wickets, description) {
+                document.getElementById('potm-image').src = imageUrl;
+                document.getElementById('potm-name').textContent = playerName;
+                document.getElementById('potm-team').textContent = teamName;
+                document.getElementById('potm-points').textContent = points;
+                document.getElementById('potm-batting').textContent = runs;
+                document.getElementById('potm-wickets').textContent = wickets;
+                document.getElementById('potm-desc').textContent = description;
+                
+                // Reveal the section
+                document.getElementById('potm-section').style.display = 'block';
+                
+                // Smooth scroll to POTM
+                document.getElementById('potm-section').scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // ============================================
+            // EXAMPLE USAGE (Remove after testing):
+            // setPlayerOfTheMatch(
+            //     'https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png',
+            //     'Rohit Sharma',
+            //     'Jaffna Sharks',
+            //     '125',
+            //     '75',
+            //     '0',
+            //     'Brilliant batting display with 8 fours and 3 sixes. Anchored the innings perfectly.'
+            // );
+            // ============================================
 
         // ============================================
         // EXAMPLE USAGE (Remove or comment out after testing)
