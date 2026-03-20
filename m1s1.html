@@ -144,28 +144,18 @@
             max-width: 300px;
         }
 
-        .team-logo {
+        .team-logo img {
             max-width: 90%;
             max-height: 90%;
             object-fit: contain;
             border-radius: 50%; /* Optional: keeps the image circular if it has a background */
         }
+
+        /* Remove 'font-size' and 'font-weight' from these classes if you only want the image to show */
+        .js-logo, .rs-logo {
+            font-size: 0; 
+        }
         /* EDIT: Change team logo colors here */
-        .js-logo {
-            border-color: var(--js-accent);
-            color: var(--js-accent);
-            background: linear-gradient(135deg, var(--js-color), #000);
-        }
-
-        .rs-logo {
-            border-color: var(--rs-accent);
-            color: var(--rs-accent);
-            background: linear-gradient(135deg, var(--rs-color), #000);
-        }
-
-.js-logo, .rs-logo {
-    font-size: 0; 
-}
 
         .team-name {
             font-size: 1.5rem;
@@ -809,23 +799,22 @@
         <div class="match-teams">
             <!-- Jaffna Sharks -->
             <div class="team-display">
-                <div class="team-logo js-logo">
-                    <img src="JS.png" alt="JS Logo" style="width: 80%; height: auto;">
-                </div>
-                <div class="team-name">Jaffna Sharks</div>
-                <div class="team-short">JS</div>
+            <div class="team-logo js-logo">
+            <img src="JS.png" alt="JS Logo" style="width: 80%; height: auto;">
+            </div>
+            <div class="team-name">Jaffna Sharks</div>
+            <div class="team-short">JS</div>
             </div>
 
             <div class="vs-badge">VS</div>
 
-            <!-- Rajasthan Stallions -->
             <div class="team-display">
-                <div class="team-logo rs-logo">
-                    <img src="RS.png" alt="JS Logo" style="width: 80%; height: auto;">
-                </div>
-                <div class="team-name">Rajasthan Stallions</div>
-                <div class="team-short">RS</div>
+            <div class="team-logo rs-logo">
+            <img src="RS.png" alt="RS Logo" style="width: 80%; height: auto;">
             </div>
+            <div class="team-name">Rajasthan Stallions</div>
+            <div class="team-short">RS</div>
+</div>
         </div>
 
         <div style="margin-top: 1rem; font-size: 1.1rem; color: #aaa;">
