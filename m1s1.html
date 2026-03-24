@@ -905,41 +905,6 @@
                     padding-left: 0;
                     padding-top: 1rem;
                 }
-                /* Container to manage the size and alignment of both images */
-                .logo-kit-container {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 10px; /* Space between the kit and the logo */
-                    margin-bottom: 10px;
-                }
-                
-                /* Increase the size of the Team Logos */
-                .team-logo img {
-                    width: 80px !important; /* Increased from 80px */
-                    height: auto;
-                    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
-                }
-                
-                /* Increase the size of the Jersey Kits */
-                .team-kit {
-                    width: 80px; /* Increased size for the jersey */
-                    height: auto;
-                    object-fit: contain;
-                }
-                
-                /* Responsive adjustment for smaller screens */
-                @media (max-width: 968px) {
-                    .team-logo img {
-                        width: 80px !important;
-                    }
-                    .team-kit {
-                        width: 80px;
-                    }
-                    .logo-kit-container {
-                        gap: 10px;
-                    }
-                }
             }
             </style>
 </head>
@@ -968,30 +933,23 @@
         
         <div class="match-teams">
             <!-- Jaffna Sharks -->
-        <div class="team-display">
-            <div class="logo-kit-container">
-                <img src="JSkit.png" class="team-kit" alt="JS Kit">
-                
-                <div class="team-logo js-logo">
-                    <img src="JS.png" alt="JS Logo">
-                </div>
+            <div class="team-display">
+            <div class="team-logo js-logo">
+            <img src="JS.png" alt="JS Logo" style="width: 80%; height: auto;">
             </div>
             <div class="team-name">Jaffna Sharks</div>
             <div class="team-short">JS</div>
-        </div>
-        
-        <div class="vs-badge">VS</div>
-        
-        <div class="team-display">
-            <div class="logo-kit-container">
-                <div class="team-logo rs-logo">
-                    <img src="RS.png" alt="RS Logo">
-                </div>
-                <img src="RSkit.png" class="team-kit" alt="RS Kit">
+            </div>
+
+            <div class="vs-badge">VS</div>
+
+            <div class="team-display">
+            <div class="team-logo rs-logo">
+            <img src="RS.png" alt="RS Logo" style="width: 80%; height: auto;">
             </div>
             <div class="team-name">Rajasthan Stallions</div>
             <div class="team-short">RS</div>
-        </div>
+</div>
         </div>
 
         <div style="margin-top: 1rem; font-size: 1.1rem; color: #aaa;">
