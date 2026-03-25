@@ -948,9 +948,9 @@
          ============================================ -->
     <section class="tabs-section">
         <div class="tabs-nav">
-            <button class="tab-btn active" onclick="showTab(event, 'scorecard')">Scorecard</button>
-            <button class="tab-btn" onclick="showTab(event, 'teams')">Teams</button>
-            <button class="tab-btn" onclick="showTab(event, 'squad-selection')">Squad Selection</button>
+            <button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>
+            <button class="tab-btn" onclick="showTab('teams')">Teams</button>
+            <button class="tab-btn" onclick="showTab('squad-selection')">Squad Selection</button>
         </div>
 
         <!-- ============================================
@@ -960,10 +960,10 @@
             <div class="scorecard-container">
                 <!-- Innings Tabs -->
                 <div class="innings-tabs">
-                    <div class="innings-tab active" onclick="showInnings(event, 'js-innings')">
+                    <div class="innings-tab active" onclick="showInnings('js-innings')">
                         Jaffna Sharks Innings
                     </div>
-                    <div class="innings-tab" onclick="showInnings(event, 'rs-innings')">
+                    <div class="innings-tab" onclick="showInnings('rs-innings')">
                         Rajasthan Stallions Innings
                     </div>
                 </div>
@@ -1485,24 +1485,34 @@
         }
 
         function populateTeamSelects(teamPrefix, squad) {
-            console.log(`Populating ${teamPrefix} dropdowns...`);
-            
-            // Improved filtering to be case-insensitive and handle various role names
-            const batters = squad.filter(p => p.role.toLowerCase() === "batter");
-            const bowlers = squad.filter(p => p.role.toLowerCase() === "bowler");
-            const wks = squad.filter(p => p.role.toLowerCase() === "wk");
-            const allRounders = squad.filter(p => p.role.toLowerCase().includes("round") || p.role.toLowerCase().includes("all"));
-        
-            console.log(`${teamPrefix} found: ${batters.length} Batters, ${bowlers.length} Bowlers, ${wks.length} WKs, ${allRounders.length} ARs`);
-        
-            // Populate the 11 starting spots
-            for (let i = 1; i <= 3; i++) populateSelect(`${teamPrefix}-batter${i}`, batters);
+            // Group players by role
+            const batters = squad.filter(p => p.role === "Batter");
+            const bowlers = squad.filter(p => p.role === "Bowler");
+            const wks = squad.filter(p => p.role === "WK");
+            const allRounders = squad.filter(p => p.role === "All-rounder");
+
+            // Populate Batters (3 selects)
+            for (let i = 1; i <= 3; i++) {
+                populateSelect(`${teamPrefix}-batter${i}`, batters);
+            }
+
+            // Populate WK (1 select)
             populateSelect(`${teamPrefix}-wk`, wks);
-            for (let i = 1; i <= 3; i++) populateSelect(`${teamPrefix}-ar${i}`, allRounders);
-            for (let i = 1; i <= 4; i++) populateSelect(`${teamPrefix}-bowler${i}`, bowlers);
-        
-            // Populate the 4 Emergency spots (using the full squad)
-            for (let i = 1; i <= 4; i++) populateSelect(`${teamPrefix}-em${i}`, squad);
+
+            // Populate All Rounders (3 selects)
+            for (let i = 1; i <= 3; i++) {
+                populateSelect(`${teamPrefix}-ar${i}`, allRounders);
+            }
+
+            // Populate Bowlers (4 selects)
+            for (let i = 1; i <= 4; i++) {
+                populateSelect(`${teamPrefix}-bowler${i}`, bowlers);
+            }
+
+            // Populate Emergencies (4 selects - all players)
+            for (let i = 1; i <= 4; i++) {
+                populateSelect(`${teamPrefix}-em${i}`, squad);
+            }
         }
 
         function populateSelect(selectId, players) {
@@ -1526,30 +1536,25 @@
         // TAB NAVIGATION
         // ============================================
 
-        function showTab(event, tabId) {
-            // 1. Hide all tab content sections
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(tab => tab.classList.remove('active'));
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
             
-            // 2. Remove 'active' styling from all buttons
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-        
-            // 3. Show the one the user clicked
-            const targetTab = document.getElementById(tabId);
-            if (targetTab) {
-                targetTab.classList.add('active');
-            }
+            // Remove active from buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
             
-            // 4. Highlight the button that was clicked
-            if (event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
-            } else if (event && event.target) {
-                event.target.classList.add('active');
-            }
+            // Add active to clicked button
+            event.target.classList.add('active');
         }
 
-        function showInnings(event, inningsId) {
+        function showInnings(inningsId) {
             // Hide all innings
             document.querySelectorAll('.innings-content').forEach(inn => {
                 inn.classList.remove('active');
@@ -1559,17 +1564,12 @@
             document.querySelectorAll('.innings-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-        
+
             // Show selected innings
-            const selectedInnings = document.getElementById(inningsId);
-            if (selectedInnings) {
-                selectedInnings.classList.add('active');
-            }
+            document.getElementById(inningsId).classList.add('active');
             
             // Add active to clicked tab
-            if (event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
-            }
+            event.target.classList.add('active');
         }
 
         // ============================================
