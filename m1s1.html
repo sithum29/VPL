@@ -65,13 +65,15 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--vpl-secondary), var(--vpl-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            width: 60px;                /* Adjust size as needed */
+            height: 60px;               /* Must match width for a perfect circle */
+            border-radius: 50%;         /* Creates the circular shape */
+            overflow: hidden;           /* Clips the image to the circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--vpl-secondary); /* Optional: matches your brand theme */
+            background-color: #000;     /* Background for transparent logos */
         }
 
         .nav-links {
@@ -796,7 +798,9 @@
          ============================================ -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">VPL 2026</div>
+            <div class="logo">
+                <img src="logo.png" alt="VPL Logo">
+            </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#matches">Matches</a></li>
