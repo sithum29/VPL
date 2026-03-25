@@ -948,9 +948,9 @@
          ============================================ -->
     <section class="tabs-section">
         <div class="tabs-nav">
-            <button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>
-            <button class="tab-btn" onclick="showTab('teams')">Teams</button>
-            <button class="tab-btn" onclick="showTab('squad-selection')">Squad Selection</button>
+            <button class="tab-btn active" onclick="showTab(event, 'scorecard')">Scorecard</button>
+            <button class="tab-btn" onclick="showTab(event, 'teams')">Teams</button>
+            <button class="tab-btn" onclick="showTab(event, 'squad-selection')">Squad Selection</button>
         </div>
 
         <!-- ============================================
@@ -1536,23 +1536,30 @@
         // TAB NAVIGATION
         // ============================================
 
-        function showTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            function showTab(event, tabId) {
+                // 1. Hide all tab contents
+                const contents = document.querySelectorAll('.tab-content');
+                contents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // 2. Remove 'active' class from all buttons
+                const buttons = document.querySelectorAll('.tab-btn');
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
             
-            // Remove active from buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected tab
-            document.getElementById(tabId).classList.add('active');
-            
-            // Add active to clicked button
-            event.target.classList.add('active');
-        }
+                // 3. Show the specific tab content
+                const activeTab = document.getElementById(tabId);
+                if (activeTab) {
+                    activeTab.classList.add('active');
+                }
+                
+                // 4. Add 'active' class to the button that was clicked
+                if (event && event.currentTarget) {
+                    event.currentTarget.classList.add('active');
+                }
+            }
 
         function showInnings(inningsId) {
             // Hide all innings
