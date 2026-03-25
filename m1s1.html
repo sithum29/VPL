@@ -960,10 +960,10 @@
             <div class="scorecard-container">
                 <!-- Innings Tabs -->
                 <div class="innings-tabs">
-                    <div class="innings-tab active" onclick="showInnings('js-innings')">
+                    <div class="innings-tab active" onclick="showInnings(event, 'js-innings')">
                         Jaffna Sharks Innings
                     </div>
-                    <div class="innings-tab" onclick="showInnings('rs-innings')">
+                    <div class="innings-tab" onclick="showInnings(event, 'rs-innings')">
                         Rajasthan Stallions Innings
                     </div>
                 </div>
@@ -1485,11 +1485,15 @@
         }
 
         function populateTeamSelects(teamPrefix, squad) {
-            // We use toLowerCase() to ensure it matches even if you type "All-Rounder" or "all-rounder"
+            console.log(`Populating ${teamPrefix} dropdowns...`);
+            
+            // Improved filtering to be case-insensitive and handle various role names
             const batters = squad.filter(p => p.role.toLowerCase() === "batter");
             const bowlers = squad.filter(p => p.role.toLowerCase() === "bowler");
             const wks = squad.filter(p => p.role.toLowerCase() === "wk");
-            const allRounders = squad.filter(p => p.role.toLowerCase().includes("round"));
+            const allRounders = squad.filter(p => p.role.toLowerCase().includes("round") || p.role.toLowerCase().includes("all"));
+        
+            console.log(`${teamPrefix} found: ${batters.length} Batters, ${bowlers.length} Bowlers, ${wks.length} WKs, ${allRounders.length} ARs`);
         
             // Populate the 11 starting spots
             for (let i = 1; i <= 3; i++) populateSelect(`${teamPrefix}-batter${i}`, batters);
@@ -1545,7 +1549,7 @@
             }
         }
 
-        function showInnings(inningsId) {
+        function showInnings(event, inningsId) {
             // Hide all innings
             document.querySelectorAll('.innings-content').forEach(inn => {
                 inn.classList.remove('active');
@@ -1555,12 +1559,17 @@
             document.querySelectorAll('.innings-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-
+        
             // Show selected innings
-            document.getElementById(inningsId).classList.add('active');
+            const selectedInnings = document.getElementById(inningsId);
+            if (selectedInnings) {
+                selectedInnings.classList.add('active');
+            }
             
             // Add active to clicked tab
-            event.target.classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
         }
 
         // ============================================
