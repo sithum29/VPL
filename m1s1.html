@@ -1521,7 +1521,7 @@
 
         function populateTeamSelects(teamPrefix, squad) {
             // Group players by role
-            const batters = squad.filter(p => p.role === "Batter");
+            const batters = squad.filter(p => p.role === "Batter" || p.role === "WK");
             const bowlers = squad.filter(p => p.role === "Bowler");
             const wks = squad.filter(p => p.role === "WK");
             const allRounders = squad.filter(p => p.role === "All-rounder");
