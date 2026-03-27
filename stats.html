@@ -561,6 +561,23 @@
             cursor: pointer;
             text-transform: uppercase;
         }
+            .logo-container {
+                width: 50px;           /* Adjust size as needed */
+                height: 50px;          /* Must match width for a perfect circle */
+                border-radius: 50%;    /* Creates the circular shape */
+                overflow: hidden;      /* Clips the image to the circle */
+                border: 2px solid var(--vpl-secondary); /* Optional: adds a themed border */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #fff;      /* Helps if your logo has a transparent background */
+            }
+            
+            .nav-logo {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;     /* Important: ensures the logo fills the circle without stretching */
+            }
 
         /* ============================================
            FOOTER
@@ -635,23 +652,6 @@
                 display: none;
             }
         }
-            .logo-container {
-                width: 50px;           /* Adjust size as needed */
-                height: 50px;          /* Must match width for a perfect circle */
-                border-radius: 50%;    /* Creates the circular shape */
-                overflow: hidden;      /* Clips the image to the circle */
-                border: 2px solid var(--vpl-secondary); /* Optional: adds a themed border */
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background: #fff;      /* Helps if your logo has a transparent background */
-            }
-            
-            .nav-logo {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;     /* Important: ensures the logo fills the circle without stretching */
-            }
     </style>
 </head>
 <body>
