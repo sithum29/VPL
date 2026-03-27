@@ -25,12 +25,12 @@
             --text-secondary: #8b92b4;
             --border-color: #2a3050;
             
-            /* Team Colors for hover effects */
+            /* Team Colors for logo borders */
             --js-color: #004d40;
             --rs-color: #b71c1c;
-            --rcg-color: #d4af37;  /* Gold for Royal Challengers */
-            --src-color: #ff6600;  /* Orange for Sunrisers */
-            --aba-color: #4a148c;  /* Purple for Apex */
+            --rcg-color: #d4af37;
+            --src-color: #ff6600;
+            --aba-color: #4a148c;
         }
 
         body {
@@ -42,7 +42,7 @@
         }
 
         /* ============================================
-           NAVIGATION BAR - Same style as IPL
+           NAVIGATION BAR
            ============================================ */
         .navbar {
             background: rgba(10, 14, 39, 0.95);
@@ -151,7 +151,7 @@
         }
 
         /* ============================================
-           FILTER/TABS SECTION - IPL Style
+           SEASON FILTER
            ============================================ */
         .filter-section {
             display: flex;
@@ -186,28 +186,6 @@
             min-width: 200px;
         }
 
-        .stats-summary {
-            display: flex;
-            gap: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .stat-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .stat-dot.qualified { background: #4caf50; }
-        .stat-dot.eliminated { background: #f44336; }
-
         /* ============================================
            POINTS TABLE - IPL Style
            ============================================ */
@@ -221,7 +199,7 @@
 
         .table-header {
             display: grid;
-            grid-template-columns: 60px 3fr 80px 80px 80px 80px 80px 80px 100px 60px;
+            grid-template-columns: 60px 3fr 80px 80px 80px 80px 80px 80px 100px;
             background: linear-gradient(90deg, rgba(255, 111, 0, 0.2), rgba(255, 111, 0, 0.05));
             padding: 1.2rem 1.5rem;
             font-weight: 700;
@@ -234,7 +212,7 @@
 
         .table-row {
             display: grid;
-            grid-template-columns: 60px 3fr 80px 80px 80px 80px 80px 80px 100px 60px;
+            grid-template-columns: 60px 3fr 80px 80px 80px 80px 80px 80px 100px;
             padding: 1.2rem 1.5rem;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
@@ -247,29 +225,37 @@
             transform: scale(1.01);
         }
 
-        /* Rank-based styling */
+        /* ============================================
+           RANK STYLING
+           Only Rank 1 is Gold (Champion)
+           ============================================ */
+        
+        /* Rank 1 - Champion (Gold) */
         .table-row.rank-1 {
-            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), transparent);
             border-left: 4px solid #ffd700;
         }
 
+        .rank-1 .col-rank {
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            font-size: 1.8rem;
+        }
+
+        /* Rank 2 - Runner-Up (Silver styling) */
         .table-row.rank-2 {
-            background: linear-gradient(90deg, rgba(192, 192, 192, 0.1), transparent);
             border-left: 4px solid #c0c0c0;
         }
 
-        .table-row.rank-3 {
-            background: linear-gradient(90deg, rgba(205, 127, 50, 0.1), transparent);
-            border-left: 4px solid #cd7f32;
+        .rank-2 .col-rank {
+            color: #c0c0c0;
         }
 
-        .table-row.rank-4 {
-            border-left: 4px solid #4caf50;
-        }
-
+        /* Rank 3,4,5 - Standard */
+        .table-row.rank-3,
+        .table-row.rank-4,
         .table-row.rank-5 {
-            border-left: 4px solid #f44336;
-            opacity: 0.8;
+            border-left: 4px solid var(--border-color);
         }
 
         .col-rank {
@@ -279,20 +265,16 @@
             text-align: center;
         }
 
-        .rank-1 .col-rank { color: #ffd700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
-        .rank-2 .col-rank { color: #c0c0c0; }
-        .rank-3 .col-rank { color: #cd7f32; }
-
+        /* ============================================
+           TEAM COLUMN WITH CIRCULAR LOGO
+           ============================================ */
         .col-team {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        /* ============================================
-           TEAM LOGO - Circular Style
-           EDIT: Update logo paths in HTML below
-           ============================================ */
+        /* Circular logo filling the circle */
         .team-logo {
             width: 50px;
             height: 50px;
@@ -300,7 +282,7 @@
             object-fit: cover;
             border: 3px solid;
             background: #fff;
-            padding: 2px;
+            padding: 0;
             transition: transform 0.3s ease;
         }
 
@@ -331,6 +313,38 @@
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        /* Champion badge */
+        .champion-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 0.5rem;
+        }
+
+        /* Runner-up badge */
+        .runner-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: linear-gradient(135deg, #c0c0c0, #808080);
+            color: #000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 0.5rem;
         }
 
         .col-stat {
@@ -380,34 +394,6 @@
         .form-loss {
             background: #f44336;
             color: #fff;
-        }
-
-        /* Status badge */
-        .status-badge {
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .status-q {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4caf50;
-            border: 1px solid #4caf50;
-        }
-
-        .status-e {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-            border: 1px solid #f44336;
-        }
-
-        .status-p {
-            background: rgba(255, 152, 0, 0.2);
-            color: #ff9800;
-            border: 1px solid #ff9800;
         }
 
         /* ============================================
@@ -479,11 +465,11 @@
         @media (max-width: 968px) {
             .table-header,
             .table-row {
-                grid-template-columns: 50px 2fr 60px 60px 60px 80px;
+                grid-template-columns: 50px 2fr 60px 60px 80px;
                 font-size: 0.8rem;
             }
 
-            /* Hide some columns on mobile */
+            /* Hide columns on mobile */
             .col-matches,
             .col-won,
             .col-lost,
@@ -499,6 +485,11 @@
 
             .page-title {
                 font-size: 1.8rem;
+            }
+
+            .champion-badge,
+            .runner-badge {
+                display: none; /* Hide badges on mobile, show only on desktop */
             }
         }
 
@@ -564,17 +555,6 @@
                     <option>VPL 2026</option>
                 </select>
             </div>
-            
-            <div class="stats-summary">
-                <div class="stat-item">
-                    <span class="stat-dot qualified"></span>
-                    <span>Qualified for Playoffs</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-dot eliminated"></span>
-                    <span>Eliminated</span>
-                </div>
-            </div>
         </div>
 
         <!-- ============================================
@@ -594,7 +574,6 @@
                 <div class="col-nrr">NRR</div>
                 <div class="col-points">Pts</div>
                 <div class="col-form">Last 5</div>
-                <div class="col-status"></div>
             </div>
 
             <!-- ============================================
@@ -607,7 +586,11 @@
                     <!-- EDIT: Logo file path -->
                     <img src="JS.png" alt="Jaffna Sharks" class="team-logo logo-js">
                     <div class="team-info">
-                        <div class="team-name">Jaffna Sharks</div>
+                        <div class="team-name">
+                            Jaffna Sharks
+                            <!-- Champion badge - only for rank 1 -->
+                            <span class="champion-badge">★ Champion</span>
+                        </div>
                         <div class="team-short">JS</div>
                     </div>
                 </div>
@@ -633,10 +616,6 @@
                         <span class="form-dot form-loss">L</span>
                     </div>
                 </div>
-                <!-- EDIT: Status (q=qualified, e=eliminated, p=playing) -->
-                <div class="col-status">
-                    <span class="status-badge status-p">Playing</span>
-                </div>
             </div>
 
             <!-- ============================================
@@ -649,7 +628,11 @@
                     <!-- EDIT: Logo file path -->
                     <img src="RS.png" alt="Rajasthan Stallions" class="team-logo logo-rs">
                     <div class="team-info">
-                        <div class="team-name">Rajasthan Stallions</div>
+                        <div class="team-name">
+                            Rajasthan Stallions
+                            <!-- Runner-up badge - only for rank 2 -->
+                            <span class="runner-badge">Runner-Up</span>
+                        </div>
                         <div class="team-short">RS</div>
                     </div>
                 </div>
@@ -674,10 +657,6 @@
                         <span class="form-dot form-loss">L</span>
                         <span class="form-dot form-win">W</span>
                     </div>
-                </div>
-                <!-- EDIT: Status -->
-                <div class="col-status">
-                    <span class="status-badge status-p">Playing</span>
                 </div>
             </div>
 
@@ -717,10 +696,6 @@
                         <span class="form-dot form-win">W</span>
                     </div>
                 </div>
-                <!-- EDIT: Status -->
-                <div class="col-status">
-                    <span class="status-badge status-p">Playing</span>
-                </div>
             </div>
 
             <!-- ============================================
@@ -758,10 +733,6 @@
                         <span class="form-dot form-loss">L</span>
                         <span class="form-dot form-win">W</span>
                     </div>
-                </div>
-                <!-- EDIT: Status -->
-                <div class="col-status">
-                    <span class="status-badge status-p">Playing</span>
                 </div>
             </div>
 
@@ -801,10 +772,6 @@
                         <span class="form-dot form-loss">L</span>
                     </div>
                 </div>
-                <!-- EDIT: Status -->
-                <div class="col-status">
-                    <span class="status-badge status-p">Playing</span>
-                </div>
             </div>
 
         </div>
@@ -813,27 +780,15 @@
              LEGEND SECTION
              ============================================ -->
         <div class="legend-section">
-            <h3 class="legend-title">Standings Legend</h3>
+            <h3 class="legend-title">Standings Guide</h3>
             <div class="legend-grid">
                 <div class="legend-item">
                     <div class="legend-color" style="background: linear-gradient(90deg, rgba(255,215,0,0.3), transparent); border-left: 4px solid #ffd700;"></div>
-                    <span>Rank 1 - Leader (Gold)</span>
+                    <span>1st Place - Champion (Gold)</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: linear-gradient(90deg, rgba(192,192,192,0.3), transparent); border-left: 4px solid #c0c0c0;"></div>
-                    <span>Rank 2 (Silver)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: linear-gradient(90deg, rgba(205,127,50,0.3), transparent); border-left: 4px solid #cd7f32;"></div>
-                    <span>Rank 3 (Bronze)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="border-left: 4px solid #4caf50;"></div>
-                    <span>Rank 4 - Playoff Contender</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="border-left: 4px solid #f44336; opacity: 0.8;"></div>
-                    <span>Rank 5 - Eliminated/Last</span>
+                    <div class="legend-color" style="border-left: 4px solid #c0c0c0;"></div>
+                    <span>2nd Place - Runner-Up (Silver)</span>
                 </div>
                 <div class="legend-item">
                     <div style="display: flex; gap: 4px;">
@@ -875,7 +830,7 @@
                 nrr: 0.000,
                 points: 0,
                 form: ["", "", "", "", ""], // W or L for last 5
-                status: "p" // q=qualified, e=eliminated, p=playing
+                rank: 1
             },
             rs: {
                 name: "Rajasthan Stallions",
@@ -887,7 +842,7 @@
                 nrr: 0.000,
                 points: 0,
                 form: ["", "", "", "", ""],
-                status: "p"
+                rank: 2
             },
             rcg: {
                 name: "Royal Challengers Galle",
@@ -899,7 +854,7 @@
                 nrr: 0.000,
                 points: 0,
                 form: ["", "", "", "", ""],
-                status: "p"
+                rank: 3
             },
             src: {
                 name: "Sunrisers Colombo",
@@ -911,7 +866,7 @@
                 nrr: 0.000,
                 points: 0,
                 form: ["", "", "", "", ""],
-                status: "p"
+                rank: 4
             },
             aba: {
                 name: "Apex Bolt Assassins",
@@ -923,7 +878,7 @@
                 nrr: 0.000,
                 points: 0,
                 form: ["", "", "", "", ""],
-                status: "p"
+                rank: 5
             }
         };
 
@@ -960,12 +915,18 @@
             if (result === 'W') teamData[teamCode].won++;
             else if (result === 'L') teamData[teamCode].lost++;
             
+            // Recalculate points
+            teamData[teamCode].points = 
+                (teamData[teamCode].won * 2) + 
+                (teamData[teamCode].tied * 1);
+            
             renderTable();
         }
 
         // ============================================
         // RENDER TABLE FUNCTION
         // Updates the HTML based on current data
+        // Auto-sorts by points, then NRR
         // ============================================
         
         function renderTable() {
@@ -982,11 +943,13 @@
                 const row = document.getElementById(`team-${code}`);
                 if (!row) return;
 
+                const newRank = index + 1;
+                
                 // Update rank classes (remove old, add new)
-                row.className = `table-row rank-${index + 1}`;
+                row.className = `table-row rank-${newRank}`;
                 
                 // Update rank number
-                row.querySelector('.col-rank').textContent = index + 1;
+                row.querySelector('.col-rank').textContent = newRank;
                 
                 // Update stats
                 row.querySelector('.col-matches').textContent = data.played;
@@ -1003,14 +966,16 @@
                     r ? `<span class="form-dot form-${r === 'W' ? 'win' : 'loss'}">${r}</span>` : ''
                 ).join('');
                 
-                // Update status badge
-                const statusBadge = row.querySelector('.status-badge');
-                const statusClass = data.status === 'q' ? 'status-q' : 
-                                   data.status === 'e' ? 'status-e' : 'status-p';
-                const statusText = data.status === 'q' ? 'Qualified' : 
-                                  data.status === 'e' ? 'Eliminated' : 'Playing';
-                statusBadge.className = `status-badge ${statusClass}`;
-                statusBadge.textContent = statusText;
+                // Update Champion/Runner badges based on new rank
+                const teamNameDiv = row.querySelector('.team-name');
+                const existingBadge = teamNameDiv.querySelector('.champion-badge, .runner-badge');
+                if (existingBadge) existingBadge.remove();
+                
+                if (newRank === 1) {
+                    teamNameDiv.innerHTML += ' <span class="champion-badge">★ Champion</span>';
+                } else if (newRank === 2) {
+                    teamNameDiv.innerHTML += ' <span class="runner-badge">Runner-Up</span>';
+                }
                 
                 // Add update animation
                 row.classList.add('updated');
@@ -1029,20 +994,16 @@
         // ============================================
         // EXAMPLE USAGE (Remove after testing):
         // 
-        // Update Jaffna Sharks after a win:
+        // Add a win for Jaffna Sharks:
         // addMatchResult('js', 'W');
         // 
-        // Update multiple stats:
+        // Update specific stats:
         // updateTeamStats('js', {
         //     played: 4,
         //     won: 3,
         //     lost: 1,
         //     nrr: 0.850
         // });
-        // 
-        // Set qualified status:
-        // teamData.js.status = 'q';
-        // renderTable();
         // ============================================
     </script>
 
