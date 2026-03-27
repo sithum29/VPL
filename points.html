@@ -484,6 +484,22 @@
         .updated {
             animation: highlightUpdate 2s ease;
         }
+        /* Styling for the Navigation Logo */
+        .nav-logo-circle {
+            width: 60px;            /* Adjust size as needed */
+            height: 60px;           /* Must match width for a perfect circle */
+            border-radius: 50%;     /* Makes it a circle */
+            object-fit: cover;      /* Ensures the image fills the circle without stretching */
+            border: 2px solid var(--vpl-secondary); /* Optional: adds a themed border */
+            background: #fff;       /* Prevents transparency issues */
+            display: block;
+        }
+        
+        /* Optional: Add a hover effect */
+        .nav-logo-circle:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -494,7 +510,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <div class="logo-text">VPL 2026</div>
+                <img src="logo.png" alt="VPL 2026" class="nav-logo-circle">
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
