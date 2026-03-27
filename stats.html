@@ -188,19 +188,16 @@
             color: #000;
         }
 
-        /* V-POWER Active */
         .award-tab.vpower.active {
             background: linear-gradient(135deg, var(--vpower-color), #ff8c00);
             box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
         }
 
-        /* V-STRIKE Active */
         .award-tab.vstrike.active {
             background: linear-gradient(135deg, var(--vstrike-color), #0099cc);
             box-shadow: 0 10px 30px rgba(0, 229, 255, 0.3);
         }
 
-        /* V-PRIME Active */
         .award-tab.vprime.active {
             background: linear-gradient(135deg, var(--vprime-color), #ff3d00);
             box-shadow: 0 10px 30px rgba(255, 111, 0, 0.3);
@@ -251,7 +248,6 @@
             opacity: 0.1;
         }
 
-        /* V-POWER Header */
         .award-header.vpower {
             border-color: var(--vpower-color);
         }
@@ -259,7 +255,6 @@
             background: radial-gradient(circle at center, var(--vpower-color), transparent);
         }
 
-        /* V-STRIKE Header */
         .award-header.vstrike {
             border-color: var(--vstrike-color);
         }
@@ -267,7 +262,6 @@
             background: radial-gradient(circle at center, var(--vstrike-color), transparent);
         }
 
-        /* V-PRIME Header */
         .award-header.vprime {
             border-color: var(--vprime-color);
         }
@@ -308,7 +302,7 @@
         }
 
         /* ============================================
-           STATS TABLE
+           STATS TABLE - FIXED ALIGNMENT WITH SPACING
            ============================================ */
         .stats-table-container {
             background: var(--bg-card);
@@ -318,40 +312,26 @@
             border: 1px solid var(--border-color);
         }
 
+        /* Fixed 6-column grid with consistent spacing */
         .stats-header {
             display: grid;
-            grid-template-columns: 80px 1fr 100px 120px 100px 150px;
-            padding: 1.2rem 1.5rem;
+            grid-template-columns: 80px minmax(200px, 2fr) 120px 100px 100px 100px;
+            gap: 30px;  /* Space between columns */
+            padding: 1.2rem 2rem;
             font-weight: 700;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             border-bottom: 2px solid;
-        }
-
-        .stats-header.vpower {
-            background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), transparent);
-            color: var(--vpower-color);
-            border-color: var(--vpower-color);
-        }
-
-        .stats-header.vstrike {
-            background: linear-gradient(90deg, rgba(0, 229, 255, 0.2), transparent);
-            color: var(--vstrike-color);
-            border-color: var(--vstrike-color);
-        }
-
-        .stats-header.vprime {
-            background: linear-gradient(90deg, rgba(255, 111, 0, 0.2), transparent);
-            color: var(--vprime-color);
-            border-color: var(--vprime-color);
+            align-items: center;  /* Vertical center alignment */
         }
 
         .stats-row {
             display: grid;
-            grid-template-columns: 80px 1fr 100px 120px 100px 150px;
-            padding: 1rem 1.5rem;
-            align-items: center;
+            grid-template-columns: 80px minmax(200px, 2fr) 120px 100px 100px 100px;
+            gap: 30px;  /* Space between columns */
+            padding: 1rem 2rem;
+            align-items: center;  /* Vertical center alignment */
             border-bottom: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
@@ -377,11 +357,13 @@
             border-left: 4px solid #cd7f32;
         }
 
+        /* Column specific alignments */
         .col-position {
             font-size: 1.8rem;
             font-weight: 900;
             text-align: center;
             color: var(--text-secondary);
+            justify-self: center;  /* Center in grid cell */
         }
 
         .rank-1 .col-position {
@@ -402,6 +384,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            justify-self: start;  /* Left align */
         }
 
         .player-image {
@@ -411,6 +394,7 @@
             object-fit: cover;
             border: 3px solid var(--border-color);
             background: #fff;
+            flex-shrink: 0;
         }
 
         .rank-1 .player-image {
@@ -439,6 +423,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            justify-self: center;  /* Center in grid cell */
         }
 
         .team-logo-small {
@@ -447,6 +432,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid;
+            flex-shrink: 0;
         }
 
         .team-logo-small.js { border-color: var(--js-color); }
@@ -465,12 +451,14 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
             text-transform: uppercase;
+            justify-self: center;  /* Center in grid cell */
         }
 
         .col-stat {
             text-align: center;
             font-weight: 900;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
+            justify-self: center;  /* Center in grid cell */
         }
 
         .vpower .col-stat {
@@ -485,16 +473,35 @@
             color: var(--vprime-color);
         }
 
-        /* Award Icon in Row */
         .award-icon-cell {
             display: flex;
             justify-content: center;
             align-items: center;
+            justify-self: center;  /* Center in grid cell */
         }
 
         .row-award-icon {
             font-size: 2rem;
             filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        /* Header colors */
+        .stats-header.vpower {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), transparent);
+            color: var(--vpower-color);
+            border-color: var(--vpower-color);
+        }
+
+        .stats-header.vstrike {
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.2), transparent);
+            color: var(--vstrike-color);
+            border-color: var(--vstrike-color);
+        }
+
+        .stats-header.vprime {
+            background: linear-gradient(90deg, rgba(255, 111, 0, 0.2), transparent);
+            color: var(--vprime-color);
+            border-color: var(--vprime-color);
         }
 
         /* ============================================
@@ -584,12 +591,23 @@
         @media (max-width: 968px) {
             .stats-header,
             .stats-row {
-                grid-template-columns: 60px 1fr 80px 100px;
+                grid-template-columns: 60px minmax(150px, 2fr) 80px 80px;
+                gap: 15px;
+                padding: 1rem;
             }
 
             .col-role,
             .award-icon-cell {
                 display: none;
+            }
+
+            .player-image {
+                width: 40px;
+                height: 40px;
+            }
+
+            .col-stat {
+                font-size: 1.2rem;
             }
 
             .award-tab {
@@ -607,13 +625,14 @@
                 display: none;
             }
 
-            .col-team {
-                display: none;
-            }
-
             .stats-header,
             .stats-row {
                 grid-template-columns: 50px 1fr 80px;
+                gap: 10px;
+            }
+
+            .col-team {
+                display: none;
             }
         }
     </style>
