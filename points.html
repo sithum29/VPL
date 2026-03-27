@@ -197,6 +197,7 @@
             border: 1px solid var(--border-color);
         }
 
+        /* EDIT: Grid columns changed - removed Last 5 column */
         .table-header {
             display: grid;
             grid-template-columns: 60px 3fr 80px 80px 80px 80px 80px 80px 100px;
@@ -367,35 +368,6 @@
             color: var(--vpl-accent);
         }
 
-        /* Form indicators (W = Win, L = Loss) */
-        .form-indicator {
-            display: flex;
-            gap: 4px;
-            justify-content: center;
-        }
-
-        .form-dot {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-
-        .form-win {
-            background: #4caf50;
-            color: #fff;
-        }
-
-        .form-loss {
-            background: #f44336;
-            color: #fff;
-        }
-
         /* ============================================
            LEGEND SECTION
            ============================================ */
@@ -473,8 +445,7 @@
             .col-matches,
             .col-won,
             .col-lost,
-            .col-tied,
-            .col-form {
+            .col-tied {
                 display: none;
             }
 
@@ -489,7 +460,7 @@
 
             .champion-badge,
             .runner-badge {
-                display: none; /* Hide badges on mobile, show only on desktop */
+                display: none;
             }
         }
 
@@ -563,7 +534,7 @@
              ============================================ -->
         <div class="points-table-container">
             
-            <!-- Table Header -->
+            <!-- Table Header - Last 5 column removed -->
             <div class="table-header">
                 <div class="col-rank">Pos</div>
                 <div class="col-team">Team</div>
@@ -573,7 +544,6 @@
                 <div class="col-stat col-tied">Tied</div>
                 <div class="col-nrr">NRR</div>
                 <div class="col-points">Pts</div>
-                <div class="col-form">Last 5</div>
             </div>
 
             <!-- ============================================
@@ -606,16 +576,6 @@
                 <div class="col-nrr">+0.000</div>
                 <!-- EDIT: Total Points -->
                 <div class="col-points">0</div>
-                <!-- EDIT: Recent form (W=Win, L=Loss) -->
-                <div class="col-form">
-                    <div class="form-indicator">
-                        <span class="form-dot form-win">W</span>
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-win">W</span>
-                        <span class="form-dot form-win">W</span>
-                        <span class="form-dot form-loss">L</span>
-                    </div>
-                </div>
             </div>
 
             <!-- ============================================
@@ -648,16 +608,6 @@
                 <div class="col-nrr">+0.000</div>
                 <!-- EDIT: Total Points -->
                 <div class="col-points">0</div>
-                <!-- EDIT: Recent form -->
-                <div class="col-form">
-                    <div class="form-indicator">
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-win">W</span>
-                        <span class="form-dot form-win">W</span>
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-win">W</span>
-                    </div>
-                </div>
             </div>
 
             <!-- ============================================
@@ -686,16 +636,6 @@
                 <div class="col-nrr">+0.000</div>
                 <!-- EDIT: Total Points -->
                 <div class="col-points">0</div>
-                <!-- EDIT: Recent form -->
-                <div class="col-form">
-                    <div class="form-indicator">
-                        <span class="form-dot form-win">W</span>
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-win">W</span>
-                        <span class="form-dot form-win">W</span>
-                    </div>
-                </div>
             </div>
 
             <!-- ============================================
@@ -724,16 +664,6 @@
                 <div class="col-nrr">+0.000</div>
                 <!-- EDIT: Total Points -->
                 <div class="col-points">0</div>
-                <!-- EDIT: Recent form -->
-                <div class="col-form">
-                    <div class="form-indicator">
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-win">W</span>
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-win">W</span>
-                    </div>
-                </div>
             </div>
 
             <!-- ============================================
@@ -762,22 +692,12 @@
                 <div class="col-nrr">+0.000</div>
                 <!-- EDIT: Total Points -->
                 <div class="col-points">0</div>
-                <!-- EDIT: Recent form -->
-                <div class="col-form">
-                    <div class="form-indicator">
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-loss">L</span>
-                        <span class="form-dot form-win">W</span>
-                        <span class="form-dot form-loss">L</span>
-                    </div>
-                </div>
             </div>
 
         </div>
 
         <!-- ============================================
-             LEGEND SECTION
+             LEGEND SECTION - Simplified
              ============================================ -->
         <div class="legend-section">
             <h3 class="legend-title">Standings Guide</h3>
@@ -789,13 +709,6 @@
                 <div class="legend-item">
                     <div class="legend-color" style="border-left: 4px solid #c0c0c0;"></div>
                     <span>2nd Place - Runner-Up (Silver)</span>
-                </div>
-                <div class="legend-item">
-                    <div style="display: flex; gap: 4px;">
-                        <span style="background: #4caf50; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 900;">W</span>
-                        <span style="background: #f44336; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 900;">L</span>
-                    </div>
-                    <span>Recent Form (Last 5 Matches)</span>
                 </div>
             </div>
         </div>
@@ -829,7 +742,6 @@
                 tied: 0,
                 nrr: 0.000,
                 points: 0,
-                form: ["", "", "", "", ""], // W or L for last 5
                 rank: 1
             },
             rs: {
@@ -841,7 +753,6 @@
                 tied: 0,
                 nrr: 0.000,
                 points: 0,
-                form: ["", "", "", "", ""],
                 rank: 2
             },
             rcg: {
@@ -853,7 +764,6 @@
                 tied: 0,
                 nrr: 0.000,
                 points: 0,
-                form: ["", "", "", "", ""],
                 rank: 3
             },
             src: {
@@ -865,7 +775,6 @@
                 tied: 0,
                 nrr: 0.000,
                 points: 0,
-                form: ["", "", "", "", ""],
                 rank: 4
             },
             aba: {
@@ -877,7 +786,6 @@
                 tied: 0,
                 nrr: 0.000,
                 points: 0,
-                form: ["", "", "", "", ""],
                 rank: 5
             }
         };
@@ -897,29 +805,6 @@
                 (teamData[teamCode].tied * 1);
             
             // Refresh the table display
-            renderTable();
-        }
-
-        // ============================================
-        // FUNCTION TO UPDATE FORM (Last 5 matches)
-        // result should be 'W' or 'L'
-        // ============================================
-        
-        function addMatchResult(teamCode, result) {
-            // Add new result to beginning, remove oldest
-            teamData[teamCode].form.unshift(result);
-            teamData[teamCode].form = teamData[teamCode].form.slice(0, 5);
-            
-            // Update played/won/lost counts
-            teamData[teamCode].played++;
-            if (result === 'W') teamData[teamCode].won++;
-            else if (result === 'L') teamData[teamCode].lost++;
-            
-            // Recalculate points
-            teamData[teamCode].points = 
-                (teamData[teamCode].won * 2) + 
-                (teamData[teamCode].tied * 1);
-            
             renderTable();
         }
 
@@ -960,12 +845,6 @@
                     (data.nrr >= 0 ? '+' : '') + data.nrr.toFixed(3);
                 row.querySelector('.col-points').textContent = data.points;
                 
-                // Update form indicators
-                const formContainer = row.querySelector('.form-indicator');
-                formContainer.innerHTML = data.form.map(r => 
-                    r ? `<span class="form-dot form-${r === 'W' ? 'win' : 'loss'}">${r}</span>` : ''
-                ).join('');
-                
                 // Update Champion/Runner badges based on new rank
                 const teamNameDiv = row.querySelector('.team-name');
                 const existingBadge = teamNameDiv.querySelector('.champion-badge, .runner-badge');
@@ -994,15 +873,12 @@
         // ============================================
         // EXAMPLE USAGE (Remove after testing):
         // 
-        // Add a win for Jaffna Sharks:
-        // addMatchResult('js', 'W');
-        // 
         // Update specific stats:
         // updateTeamStats('js', {
-        //     played: 4,
-        //     won: 3,
-        //     lost: 1,
-        //     nrr: 0.850
+        //     played: 8,
+        //     won: 6,
+        //     lost: 2,
+        //     nrr: 1.250
         // });
         // ============================================
     </script>
