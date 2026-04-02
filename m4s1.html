@@ -854,7 +854,7 @@
             <!-- src -->
             <div class="team-display">
                 <div class="team-logo src-logo">
-                    <img rs="src.jpeg" alt="src" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                    <img src="src.jpeg" alt="src" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
                 </div>
                 <div class="header-score" id="header-src-score">0</div>
                 <div class="team-name">Sunrisers Colombo</div>
@@ -866,7 +866,7 @@
             <!-- rs -->
             <div class="team-display">
                 <div class="team-logo rs-logo">
-                    <img rs="rs.jpeg" alt="rs" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                    <img src="rs.jpeg" alt="rs" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
                 </div>
                 <div class="header-score" id="header-rs-score">0</div>
                 <div class="team-name">Rajasthan Stallions</div>
@@ -925,7 +925,7 @@
             <!-- src Featured Player -->
             <div class="featured-card src-card">
                 <!-- EDIT: Add featured player image URL here -->
-                <img rs="https://documents.iplt20.com/ipl/IPLHeadshot2026/46.png" 
+                <img src="https://documents.iplt20.com/ipl/IPLHeadshot2026/46.png" 
                      alt="Rajat Patidar" 
                      class="player-image" 
                      id="src-featured-img">
@@ -936,7 +936,7 @@
             <!-- rs Featured Player -->
             <div class="featured-card rs-card">
                 <!-- EDIT: Add featured player image URL here -->
-                <img rs="https://documents.iplt20.com/ipl/IPLHeadshot2026/189.png" 
+                <img src="https://documents.iplt20.com/ipl/IPLHeadshot2026/189.png" 
                      alt="Ravindra Jadeja" 
                      class="player-image" 
                      id="rs-featured-img">
@@ -1030,7 +1030,7 @@
                             <!-- Template for each player (2 rows - stats and points) -->
                             <tr class="stats-row">
                                 <td class="player-cell">
-                                    <img rs="https://documents.iplt20.com/ipl/IPLHeadshot2026/46.png" alt="">
+                                    <img src="https://documents.iplt20.com/ipl/IPLHeadshot2026/46.png" alt="">
                                     <span>Ravindra Jadeja</span>
                                 </td>
                                 <!-- Batting Stats -->
@@ -1091,7 +1091,7 @@
                             <!-- EDIT: Add rs playing 11 + 4 emergency players here -->
                             <tr class="stats-row">
                                 <td class="player-cell">
-                                    <img rs="https://documents.iplt20.com/ipl/IPLHeadshot2026/189.png" alt="">
+                                    <img src="https://documents.iplt20.com/ipl/IPLHeadshot2026/189.png" alt="">
                                     <span>Riyan Parag</span>
                                 </td>
                                 <td>0</td><td>0</td><td>0</td><td>0</td><td>0.00</td>
@@ -1495,7 +1495,7 @@
             const div = document.createElement('div');
             div.className = 'squad-player';
             div.innerHTML = `
-                <img rs="${player.image}" alt="${player.name}" onerror="this.rs='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+                <img src="${player.image}" alt="${player.name}" onerror="this.rs='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
                 <div class="name">${player.name}</div>
                 <div class="role">${player.role}</div>
                 ${player.isForeign ? '<span class="foreign-badge">OVERSEAS</span>' : ''}
