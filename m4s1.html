@@ -14,8 +14,8 @@
             --success: #22c55e;
             --danger: #ef4444;
             --card-bg: rgba(30, 41, 59, 0.85);
-            --home-color: #3b82f6;
-            --away-color: #ef4444;
+            --home-color: orange;
+            --away-color: brown;
         }
 
         * {
@@ -649,11 +649,11 @@
         <div id="playingxi" class="tab-content">
             <div class="xi-container">
                 <div class="xi-column xi-home">
-                    <h3 class="xi-title" id="xi-home-title">Home Playing XI</h3>
+                    <h3 class="xi-title" id="xi-home-title">Sunrisers Colombo Playing XI</h3>
                     <div id="home-xi-content"></div>
                 </div>
                 <div class="xi-column xi-away">
-                    <h3 class="xi-title" id="xi-away-title">Away Playing XI</h3>
+                    <h3 class="xi-title" id="xi-away-title">Rajasthan Stallions Playing XI</h3>
                     <div id="away-xi-content"></div>
                 </div>
             </div>
@@ -763,59 +763,59 @@
  */
 const PLAYER_DB = {
     home: [
-        { name: "Rohit Sharma", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png", foreign: false },
-        { name: "Shubman Gill", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/62.png", foreign: false },
-        { name: "Ruturaj Gaikwad", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/102.png", foreign: false },
-        { name: "Avesh Khan", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/109.png", foreign: false },
-        { name: "Prasidh Krishna", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/150.png", foreign: false },
-        { name: "Mitchell Starc", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/31.png", foreign: true },
-        { name: "Noor Ahmad", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/975.png", foreign: true },
-        { name: "Yuzvendra Chahal", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/10.png", foreign: false },
-        { name: "Digvesh Rathi", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3565.png", foreign: false },
-        { name: "Suyash Sharma", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1932.png", foreign: false },
-        { name: "KL Rahul", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/19.png", foreign: false },
-        { name: "Nicholas Pooran", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/136.png", foreign: true },
-        { name: "Quinton de Kock", role: "WK", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: true },
-        { name: "Dhruv Jurel", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1004.png", foreign: false },
-        { name: "Donovan Ferreira", role: "WK", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: true },
-        { name: "Priyansh Arya", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3571.png", foreign: false },
-        { name: "Harshal Patel", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/114.png", foreign: false },
-        { name: "Romario Shepherd", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/371.png", foreign: true },
-        { name: "Liam Livingstone", role: "All-rounder", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: true },
-        { name: "Ashutosh Sharma", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3109.png", foreign: false },
-        { name: "Vipraj Nigam", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3560.png", foreign: false },
-        { name: "Ramandeep Singh", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/991.png", foreign: false },
-        { name: "Shardul Thakur", role: "All-rounder", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: false },
-        { name: "Prashant Veer", role: "All-rounder", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: false },
-        { name: "Cooper Connolly", role: "All-rounder", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: true }
+                { name: "Aiden Markram", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/287.png" },
+                { name: "Sherfane Rutherford", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Vaibhav Sooryavanshi", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3498.png" },
+                { name: "Dewald Brevis", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/797.png" },
+                { name: "N. Tilak Varma", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/993.png" },
+                { name: "Shashank Singh", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/191.png" },
+                { name: "Aniket Verma", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3576.png" },
+                { name: "Arshdeep Singh", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/125.png" },
+                { name: "Rashid Khan", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/218.png" },
+                { name: "Jofra Archer", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/181.png" },
+                { name: "Kuldeep Sen", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/1005.png" },
+                { name: "T. Natarajan", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/224.png" },
+                { name: "Khaleel Ahmed", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/8.png" },
+                { name: "Varun Chakaravarthy", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/140.png" },
+                { name: "Mohammed Siraj", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/63.png" },
+                { name: "Zeeshan Ansari", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3575.png" },
+                { name: "Finn Allen", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Rishabh Pant", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/18.png" },
+                { name: "Jitesh Sharma", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1000.png" },
+                { name: "Tristan Stubbs", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1017.png" },
+                { name: "Abhishek Sharma", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/212.png" },
+                { name: "Will Jacks", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Ravindra Jadeja", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Harpreet Brar", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/130.png" },
+                { name: "Ayush Badoni", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/985.png" }
     ],
     
     away: [
-        { name: "Riyan Parag", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/189.png", foreign: false },
-        { name: "Shimron Hetmyer", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/210.png", foreign: true },
-        { name: "Rinku Singh", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/152.png", foreign: false },
-        { name: "Glenn Phillips", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/635.png", foreign: true },
-        { name: "Ajinkya Rahane", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/44.png", foreign: false },
-        { name: "Rahul Tripathi", role: "Batter", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: false },
-        { name: "Prithvi Shaw", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2024/51.png", foreign: false },
-        { name: "Manish Pandey", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/16.png", foreign: false },
-        { name: "Ravi Bishnoi", role: "Bowler", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: false },
-        { name: "Trent Boult", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/66.png", foreign: true },
-        { name: "Mohammad Shami", role: "Bowler", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: false },
-        { name: "Deepak Chahar", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/91.png", foreign: false },
-        { name: "Josh Hazlewood", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/36.png", foreign: true },
-        { name: "Ishant Sharma", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/50.png", foreign: false },
-        { name: "Tushar Deshpande", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/539.png", foreign: false },
-        { name: "Rahul Tewatia", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/120.png", foreign: false },
-        { name: "Jos Buttler", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/182.png", foreign: true },
-        { name: "Ishan Kishan", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/164.png", foreign: false },
-        { name: "Prabhsimran Singh", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/137.png", foreign: false },
-        { name: "Jason Holder", role: "All-rounder", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: true },
-        { name: "Marcus Stoinis", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/23.png", foreign: true },
-        { name: "Washington Sundar", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/20.png", foreign: false },
-        { name: "Mitchell Santner", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/75.png", foreign: true },
-        { name: "Shahbaz Ahmed", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/523.png", foreign: false },
-        { name: "Nitish Rana", role: "All-rounder", img: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png", foreign: false }
+                { name: "Riyan Parag", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/189.png" },
+                { name: "Shimron Hetmyer", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/210.png" },
+                { name: "Rinku Singh", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/152.png" },
+                { name: "Glenn Phillips", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/635.png" },
+                { name: "Ajinkya Rahane", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/44.png" },
+                { name: "Rahul Tripathi", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Prithvi Shaw", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/51.png" },
+                { name: "Manish Pandey", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/16.png" },
+                { name: "Ravi Bishnoi", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Trent Boult", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/66.png" },
+                { name: "Mohammad Shami", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Deepak Chahar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/91.png" },
+                { name: "Josh Hazlewood", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/36.png" },
+                { name: "Ishant Sharma", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/50.png" },
+                { name: "Tushar Deshpande", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/539.png" },
+                { name: "Rahul Tewatia", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/120.png" },
+                { name: "Jos Buttler", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/182.png" },
+                { name: "Ishan Kishan", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/164.png" },
+                { name: "Prabhsimran Singh", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/137.png" },
+                { name: "Jason Holder", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
+                { name: "Marcus Stoinis", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/23.png" },
+                { name: "Washington Sundar", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/20.png" },
+                { name: "Mitchell Santner", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/75.png" },
+                { name: "Shahbaz Ahmed", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/523.png" },
+                { name: "Nitish Rana", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" }
     ]
 };
 
@@ -824,33 +824,33 @@ const PLAYER_DB = {
  */
 const matchConfig = {
     meta: {
-        matchNo: 1,
+        matchNo: 4,
         season: 1,
-        venue: "Virtual Stadium, Jaffna",
-        date: "March 28 - April 1, 2026"
+        venue: "Virtual Stadium, Colombo",
+        date: "April 02 - April 15, 2026"
     },
     home: {
-        name: "Jaffna Sharks",
-        short: "JS",
-        score: 808,
-        color: "#3b82f6",
+        name: "Sunrisers Colombo",
+        short: "SRC",
+        score: 0,
+        color: "orange",
         // STADIUM IMAGE - Set this to change background per match
-        stadiumImage: "JSstadium.png" // or use URL: "https://example.com/stadium.jpg"
+        stadiumImage: "SRCstadium.png" // or use URL: "https://example.com/stadium.jpg"
     },
     away: {
         name: "Rajasthan Stallions", 
         short: "RS",
-        score: 527,
-        color: "#ef4444"
+        score: 0,
+        color: "brown"
     },
-    result: "JS WON BY 281 POINTS",
+    result: "Match Not Started",
     
     iplMatches: [
-        { date: "March 28, 2026", match: "RCB vs SRH" },
-        { date: "March 29, 2026", match: "MI vs KKR" },
-        { date: "March 30, 2026", match: "RR vs CSK" },
-        { date: "March 31, 2026", match: "PBKS vs GT" },
-        { date: "April 1, 2026", match: "LSG vs DC" }
+        { date: "April 02, 2026", match: "KKR vs SRH" },
+        { date: "April 03, 2026", match: "CSK vs PBKS" },
+        { date: "April 04, 2026", match: "DC vs MI" },
+        { date: "April 04, 2026", match: "GT vs RR" },
+        { date: "April 15, 2026", match: "RCG vs LSG" }
     ],
     
     stats: {
