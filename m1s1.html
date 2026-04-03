@@ -591,14 +591,85 @@
             .tabs-nav { gap: 0.25rem; }
             .tab-btn { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
         }
+        
+            .potm-section {
+                max-width: 500px;
+                margin: 2rem auto;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+                border: 2px solid rgba(245, 158, 11, 0.4);
+                border-radius: 20px;
+                text-align: center;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 10px 40px rgba(245, 158, 11, 0.2);
+            }
+            
+            .potm-title {
+                color: #fbbf24;
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                margin-bottom: 1rem;
+                font-weight: 800;
+                text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+            }
+            
+            .potm-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1.5rem;
+                flex-wrap: wrap;
+            }
+            
+            .potm-img {
+                width: 90px;
+                height: 90px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 4px solid #fbbf24;
+                box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+            }
+            
+            .potm-info h3 {
+                font-size: 1.6rem;
+                margin-bottom: 0.25rem;
+                color: #fff;
+            }
+            
+            .potm-team {
+                color: #fbbf24;
+                font-size: 0.9rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+            
+            .potm-stats {
+                color: #94a3b8;
+                font-size: 1rem;
+                font-weight: 500;
+            }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .potm-section {
+                margin: 1.5rem 1rem;
+                padding: 1.25rem;
+            }
+            .potm-img {
+                width: 70px;
+                height: 70px;
+            }
+            .potm-info h3 {
+                font-size: 1.3rem;
+            }
+        }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="logo">
-                <img src="logo.png" alt="VPL Logo">
-            </div>
+        <div class="logo">VPL 2026</div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="matches.html">Matches</a></li>
@@ -627,6 +698,14 @@
 
         <div class="match-status" id="match-result">JS won by 281 Points</div>
     </header>
+
+    <!-- Player of the Match -->
+<section class="potm-section" id="potm-container">
+    <div class="potm-title">Player of the Match</div>
+    <div class="potm-content" id="potm-content">
+        <!-- Content populated by JavaScript -->
+    </div>
+</section>
 
     <!-- Featured IPL Matches -->
     <section class="ipl-section">
@@ -899,6 +978,30 @@ const matchConfig = {
         }
     }
 };
+
+// PLAYER OF THE MATCH DATA - Add to your JavaScript
+const potmData = {
+    name: "Rohit Sharma",           // Change player name
+    team: "Jaffna Sharks",          // Change team name
+    stats: "424 Points (2x Captain)", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/6.png" // Change image URL
+};
+
+// FUNCTION TO RENDER POTM - Add to your init() or call separately
+function renderPOTM() {
+    const container = document.getElementById('potm-content');
+    container.innerHTML = `
+        <img src="${potmData.image}" class="potm-img" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+        <div class="potm-info">
+            <h3>${potmData.name}</h3>
+            <div class="potm-team">${potmData.team}</div>
+            <div class="potm-stats">${potmData.stats}</div>
+        </div>
+    `;
+}
+
+// Call this in your init() function or after DOM loads
+// renderPOTM();
 
 /**
  * INITIALIZATION
