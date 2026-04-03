@@ -714,7 +714,7 @@
             <div class="team-block">
                 <div class="team-logo" id="home-logo" style="border-color: var(--home-color); color: var(--home-color);">H</div>
                 <div class="team-name" id="home-name">Royal Challengers Galle</div>
-                <div class="team-score" id="home-score" style="color: var(--home-color);">0</div>
+                <div class="team-score" id="home-score" style="color: var(--home-color);">436</div>
             </div>
             
             <div class="vs-divider">VS</div>
@@ -722,11 +722,11 @@
             <div class="team-block">
                 <div class="team-logo" id="away-logo" style="border-color: var(--away-color); color: var(--away-color);">A</div>
                 <div class="team-name" id="away-name">Jaffna Sharks</div>
-                <div class="team-score" id="away-score" style="color: var(--away-color);">0</div>
+                <div class="team-score" id="away-score" style="color: var(--away-color);">135</div>
             </div>
         </div>
 
-        <div class="match-status" id="match-result">LIVE</div>
+        <div class="match-status" id="match-result">RCG Lead by 301 Points</div>
     </header>
 
 
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Royal Challengers Galle",
         short: "RCG",
-        score: 0,
+        score: 436,
         color: "red",
         logo: "RCG.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Jaffna Sharks", 
         short: "JS",
-        score: 0,
+        score: 135,
         color: "blue",
         logo: "JS.png"
     },
-    result: "LIVE",
+    result: "RCG Lead by 301 Points",
     
     iplMatches: [
         { date: "April 02, 2026", match: "KKR vs SRH" },
@@ -969,10 +969,16 @@ const matchConfig = {
     
     stats: {
         home: [
-
+            { name: "Angkrish Raghuvanshi", batting: "52(29)", bowling: "-", total: 125 },
+            { name: "Shreyas Iyer", batting: "50(29)", bowling: "-", total: 120 },
+            { name: "Nitish Kumar Reddy", batting: "39(24)", bowling: "2/17", total: 152 },
+            { name: "Rahul Chahar", batting: "DNB", bowling: "0/46", total: -4 },
+            { name: "Matt Henry", batting: "DNB", bowling: "2/54", total: 43 }
         ],
         away: [
-
+            { name: "Cooper Connolly", batting: "36(22)", bowling: "-", total: 75 },
+            { name: "Prashant Veer", batting: "6(7)", bowling: "-", total: 7 },
+            { name: "Yuzvendra Chahal", batting: "DNB", bowling: "1/21", total: 53 }
         ],
     },
     
