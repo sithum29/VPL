@@ -858,7 +858,7 @@ const PLAYER_DB = {
         { name: "Nicholas Pooran", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/136.png", foreign: true },
         { name: "Quinton de Kock", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/170.png", foreign: true },
         { name: "Dhruv Jurel", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1004.png", foreign: false },
-        { name: "Donovan Ferreira", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2033.png, foreign: true },
+        { name: "Donovan Ferreira", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2033.png", foreign: true },
         { name: "Priyansh Arya", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/3571.png", foreign: false },
         { name: "Harshal Patel", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/114.png", foreign: false },
         { name: "Romario Shepherd", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/371.png", foreign: true },
@@ -958,7 +958,7 @@ const matchConfig = {
             { name: "Ravi Bishnoi", batting: "DNB", bowling: "1/16", total: 82 },
             { name: "Mohammad Shami", batting: "1(2)", bowling: "1/28", total: 45 },
             { name: "Trent Boult", batting: "DNB", bowling: "0/38", total: -4, emergency: true }
-        ]
+        ],
     },
     
     playingXI: {
@@ -975,7 +975,7 @@ const matchConfig = {
             allRounders: [{name: "Nitish Rana"}, {name: "Marcus Stoinis"}, {name: "Jason Holder"}],
             bowlers: [{name: "Ravi Bishnoi"}, {name: "Mohammad Shami"}, {name: "Deepak Chahar"}, {name: "Rahul Tewatia"}],
             emergency: [{name: "Trent Boult"}, {name: "Prabhsimran Singh"}, {name: "Mitchell Santner"}, {name: "Ajinkya Rahane"}]
-        }
+        },
     }
 };
 
@@ -1007,6 +1007,7 @@ function renderPOTM() {
  * INITIALIZATION
  */
 function init() {
+    renderPOTM();
     // Set stadium background dynamically based on home team
     setStadiumBackground();
     
