@@ -1,439 +1,275 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta chajset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPL Season 1 - Match 5: RCG vs JS | Virtual Premier League</title>
+    <title>VPL Match Center</title>
     <style>
-        /* ============================================
-           GLOBAL STYLES & RESET
-           ============================================ */
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #3b82f6;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --card-bg: rgba(30, 41, 59, 0.85);
+            --home-color: red;
+            --away-color: blue;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        :root {
-            /* VPL Brand Colojs - Edit these to change theme */
-            --vpl-primary: red;
-            --vpl-secondary: white;
-            --vpl-accent: #00bcd4;
-            
-            /* Team Colojs - Edit these for team themes */
-            --rcg-color: red;      /* Royal Challengejs Galle - Teal */
-            --rcg-accent: red;
-            --js-color: blue;      /* Sunrisejs Colombo - Red */
-            --js-accent: blue;
-            
-            /* Match Status Colojs */
-            --live-color: #4caf50;
-            --completed-color: #9e9e9e;
-            --upcoming-color: #ff9800;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, rgba(15, 12, 41, 0.8) 0%, rgba(48, 43, 99, 0.8) 50%, rgba(36, 36, 62, 0.8) 100%),
+            /* OPTION 1: Local image file - place stadium image in same folder as HTML */
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 27, 75, 0.85) 100%),
                         url('RCGstadium.png') no-repeat center center fixed;
+            
+            /* OPTION 2: Use full URL if image is hosted online */
+            /* Uncomment below and comment out above to use URL */
+            /*
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 27, 75, 0.85) 100%),
+                        url('https://your-domain.com/stadium.jpg') no-repeat center center fixed;
+            */
+            
             background-size: cover;
-            color: #ffffff;
+            color: var(--text);
             min-height: 100vh;
-            line-height: 1.6;
+            padding-bottom: 2rem;
         }
 
-        /* ============================================
-           NAVIGATION BAR
-           ============================================ */
+        /* Navigation */
         .navbar {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--vpl-secondary);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
+        /* Container for the logo */
         .logo {
-            width: 60px;                /* Adjust size as needed */
-            height: 60px;               /* Must match width for a perfect circle */
-            border-radius: 50%;         /* Creates the circular shape */
-            overflow: hidden;           /* Clips the image to the circle */
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid var(--vpl-secondary); /* Optional: matches your brand theme */
-            background-color: #000;     /* Background for transparent logos */
         }
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;          /* Ensures logo fills the circle without distortion */
+        
+        /* The actual circular logo */
+        .nav-logo-only {
+            width: 45px;          /* Adjust size as needed */
+            height: 45px;
+            border-radius: 50%;   /* Makes it a circle */
+            object-fit: cover;    /* Ensures image fills circle without stretching */
+            background: #ffffff;  /* Optional: adds white background if logo is transparent */
+            border: 2px solid var(--accent); /* Optional: adds a glow/ring effect */
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-logo-only:hover {
+            transform: scale(1.1); /* Subtle pop effect on hover */
+        }
+        
+        /* Mobile size adjustment */
+        @media (max-width: 768px) {
+            .nav-logo-only {
+                width: 38px;
+                height: 38px;
+            }
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1rem;
             list-style: none;
+            font-size: 0.85rem;
         }
 
         .nav-links a {
-            color: #ffffff;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--vpl-secondary);
-            background: rgba(255, 111, 0, 0.1);
+            color: var(--text);
         }
 
-        /* ============================================
-           MATCH HEADER SECTION
-           ============================================ */
+        /* Match Header */
         .match-header {
-            background: linear-gradient(135deg, rgba(26, 35, 126, 0.9), rgba(0, 0, 0, 0.8));
-            padding: 3rem 2rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .match-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></svg>');
-            background-size: 100px;
-            opacity: 0.5;
+            padding: 2rem 1rem;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
         }
 
         .match-meta {
-            font-size: 0.9rem;
-            color: var(--vpl-accent);
+            color: var(--accent);
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
             margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
         }
 
-        .match-teams {
+        .scoreboard {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 3rem;
-            margin: 2rem 0;
-            position: relative;
-            z-index: 1;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .team-display {
+        .team-block {
             text-align: center;
             flex: 1;
-            max-width: 300px;
+            min-width: 120px;
         }
 
         .team-logo {
-            width: 120px;
-            height: 120px;
-            background: rgba(255, 255, 255, 0.1);
+            width: 80px; /* Slightly larger for better visibility */
+            height: 80px;
+            background: var(--secondary);
             border-radius: 50%;
-            margin: 0 auto 1rem;
+            margin: 0 auto 0.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 900;
-            border: 4px solid;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden; /* This keeps the image inside the circle */
+            border: 3px solid;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
 
-        /* EDIT: Change team logo colojs here */
-        .rcg-logo {
-            border-color: var(--rcg-accent);
-            color: var(--rcg-accent);
-            background: linear-gradient(135deg, var(--rcg-color), #000);
-        }
-
-        .js-logo {
-            border-color: var(--js-accent);
-            color: var(--js-accent);
-            background: linear-gradient(135deg, var(--js-color), #000);
+        .team-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This makes the logo fill the circle perfectly */
         }
 
         .team-name {
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .team-short {
-            font-size: 2rem;
-            font-weight: 900;
-            opacity: 0.8;
-        }
-
-        .vs-badge {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--vpl-secondary);
-            background: rgba(255, 255, 255, 0.1);
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            border: 3px solid var(--vpl-secondary);
-        }
-
-        /* ============================================
-           SCORE DISPLAY SECTION
-           EDIT THIS SECTION AFTER EACH IPL MATCH
-           ============================================ */
-        .score-section {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 1200px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .score-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .score-header h2 {
-            color: var(--vpl-secondary);
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .score-display {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            gap: 2rem;
+            margin-bottom: 0.25rem;
         }
 
         .team-score {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            min-width: 200px;
-        }
-
-        .score-value {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            color: var(--vpl-accent);
+            line-height: 1;
         }
 
-        .score-label {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-top: 0.5rem;
+        .vs-divider {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
         }
 
-        /* EDIT: Match Result - Update after match completion */
-        .match-result {
-            text-align: center;
-            padding: 1rem;
-            background: linear-gradient(90deg, var(--rcg-color), var(--js-color));
-            border-radius: 8px;
+        .match-status {
             margin-top: 1.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
-        /* ============================================
-           FEATURED PLAYEjs SECTION
-           ============================================ */
-        .featured-section {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
+        /* Featured IPL Matches */
+        .ipl-section {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
 
         .section-title {
             text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--vpl-secondary), transparent);
-        }
-
-        .featured-playejs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .featured-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            border: 2px solid;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .featured-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .featured-card.rcg-card {
-            border-color: var(--rcg-accent);
-        }
-
-        .featured-card.js-card {
-            border-color: var(--js-accent);
-        }
-
-        .player-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid;
-            margin-bottom: 1rem;
-        }
-
-        /* EDIT: Add your featured player image URLs here */
-        .rcg-card .player-image {
-            border-color: var(--rcg-accent);
-        }
-
-        .js-card .player-image {
-            border-color: var(--js-accent);
-        }
-
-        .player-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .player-role {
-            color: var(--vpl-accent);
-            font-size: 0.9rem;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        /* ============================================
-           IPL MATCHES SCHEDULE SECTION
-           ============================================ */
-        .schedule-section {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-        }
-
-        .schedule-grid {
+        .ipl-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
         }
 
-        .schedule-card {
-            background: rgba(255, 255, 255, 0.05);
+        .ipl-card {
+            background: var(--card-bg);
             border-radius: 12px;
-            padding: 1.5rem;
-            border-left: 4px solid var(--vpl-secondary);
-            transition: all 0.3s ease;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
         }
 
-        .schedule-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
-        }
-
-        .schedule-date {
-            color: var(--vpl-accent);
+        .ipl-date {
+            color: var(--accent);
+            font-size: 0.75rem;
             font-weight: 700;
-            font-size: 0.9rem;
+            text-transform: uppercase;
             margin-bottom: 0.5rem;
         }
 
-        .schedule-match {
-            font-size: 1.1rem;
+        .ipl-match {
+            font-size: 0.9rem;
             font-weight: 600;
         }
 
-        /* ============================================
-           TABS NAVIGATION
-           ============================================ */
-        .tabs-section {
-            max-width: 1400px;
-            margin: 3rem auto;
-            padding: 0 2rem;
+        /* Tabs */
+        .tabs-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
 
         .tabs-nav {
             display: flex;
-            gap: 1rem;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 2rem;
+            gap: 0.5rem;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            color: #aaa;
-            padding: 1rem 2rem;
-            font-size: 1rem;
+            color: var(--text-muted);
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            cujsor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
             position: relative;
+            transition: all 0.3s;
         }
 
         .tab-btn.active {
-            color: var(--vpl-secondary);
+            color: var(--accent);
         }
 
         .tab-btn.active::after {
@@ -443,11 +279,8 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: var(--vpl-secondary);
-        }
-
-        .tab-btn:hover {
-            color: #fff;
+            background: var(--accent);
+            border-radius: 3px;
         }
 
         .tab-content {
@@ -456,7 +289,7 @@
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.4s ease;
         }
 
         @keyframes fadeIn {
@@ -464,925 +297,561 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ============================================
-           SQUAD SECTION STYLES
-           ============================================ */
-        .squad-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .squad-column {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 2px solid;
-        }
-
-        .squad-column.rcg-squad {
-            border-color: var(--rcg-accent);
-        }
-
-        .squad-column.js-squad {
-            border-color: var(--js-accent);
-        }
-
-        .squad-title {
-            text-align: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .player-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 1rem;
-        }
-
-        .squad-player {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .squad-player:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-        }
-
-        .squad-player img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 0.5rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .squad-player .name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-        }
-
-        .squad-player .role {
-            font-size: 0.75rem;
-            color: var(--vpl-accent);
-            text-transform: uppercase;
-        }
-
-        .foreign-badge {
-            display: inline-block;
-            background: var(--vpl-secondary);
-            color: #000;
-            font-size: 0.6rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-top: 0.3rem;
-            font-weight: 700;
-        }
-
-        /* ============================================
-           SCORECARD STYLES
-           ============================================ */
-        .scorecard-container {
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .innings-tabs {
+        /* Scorecard */
+        .innings-header {
             display: flex;
-            background: rgba(255, 255, 255, 0.05);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .innings-tab {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            cujsor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            padding: 0.75rem 1.25rem;
+            cursor: pointer;
             border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: all 0.3s;
         }
 
         .innings-tab.active {
-            background: rgba(255, 111, 0, 0.2);
-            border-bottom-color: var(--vpl-secondary);
+            color: var(--text);
+            border-bottom-color: var(--accent);
         }
 
-        .innings-tab:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .scorecard {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
         }
 
-        .innings-content {
-            display: none;
-            padding: 2rem;
-            overflow-x: auto;
-        }
-
-        .innings-content.active {
-            display: block;
-        }
-
-        .scorecard-table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
-            min-width: 1000px;
+            font-size: 0.85rem;
         }
 
-        .scorecard-table th {
-            background: rgba(255, 111, 0, 0.2);
-            padding: 1rem;
-            text-align: center;
+        th {
+            background: rgba(0,0,0,0.3);
+            padding: 0.75rem;
+            text-align: left;
             font-weight: 700;
+            color: var(--text-muted);
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             letter-spacing: 1px;
-            border-bottom: 2px solid var(--vpl-secondary);
         }
 
-        .scorecard-table td {
-            padding: 0.8rem;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .scorecard-table tr:hover {
-            background: rgba(255, 255, 255, 0.05);
+        tr:hover {
+            background: rgba(255,255,255,0.03);
         }
 
         .player-cell {
-            text-align: left;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
-        .player-cell img {
-            width: 40px;
-            height: 40px;
+        .player-img {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             object-fit: cover;
+            background: var(--secondary);
         }
 
-        .stats-row {
-            background: rgba(255, 255, 255, 0.03);
+        .player-name {
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        .points-row {
-            background: rgba(0, 188, 212, 0.1);
-            font-weight: 700;
-            color: var(--vpl-accent);
+        .player-role {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
         }
 
-        .points-row td {
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        .text-right {
+            text-align: right;
         }
 
         .total-row {
-            background: var(--vpl-secondary);
-            color: #000;
-            font-weight: 900;
-            font-size: 1.1rem;
+            background: rgba(59, 130, 246, 0.15);
+            font-weight: 700;
         }
 
-        /* ============================================
-           TEAM SELECTION FORM STYLES
-           ============================================ */
-        .selection-section {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 2rem;
+        .total-row td {
+            border-bottom: none;
+            font-size: 1rem;
+            color: var(--accent);
         }
 
-        .selection-forms {
+        .captain-badge, .em-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 4px;
+            font-weight: 700;
+        }
+
+        .em-badge {
+            background: #f59e0b;
+        }
+
+        /* Playing XI Section */
+        .xi-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 1.5rem;
         }
 
-        .selection-form {
-            background: rgba(0, 0, 0, 0.6);
+        .xi-column {
+            background: var(--card-bg);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 1.5rem;
             border: 2px solid;
+            backdrop-filter: blur(10px);
         }
 
-        .selection-form.rcg-form {
-            border-color: var(--rcg-accent);
+        .xi-home {
+            border-color: var(--home-color);
         }
 
-        .selection-form.js-form {
-            border-color: var(--js-accent);
+        .xi-away {
+            border-color: var(--away-color);
         }
 
-        .form-group {
+        .xi-title {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .role-section {
             margin-bottom: 1.5rem;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--vpl-accent);
+        .role-header {
+            font-size: 0.75rem;
+            color: var(--text-muted);
             text-transform: uppercase;
-            font-size: 0.85rem;
             letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .role-count {
+            background: var(--accent);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        .player-slot {
+            background: rgba(255,255,255,0.05);
             border-radius: 8px;
-            color: #fff;
-            font-size: 1rem;
-            cujsor: pointer;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px dashed rgba(255,255,255,0.2);
+            min-height: 50px;
         }
 
-        .form-group select:focus {
+        .player-slot.filled {
+            border-style: solid;
+            border-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .slot-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--secondary);
+        }
+
+        .slot-info {
+            flex: 1;
+        }
+
+        .slot-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .slot-role {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Squad Selection Forms */
+        .selection-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .selection-form {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 2px solid;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-home {
+            border-color: var(--home-color);
+        }
+
+        .form-away {
+            border-color: var(--away-color);
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .form-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section-title {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .form-select:focus {
             outline: none;
-            border-color: var(--vpl-secondary);
+            border-color: var(--accent);
         }
 
-        .form-group select option {
-            background: #1a1a2e;
-            color: #fff;
+        .form-select option {
+            background: var(--secondary);
+            color: var(--text);
         }
 
         .submit-btn {
             width: 100%;
             padding: 1rem;
-            background: linear-gradient(135deg, var(--vpl-secondary), #ff8f00);
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
             border: none;
             border-radius: 8px;
-            color: #000;
-            font-weight: 900;
-            font-size: 1.1rem;
-            cujsor: pointer;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            transition: transform 0.2s;
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 111, 0, 0.3);
         }
 
-        .emergency-section {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar { padding: 0.75rem; }
+            .logo { font-size: 1.1rem; }
+            .nav-links { font-size: 0.75rem; gap: 0.75rem; }
+            
+            .match-header { padding: 1.5rem 1rem; }
+            .team-logo { width: 60px; height: 60px; font-size: 1rem; }
+            .team-score { font-size: 2rem; }
+            .vs-divider { width: 40px; height: 40px; font-size: 1rem; }
+            
+            .ipl-grid { grid-template-columns: repeat(2, 1fr); }
+            
+            .xi-container,
+            .selection-container { grid-template-columns: 1fr; }
+            
+            table { font-size: 0.75rem; }
+            th, td { padding: 0.5rem; }
+            .player-img { width: 28px; height: 28px; }
+            .player-name { font-size: 0.8rem; }
+            
+            .tabs-nav { gap: 0.25rem; }
+            .tab-btn { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
         }
-
-        /* ============================================
-           FOOTER
-           ============================================ */
-        .footer {
-            background: rgba(0, 0, 0, 0.9);
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            border-top: 2px solid var(--vpl-secondary);
-        }
-
-        .footer p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* ============================================
-           RESPONSIVE DESIGN
-           ============================================ */
-        @media (max-width: 968px) {
-            .match-teams {
-                flex-direction: column;
+        
+            .potm-section {
+                max-width: 500px;
+                margin: 2rem auto;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+                border: 2px solid rgba(245, 158, 11, 0.4);
+                border-radius: 20px;
+                text-align: center;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 10px 40px rgba(245, 158, 11, 0.2);
+            }
+            
+            .potm-title {
+                color: #fbbf24;
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                margin-bottom: 1rem;
+                font-weight: 800;
+                text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+            }
+            
+            .potm-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 gap: 1.5rem;
-            }
-
-            .vs-badge {
-                order: -1;
-            }
-
-            .featured-playejs,
-            .squad-container,
-            .selection-forms {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none; /* Add mobile menu logic if needed */
-            }
-
-            .score-display {
-                flex-direction: column;
-            }
-
-            .tabs-nav {
                 flex-wrap: wrap;
             }
-            /* Styling for scores in the header */
-            .header-score {
-                font-size: 2.5rem;
-                font-weight: 900;
-                color: var(--vpl-accent);
-                margin: 0.5rem 0;
-                text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+            
+            .potm-img {
+                width: 90px;
+                height: 90px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 4px solid #fbbf24;
+                box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
             }
             
-            /* Styling for the result banner in the header */
-            .final-result-header {
-                background: rgba(255, 111, 0, 0.2);
-                border: 1px solid var(--vpl-secondary);
-                color: var(--vpl-secondary);
-                display: inline-block;
-                padding: 0.5rem 2rem;
-                border-radius: 50px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                margin-top: 1rem;
-                animation: pulse 2s infinite;
+            .potm-info h3 {
+                font-size: 1.6rem;
+                margin-bottom: 0.25rem;
+                color: #fff;
             }
             
-            @keyframes pulse {
-                0% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.05); opacity: 0.8; }
-                100% { transform: scale(1); opacity: 1; }
+            .potm-team {
+                color: #fbbf24;
+                font-size: 0.9rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+            
+            .potm-stats {
+                color: #94a3b8;
+                font-size: 1rem;
+                font-weight: 500;
             }
 
-        /* Utility Classes */
-        .text-center { text-align: center; }
-        .mt-2 { margin-top: 2rem; }
-        .mb-2 { margin-bottom: 2rem; }
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .potm-section {
+                margin: 1.5rem 1rem;
+                padding: 1.25rem;
+            }
+            .potm-img {
+                width: 70px;
+                height: 70px;
+            }
+            .potm-info h3 {
+                font-size: 1.3rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ============================================
-         NAVIGATION BAR
-         ============================================ -->
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="logo.png" alt="VPL Logo">
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="matches.html">Matches</a></li>
-                <li><a href="teams.html">Teams</a></li>
-                <li><a href="points.html">Points Table</a></li>
-            </ul>
+        <div class="logo">
+            <img src="logo.png" alt="VPL" class="nav-logo-only">
         </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="matches.html">Matches</a></li>
+            <li><a href="points.html">Points Table</a></li>
+        </ul>
     </nav>
 
-    <!-- ============================================
-         MATCH HEADER
-         ============================================ -->
     <header class="match-header">
-        <div class="match-meta">VPL Season 1 • Match 5 • Virtual Stadium, Royal Challengers Galle</div>
+        <div class="match-meta" id="match-title">Match 5 • VPL Season 1</div>
         
-        <div class="match-teams">
-            <!-- rcg -->
-            <div class="team-display">
-                <div class="team-logo rcg-logo">
-                    <img src="RCG.jpeg" alt="rcg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                </div>
-                <div class="header-score" id="header-rcg-score">0</div>
-                <div class="team-name">Royal Challengers Galle</div>
-                <div class="team-short">RCG</div>
+        <div class="scoreboard">
+            <div class="team-block">
+                <div class="team-logo" id="home-logo" style="border-color: var(--home-color); color: var(--home-color);">H</div>
+                <div class="team-name" id="home-name">Royal Challengers Galle</div>
+                <div class="team-score" id="home-score" style="color: var(--home-color);">0</div>
             </div>
-
-            <div class="vs-badge">VS</div>
-
-            <!-- js -->
-            <div class="team-display">
-                <div class="team-logo js-logo">
-                    <img src="JS.png" alt="js" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                </div>
-                <div class="header-score" id="header-js-score">0</div>
-                <div class="team-name">Jaffna Sharks</div>
-                <div class="team-short">JS</div>
+            
+            <div class="vs-divider">VS</div>
+            
+            <div class="team-block">
+                <div class="team-logo" id="away-logo" style="border-color: var(--away-color); color: var(--away-color);">A</div>
+                <div class="team-name" id="away-name">Jaffna Sharks</div>
+                <div class="team-score" id="away-score" style="color: var(--away-color);">0</div>
             </div>
         </div>
-                <div class="final-result-header" id="header-match-result">
-                        Match Not Started
-                    </div>
 
-        <div style="margin-top: 1rem; font-size: 1.1rem; color: #aaa;">
-            April 02 - April 15, 2026
-        </div>
+        <div class="match-status" id="match-result">LIVE</div>
     </header>
 
-    <!-- ============================================
-         LIVE SCORE SECTION
-         EDIT THIS SECTION AFTER EACH IPL MATCH
-         ============================================ -->
-    <section class="score-section">
-        <div class="score-header">
-            <h2>Virtual Points Live</h2>
-        </div>
-        
-        <div class="score-display">
-            <div class="team-score">
-                <!-- EDIT: Update rcg total points here -->
-                <div class="score-value" id="rcg-total">0</div>
-                <div class="score-label">Royal Challengers Galle</div>
-            </div>
-            
-            <div style="font-size: 2rem; font-weight: 900; color: var(--vpl-secondary);">VS</div>
-            
-            <div class="team-score">
-                <!-- EDIT: Update js total points here -->
-                <div class="score-value" id="js-total">0</div>
-                <div class="score-label">Jaffna Sharks</div>
-            </div>
-        </div>
 
-        <!-- EDIT: Add match result here after completion -->
-        <!-- Example: "Jaffna Sharks won by 45 points" -->
-        <div class="match-result" id="match-result">
-            Match Not Started
-        </div>
-    </section>
-
-    <!-- ============================================
-         FEATURED PLAYEjs SECTION
-         EDIT IMAGE URLs BELOW
-         ============================================ -->
-    <section class="featured-section">
-        <h2 class="section-title">Featured Playejs</h2>
-        
-        <div class="featured-playejs">
-            <!-- rcg Featured Player -->
-            <div class="featured-card rcg-card">
-                <!-- EDIT: Add featured player image URL here -->
-                <img src="https://documents.iplt20.com/ipl/IPLHeadshot2026/597.png" 
-                     alt="Rajat Patidar" 
-                     class="player-image" 
-                     id="rcg-featured-img">
-                <div class="player-name" id="rcg-featured-name">Rajat Patidar</div>
-                <div class="player-role">Captain • Batter</div>
-            </div>
-
-            <!-- js Featured Player -->
-            <div class="featured-card js-card">
-                <!-- EDIT: Add featured player image URL here -->
-                <img src="https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png" 
-                     alt="Ravindra Jadeja" 
-                     class="player-image" 
-                     id="js-featured-img">
-                <div class="player-name" id="js-featured-name">Rohit Sharma</div>
-                <div class="player-role">Captain • Batter</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================
-         IPL MATCHES SCHEDULE
-         These matches contribute to this VPL match
-         ============================================ -->
-    <section class="schedule-section">
+    <!-- Featured IPL Matches -->
+    <section class="ipl-section">
         <h2 class="section-title">Featured IPL Matches</h2>
-        
-        <div class="schedule-grid">
-            <div class="schedule-card">
-                <div class="schedule-date">April 02, 2026</div>
-                <div class="schedule-match">KKR vs SRH</div>
-            </div>
-            <div class="schedule-card">
-                <div class="schedule-date">April 03, 2026</div>
-                <div class="schedule-match">CSK vs PBKS</div>
-            </div>
-            <div class="schedule-card">
-                <div class="schedule-date">April 04, 2026</div>
-                <div class="schedule-match">DC vs MI</div>
-            </div>
-            <div class="schedule-card">
-                <div class="schedule-date">April 04, 2026</div>
-                <div class="schedule-match">GT vs RR</div>
-            </div>
-            <div class="schedule-card">
-                <div class="schedule-date">April 15, 2026</div>
-                <div class="schedule-match">RCB vs LSG</div>
-            </div>
-        </div>
+        <div class="ipl-grid" id="ipl-matches"></div>
     </section>
 
-    <!-- ============================================
-         MAIN TABS SECTION
-         ============================================ -->
-    <section class="tabs-section">
+    <section class="tabs-container">
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>
-            <button class="tab-btn" onclick="showTab('teams')">Teams</button>
-            <button class="tab-btn" onclick="showTab('squad-selection')">Squad Selection</button>
+            <button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>
+            <!--<button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>-->
         </div>
 
-        <!-- ============================================
-             SCORECARD TAB
-             ============================================ -->
+        <!-- Scorecard Tab -->
         <div id="scorecard" class="tab-content active">
-            <div class="scorecard-container">
-                <!-- Innings Tabs -->
-                <div class="innings-tabs">
-                    <div class="innings-tab active" onclick="showInnings('rcg-innings')">
-                        Royal Challengers Galle Innings
-                    </div>
-                    <div class="innings-tab" onclick="showInnings('js-innings')">
-                        Jaffna Sharks Innings
-                    </div>
-                </div>
+            <div class="innings-header" id="innings-tabs"></div>
+            <div id="innings-content"></div>
+        </div>
 
-                <!-- rcg Innings -->
-                <div id="rcg-innings" class="innings-content active">
-                    <table class="scorecard-table">
-                        <thead>
-                            <tr>
-                                <th>Player</th>
-                                <th>R</th>
-                                <th>B</th>
-                                <th>4s</th>
-                                <th>6s</th>
-                                <th>SR</th>
-                                <th>Balls</th>
-                                <th>Runs</th>
-                                <th>W</th>
-                                <th>Dots</th>
-                                <th>M</th>
-                                <th>Eco</th>
-                                <th>4s</th>
-                                <th>6s</th>
-                                <th>WD</th>
-                                <th>NB</th>
-                                <th>C</th>
-                                <th>RO</th>
-                                <th>ST</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rcg-scorecard-body">
-                            <!-- EDIT: Add rcg playing 11 + 4 emergency playejs here -->
-                            <!-- Template for each player (2 rows - stats and points) -->
-                            <tr class="stats-row">
-                                <td class="player-cell">
-                                    <img src="https://documents.iplt20.com/ipl/IPLHeadshot2026/597.png" alt="">
-                                    <span>Rajat Patidar</span>
-                                </td>
-                                <!-- Batting Stats -->
-                                <td>0</td><td>0</td><td>0</td><td>0</td><td>0.00</td>
-                                <!-- Bowling Stats -->
-                                <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0.00</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                                <!-- Fielding -->
-                                <td>0</td><td>0</td><td>0</td>
-                                <!-- Total -->
-                                <td>0</td>
-                            </tr>
-                            <tr class="points-row">
-                                <td style="text-align: right; padding-right: 1rem;">Points:</td>
-                                <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                                <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                                <td>0</td><td>0</td><td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <!-- Copy above 2 rows for each player -->
-                        </tbody>
-                        <tfoot>
-                            <tr class="total-row">
-                                <td colspan="19" style="text-align: right;">Team Total:</td>
-                                <td id="rcg-table-total">0</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+        <!-- Playing XI Tab -->
+        <div id="playingxi" class="tab-content">
+            <div class="xi-container">
+                <div class="xi-column xi-home">
+                    <h3 class="xi-title" id="xi-home-title">Royal Challengers Galle Playing XI</h3>
+                    <div id="home-xi-content"></div>
                 </div>
-
-                <!-- js Innings -->
-                <div id="js-innings" class="innings-content">
-                    <table class="scorecard-table">
-                        <thead>
-                            <tr>
-                                <th>Player</th>
-                                <th>R</th>
-                                <th>B</th>
-                                <th>4s</th>
-                                <th>6s</th>
-                                <th>SR</th>
-                                <th>Balls</th>
-                                <th>Runs</th>
-                                <th>W</th>
-                                <th>Dots</th>
-                                <th>M</th>
-                                <th>Eco</th>
-                                <th>4s</th>
-                                <th>6s</th>
-                                <th>WD</th>
-                                <th>NB</th>
-                                <th>C</th>
-                                <th>RO</th>
-                                <th>ST</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody id="js-scorecard-body">
-                            <!-- EDIT: Add js playing 11 + 4 emergency playejs here -->
-                            <tr class="stats-row">
-                                <td class="player-cell">
-                                    <img src="https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png" alt="">
-                                    <span>Rohit Sharma</span>
-                                </td>
-                                <td>0</td><td>0</td><td>0</td><td>0</td><td>0.00</td>
-                                <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0.00</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                                <td>0</td><td>0</td><td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr class="points-row">
-                                <td style="text-align: right; padding-right: 1rem;">Points:</td>
-                                <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                                <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                                <td>0</td><td>0</td><td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr class="total-row">
-                                <td colspan="19" style="text-align: right;">Team Total:</td>
-                                <td id="js-table-total">0</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                <div class="xi-column xi-away">
+                    <h3 class="xi-title" id="xi-away-title">Jaffna Sharks Playing XI</h3>
+                    <div id="away-xi-content"></div>
                 </div>
             </div>
         </div>
 
-        <!-- ============================================
-             TEAMS TAB - FULL SQUADS
-             ============================================ -->
-        <div id="teams" class="tab-content">
-            <div class="squad-container">
-                <!-- rcg Squad -->
-                <div class="squad-column rcg-squad">
-                    <h3 class="squad-title" style="color: var(--rcg-accent);">Royal Challengers Galle Squad</h3>
-                    <div class="player-grid" id="rcg-squad-grid">
-                        <!-- Squad populated by JavaScript -->
-                    </div>
-                </div>
-
-                <!-- js Squad -->
-                <div class="squad-column js-squad">
-                    <h3 class="squad-title" style="color: var(--js-accent);">Jaffna Sharks Squad</h3>
-                    <div class="player-grid" id="js-squad-grid">
-                        <!-- Squad populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ============================================
-             SQUAD SELECTION TAB
-             ============================================ -->
-        <div id="squad-selection" class="tab-content">
-            <div class="selection-forms">
-                <!-- rcg Selection Form -->
-                <div class="selection-form rcg-form">
-                    <h3 style="color: var(--rcg-accent); margin-bottom: 1.5rem; text-align: center;">
-                        Royal Challengers Galle - Submit Playing XI
-                    </h3>
-                    
-                    <!-- EDIT: Update Formspree action URL below -->
-                    <form action="https://formspree.io/f/xjgpvlbj" method="POST" id="rcg-form">
-                        <input type="hidden" name="team" value="Sunrisejs Colombo">
-                        <input type="hidden" name="match" value="M2S1">
-
-                        <!-- 3 Battejs -->
-                        <div class="form-group">
-                            <label>Batter 1</label>
-                            <select name="batter1" required id="rcg-batter1">
-                                <option value="">Select Batter</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Batter 2</label>
-                            <select name="batter2" required id="rcg-batter2">
-                                <option value="">Select Batter</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Batter 3</label>
-                            <select name="batter3" required id="rcg-batter3">
-                                <option value="">Select Batter</option>
-                            </select>
+        <!-- Squad Selection Tab -->
+        <div id="squadselection" class="tab-content">
+            <div class="selection-container">
+                <!-- Home Team Form -->
+                <div class="selection-form form-home">
+                    <h3 class="form-title" id="form-home-title">Home Team Selection</h3>
+                    <form action="https://formspree.io/f/xjgpvlbj" method="POST" id="home-form">
+                        <input type="hidden" name="team_type" value="home">
+                        <input type="hidden" name="team_name" id="home-form-name">
+                        
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">3</span> Batters</div>
+                            <select name="batter1" class="form-select" required id="home-batter1"></select>
+                            <select name="batter2" class="form-select" required id="home-batter2"></select>
+                            <select name="batter3" class="form-select" required id="home-batter3"></select>
                         </div>
 
-                        <!-- 1 Wicket Keeper -->
-                        <div class="form-group">
-                            <label>Wicket Keeper</label>
-                            <select name="wk" required id="rcg-wk">
-                                <option value="">Select WK</option>
-                            </select>
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">1</span> Wicket Keeper</div>
+                            <select name="wk" class="form-select" required id="home-wk"></select>
                         </div>
 
-                        <!-- 3 All Roundejs -->
-                        <div class="form-group">
-                            <label>All-Rounder 1</label>
-                            <select name="ar1" required id="rcg-ar1">
-                                <option value="">Select All-Rounder</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>All-Rounder 2</label>
-                            <select name="ar2" required id="rcg-ar2">
-                                <option value="">Select All-Rounder</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>All-Rounder 3</label>
-                            <select name="ar3" required id="rcg-ar3">
-                                <option value="">Select All-Rounder</option>
-                            </select>
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">3</span> All Rounders</div>
+                            <select name="ar1" class="form-select" required id="home-ar1"></select>
+                            <select name="ar2" class="form-select" required id="home-ar2"></select>
+                            <select name="ar3" class="form-select" required id="home-ar3"></select>
                         </div>
 
-                        <!-- 4 Bowlejs -->
-                        <div class="form-group">
-                            <label>Bowler 1</label>
-                            <select name="bowler1" required id="rcg-bowler1">
-                                <option value="">Select Bowler</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Bowler 2</label>
-                            <select name="bowler2" required id="rcg-bowler2">
-                                <option value="">Select Bowler</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Bowler 3</label>
-                            <select name="bowler3" required id="rcg-bowler3">
-                                <option value="">Select Bowler</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Bowler 4</label>
-                            <select name="bowler4" required id="rcg-bowler4">
-                                <option value="">Select Bowler</option>
-                            </select>
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">4</span> Bowlers</div>
+                            <select name="bowler1" class="form-select" required id="home-bowler1"></select>
+                            <select name="bowler2" class="form-select" required id="home-bowler2"></select>
+                            <select name="bowler3" class="form-select" required id="home-bowler3"></select>
+                            <select name="bowler4" class="form-select" required id="home-bowler4"></select>
                         </div>
 
-                        <!-- 4 Emergencies -->
-                        <div class="emergency-section">
-                            <h4 style="color: var(--vpl-secondary); margin-bottom: 1rem;">Emergency Playejs</h4>
-                            
-                            <div class="form-group">
-                                <label>Emergency 1</label>
-                                <select name="em1" required id="rcg-em1">
-                                    <option value="">Select Emergency</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Emergency 2</label>
-                                <select name="em2" required id="rcg-em2">
-                                    <option value="">Select Emergency</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Emergency 3</label>
-                                <select name="em3" required id="rcg-em3">
-                                    <option value="">Select Emergency</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Emergency 4</label>
-                                <select name="em4" required id="rcg-em4">
-                                    <option value="">Select Emergency</option>
-                                </select>
-                            </div>
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">4</span> Emergency Players</div>
+                            <select name="em1" class="form-select" required id="home-em1"></select>
+                            <select name="em2" class="form-select" required id="home-em2"></select>
+                            <select name="em3" class="form-select" required id="home-em3"></select>
+                            <select name="em4" class="form-select" required id="home-em4"></select>
                         </div>
 
                         <button type="submit" class="submit-btn">Submit Squad</button>
                     </form>
                 </div>
 
-                <!-- js Selection Form -->
-                <div class="selection-form js-form">
-                    <h3 style="color: var(--js-accent); margin-bottom: 1.5rem; text-align: center;">
-                        Jaffna Sharks - Submit Playing XI
-                    </h3>
-                    
-                    <!-- EDIT: Update Formspree action URL below -->
-                    <form action="https://formspree.io/f/xjgpvlbj" method="POST" id="js-form">
-                        <input type="hidden" name="team" value="Rajasthan Stallions">
-                        <input type="hidden" name="match" value="M2S1">
-
-                        <!-- 3 Battejs -->
-                        <div class="form-group">
-                            <label>Batter 1</label>
-                            <select name="batter1" required id="js-batter1">
-                                <option value="">Select Batter</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Batter 2</label>
-                            <select name="batter2" required id="js-batter2">
-                                <option value="">Select Batter</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Batter 3</label>
-                            <select name="batter3" required id="js-batter3">
-                                <option value="">Select Batter</option>
-                            </select>
+                <!-- Away Team Form -->
+                <div class="selection-form form-away">
+                    <h3 class="form-title" id="form-away-title">Away Team Selection</h3>
+                    <form action="https://formspree.io/f/xjgpvlbj" method="POST" id="away-form">
+                        <input type="hidden" name="team_type" value="away">
+                        <input type="hidden" name="team_name" id="away-form-name">
+                        
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">3</span> Batters</div>
+                            <select name="batter1" class="form-select" required id="away-batter1"></select>
+                            <select name="batter2" class="form-select" required id="away-batter2"></select>
+                            <select name="batter3" class="form-select" required id="away-batter3"></select>
                         </div>
 
-                        <!-- 1 Wicket Keeper -->
-                        <div class="form-group">
-                            <label>Wicket Keeper</label>
-                            <select name="wk" required id="js-wk">
-                                <option value="">Select WK</option>
-                            </select>
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">1</span> Wicket Keeper</div>
+                            <select name="wk" class="form-select" required id="away-wk"></select>
                         </div>
 
-                        <!-- 3 All Roundejs -->
-                        <div class="form-group">
-                            <label>All-Rounder 1</label>
-                            <select name="ar1" required id="js-ar1">
-                                <option value="">Select All-Rounder</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>All-Rounder 2</label>
-                            <select name="ar2" required id="js-ar2">
-                                <option value="">Select All-Rounder</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>All-Rounder 3</label>
-                            <select name="ar3" required id="js-ar3">
-                                <option value="">Select All-Rounder</option>
-                            </select>
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">3</span> All Rounders</div>
+                            <select name="ar1" class="form-select" required id="away-ar1"></select>
+                            <select name="ar2" class="form-select" required id="away-ar2"></select>
+                            <select name="ar3" class="form-select" required id="away-ar3"></select>
                         </div>
 
-                        <!-- 4 Bowlejs -->
-                        <div class="form-group">
-                            <label>Bowler 1</label>
-                            <select name="bowler1" required id="js-bowler1">
-                                <option value="">Select Bowler</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Bowler 2</label>
-                            <select name="bowler2" required id="js-bowler2">
-                                <option value="">Select Bowler</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Bowler 3</label>
-                            <select name="bowler3" required id="js-bowler3">
-                                <option value="">Select Bowler</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Bowler 4</label>
-                            <select name="bowler4" required id="js-bowler4">
-                                <option value="">Select Bowler</option>
-                            </select>
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">4</span> Bowlers</div>
+                            <select name="bowler1" class="form-select" required id="away-bowler1"></select>
+                            <select name="bowler2" class="form-select" required id="away-bowler2"></select>
+                            <select name="bowler3" class="form-select" required id="away-bowler3"></select>
+                            <select name="bowler4" class="form-select" required id="away-bowler4"></select>
                         </div>
 
-                        <!-- 4 Emergencies -->
-                        <div class="emergency-section">
-                            <h4 style="color: var(--vpl-secondary); margin-bottom: 1rem;">Emergency Players</h4>
-                            
-                            <div class="form-group">
-                                <label>Emergency 1</label>
-                                <select name="em1" required id="js-em1">
-                                    <option value="">Select Emergency</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Emergency 2</label>
-                                <select name="em2" required id="js-em2">
-                                    <option value="">Select Emergency</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Emergency 3</label>
-                                <select name="em3" required id="js-em3">
-                                    <option value="">Select Emergency</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Emergency 4</label>
-                                <select name="em4" required id="js-em4">
-                                    <option value="">Select Emergency</option>
-                                </select>
-                            </div>
+                        <div class="form-section">
+                            <div class="form-section-title"><span class="role-count">4</span> Emergency Players</div>
+                            <select name="em1" class="form-select" required id="away-em1"></select>
+                            <select name="em2" class="form-select" required id="away-em2"></select>
+                            <select name="em3" class="form-select" required id="away-em3"></select>
+                            <select name="em4" class="form-select" required id="away-em4"></select>
                         </div>
 
                         <button type="submit" class="submit-btn">Submit Squad</button>
@@ -1392,275 +861,415 @@
         </div>
     </section>
 
-    <!-- ============================================
-         FOOTER
-         ============================================ -->
-    <footer class="footer">
-        <p>&copy; 2026 Virtual Premier League. All rights reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Powered by CricketXI Points System</p>
-    </footer>
+        <!-- Player of the Match -->
+    <section class="potm-section" id="potm-container"> 
+    <div class="potm-title">Player of the Match</div>
+    <div class="potm-content" id="potm-content">
+        <!-- Content populated by JavaScript --> 
+    </div>
+</section>
 
-    <!-- ============================================
-         JAVASCRIPT
-         ============================================ -->
-    <script>
-        // ============================================
-        // SQUAD DATA - EDIT THESE ARRAYS TO UPDATE PLAYEjs
-        // ============================================
+<script>
+/**
+ * GLOBAL PLAYER DATABASE - All 25 players per team
+ */
+const PLAYER_DB = {
+    home: [
+        { name: "Virat Kohli", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2.png", foreign: false },
+        { name: "Devdutt Padikkal", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/200.png", foreign: false },
+        { name: "David Miller", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/128.png", foreign: true },
+        { name: "Rovman Powell", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/329.png", foreign: true },
+        { name: "Rajat Patidar", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/597.png", foreign: false },
+        { name: "Shreyas Iyer", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/12.png", foreign: false },
+        { name: "Angkrish Raghuvanshi", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/787.png", foreign: false },
+        { name: "Cameron Green", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/550.png", foreign: true },
+        { name: "Bhuvneshwar Kumar", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/15.png", foreign: false },
+        { name: "Matt Henry", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/71.png", foreign: true },
+        { name: "Mukesh Kumar", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1462.png", foreign: false },
+        { name: "Rahul Chahar", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/171.png", foreign: false },
+        { name: "Umran Malik", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/637.png", foreign: false },
+        { name: "Pat Cummins", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/33.png", foreign: true },
+        { name: "Shreyas Gopal", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/192.png", foreign: false },
+        { name: "Josh Inglis", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/647.png", foreign: true },
+        { name: "Sanju Samson", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/190.png", foreign: false },
+        { name: "MS Dhoni", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/57.png", foreign: false },
+        { name: "Krunal Pandya", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/17.png", foreign: false },
+        { name: "Wanindu Hasaranga", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/377.png", foreign: true },
+        { name: "Venkatesh Iyer", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/584.png", foreign: false },
+        { name: "Mitchell Marsh", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/40.png", foreign: true },
+        { name: "Nitish Kumar Reddy", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1944.png", foreign: false },
+        { name: "Harsh Dubey", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1494.png", foreign: false },
+        { name: "Abdul Samad", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/525.png", foreign: false }
+    ],
+    
+    away: [
+        { name: "Rohit Sharma", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/6.png", foreign: false },
+        { name: "Shubman Gill", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/62.png", foreign: false },
+        { name: "Ruturaj Gaikwad", role: "Batter", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/102.png", foreign: false },
+        { name: "Avesh Khan", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/109.png", foreign: false },
+        { name: "Prasidh Krishna", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/150.png", foreign: false },
+        { name: "Mitchell Starc", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/31.png", foreign: true },
+        { name: "Noor Ahmad", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/975.png", foreign: true },
+        { name: "Yuzvendra Chahal", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/10.png", foreign: false },
+        { name: "Digvesh Rathi", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/3565.png", foreign: false },
+        { name: "Suyash Sharma", role: "Bowler", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1932.png", foreign: false },
+        { name: "KL Rahul", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/19.png", foreign: false },
+        { name: "Nicholas Pooran", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/136.png", foreign: true },
+        { name: "Quinton de Kock", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/170.png", foreign: true },
+        { name: "Dhruv Jurel", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1004.png", foreign: false },
+        { name: "Donovan Ferreira", role: "WK", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2033.png", foreign: true },
+        { name: "Priyansh Arya", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/3571.png", foreign: false },
+        { name: "Harshal Patel", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/114.png", foreign: false },
+        { name: "Romario Shepherd", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/371.png", foreign: true },
+        { name: "Liam Livingstone", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/183.png", foreign: true },
+        { name: "Ashutosh Sharma", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/3109.png", foreign: false },
+        { name: "Vipraj Nigam", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/3560.png", foreign: false },
+        { name: "Ramandeep Singh", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/991.png", foreign: false },
+        { name: "Shardul Thakur", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/105.png", foreign: false },
+        { name: "Prashant Veer", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/4541.png", foreign: false },
+        { name: "Cooper Connolly", role: "All-rounder", img: "https://documents.iplt20.com/ipl/IPLHeadshot2026/848.png", foreign: true }
+    ]
+};
+
+/**
+ * MATCH CONFIGURATION
+ */
+const matchConfig = {
+    meta: {
+        matchNo: 5,
+        season: 1,
+        venue: "Virtual Stadium, Galle",
+        date: "April 02 - April 15, 2026"
+    },
+    home: {
+        name: "Royal Challengers Galle",
+        short: "RCG",
+        score: 0,
+        color: "red",
+        logo: "RCG.jpeg",
+        // STADIUM IMAGE - Set this to change background per match
+        stadiumImage: "RCGstadium.png" // or use URL: "https://example.com/stadium.jpg"
+    },
+    away: {
+        name: "Jaffna Sharks", 
+        short: "JS",
+        score: 0,
+        color: "blue",
+        logo: "JS.png"
+    },
+    result: "LIVE",
+    
+    iplMatches: [
+        { date: "April 02, 2026", match: "KKR vs SRH" },
+        { date: "April 03, 2026", match: "CSK vs PBKS" },
+        { date: "April 04, 2026", match: "DC vs MI" },
+        { date: "April 04, 2026", match: "GT vs RR" },
+        { date: "April 15, 2026", match: "RCB vs LSG" }
+    ],
+    
+    stats: {
+        home: [
+
+        ],
+        away: [
+
+        ],
+    },
+    
+    playingXI: {
+        home: {
+            batters: [{name: "Virat Kohli"}, {name: "Rajat Patidar"}, {name: "Shreyas Iyer"}],
+            wk: [{name: "Angkrish Raghuvanshi"}],
+            allRounders: [{name: "Venkatesh Iyer"}, {name: "Krunal Pandya"}, {name: "Nitish Kumar Reddy"}],
+            bowlers: [{name: "Bhuvneshwar Kumar"}, {name: "Rahul Chahar"}, {name: "Matt Henry"}, {name: "Mukesh Kumar"}],
+            emergency: [{name: "Cameron Green"}, {name: "Sanju Samson"}, {name: "Mitchell Marsh"}, {name: "Pat Cummins"}]
+        },
+        away: {
+            batters: [{name: "Rohit Sharma"}, {name: "Shubman Gill"}, {name: "Quinton de Kock"}],
+            wk: [{name: "KL Rahul"}],
+            allRounders: [{name: "Cooper Connolly"}, {name: "Romario Shepherd"}, {name: "Prashant Veer"}],
+            bowlers: [{name: "Yuzvendra Chahal"}, {name: "Digvesh Rathi"}, {name: "Prasidh Krishna"}, {name: "Suyash Sharma"}],
+            emergency: [{name: "Nicholas Pooran"}, {name: "Noor Ahmed"}, {name: "Dhruv Jurel"}, {name: "Shardul Thakur"}]
+        },
+    }
+};
+
+// PLAYER OF THE MATCH DATA - Add to your JavaScript
+const potmData = {
+    name: "",           // Change player name
+    team: "",          // Change team name
+    stats: "", // Change stats
+    image: "" // Change image URL
+};
+
+// FUNCTION TO RENDER POTM - Add to your init() or call separately
+function renderPOTM() {
+    const container = document.getElementById('potm-content');
+    container.innerHTML = `
+        <img src="${potmData.image}" class="potm-img" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+        <div class="potm-info">
+            <h3>${potmData.name}</h3>
+            <div class="potm-team">${potmData.team}</div>
+            <div class="potm-stats">${potmData.stats}</div>
+        </div>
+    `;
+}
+
+// Call this in your init() function or after DOM loads
+// renderPOTM();
+
+/**
+ * INITIALIZATION
+ */
+function init() {
+    renderPOTM();
+    // Set stadium background dynamically based on home team
+    setStadiumBackground();
+    
+    // Set CSS variables for team colors
+    document.documentElement.style.setProperty('--home-color', matchConfig.home.color);
+    document.documentElement.style.setProperty('--away-color', matchConfig.away.color);
+    
+    // Header
+    document.getElementById('match-title').textContent = `Match ${matchConfig.meta.matchNo} • VPL Season ${matchConfig.meta.season} • ${matchConfig.meta.venue}`;
+    document.getElementById('home-name').textContent = matchConfig.home.name;
+    document.getElementById('home-score').textContent = matchConfig.home.score;
+    document.getElementById('home-logo').textContent = matchConfig.home.short;
+    document.getElementById('home-logo').style.borderColor = matchConfig.home.color;
+    document.getElementById('home-logo').style.color = matchConfig.home.color;
+    
+    document.getElementById('away-name').textContent = matchConfig.away.name;
+    document.getElementById('away-score').textContent = matchConfig.away.score;
+    document.getElementById('away-logo').textContent = matchConfig.away.short;
+    document.getElementById('away-logo').style.borderColor = matchConfig.away.color;
+    document.getElementById('away-logo').style.color = matchConfig.away.color;
+    
+    document.getElementById('match-result').textContent = matchConfig.result;
+
+    // Form team names
+    document.getElementById('home-form-name').value = matchConfig.home.name;
+    document.getElementById('away-form-name').value = matchConfig.away.name;
+    document.getElementById('form-home-title').textContent = matchConfig.home.name + " Selection";
+    document.getElementById('form-away-title').textContent = matchConfig.away.name + " Selection";
+
+    // Home Logo Update
+    const homeLogoDiv = document.getElementById('home-logo');
+    homeLogoDiv.innerHTML = `<img src="${matchConfig.home.logo}" alt="JS" onerror="this.parentElement.innerText='${matchConfig.home.short}'">`;
+    homeLogoDiv.style.borderColor = matchConfig.home.color;
+
+    // Away Logo Update
+    const awayLogoDiv = document.getElementById('away-logo');
+    awayLogoDiv.innerHTML = `<img src="${matchConfig.away.logo}" alt="RS" onerror="this.parentElement.innerText='${matchConfig.away.short}'">`;
+    awayLogoDiv.style.borderColor = matchConfig.away.color;
+
+    // Render sections
+    renderIPLMatches();
+    renderInningsTabs();
+    renderInnings('home');
+    renderPlayingXI();
+    populateForms();
+}
+
+/**
+ * SET STADIUM BACKGROUND
+ * This function sets the background image based on home team stadium
+ */
+function setStadiumBackground() {
+    const stadiumImage = matchConfig.home.stadiumImage || 'default-stadium.jpg';
+    
+    // Apply background to body
+    document.body.style.background = `
+        linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 27, 75, 0.85) 100%),
+        url('${stadiumImage}') no-repeat center center fixed
+    `;
+    document.body.style.backgroundSize = 'cover';
+}
+
+function renderIPLMatches() {
+    const container = document.getElementById('ipl-matches');
+    container.innerHTML = matchConfig.iplMatches.map(m => `
+        <div class="ipl-card">
+            <div class="ipl-date">${m.date}</div>
+            <div class="ipl-match">${m.match}</div>
+        </div>
+    `).join('');
+}
+
+function renderInningsTabs() {
+    const container = document.getElementById('innings-tabs');
+    container.innerHTML = `
+        <div class="innings-tab active" onclick="renderInnings('home')">${matchConfig.home.short} Innings</div>
+        <div class="innings-tab" onclick="renderInnings('away')">${matchConfig.away.short} Innings</div>
+    `;
+}
+
+function renderInnings(team) {
+    document.querySelectorAll('.innings-tab').forEach((tab, idx) => {
+        tab.classList.toggle('active', (team === 'home' && idx === 0) || (team === 'away' && idx === 1));
+    });
+
+    const data = matchConfig.stats[team];
+    let total = 0;
+    
+    let html = `
+        <div class="scorecard">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th class="text-right">Batting</th>
+                        <th class="text-right">Bowling</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    data.forEach(player => {
+        const db = getPlayerData(team, player.name);
+        total += player.total;
         
-        // rcg Squad Data
-        // EDIT: Remove playejs from this array when updating to final 15
-        const rcgSquad = [
-                { name: "Virat Kohli", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2.png" },
-                { name: "Devdutt Padikkal", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/200.png" },
-                { name: "David Miller", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Rovman Powell", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/329.png" },
-                { name: "Rajat Patidar", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/597.png" },
-                { name: "Shreyas Iyer", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/12.png" },
-                { name: "Angkrish Raghuvanshi", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/787.png" },
-                { name: "Cameron Green", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Bhuvneshwar Kumar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/15.png" },
-                { name: "Matt Henry", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Mukesh Kumar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1462.png" },
-                { name: "Rahul Chahar", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Umran Malik", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Pat Cummins", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/33.png" },
-                { name: "Shreyas Gopal", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/192.png" },
-                { name: "Josh Inglis", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Sanju Samson", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "MS Dhoni", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/57.png" },
-                { name: "Krunal Pandya", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/17.png" },
-                { name: "Wanindu Hasaranga", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Venkatesh Iyer", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Mitchell Marsh", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/40.png" },
-                { name: "Nitish Kumar Reddy", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1944.png" },
-                { name: "Harsh Dubey", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1494.png" },
-                { name: "Abdul Samad", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/525.png" }
-            ];
+        const badges = (player.captain ? '<span class="captain-badge">C</span>' : '') + 
+                      (player.emergency ? '<span class="em-badge">EM</span>' : '');
 
-        // js Squad Data
-        // EDIT: Remove playejs from this array when updating to final 15
-        const jsSquad = [
-                { name: "Rohit Sharma", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png" },
-                { name: "Ruturaj Gaikwad", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/102.png" },
-                { name: "Shubman Gill", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/62.png" },
-                { name: "Avesh Khan", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/109.png" },
-                { name: "Prasidh Krishna", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/150.png" },
-                { name: "Mitchell Starc", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/31.png" },
-                { name: "Noor Ahmad", role: "Bowler", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/975.png" },
-                { name: "Yuzvendra Chahal", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/10.png" },
-                { name: "Digvesh Rathi", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3565.png" },
-                { name: "Suyash Sharma", role: "Bowler", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1932.png" },
-                { name: "KL Rahul", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/19.png" },
-                { name: "Nicholas Pooran", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/136.png" },
-                { name: "Quinton de Kock", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Dhruv Jurel", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1004.png" },
-                { name: "Donovan Ferreira", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Priyansh Arya", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3571.png" },
-                { name: "Harshal Patel", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/114.png" },
-                { name: "Romario Shepherd", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/371.png" },
-                { name: "Liam Livingstone", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Ashutosh Sharma", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3109.png" },
-                { name: "Vipraj Nigam", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3560.png" },
-                { name: "Ramandeep Singh", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/991.png" },
-                { name: "Shardul Thakur", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Prashant Veer", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" },
-                { name: "Cooper Connolly", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/assets/images/Default-Men.png" }
-            ];
+        html += `
+            <tr>
+                <td>
+                    <div class="player-cell">
+                        <img src="${db.img}" class="player-img" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+                        <div>
+                            <div class="player-name">${player.name}${badges}</div>
+                            <div class="player-role">${db.role}</div>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-right">${player.batting}</td>
+                <td class="text-right">${player.bowling}</td>
+                <td class="text-right" style="font-weight:700; color: ${player.total >= 0 ? 'var(--success)' : 'var(--danger)'}">${player.total > 0 ? '+' : ''}${player.total}</td>
+            </tr>
+        `;
+    });
 
-        // ============================================
-        // INITIALIZATION
-        // ============================================
+    html += `
+                </tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td colspan="3" style="text-align:right">Team Total:</td>
+                        <td class="text-right">${total}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    `;
 
-        document.addEventListener('DOMContentLoaded', function() {
-            rendejsquads();
-            populateSelects();
-        });
+    document.getElementById('innings-content').innerHTML = html;
+}
 
-        // ============================================
-        // RENDER SQUADS TO TEAM TAB
-        // ============================================
+function renderPlayingXI() {
+    document.getElementById('xi-home-title').textContent = matchConfig.home.name + " Playing XI";
+    document.getElementById('xi-away-title').textContent = matchConfig.away.name + " Playing XI";
+    
+    renderXIColumn('home-xi-content', matchConfig.playingXI.home, 'home');
+    renderXIColumn('away-xi-content', matchConfig.playingXI.away, 'away');
+}
 
-        function rendejsquads() {
-            const rcgContainer = document.getElementById('rcg-squad-grid');
-            const jsContainer = document.getElementById('js-squad-grid');
-
-            // Render rcg
-            rcgSquad.forEach(player => {
-                rcgContainer.appendChild(createPlayerCard(player));
-            });
-
-            // Render js
-            jsSquad.forEach(player => {
-                jsContainer.appendChild(createPlayerCard(player));
-            });
-        }
-
-        function createPlayerCard(player) {
-            const div = document.createElement('div');
-            div.className = 'squad-player';
-            div.innerHTML = `
-                <img src="${player.image}" alt="${player.name}" onerror="this.js='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
-                <div class="name">${player.name}</div>
-                <div class="role">${player.role}</div>
-                ${player.isForeign ? '<span class="foreign-badge">OVEjsEAS</span>' : ''}
-            `;
-            return div;
-        }
-
-        // ============================================
-        // POPULATE DROPDOWNS FOR SQUAD SELECTION
-        // ============================================
-
-        function populateSelects() {
-            // Populate rcg selects
-            populateTeamSelects('rcg', rcgSquad);
-            // Populate js selects
-            populateTeamSelects('js', jsSquad);
-        }
-
-        function populateTeamSelects(teamPrefix, squad) {
-            // Group playejs by role
-            const battejs = squad.filter(p => p.role === "Batter" || p.role === "WK");
-            const bowlejs = squad.filter(p => p.role === "Bowler");
-            const wks = squad.filter(p => p.role === "WK");
-            const allRoundejs = squad.filter(p => p.role === "All-rounder");
-
-            // Populate Battejs (3 selects)
-            for (let i = 1; i <= 3; i++) {
-                populateSelect(`${teamPrefix}-batter${i}`, battejs);
-            }
-
-            // Populate WK (1 select)
-            populateSelect(`${teamPrefix}-wk`, wks);
-
-            // Populate All Roundejs (3 selects)
-            for (let i = 1; i <= 3; i++) {
-                populateSelect(`${teamPrefix}-ar${i}`, allRoundejs);
-            }
-
-            // Populate Bowlejs (4 selects)
-            for (let i = 1; i <= 4; i++) {
-                populateSelect(`${teamPrefix}-bowler${i}`, bowlejs);
-            }
-
-            // Populate Emergencies (4 selects - all playejs)
-            for (let i = 1; i <= 4; i++) {
-                populateSelect(`${teamPrefix}-em${i}`, squad);
-            }
-        }
-
-        function populateSelect(selectId, playejs) {
-            const select = document.getElementById(selectId);
-            if (!select) return;
-            
-            // Keep the fijst option
-            const fijstOption = select.options[0];
-            select.innerHTML = '';
-            select.appendChild(fijstOption);
-
-            playejs.forEach(player => {
-                const option = document.createElement('option');
-                option.value = player.name;
-                option.textContent = `${player.name} ${player.isForeign ? '(OS)' : ''}`;
-                select.appendChild(option);
-            });
-        }
-
-        // ============================================
-        // TAB NAVIGATION
-        // ============================================
-
-        function showTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active from buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected tab
-            document.getElementById(tabId).classList.add('active');
-            
-            // Add active to clicked button
-            event.target.classList.add('active');
-        }
-
-        function showInnings(inningsId) {
-            // Hide all innings
-            document.querySelectorAll('.innings-content').forEach(inn => {
-                inn.classList.remove('active');
-            });
-            
-            // Remove active from tabs
-            document.querySelectorAll('.innings-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Show selected innings
-            document.getElementById(inningsId).classList.add('active');
-            
-            // Add active to clicked tab
-            event.target.classList.add('active');
-        }
-
-        // ============================================
-        // SCORE UPDATE FUNCTIONS
-        // Call these to update scores after IPL matches
-        // ============================================
-
-        // EDIT: Use this function to update team totals
-        function updateScores(rcgPoints, jsPoints) {
-            document.getElementById('rcg-total').textContent = rcgPoints;
-            document.getElementById('js-total').textContent = jsPoints;
-            document.getElementById('rcg-table-total').textContent = rcgPoints;
-            document.getElementById('js-table-total').textContent = jsPoints;
-        }
-
-        // EDIT: Use this function to set match result
-        function setMatchResult(winner, margin) {
-            const resultText = `${winner} won by ${margin} points`;
-            document.getElementById('match-result').textContent = resultText;
-        }
-
-        // ============================================
-        // FORM SUBMISSION HANDLING
-        // ============================================
-
-        // Prevent duplicate selections in forms
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                const selects = form.querySelectorAll('select');
-                const values = Array.from(selects).map(s => s.value).filter(v => v);
-                const unique = [...new Set(values)];
-                
-                if (unique.length !== values.length) {
-                    e.preventDefault();
-                    alert('Error: Duplicate player selected! Each player can only be selected once.');
-                    return false;
+function renderXIColumn(elementId, data, team) {
+    const container = document.getElementById(elementId);
+    
+    const sections = [
+        { title: 'Batters', count: 3, players: data.batters, icon: '🏏' },
+        { title: 'Wicket Keeper', count: 1, players: data.wk, icon: '🧤' },
+        { title: 'All Rounders', count: 3, players: data.allRounders, icon: '⚡' },
+        { title: 'Bowlers', count: 4, players: data.bowlers, icon: '🎯' },
+        { title: 'Emergency Players', count: 4, players: data.emergency, icon: '🚑' }
+    ];
+    
+    container.innerHTML = sections.map(section => `
+        <div class="role-section">
+            <div class="role-header">
+                <span>${section.icon}</span>
+                <span class="role-count">${section.count}</span>
+                <span>${section.title}</span>
+            </div>
+            ${section.players.map((p, i) => {
+                if (p.name) {
+                    const db = getPlayerData(team, p.name);
+                    return `
+                        <div class="player-slot filled">
+                            <img src="${db.img}" class="slot-img" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+                            <div class="slot-info">
+                                <div class="slot-name">${p.name} ${db.foreign ? '(OS)' : ''}</div>
+                                <div class="slot-role">${db.role}</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="player-slot">
+                            <div class="slot-info">
+                                <div class="slot-name" style="color: var(--text-muted);">Player ${i + 1}</div>
+                            </div>
+                        </div>
+                    `;
                 }
-                
-                // Validate exactly 11 playejs + 4 emergencies
-                if (values.length !== 15) {
-                    e.preventDefault();
-                    alert('Error: Please select exactly 11 playing membejs and 4 emergencies.');
-                    return false;
-                }
-            });
-        });
+            }).join('')}
+        </div>
+    `).join('');
+}
 
-        // ============================================
-        // EXAMPLE USAGE (Remove or comment out after testing)
-        // ============================================
+function populateForms() {
+    populateTeamForm('home', PLAYER_DB.home);
+    populateTeamForm('away', PLAYER_DB.away);
+}
+
+function populateTeamForm(team, players) {
+    const battersAndWK = players.filter(p => p.role === 'Batter' || p.role === 'WK');
+    const wks = players.filter(p => p.role === 'WK');
+    const allRounders = players.filter(p => p.role === 'All-rounder');
+    const bowlers = players.filter(p => p.role === 'Bowler');
+    
+    for (let i = 1; i <= 3; i++) populateSelect(`${team}-batter${i}`, battersAndWK);
+    populateSelect(`${team}-wk`, wks);
+    for (let i = 1; i <= 3; i++) populateSelect(`${team}-ar${i}`, allRounders);
+    for (let i = 1; i <= 4; i++) populateSelect(`${team}-bowler${i}`, bowlers);
+    for (let i = 1; i <= 4; i++) populateSelect(`${team}-em${i}`, players);
+}
+
+function populateSelect(id, players) {
+    const select = document.getElementById(id);
+    select.innerHTML = '<option value="">Select Player</option>' + 
+        players.map(p => `<option value="${p.name}">${p.name} ${p.foreign ? '(OS)' : ''}</option>`).join('');
+}
+
+function getPlayerData(team, name) {
+    const list = PLAYER_DB[team];
+    return list.find(p => p.name === name) || { role: "Unknown", img: "", foreign: false };
+}
+
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.target.classList.add('active');
+}
+
+// Form validation
+document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        const selects = form.querySelectorAll('select');
+        const values = Array.from(selects).map(s => s.value).filter(v => v);
+        const unique = [...new Set(values)];
         
-        // Example: Update scores after fijst IPL match
-        // updateScores(245, 230);
-        
-        // Example: Set result
-        // setMatchResult('Jaffna Sharks', 15);
-    </script>
+        if (unique.length !== values.length) {
+            e.preventDefault();
+            alert('Error: Duplicate player selected! Each player can only be selected once.');
+            return false;
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
 </body>
 </html>
