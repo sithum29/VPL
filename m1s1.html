@@ -116,18 +116,23 @@
         }
 
         .team-logo {
-            width: 70px;
-            height: 70px;
+            width: 80px; /* Slightly larger for better visibility */
+            height: 80px;
             background: var(--secondary);
             border-radius: 50%;
             margin: 0 auto 0.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
-            font-weight: 900;
+            overflow: hidden; /* This keeps the image inside the circle */
             border: 3px solid;
             box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .team-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This makes the logo fill the circle perfectly */
         }
 
         .team-name {
@@ -915,6 +920,7 @@ const matchConfig = {
         short: "JS",
         score: 808,
         color: "blue",
+        logo: "JS.png",
         // STADIUM IMAGE - Set this to change background per match
         stadiumImage: "JSstadium.png" // or use URL: "https://example.com/stadium.jpg"
     },
@@ -922,7 +928,8 @@ const matchConfig = {
         name: "Rajasthan Stallions", 
         short: "RS",
         score: 527,
-        color: "brown"
+        color: "brown",
+        logo: "RS.png"
     },
     result: "JS WON BY 281 POINTS",
     
@@ -1036,6 +1043,16 @@ function init() {
     document.getElementById('away-form-name').value = matchConfig.away.name;
     document.getElementById('form-home-title').textContent = matchConfig.home.name + " Selection";
     document.getElementById('form-away-title').textContent = matchConfig.away.name + " Selection";
+
+    // Home Logo Update
+    const homeLogoDiv = document.getElementById('home-logo');
+    homeLogoDiv.innerHTML = `<img src="${matchConfig.home.logo}" alt="JS" onerror="this.parentElement.innerText='${matchConfig.home.short}'">`;
+    homeLogoDiv.style.borderColor = matchConfig.home.color;
+
+    // Away Logo Update
+    const awayLogoDiv = document.getElementById('away-logo');
+    awayLogoDiv.innerHTML = `<img src="${matchConfig.away.logo}" alt="RS" onerror="this.parentElement.innerText='${matchConfig.away.short}'">`;
+    awayLogoDiv.style.borderColor = matchConfig.away.color;
 
     // Render sections
     renderIPLMatches();
