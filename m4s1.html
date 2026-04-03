@@ -715,7 +715,7 @@
             <div class="team-block">
                 <div class="team-logo" id="home-logo" style="border-color: var(--home-color); color: var(--home-color);">H</div>
                 <div class="team-name" id="home-name">Sunrisers Colombo</div>
-                <div class="team-score" id="home-score" style="color: var(--home-color);">0</div>
+                <div class="team-score" id="home-score" style="color: var(--home-color);">185</div>
             </div>
             
             <div class="vs-divider">VS</div>
@@ -723,11 +723,11 @@
             <div class="team-block">
                 <div class="team-logo" id="away-logo" style="border-color: var(--away-color); color: var(--away-color);">A</div>
                 <div class="team-name" id="away-name">Rajasthan Stallions</div>
-                <div class="team-score" id="away-score" style="color: var(--away-color);">0</div>
+                <div class="team-score" id="away-score" style="color: var(--away-color);">64</div>
             </div>
         </div>
 
-        <div class="match-status" id="match-result">LIVE</div>
+        <div class="match-status" id="match-result">SRC lead by 121 Points</div>
     </header>
 
 
@@ -945,7 +945,7 @@ const matchConfig = {
     home: {
         name: "Sunrisers Colombo",
         short: "SRC",
-        score: 0,
+        score: 185,
         color: "orange",
         logo: "SRC.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -954,11 +954,11 @@ const matchConfig = {
     away: {
         name: "Rajasthan Stallions", 
         short: "RS",
-        score: 0,
+        score: 64,
         color: "brown",
         logo: "RS.png"
     },
-    result: "LIVE",
+    result: "SRC lead by 121 Points",
     
     iplMatches: [
         { date: "April 02, 2026", match: "KKR vs SRH" },
@@ -970,10 +970,13 @@ const matchConfig = {
     
     stats: {
         home: [
-
+            { name: "Finn Allen", batting: "28(7)", bowling: "-", total: 85 },
+            { name: "Abhishek Sharma", batting: "48(21)", bowling: "0/15", total: 112 },
+            { name: "Varun Chakaravarthy", batting: "0(1)", bowling: "0/31", total: -12 },
         ],
         away: [
-
+            { name: "Ajinkya Rahane", batting: "8(10)", bowling: "-", total: 22 },
+            { name: "Ishan Kishan", batting: "14(9)", bowling: "-", total: 42 },
         ],
     },
     
