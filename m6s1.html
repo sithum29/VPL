@@ -714,7 +714,7 @@
             <div class="team-block">
                 <div class="team-logo" id="home-logo" style="border-color: var(--home-color); color: var(--home-color);">H</div>
                 <div class="team-name" id="home-name">Rajasthan Stallions</div>
-                <div class="team-score" id="home-score" style="color: var(--home-color);">0</div>
+                <div class="team-score" id="home-score" style="color: var(--home-color);">185</div>
             </div>
             
             <div class="vs-divider">VS</div>
@@ -722,11 +722,11 @@
             <div class="team-block">
                 <div class="team-logo" id="away-logo" style="border-color: var(--away-color); color: var(--away-color);">A</div>
                 <div class="team-name" id="away-name">Apex Bolt Assassins</div>
-                <div class="team-score" id="away-score" style="color: var(--away-color);">0</div>
+                <div class="team-score" id="away-score" style="color: var(--away-color);">284</div>
             </div>
         </div>
 
-        <div class="match-status" id="match-result">LIVE</div>
+        <div class="match-status" id="match-result">ABA lead by 99 Points</div>
     </header>
 
 
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Rajasthan Stallions",
         short: "RS",
-        score: 0,
+        score: 185,
         color: "brown",
         logo: "RS.png",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Apex Bolt Assassins", 
         short: "ABA",
-        score: 0,
+        score: 284,
         color: "black",
         logo: "ABA.jpeg"
     },
-    result: "LIVE",
+    result: "ABA lead by 99 Points",
     
     iplMatches: [
         { date: "April 02, 2026", match: "KKR vs SRH" },
@@ -969,10 +969,15 @@ const matchConfig = {
     
     stats: {
         home: [
-
+            { name: "Ajinkya Rahane", batting: "8(10)", bowling: "-", total: 44, captain: true },
+            { name: "Ishan Kishan", batting: "14(9)", bowling: "-", total: 42 },
+            { name: "Prabhsimran Singh", batting: "43(34)", bowling: "-", total: 90 }
+            { name: "Marcus Stoinis", batting: "9(3)", bowling: "0/17", total: 9 }
         ],
         away: [
-
+            { name: "Travis Head", batting: "46(21)", bowling: "-", total: 116 },
+            { name: "Heinrich Klaasen", batting: "52(35)", bowling: "-", total: 108 },
+            { name: "Sunil Narine", batting: "12(4)", bowling: "0/39", total: 60, captain: true },
         ],
     },
     
