@@ -714,7 +714,7 @@
             <div class="team-block">
                 <div class="team-logo" id="home-logo" style="border-color: var(--home-color); color: var(--home-color);">H</div>
                 <div class="team-name" id="home-name">Apex Bolt Assassins</div>
-                <div class="team-score" id="home-score" style="color: var(--home-color);">0</div>
+                <div class="team-score" id="home-score" style="color: var(--home-color);">487</div>
             </div>
             
             <div class="vs-divider">VS</div>
@@ -722,11 +722,11 @@
             <div class="team-block">
                 <div class="team-logo" id="away-logo" style="border-color: var(--away-color); color: var(--away-color);">A</div>
                 <div class="team-name" id="away-name">Royal Challengers Galle</div>
-                <div class="team-score" id="away-score" style="color: var(--away-color);">0</div>
+                <div class="team-score" id="away-score" style="color: var(--away-color);">416</div>
             </div>
         </div>
 
-        <div class="match-status" id="match-result">LIVE</div>
+        <div class="match-status" id="match-result">ABA lead by 71 Points</div>
     </header>
 
 
@@ -738,7 +738,7 @@
 
     <section class="tabs-container">
         <div class="tabs-nav">
-            <!--<button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>-->
+            <button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>
             <button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>
             <!--<button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>-->
         </div>
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Apex Bolt Assassins",
         short: "ABA",
-        score: 0,
+        score: 487,
         color: "black",
         logo: "ABA.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Royal Challengers Galle", 
         short: "RCG",
-        score: 0,
+        score: 416,
         color: "red",
         logo: "RCG.jpeg"
     },
-    result: "LIVE",
+    result: "ABA lead by 71 Points",
     
     iplMatches: [
         { date: "April 05, 2026", match: "SRH vs LSG" },
@@ -969,10 +969,22 @@ const matchConfig = {
     
     stats: {
         home: [
-
+            { name: "Travis Head", batting: "7(8)", bowling: "-", total: 16, captain: true },
+            { name: "Yashasvi Jaiswal", batting: "77(32)", bowling: "-", total: 234 },
+            { name: "Surya Kumar Yadav", batting: "6(3)", bowling: "-", total: 15 },
+            { name: "Heinrich Klaasen", batting: "62(41)", bowling: "-", total: 130 },
+            { name: "Hardik Pandya", batting: "9(6)", bowling: "0/17", total: 18 },
+            { name: "Sandeep Sharma", batting: "DNB", bowling: "2/26", total: 73, emergency: true },
+            { name: "Jasprit Bumrah", batting: "5(2)", bowling: "0/32", total: 1 }
         ],
         away: [
-
+            { name: "Virat Kohli", batting: "28(18)", bowling: "-", total: 73 },
+            { name: "Angkrish Raghuvanshi", batting: "7(7)", bowling: "-", total: 7 },
+            { name: "Nitish Kumar Reddy", batting: "56(33)", bowling: "0/14", total: 143, emergency: true },
+            { name: "Krunal Pandya", batting: "DNB", bowling: "2/36", total: 42 },
+            { name: "Harsh Dubey", batting: "0(1)", bowling: "2/18", total: 81 },
+            { name: "Matt Henry", batting: "2(3)", bowling: "0/36", total: -13 },
+            { name: "Bhuvneshwar Kumar", batting: "DNB", bowling: "3/41", total: 83 }
         ],
     },
     
