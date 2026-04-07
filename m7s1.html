@@ -714,7 +714,7 @@
             <div class="team-block">
                 <div class="team-logo" id="home-logo" style="border-color: var(--home-color); color: var(--home-color);">H</div>
                 <div class="team-name" id="home-name">Royal Challengers Galle</div>
-                <div class="team-score" id="home-score" style="color: var(--home-color);">0</div>
+                <div class="team-score" id="home-score" style="color: var(--home-color);">675</div>
             </div>
             
             <div class="vs-divider">VS</div>
@@ -722,11 +722,11 @@
             <div class="team-block">
                 <div class="team-logo" id="away-logo" style="border-color: var(--away-color); color: var(--away-color);">A</div>
                 <div class="team-name" id="away-name">Rajasthan Stallions</div>
-                <div class="team-score" id="away-score" style="color: var(--away-color);">0</div>
+                <div class="team-score" id="away-score" style="color: var(--away-color);">255</div>
             </div>
         </div>
 
-        <div class="match-status" id="match-result">LIVE</div>
+        <div class="match-status" id="match-result">RCG lead by 420 Points</div>
     </header>
 
 
@@ -738,7 +738,7 @@
 
     <section class="tabs-container">
         <div class="tabs-nav">
-            <!--<button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>-->
+            <button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>
             <button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>
             <!--<button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>-->
         </div>
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Royal Challengers Galle",
         short: "RCG",
-        score: 0,
+        score: 675,
         color: "red",
         logo: "RCG.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Rajasthan Stallions", 
         short: "RS",
-        score: 0,
+        score: 255,
         color: "brown",
         logo: "RS.png"
     },
-    result: "LIVE",
+    result: "RCG lead by 420 Points",
     
     iplMatches: [
         { date: "April 05, 2026", match: "SRH vs LSG" },
@@ -969,10 +969,22 @@ const matchConfig = {
     
     stats: {
         home: [
-
+            { name: "Virat Kohli", batting: "28(18)", bowling: "-", total: 73 },
+            { name: "Mitchell Marsh", batting: "14(12)", bowling: "-", total: 20 },
+            { name: "Rajat Patidar", batting: "48(19)", bowling: "-", total: 320, captain: true },
+            { name: "Angkrish Raghuvanshi", batting: "7(7)", bowling: "-", total: 7 },
+            { name: "Nitish Kumar Reddy", batting: "56(33)", bowling: "0/14", total: 143 },
+            { name: "Krunal Pandya", batting: "DNB", bowling: "2/36", total: 42 },
+            { name: "Matt Henry", batting: "2(3)", bowling: "0/36", total: -13 },
+            { name: "Bhuvneshwar Kumar", batting: "DNB", bowling: "3/41", total: 83 }
         ],
         away: [
-
+            { name: "Ishan Kishan", batting: "1(4)", bowling: "-", total: 35 },
+            { name: "Ajinkya Rahane", batting: "8(6)", bowling: "-", total: 26, captain: true },
+            { name: "Prabhsimran Singh", batting: "DNB", bowling: "-", total: 30 },
+            { name: "Ravi Bishnoi", batting: "DNB", bowling: "2/25", total: 60 },
+            { name: "Trent Boult", batting: "1(2)", bowling: "0/22", total: -22 },
+            { name: "Mohammad Shami", batting: "DNB", bowling: "2/9", total: 126 }
         ],
     },
     
