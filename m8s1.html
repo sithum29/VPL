@@ -714,7 +714,7 @@
             <div class="team-block">
                 <div class="team-logo" id="home-logo" style="border-color: var(--home-color); color: var(--home-color);">H</div>
                 <div class="team-name" id="home-name">Jaffna Sharks</div>
-                <div class="team-score" id="home-score" style="color: var(--home-color);">113</div>
+                <div class="team-score" id="home-score" style="color: var(--home-color);">538</div>
             </div>
             
             <div class="vs-divider">VS</div>
@@ -722,11 +722,11 @@
             <div class="team-block">
                 <div class="team-logo" id="away-logo" style="border-color: var(--away-color); color: var(--away-color);">A</div>
                 <div class="team-name" id="away-name">Sunrisers Colombo</div>
-                <div class="team-score" id="away-score" style="color: var(--away-color);">327</div>
+                <div class="team-score" id="away-score" style="color: var(--away-color);">466</div>
             </div>
         </div>
 
-        <div class="match-status" id="match-result">SRC lead by 214 Points</div>
+        <div class="match-status" id="match-result">JS won by 72 Points</div>
     </header>
 
 
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Jaffna Sharks",
         short: "JS",
-        score: 113,
+        score: 538,
         color: "blue",
         logo: "JS.png",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Sunrisers Colombo", 
         short: "SRC",
-        score: 327,
+        score: 466,
         color: "orange",
         logo: "SRC.jpeg"
     },
-    result: "SRC lead by 214 Points",
+    result: "JS won by 72 Points",
     
     iplMatches: [
         { date: "April 05, 2026", match: "SRH vs LSG" },
@@ -971,11 +971,17 @@ const matchConfig = {
         home: [
             { name: "Rohit Sharma", batting: "5(6)", bowling: "-", total: 10, captain: true },
             { name: "Nicholas Pooran", batting: "1(4)", bowling: "-", total: 0 },
+            { name: "Shubman Gill", batting: "70(45)", bowling: "-", total: 169 },
+            { name: "KL Rahul", batting: "92(52)", bowling: "-", total: 225 },
             { name: "Liam Livingstone", batting: "14(20)", bowling: "-", total: 44 },
             { name: "Romario Shepherd", batting: "DNB", bowling: "0/19", total: -17 },
             { name: "Suyash Sharma", batting: "DNB", bowling: "1/21", total: 62 },
             { name: "Digvesh Rathi", batting: "DNB", bowling: "1/46", total: 7 },
             { name: "Shardul Thakur", batting: "8(7)", bowling: "1/36", total: 7, emergency: true }
+            { name: "Yuzvendra Chahal", batting: "DNB", bowling: "DNB", total: 0 },
+            { name: "Pradish Krishna", batting: "-", bowling: "2/52", total: 31 }
+            
+            
         ],
         away: [
             { name: "Abhishek Sharma", batting: "0(2)", bowling: "-", total: -21 },
@@ -986,6 +992,8 @@ const matchConfig = {
             { name: "Ayush Badoni", batting: "12(9)", bowling: "-", total: 19 },
             { name: "Ravindra Jadeja", batting: "DNB", bowling: "-", total: 0, captain: true },
             { name: "Arshdeep Singh", batting: "DNB", bowling: "0/16", total: 4 },
+            { name: "Rashid Khan", batting: "-", bowling: "3/17", total: 137 },
+            { name: "T Natarajan", batting: "-", bowling: "0/34", total: 2 },
             { name: "Jofra Archer", batting: "DNB", bowling: "1/17", total: 56 }
         ],
     },
@@ -1010,10 +1018,10 @@ const matchConfig = {
 
 // PLAYER OF THE MATCH DATA - Add to your JavaScript
 const potmData = {
-    name: "",           // Change player name
-    team: "",          // Change team name
-    stats: "", // Change stats
-    image: "" // Change image URL
+    name: "KL Rahul",           // Change player name
+    team: "Jaffna Sharks",          // Change team name
+    stats: "225 Points (92 from 52 balls)", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/19.png" // Change image URL
 };
 
 // FUNCTION TO RENDER POTM - Add to your init() or call separately
