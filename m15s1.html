@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Royal Challengers Galle",
         short: "RCG",
-        score: 0,
+        score: 29,
         color: "red",
         logo: "RCG.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Apex Bolt Assassins", 
         short: "ABA",
-        score: 0,
+        score: -2,
         color: "black",
         logo: "ABA.jpeg"
     },
-    result: "Match not Started",
+    result: "RCG Lead By 31 Points",
     
     iplMatches: [
         { date: "April 12, 2026", match: "LSG vs GT" },
@@ -969,9 +969,11 @@ const matchConfig = {
     
     stats: {
         home: [
+             { name: "Mitchell Marsh", batting: "11(4)", bowling: "-", total: 29 },
 
         ],
         away: [
+             { name: "Kagiso Rabada", batting: "-", bowling: "1/54", total: -2, emergency: true },
 
         ],
     },
