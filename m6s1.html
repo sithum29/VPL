@@ -726,7 +726,7 @@
             </div>
         </div>
 
-        <div class="match-status" id="match-result">ABA lead by 246 Points</div>
+        <div class="match-status" id="match-result">ABA Won By 360 Points</div>
     </header>
 
 
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Rajasthan Stallions",
         short: "RS",
-        score: 534,
+        score: 509,
         color: "brown",
         logo: "RS.png",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Apex Bolt Assassins", 
         short: "ABA",
-        score: 780,
+        score: 869,
         color: "black",
         logo: "ABA.jpeg"
     },
-    result: "ABA lead by 246 Points",
+    result: "ABA Won By 360 Points",
     
     iplMatches: [
         { date: "April 02, 2026", match: "KKR vs SRH" },
@@ -978,6 +978,7 @@ const matchConfig = {
             { name: "Mitchell Santner", batting: "18(13)", bowling: "1/22", total: 69 },
             { name: "Rahul Tewatia", batting: "12(6)", bowling: "-", total: 28 },
             { name: "Ravi Bishnoi", batting: "DNB", bowling: "4/41", total: 124 },
+            { name: "Mohammad Shami", batting: "0(1)", bowling: "0/30", total: -25 },
             { name: "Deepak Chahar", batting: "DNB", bowling: "1/20", total: 44, emergency: true }
         ],
         away: [
@@ -990,6 +991,7 @@ const matchConfig = {
             { name: "Sunil Narine", batting: "12(4)", bowling: "0/39", total: 60, captain: true },
             { name: "Kuldeep Yadav", batting: "DNB", bowling: "0/31", total: -8 },
             { name: "Sandeep Sharma", batting: "DNB", bowling: "0/34", total: 5 },
+            { name: "Kagiso Rabada", batting: "23(16)", bowling: "2/42", total: 89, emergency: true },
             { name: "Jasprit Bumrah", batting: "DNB", bowling: "0/21", total: 54 }
         ],
     },
@@ -1014,10 +1016,10 @@ const matchConfig = {
 
 // PLAYER OF THE MATCH DATA - Add to your JavaScript
 const potmData = {
-    name: "",           // Change player name
-    team: "",          // Change team name
-    stats: "", // Change stats
-    image: "" // Change image URL
+    name: "Sai Sudharshan",           // Change player name
+    team: "Apex Bolt Assassins",          // Change team name
+    stats: "164 Points (73 from 44 balls)", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/976.png" // Change image URL
 };
 
 // FUNCTION TO RENDER POTM - Add to your init() or call separately
