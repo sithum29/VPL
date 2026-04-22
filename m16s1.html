@@ -726,7 +726,7 @@
             </div>
         </div>
 
-        <div class="match-status" id="match-result">Match not Started</div>
+        <div class="match-status" id="match-result">JS Won By 229 Points</div>
     </header>
 
 
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Jaffna Sharks",
         short: "JS",
-        score: 986,
+        score: 1011,
         color: "blue",
         logo: "JS.png",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Royal Challengers Galle", 
         short: "RCG",
-        score: 594,
+        score: 782,
         color: "red",
         logo: "RCG.jpeg"
     },
-    result: "JS lead by 392 Points",
+    result: "JS Won by 229 Points",
     
     iplMatches: [
         { date: "April 16, 2026", match: "MI vs PBKS" },
@@ -970,6 +970,7 @@ const matchConfig = {
     stats: {
         home: [
             { name: "Shubman Gill", batting: "86(50)", bowling: "-", total: 416, captain: true },
+            { name: "Dhruv Jurel", batting: "0(1)", bowling: "-", total: 25 },
             { name: "Quinton de Kock", batting: "112(60)", bowling: "-", total: 310 },
             { name: "KL Rahul", batting: "57(34)", bowling: "-", total: 160 },
             { name: "Priyansh Arya", batting: "15(9)", bowling: "-", total: 32 },
@@ -988,9 +989,11 @@ const matchConfig = {
             { name: "Shreyas Iyer", batting: "66(35)", bowling: "-", total: 160 },
             { name: "Angkrish Raghuvanshi", batting: "8(4)", bowling: "-", total: 18 },
             { name: "Krunal Pandya", batting: "12(10)", bowling: "1/24", total: 72 },
+            { name: "Mitchell Marsh", batting: "55(41)", bowling: "-", total: 110 },
             { name: "Nitish Kumar Reddy", batting: "12(8)", bowling: "2/31", total: 105 },
             { name: "Bhuvneshwar Kumar", batting: "3(2)", bowling: "3/26", total: 119 },
-            { name: "Mukesh Kumar", batting: "-", bowling: "1/32", total: 33 }, 
+            { name: "Mukesh Kumar", batting: "-", bowling: "1/32", total: 33 },
+            { name: "Nandre Burger", batting: "-", bowling: "2/27", total: 78 }
 
 
         ],
@@ -1016,10 +1019,10 @@ const matchConfig = {
 
 // PLAYER OF THE MATCH DATA - Add to your JavaScript
 const potmData = {
-    name: "",           // Change player name
-    team: "",          // Change team name
-    stats: "", // Change stats
-    image: "" // Change image URL
+    name: "Quinton de Kock",           // Change player name
+    team: "Jaffna Sharks",          // Change team name
+    stats: "310 Points (112 from 60 balls)", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/170.png" // Change image URL
 };
 
 // FUNCTION TO RENDER POTM - Add to your init() or call separately
