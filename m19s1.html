@@ -726,7 +726,7 @@
             </div>
         </div>
 
-        <div class="match-status" id="match-result">Match not Started</div>
+        <div class="match-status" id="match-result">RCG Won By 92 Points</div>
     </header>
 
 
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Royal Challengers Galle",
         short: "RCG",
-        score: 127,
+        score: 427,
         color: "red",
         logo: "RCG.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Rajasthan Stallions", 
         short: "RS",
-        score: 179,
+        score: 335,
         color: "brown",
         logo: "RS.png"
     },
-    result: "RS Lead By 52 Points",
+    result: "RCG Won By 92 Points",
     
     iplMatches: [
         { date: "April 19, 2026", match: "KKR vs RR" },
@@ -969,23 +969,30 @@ const matchConfig = {
     
     stats: {
         home: [
+            { name: "Virat Kohli", batting: "81(44)", bowling: "-", total: 205 },
+            { name: "Rajat Patidar", batting: "8(5)", bowling: "-", total: 34, captain: true },
             { name: "Shreyas Iyer", batting: "5(6)", bowling: "-", total: 20 },
             { name: "Angkrish Raghuvanshi", batting: "10(19)", bowling: "-", total: 22 },
+            { name: "Krunal Pandya", batting: "23(12)", bowling: "0/50", total: 24 },
             { name: "Mitchell Marsh", batting: "40(28)", bowling: "-", total: 108 },
             { name: "Nitish Kumar Reddy", batting: "DNB", bowling: "0/57", total: -20 },
+            { name: "Bhuvneshwar Kumar", batting: "-", bowling: "1/31", total: 37 },
             { name: "Mukesh Kumar", batting: "DNB", bowling: "0/53", total: -25 },
-            { name: "Nandre Burger", batting: "-", bowling: "1/20", total: 22 },
+            { name: "Nandre Burger", batting: "-", bowling: "1/20", total: 22 }
 
 
         ],
         away: [
+            { name: "Jos Buttler", batting: "25(16)", bowling: "-", total: 53 },
             { name: "Prabhsimran Singh", batting: "0(1)", bowling: "-", total: -5 },
             { name: "Riyan Parag", batting: "12(14)", bowling: "0/10", total: 20, captain: true },
             { name: "Ishan Kishan", batting: "25(13)", bowling: "-", total: 59 },
+            { name: "Washington Sundar", batting: "19(12)", bowling: "-", total: 52 },
             { name: "Marcus Stoinis", batting: "29(16)", bowling: "-", total: 83 },
             { name: "Mitchell Santner", batting: "-", bowling: "1/44", total: 24 },
             { name: "Mohammad Shami", batting: "-", bowling: "1/56", total: 6 },
             { name: "Ravi Bishnoi", batting: "0(2)", bowling: "1/41", total: -8 },
+            { name: "Josh Hazlewood", batting: "-", bowling: "1/40", total: 51 }
 
 
         ],
@@ -1012,10 +1019,10 @@ const matchConfig = {
 
 // PLAYER OF THE MATCH DATA - Add to your JavaScript
 const potmData = {
-    name: "",           // Change player name
-    team: "",          // Change team name
-    stats: "", // Change stats
-    image: "" // Change image URL
+    name: "Virat Kohli",           // Change player name
+    team: "Royal Challengers Galle",          // Change team name
+    stats: "205 Points (81 from 44 balls)", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2.png" // Change image URL
 };
 
 // FUNCTION TO RENDER POTM - Add to your init() or call separately
