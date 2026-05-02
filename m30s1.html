@@ -739,8 +739,8 @@
     <section class="tabs-container">
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>
-            <!--<button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>-->
-            <button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>
+            <button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>
+            <!--<button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>-->
         </div>
 
         <!-- Scorecard Tab -->
@@ -945,7 +945,7 @@ const matchConfig = {
     home: {
         name: "Sunrisers Colombo",
         short: "SRC",
-        score: 0,
+        score: 149,
         color: "orange",
         logo: "SRC.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -954,11 +954,11 @@ const matchConfig = {
     away: {
         name: "Apex Bolt Assassins", 
         short: "ABA",
-        score: 0,
+        score: 292,
         color: "black",
         logo: "ABA.jpeg"
     },
-    result: "LIVE",
+    result: "ABA Lead By 143 Points",
     
     iplMatches: [
         { date: "May 01, 2026", match: "RR vs DC" },
@@ -970,10 +970,22 @@ const matchConfig = {
     
     stats: {
         home: [
+            { name: "Vaibhav Sooryavanshi", batting: "4(2)", bowling: "-", total: 9 },
+            { name: "Dewald Brevis", batting: "DNB", bowling: "-", total: 30 },
+            { name: "Ravindra Jadeja", batting: "20(14)", bowling: "1/33", total: 100, captain: true, emergency: true },
+            { name: "Will Jacks", batting: "1(5)", bowling: "-", total: -1 },
+            { name: "Jofra Archer", batting: "1(1)", bowling: "1/46", total: 11 },
 
 
         ],
         away: [
+            { name: "Pathum Nissanka", batting: "62(33)", bowling: "-", total: 150 },
+            { name: "Yashasvi Jaiswal", batting: "6(3)", bowling: "-", total: 15 },
+            { name: "Surya Kumar Yadav", batting: "21(12)", bowling: "-", total: 45 },
+            { name: "Hardik Pandya", batting: "18(23)", bowling: "0/17", total: 17 },
+            { name: "Axar Patel", batting: "-", bowling: "1/39", total: 32 },
+            { name: "Jasprit Bumrah", batting: "-", bowling: "1/20", total: 44 },
+            { name: "Kuldeep yadav", batting: "-", bowling: "0/41", total: -11 },
 
 
         ],
@@ -990,7 +1002,7 @@ const matchConfig = {
         away: {
             batters: [{name: "Pathum Nissanka"}, {name: "Yashasvi Jaiswal"}, {name: "Surya Kumar Yadav"}],
             wk: [{name: "Heinrich Klaasen"}],
-            allRounders: [{name: "Sunil Narine"}, {name: "Hardik Pandya"}, {name: "Axar Patrl"}],
+            allRounders: [{name: "Sunil Narine"}, {name: "Hardik Pandya"}, {name: "Axar Patel"}],
             bowlers: [{name: "Jasprit Bumrah"}, {name: "Kuldeep Yadav"}, {name: "Mayank Yadav"}, {name: "Matheesha Pathirana"}],
             emergency: [{name: "Travis Head"}, {name: "Phil Salt"}, {name: "Shivam Dube"}, {name: "Sandeep Sharma"}]
         },
