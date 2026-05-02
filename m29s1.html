@@ -945,7 +945,7 @@ const matchConfig = {
     home: {
         name: "Royal Challengers Galle",
         short: "RCG",
-        score: 0,
+        score: -5,
         color: "red",
         logo: "RCG.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -954,7 +954,7 @@ const matchConfig = {
     away: {
         name: "Rajasthan Stallions", 
         short: "RS",
-        score: 0,
+        score: 70,
         color: "brown",
         logo: "RS.png"
     },
@@ -970,10 +970,15 @@ const matchConfig = {
     
     stats: {
         home: [
+            { name: "Sanju Samson", batting: "11(9)", bowling: "-", total: 17 },
+            { name: "Nandre Burger", batting: "-", bowling: "0/41", total: -22, emergency: true },
 
 
         ],
         away: [
+            { name: "Nitish Rana", batting: "33(17)", bowling: "-", total: 79 },
+            { name: "Trent Boult", batting: "7(2)", bowling: "0/37", total: 7 },
+            { name: "Ravi Bishnoi", batting: "-", bowling: "0/28", total: -16 },
 
 
         ],
@@ -991,7 +996,7 @@ const matchConfig = {
             batters: [{name: "Ajinkya Rahane"}, {name: "Ishan Kishan"}, {name: "Prabhsimran Singh"}],
             wk: [{name: "Jos Buttler"}],
             allRounders: [{name: "Jason Holder"}, {name: "Nitish Rana"}, {name: "Washington Sundar"}],
-            bowlers: [{name: "Mohammed Shami"}, {name: "Trent Boult"}, {name: "Ravi Bishnoi"}, {name: "Rahul Tewatia"}],
+            bowlers: [{name: "Mohammad Shami"}, {name: "Trent Boult"}, {name: "Ravi Bishnoi"}, {name: "Rahul Tewatia"}],
             emergency: [{name: "Rinku Singh"}, {name: "Prithvi Shaw"}, {name: "Marcus Stoinis"}, {name: "Tushar Deshpande"}]
         },
     }
