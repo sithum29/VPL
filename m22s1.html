@@ -726,7 +726,7 @@
             </div>
         </div>
 
-        <div class="match-status" id="match-result">LIVE</div>
+        <div class="match-status" id="match-result">JS Won By 112 Points</div>
     </header>
 
 
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Royal Challengers Galle",
         short: "RCG",
-        score: 418,
+        score: 427,
         color: "red",
         logo: "RCG.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Jaffna Sharks", 
         short: "JS",
-        score: 242,
+        score: 539,
         color: "blue",
         logo: "JS.png"
     },
-    result: "RCG Lead By 176 Points",
+    result: "JS Won By 112 Points",
     
     iplMatches: [
         { date: "April 25, 2026", match: "RR vs SRH" },
@@ -971,6 +971,7 @@ const matchConfig = {
         home: [
             { name: "Virat Kohli", batting: "23(15)", bowling: "-", total: 46 },
             { name: "Rajat Patidar", batting: "DNB", bowling: "-", total: 0, captain: true },
+            { name: "Shreyas Iyer", batting: "4(2)", bowling: "-", total: 9 },
             { name: "Angkrish Raghuvanshi", batting: "9(8)", bowling: "-", total: 12 },
             { name: "Krunal Pandya", batting: "-", bowling: "1/9", total: 47 },
             { name: "Mitchell Marsh", batting: "2(3)", bowling: "-", total: 17 },
@@ -983,9 +984,14 @@ const matchConfig = {
         ],
         away: [
             { name: "Shubman Gill", batting: "33(23)", bowling: "-", total: 83 },
+            { name: "Rohit Sharma", batting: "25(26)", bowling: "-", total: 72, captain: true },
+            { name: "Donovan Ferreira", batting: "33(16)", bowling: "1/14", total: 116, emergency: true },
             { name: "KL Rahul", batting: "1(3)", bowling: "-", total: 0 },
-            { name: "Ramandeep Singh", batting: "6(11)", bowling: "-", total: 4 },
+            { name: "Priyansh Arya", batting: "22(17)", bowling: "DNB", total: 51 },
+            { name: "Cooper Connolly", batting: "21(22)", bowling: "DNB", total: 26 },
+            { name: "Ramandeep Singh", batting: "6(11)", bowling: "DNB", total: 4 },
             { name: "Noor Ahmad", batting: "-", bowling: "1/29", total: 40 },
+            { name: "Yuzvendra Chahal", batting: "-", bowling: "1/32", total: 32 },
             { name: "Suyash Sharma", batting: "-", bowling: "1/7", total: 115, emergency: true }
 
 
@@ -1012,10 +1018,10 @@ const matchConfig = {
 
 // PLAYER OF THE MATCH DATA - Add to your JavaScript
 const potmData = {
-    name: "",           // Change player name
-    team: "",          // Change team name
-    stats: "", // Change stats
-    image: "" // Change image URL
+    name: "Donovan Ferreira",           // Change player name
+    team: "Jaffna Sharks",          // Change team name
+    stats: "116 Points (33(16) & 1/14(1))", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2033.png" // Change image URL
 };
 
 // FUNCTION TO RENDER POTM - Add to your init() or call separately
