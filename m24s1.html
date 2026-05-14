@@ -726,7 +726,7 @@
             </div>
         </div>
 
-        <div class="match-status" id="match-result">LIVE</div>
+        <div class="match-status" id="match-result">ABA Won By 89 Points</div>
     </header>
 
 
@@ -944,7 +944,7 @@ const matchConfig = {
     home: {
         name: "Apex Bolt Assassins",
         short: "ABA",
-        score: 488,
+        score: 535,
         color: "black",
         logo: "ABA.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Royal Challenngers Galle", 
         short: "RCG",
-        score: 437,
+        score: 446,
         color: "red",
         logo: "RCG.jpeg"
     },
-    result: "ABA Lead By 51 Points",
+    result: "ABA Won By 89 Points",
     
     iplMatches: [
         { date: "April 25, 2026", match: "RR vs SRH" },
@@ -974,6 +974,8 @@ const matchConfig = {
             { name: "Heinrich Klaasen", batting: "29(24)", bowling: "-", total: 80 },
             { name: "Sunil Narine", batting: "4(6)", bowling: "3/24", total: 272, captain: true },
             { name: "Axar Patel", batting: "0(3)", bowling: "0/5", total: -12 },
+            { name: "Shivam Dube", batting: "22(17)", bowling: "0/7", total: 43 },
+            { name: "Jasprit Bumrah", batting: "-", bowling: "0/35", total: 4 },
             { name: "Kuldeep Yadav", batting: "3(11)", bowling: "DNB", total: -1 },
             { name: "Kagiso Rabada", batting: "-", bowling: "3/25", total: 122 },
 
@@ -982,6 +984,7 @@ const matchConfig = {
         away: [
             { name: "Virat Kohli", batting: "23(15)", bowling: "-", total: 46 },
             { name: "Rajat Patidar", batting: "DNB", bowling: "-", total: 0, captain: true },
+            { name: "Shreyas Iyer", batting: "4(2)", bowling: "-", total: 9 },
             { name: "Sanju Samson", batting: "11(15)", bowling: "-", total: 31 },
             { name: "Krunal Pandya", batting: "-", bowling: "1/9", total: 47 },
             { name: "Mitchell Marsh", batting: "2(3)", bowling: "-", total: 17 },
@@ -1014,10 +1017,10 @@ const matchConfig = {
 
 // PLAYER OF THE MATCH DATA - Add to your JavaScript
 const potmData = {
-    name: "",           // Change player name
-    team: "",          // Change team name
-    stats: "", // Change stats
-    image: "" // Change image URL
+    name: "Bhuvneshwar Kumar",           // Change player name
+    team: "Royal Challengers Galle",          // Change team name
+    stats: "148 Points (3/5(4))", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/15.png" // Change image URL
 };
 
 // FUNCTION TO RENDER POTM - Add to your init() or call separately
