@@ -739,8 +739,8 @@
     <section class="tabs-container">
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>
-            <!--<button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>-->
-            <button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>
+            <button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>
+            <!--<button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>-->
         </div>
 
         <!-- Scorecard Tab -->
@@ -954,11 +954,11 @@ const matchConfig = {
     away: {
         name: "Rajasthan Stallions", 
         short: "RS",
-        score: 0,
+        score: 112,
         color: "brown",
         logo: "RS.png"
     },
-    result: "Match Not Started",
+    result: "RS Lead By 112 Points",
     
     iplMatches: [
         { date: "May 13, 2026", match: "RCB vs KKR" },
@@ -970,10 +970,14 @@ const matchConfig = {
     
     stats: {
         home: [
+            { name: "Prasidh Krishna", batting: "-", bowling: "DNB", total: 0 },
 
 
         ],
         away: [
+            { name: "Ajinkya Rahane", batting: "19(13)", bowling: "-", total: 67 },
+            { name: "Tim David", batting: "2(3)", bowling: "DNB", total: 2 },
+            { name: "Josh Hazlewood", batting: "-", bowling: "1/35", total: 43 },
             
 
 
@@ -982,18 +986,18 @@ const matchConfig = {
     
     playingXI: {
         home: {
-            batters: [{name: "Pathum Nissanka"}, {name: "Surya Kumar Yadav"}, {name: "Travis Head"}],
-            wk: [{name: "Heinrich Klaasen"}],
-            allRounders: [{name: "Hardik Pandya"}, {name: "Axar Patel"}, {name: "Sai Sudharsan"}],
-            bowlers: [{name: "Jasprit Bumrah"}, {name: "Kuldeep Yadav"}, {name: "Kagiso Rabada"}, {name: "Sandeep Sharma"}],
-            emergency: [{name: "Yashasvi Jaiswal"}, {name: "Phil Salt"}, {name: "Shivam Dube"}, {name: "Anshul Kamboj"}]
+            batters: [{name: "Dhruv Jurel"}, {name: "Ruturaj Gaikwad"}, {name: "Nicholas Pooran"}],
+            wk: [{name: "KL Rahul"}],
+            allRounders: [{name: "Priyansh Arya"}, {name: "Cooper Connolly"}, {name: "Romario Shepherd"}],
+            bowlers: [{name: "Prasidh Krishna"}, {name: "Noor Ahmad"}, {name: "Suyash Sharma"}, {name: "Digvesh Rathi"}],
+            emergency: [{name: "Donovan Ferreira"}, {name: "Quinton de Kock"}, {name: "Ashutosh Sharma"}, {name: "Mitchell Starc"}]
         },
         away: {
-            batters: [{name: "Rohit Sharma"}, {name: "Shubman Gill"}, {name: "Quinton de Kock"}],
-            wk: [{name: "KL Rahul"}],
-            allRounders: [{name: "Priyansh Arya"}, {name: "Cooper Connolly"}, {name: "Naman Dhir"}],
-            bowlers: [{name: "Noor Ahmad"}, {name: "Mitchell Starc"}, {name: "Suyash Sharma"}, {name: "Prasidh Krishna"}],
-            emergency: [{name: "Ruturaj Gaikwad"}, {name: "Dhruv Jurel"}, {name: "Romario Shepherd"}, {name: "Digvesh Rathi"}]
+            batters: [{name: "Riyan Parag"}, {name: "Prabhsimran Singh"}, {name: "Ajinkya Rahane"}],
+            wk: [{name: "Ishan Kishan"}],
+            allRounders: [{name: "Marcus Stoinis"}, {name: "Shahbaz Ahmed"}, {name: "Tim David"}],
+            bowlers: [{name: "Josh Hazlewood"}, {name: "Mohammad Shami"}, {name: "Ravi Bishnoi"}, {name: "Tushar Deshpande"}],
+            emergency: [{name: "Shimron Hetmyer"}, {name: "Jos Buttler"}, {name: "Ishant Sharma"}, {name: "Manish Pandey"}]
         },
     }
 };
