@@ -739,8 +739,8 @@
     <section class="tabs-container">
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>
-            <!--<button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>-->
-            <button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>
+            <button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>
+            <!--<button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>-->
         </div>
 
         <!-- Scorecard Tab -->
@@ -945,7 +945,7 @@ const matchConfig = {
     home: {
         name: "Apex Bolt Assassins",
         short: "ABA",
-        score: 0,
+        score: 74,
         color: "black",
         logo: "ABA.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -954,11 +954,11 @@ const matchConfig = {
     away: {
         name: "Royal Challengers Galle", 
         short: "RCG",
-        score: 0,
+        score: 585,
         color: "red",
         logo: "RCG.jpeg"
     },
-    result: "Match Not Started",
+    result: "RCG Lead By 511 Points",
     
     iplMatches: [
         { date: "May 13, 2026", match: "RCB vs KKR" },
@@ -970,10 +970,17 @@ const matchConfig = {
     
     stats: {
         home: [
+            { name: "Sunil Narine", batting: "DNB", bowling: "1/31", total: 74, captain: true },
 
 
         ],
         away: [
+            { name: "Virat Kohli", batting: "105(60)", bowling: "-", total: 265 },
+            { name: "Rajat Patidar", batting: "11(8)", bowling: "-", total: 40, captain: true },
+            { name: "Devdutt Padikkal", batting: "39(27)", bowling: "-", total: 90 },
+            { name: "Angkrish Raghuvanshi", batting: "71(46)", bowling: "-", total: 152 },
+            { name: "Krunal Pandya", batting: "DNB", bowling: "0/39", total: -9 },
+            { name: "Bhuvneshwar Kumar", batting: "-", bowling: "1/34", total: 47 },
             
 
 
@@ -982,18 +989,18 @@ const matchConfig = {
     
     playingXI: {
         home: {
-            batters: [{name: "Pathum Nissanka"}, {name: "Surya Kumar Yadav"}, {name: "Travis Head"}],
+            batters: [{name: "Abishek Porel"}, {name: "Yashasvi Jaiswal"}, {name: "Travis Head"}],
             wk: [{name: "Heinrich Klaasen"}],
-            allRounders: [{name: "Hardik Pandya"}, {name: "Axar Patel"}, {name: "Sai Sudharsan"}],
-            bowlers: [{name: "Jasprit Bumrah"}, {name: "Kuldeep Yadav"}, {name: "Kagiso Rabada"}, {name: "Sandeep Sharma"}],
-            emergency: [{name: "Yashasvi Jaiswal"}, {name: "Phil Salt"}, {name: "Shivam Dube"}, {name: "Anshul Kamboj"}]
+            allRounders: [{name: "Sunil Narine"}, {name: "Axar Patel"}, {name: "Marco Jansen"}],
+            bowlers: [{name: "Mayank Yadav"}, {name: "Kuldeep Yadav"}, {name: "Anshul Kamboj"}, {name: "Sandeep Sharma"}],
+            emergency: [{name: "Pathum Nissanka"}, {name: "Phil Salt"}, {name: "Shivam Dube"}, {name: "Matheesha Pathirana"}]
         },
         away: {
-            batters: [{name: "Rohit Sharma"}, {name: "Shubman Gill"}, {name: "Quinton de Kock"}],
-            wk: [{name: "KL Rahul"}],
-            allRounders: [{name: "Priyansh Arya"}, {name: "Cooper Connolly"}, {name: "Naman Dhir"}],
-            bowlers: [{name: "Noor Ahmad"}, {name: "Mitchell Starc"}, {name: "Suyash Sharma"}, {name: "Prasidh Krishna"}],
-            emergency: [{name: "Ruturaj Gaikwad"}, {name: "Dhruv Jurel"}, {name: "Romario Shepherd"}, {name: "Digvesh Rathi"}]
+            batters: [{name: "Virat Kohli"}, {name: "Rajat Patidar"}, {name: "Devdutt Padikkal"}],
+            wk: [{name: "Angkrish Raghuvanshi"}],
+            allRounders: [{name: "Krunal Pandya"}, {name: "Mitchell Marsh"}, {name: "Nitish Kumar Reddy"}],
+            bowlers: [{name: "Bhuvneshwar Kumar"}, {name: "Pat Cummins"}, {name: "Mukesh Kumar"}, {name: "Mohsin Khan"}],
+            emergency: [{name: "Shreyas Iyer"}, {name: "Sanju Samson"}, {name: "Venkatesh Iyer"}, {name: "Eshan Malinga"}]
         },
     }
 };
