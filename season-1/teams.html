@@ -1442,5 +1442,22 @@
             renderPlayers('jaffna', 'all');
         });
     </script>
+    <script>
+        // Fix for the unresponsive mobile menu button
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark'); // changes burger to 'X' close icon
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+    </script>
 </body>
 </html>
