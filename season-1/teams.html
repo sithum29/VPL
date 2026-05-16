@@ -489,6 +489,13 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.4s ease;
             position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .player-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .player-card:hover {
@@ -593,7 +600,7 @@
                 transform: none;
             }
             .player-card:hover {
-                transform: none;
+                transform: translateY(0);
             }
         }
 
@@ -825,23 +832,23 @@
          ============================================ -->
     <div class="team-selector-bar">
         <div class="selector-container">
-            <button class="team-tab active" onclick="switchTeam('jaffna')">
+            <button class="team-tab active" onclick="switchTeam('jaffna', this)">
                 <span style="display:inline-block; width:24px; height:24px; background:var(--franchise-sharks); border-radius:50%;"></span>
                 Jaffna Sharks
             </button>
-            <button class="team-tab" onclick="switchTeam('rajasthan')">
+            <button class="team-tab" onclick="switchTeam('rajasthan', this)">
                 <span style="display:inline-block; width:24px; height:24px; background:var(--franchise-stallions); border-radius:50%;"></span>
                 Rajasthan Stallions
             </button>
-            <button class="team-tab" onclick="switchTeam('rcg')">
+            <button class="team-tab" onclick="switchTeam('rcg', this)">
                 <span style="display:inline-block; width:24px; height:24px; background:var(--franchise-challengers); border-radius:50%;"></span>
                 Royal Challengers Galle
             </button>
-            <button class="team-tab" onclick="switchTeam('sunrisers')">
+            <button class="team-tab" onclick="switchTeam('sunrisers', this)">
                 <span style="display:inline-block; width:24px; height:24px; background:var(--franchise-sunrisers); border-radius:50%;"></span>
                 Sunrisers Colombo
             </button>
-            <button class="team-tab" onclick="switchTeam('apex')">
+            <button class="team-tab" onclick="switchTeam('apex', this)">
                 <span style="display:inline-block; width:24px; height:24px; background:var(--franchise-assassins); border-radius:50%;"></span>
                 Apex Bolt Assassins
             </button>
@@ -885,11 +892,11 @@
             <div class="section-header">
                 <h2 class="section-title">Squad 2026</h2>
                 <div class="filter-tabs">
-                    <button class="filter-btn active" onclick="filterPlayers('jaffna', 'all')">All</button>
-                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'Batter')">Batters</button>
-                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'Bowler')">Bowlers</button>
-                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'WK')">WKs</button>
-                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'All-rounder')">All Rounders</button>
+                    <button class="filter-btn active" onclick="filterPlayers('jaffna', 'all', this)">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'Batter', this)">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'Bowler', this)">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'WK', this)">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('jaffna', 'All-rounder', this)">All Rounders</button>
                 </div>
             </div>
             <div class="players-grid" id="grid-jaffna">
@@ -923,11 +930,11 @@
             <div class="section-header">
                 <h2 class="section-title">Squad 2026</h2>
                 <div class="filter-tabs">
-                    <button class="filter-btn active" onclick="filterPlayers('rajasthan', 'all')">All</button>
-                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'Batter')">Batters</button>
-                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'Bowler')">Bowlers</button>
-                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'WK')">WKs</button>
-                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'All-rounder')">All Rounders</button>
+                    <button class="filter-btn active" onclick="filterPlayers('rajasthan', 'all', this)">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'Batter', this)">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'Bowler', this)">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'WK', this)">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('rajasthan', 'All-rounder', this)">All Rounders</button>
                 </div>
             </div>
             <div class="players-grid" id="grid-rajasthan"></div>
@@ -959,11 +966,11 @@
             <div class="section-header">
                 <h2 class="section-title">Squad 2026</h2>
                 <div class="filter-tabs">
-                    <button class="filter-btn active" onclick="filterPlayers('rcg', 'all')">All</button>
-                    <button class="filter-btn" onclick="filterPlayers('rcg', 'Batter')">Batters</button>
-                    <button class="filter-btn" onclick="filterPlayers('rcg', 'Bowler')">Bowlers</button>
-                    <button class="filter-btn" onclick="filterPlayers('rcg', 'WK')">WKs</button>
-                    <button class="filter-btn" onclick="filterPlayers('rcg', 'All-rounder')">All Rounders</button>
+                    <button class="filter-btn active" onclick="filterPlayers('rcg', 'all', this)">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('rcg', 'Batter', this)">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('rcg', 'Bowler', this)">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('rcg', 'WK', this)">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('rcg', 'All-rounder', this)">All Rounders</button>
                 </div>
             </div>
             <div class="players-grid" id="grid-rcg"></div>
@@ -995,11 +1002,11 @@
             <div class="section-header">
                 <h2 class="section-title">Squad 2026</h2>
                 <div class="filter-tabs">
-                    <button class="filter-btn active" onclick="filterPlayers('sunrisers', 'all')">All</button>
-                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'Batter')">Batters</button>
-                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'Bowler')">Bowlers</button>
-                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'WK')">WKs</button>
-                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'All-rounder')">All Rounders</button>
+                    <button class="filter-btn active" onclick="filterPlayers('sunrisers', 'all', this)">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'Batter', this)">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'Bowler', this)">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'WK', this)">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('sunrisers', 'All-rounder', this)">All Rounders</button>
                 </div>
             </div>
             <div class="players-grid" id="grid-sunrisers"></div>
@@ -1031,11 +1038,11 @@
             <div class="section-header">
                 <h2 class="section-title">Squad 2026</h2>
                 <div class="filter-tabs">
-                    <button class="filter-btn active" onclick="filterPlayers('apex', 'all')">All</button>
-                    <button class="filter-btn" onclick="filterPlayers('apex', 'Batter')">Batters</button>
-                    <button class="filter-btn" onclick="filterPlayers('apex', 'Bowler')">Bowlers</button>
-                    <button class="filter-btn" onclick="filterPlayers('apex', 'WK')">WKs</button>
-                    <button class="filter-btn" onclick="filterPlayers('apex', 'All-rounder')">All Rounders</button>
+                    <button class="filter-btn active" onclick="filterPlayers('apex', 'all', this)">All</button>
+                    <button class="filter-btn" onclick="filterPlayers('apex', 'Batter', this)">Batters</button>
+                    <button class="filter-btn" onclick="filterPlayers('apex', 'Bowler', this)">Bowlers</button>
+                    <button class="filter-btn" onclick="filterPlayers('apex', 'WK', this)">WKs</button>
+                    <button class="filter-btn" onclick="filterPlayers('apex', 'All-rounder', this)">All Rounders</button>
                 </div>
             </div>
             <div class="players-grid" id="grid-apex"></div>
@@ -1231,16 +1238,16 @@
                 { name: "Tristan Stubbs", role: "WK", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1017.png" },
                 { name: "Kartik Sharma", role: "WK", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/4540.png" },
                 { name: "Abhishek Sharma", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/212.png" },
-                { name: "Will Jacks", role: "All-rounder", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1941.png" },
+                { name: "Will Jacks", role: "All-rounder", isForeign: true, image I need to continue providing the rest of the corrected code. The previous response was cut off at the squad data for Sunrisers and didn't include the Apex team data or the JavaScript functions. Let me provide the complete, fixed code.
+
+```html
+                "https://documents.iplt20.com/ipl/IPLHeadshot2026/1941.png" },
                 { name: "Ravindra Jadeja", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/46.png" },
                 { name: "Sameer Rizvi", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1229.png" },
                 { name: "Ayush Badoni", role: "All-rounder", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/985.png" }
             ],
             apex: [
-                { name: "Surya Kumar Yadav", role: "Batter", isForeign: false, image I'll continue providing the rest of the code. The previous response was cut off, so I'll complete the teams page with all remaining JavaScript data and functions.
-
-```html
-                "https://documents.iplt20.com/ipl/IPLHeadshot2025/174.png" },
+                { name: "Surya Kumar Yadav", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/174.png" },
                 { name: "Travis Head", role: "Batter", isForeign: true, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/37.png" },
                 { name: "Karun Nair", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/131.png" },
                 { name: "Nehal Wadhera", role: "Batter", isForeign: false, image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1541.png" },
@@ -1342,21 +1349,16 @@
         let currentTeam = 'jaffna';
         let currentFilter = 'all';
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderPlayers('jaffna', 'all');
-        });
-
         // Switch Team View
-        function switchTeam(teamId) {
+        function switchTeam(teamId, clickedTab) {
             currentTeam = teamId;
             currentFilter = 'all';
             
-            // Update Tab Styles
+            // Update Tab Styles - remove active from all, add to clicked
             document.querySelectorAll('.team-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            event.target.closest('.team-tab').classList.add('active');
+            clickedTab.classList.add('active');
             
             // Hide all team views
             document.querySelectorAll('.team-view').forEach(view => {
@@ -1366,7 +1368,7 @@
             // Show selected team
             document.getElementById(teamId).classList.remove('hidden');
             
-            // Reset filter buttons visual state
+            // Reset filter buttons visual state for the newly shown team
             const activeTeamContainer = document.getElementById(teamId);
             activeTeamContainer.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -1381,19 +1383,15 @@
         }
 
         // Filter Players
-        function filterPlayers(teamId, role) {
+        function filterPlayers(teamId, role, clickedBtn) {
             currentFilter = role;
             
-            // Update button styles
+            // Update button styles - remove active from all in this team, add to clicked
             const container = document.getElementById(teamId);
             container.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if(role === 'all' && btn.textContent === 'All') btn.classList.add('active');
-                if(role === 'Batter' && btn.textContent === 'Batters') btn.classList.add('active');
-                if(role === 'Bowler' && btn.textContent === 'Bowlers') btn.classList.add('active');
-                if(role === 'WK' && btn.textContent === 'WKs') btn.classList.add('active');
-                if(role === 'All-rounder' && btn.textContent === 'All Rounders') btn.classList.add('active');
             });
+            clickedBtn.classList.add('active');
             
             renderPlayers(teamId, role);
         }
@@ -1408,7 +1406,7 @@
                 players = squad.filter(p => p.role === role);
             }
             
-            grid.innerHTML = players.map(player => {
+            grid.innerHTML = players.map((player, index) => {
                 let roleClass = '';
                 if(player.role === 'Batter') roleClass = 'role-batter';
                 else if(player.role === 'Bowler') roleClass = 'role-bowler';
@@ -1416,7 +1414,7 @@
                 else if(player.role === 'WK') roleClass = 'role-wk';
                 
                 return `
-                <div class="player-card">
+                <div class="player-card" style="transition-delay: ${index * 0.05}s">
                     <div class="player-image-container">
                         ${player.isForeign ? '<span class="foreign-badge">OVERSEAS</span>' : ''}
                         <img src="${player.image}" 
@@ -1431,44 +1429,21 @@
                 </div>
                 `;
             }).join('');
+            
+            // Trigger animation after a small delay
+            setTimeout(() => {
+                grid.querySelectorAll('.player-card').forEach(card => {
+                    card.classList.add('visible');
+                });
+            }, 50);
         }
 
         // ==========================================
-        // 5. SCROLL REVEAL ANIMATION
+        // 5. INITIALIZE ON PAGE LOAD
         // ==========================================
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -30px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe player cards after render
-        function observeCards() {
-            document.querySelectorAll('.player-card').forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = `all 0.6s ease ${index * 0.05}s`;
-                observer.observe(card);
-            });
-        }
-
-        // Override renderPlayers to include animation
-        const originalRenderPlayers = renderPlayers;
-        renderPlayers = function(teamId, role) {
-            originalRenderPlayers(teamId, role);
-            setTimeout(observeCards, 50);
-        };
-
-        // Initial observe
-        setTimeout(observeCards, 100);
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPlayers('jaffna', 'all');
+        });
     </script>
 </body>
 </html>
