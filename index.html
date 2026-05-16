@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VPL Season 01 | Virtual Premier League 2026</title>
     
     <!-- Tailwind CSS -->
@@ -58,6 +58,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
@@ -66,6 +72,8 @@
             color: #ffffff;
             overflow-x: hidden;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Animated Background Grid */
@@ -105,7 +113,7 @@
 
         /* Glassmorphism Header */
         .glass-header {
-            background: rgba(10, 14, 39, 0.7);
+            background: rgba(10, 14, 39, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 215, 0, 0.1);
@@ -190,7 +198,9 @@
         /* Hero Section */
         .hero-section {
             position: relative;
-            height: 700px;
+            height: 100vh;
+            min-height: 600px;
+            max-height: 900px;
             overflow: hidden;
         }
 
@@ -338,14 +348,14 @@
 
         /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
             background: #050505;
         }
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, #ffd700, #0066ff);
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         /* Mobile Menu */
@@ -406,9 +416,46 @@
             animation: subtle-pulse 3s ease-in-out infinite;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-section { height: 500px; }
+        /* Touch device optimizations */
+        @media (hover: none) {
+            .neon-card:hover {
+                transform: none;
+            }
+            .glow-btn:hover {
+                transform: none;
+            }
+        }
+
+        /* Mobile-specific fixes */
+        @media (max-width: 640px) {
+            .hero-section {
+                min-height: 500px;
+                height: 85vh;
+            }
+            
+            .carousel-slide img {
+                object-position: center;
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .hero-section {
+                min-height: 550px;
+            }
+        }
+
+        /* Large screens */
+        @media (min-width: 1920px) {
+            .hero-section {
+                max-height: 1000px;
+            }
+        }
+
+        /* Prevent text selection on interactive elements */
+        .no-select {
+            -webkit-user-select: none;
+            user-select: none;
         }
     </style>
 </head>
@@ -422,53 +469,53 @@
 
     <!-- ================= HEADER ================= -->
     <header class="glass-header sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4">
+        <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
             <div class="flex justify-between items-center">
                 
                 <!-- Logo -->
-                <div class="flex items-center gap-4">
-                    <div class="relative">
+                <div class="flex items-center gap-2 sm:gap-3 lg:gap-4">
+                    <div class="relative flex-shrink-0">
                         <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-blue-500 rounded-full blur-lg opacity-30"></div>
-                        <img src="season-1/logo.png" alt="VPL Logo" class="relative h-14 w-14 rounded-full border-2 border-yellow-400/50">
+                        <img src="season-1/logo.png" alt="VPL Logo" class="relative h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 rounded-full border-2 border-yellow-400/50 object-cover">
                     </div>
-                    <div>
-                        <h1 class="font-orbitron text-3xl font-black tracking-wider text-white">
+                    <div class="min-w-0">
+                        <h1 class="font-orbitron text-xl sm:text-2xl lg:text-3xl font-black tracking-wider text-white whitespace-nowrap">
                             VPL <span class="gold-text">2026</span>
                         </h1>
-                        <p class="font-rajdhani text-xs text-blue-300 tracking-[0.3em] uppercase">Virtual Premier League</p>
+                        <p class="font-rajdhani text-[10px] sm:text-xs text-blue-300 tracking-[0.2em] sm:tracking-[0.3em] uppercase hidden sm:block">Virtual Premier League</p>
                     </div>
                 </div>
 
                 <!-- Desktop Navigation -->
-                <nav class="hidden lg:flex items-center gap-2">
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
                     <!-- Home - Current Page -->
-                    <a href="season-1/index.html" class="nav-active px-5 py-2.5 rounded-lg font-rajdhani font-bold text-sm tracking-wider text-yellow-400 transition-all">
-                        <i class="fas fa-home mr-2"></i>HOME
+                    <a href="season-1/index.html" class="nav-active px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-home mr-1 xl:mr-2"></i>HOME
                     </a>
 
                     <!-- Matches -->
-                    <a href="season-1/matches.html" class="glow-btn px-5 py-2.5 rounded-lg font-rajdhani font-bold text-sm tracking-wider text-white hover:text-yellow-400 transition-all">
-                        <i class="fas fa-cricket-bat-ball mr-2"></i>MATCHES
+                    <a href="season-1/matches.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-cricket-bat-ball mr-1 xl:mr-2"></i>MATCHES
                     </a>
 
                     <!-- Points Table -->
-                    <a href="season-1/points.html" class="glow-btn px-5 py-2.5 rounded-lg font-rajdhani font-bold text-sm tracking-wider text-white hover:text-yellow-400 transition-all">
-                        <i class="fas fa-table mr-2"></i>POINTS TABLE
+                    <a href="season-1/points.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-table mr-1 xl:mr-2"></i>POINTS
                     </a>
 
                     <!-- Teams -->
-                    <a href="season-1/teams.html" class="glow-btn px-5 py-2.5 rounded-lg font-rajdhani font-bold text-sm tracking-wider text-white hover:text-yellow-400 transition-all">
-                        <i class="fas fa-shield-halved mr-2"></i>TEAMS
+                    <a href="season-1/teams.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-shield-halved mr-1 xl:mr-2"></i>TEAMS
                     </a>
 
                     <!-- More Dropdown -->
                     <div class="relative group">
-                        <button class="glow-btn px-5 py-2.5 rounded-lg font-rajdhani font-bold text-sm tracking-wider text-white hover:text-yellow-400 transition-all flex items-center gap-2">
+                        <button class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all flex items-center gap-1 xl:gap-2 whitespace-nowrap">
                             <i class="fas fa-ellipsis-vertical"></i>MORE
-                            <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+                            <i class="fas fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
                         </button>
                         
-                        <div class="dropdown-menu absolute top-full right-0 mt-2 w-48 rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
+                        <div class="dropdown-menu absolute top-full right-0 mt-2 w-44 sm:w-48 rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
                             <a href="season-1/stats.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
                                 <i class="fas fa-chart-line mr-2 w-5"></i>Stats
                             </a>
@@ -489,43 +536,43 @@
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <button onclick="toggleMobileMenu()" class="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg border border-yellow-400/20 text-yellow-400 hover:bg-yellow-400/5 transition-all">
-                    <i class="fas fa-bars text-lg"></i>
+                <button onclick="toggleMobileMenu()" class="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg border border-yellow-400/20 text-yellow-400 hover:bg-yellow-400/5 transition-all no-select" aria-label="Toggle menu">
+                    <i class="fas fa-bars text-lg" id="menu-icon"></i>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu hidden lg:hidden border-t border-yellow-400/10">
-            <div class="container mx-auto px-4 py-4 space-y-2">
-                <a href="season-1/index.html" class="block px-4 py-3 rounded-lg bg-yellow-400/5 border border-yellow-400/20 text-yellow-400 font-rajdhani font-bold">
-                    <i class="fas fa-home mr-3"></i>Home
+        <div id="mobile-menu" class="mobile-menu hidden lg:hidden border-t border-yellow-400/10 max-h-[80vh] overflow-y-auto">
+            <div class="container mx-auto px-4 py-4 space-y-1">
+                <a href="season-1/index.html" class="block px-4 py-3 rounded-lg bg-yellow-400/5 border border-yellow-400/20 text-yellow-400 font-rajdhani font-bold text-sm">
+                    <i class="fas fa-home mr-3 w-5"></i>Home
                 </a>
-                <a href="season-1/matches.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold transition-all">
-                    <i class="fas fa-cricket-bat-ball mr-3"></i>Matches
+                <a href="season-1/matches.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-cricket-bat-ball mr-3 w-5"></i>Matches
                 </a>
-                <a href="season-1/points.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold transition-all">
-                    <i class="fas fa-table mr-3"></i>Points Table
+                <a href="season-1/points.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-table mr-3 w-5"></i>Points Table
                 </a>
-                <a href="season-1/teams.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold transition-all">
-                    <i class="fas fa-shield-halved mr-3"></i>Teams
+                <a href="season-1/teams.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-shield-halved mr-3 w-5"></i>Teams
                 </a>
-                <div class="pt-2 border-t border-white/10">
+                <div class="pt-2 border-t border-white/10 mt-2">
                     <p class="px-4 py-2 text-xs text-gray-500 font-rajdhani uppercase tracking-wider">More Options</p>
-                    <a href="season-1/stats.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold transition-all">
-                        <i class="fas fa-chart-line mr-3"></i>Stats
+                    <a href="season-1/stats.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-chart-line mr-3 w-5"></i>Stats
                     </a>
-                    <a href="season-1/auction.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold transition-all">
-                        <i class="fas fa-gavel mr-3"></i>Auction
+                    <a href="season-1/auction.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-gavel mr-3 w-5"></i>Auction
                     </a>
-                    <a href="season-1/venues.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold transition-all">
-                        <i class="fas fa-location-dot mr-3"></i>Venues
+                    <a href="season-1/venues.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-location-dot mr-3 w-5"></i>Venues
                     </a>
-                    <a href="season-1/kits.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold transition-all">
-                        <i class="fas fa-shirt mr-3"></i>Kits
+                    <a href="season-1/kits.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-shirt mr-3 w-5"></i>Kits
                     </a>
-                    <a href="season-1/rules.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold transition-all">
-                        <i class="fas fa-scale-balanced mr-3"></i>Rules
+                    <a href="season-1/rules.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-scale-balanced mr-3 w-5"></i>Rules
                     </a>
                 </div>
             </div>
@@ -538,35 +585,35 @@
 
         <!-- Slides -->
         <div class="carousel-slide active" data-slide="0">
-            <img src="season-1/slide1.png" alt="Cricket Action">
+            <img src="season-1/slide1.png" alt="Cricket Action" loading="eager">
         </div>
         <div class="carousel-slide" data-slide="1">
-            <img src="https://ipl2026.live/images/Rollwin%20Website%20Banner.jpg" alt="IPL 2026">
+            <img src="https://ipl2026.live/images/Rollwin%20Website%20Banner.jpg" alt="IPL 2026" loading="lazy">
         </div>
 
         <!-- Overlay Content -->
-        <div class="carousel-overlay absolute inset-0 flex flex-col justify-end pb-24 px-6 md:px-20 z-10">
-            <div class="max-w-4xl">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="h-px w-12 bg-gradient-to-r from-yellow-400 to-transparent"></div>
-                    <span class="font-orbitron text-sm text-yellow-400 tracking-[0.3em] uppercase animate-subtle-pulse">Season 01</span>
+        <div class="carousel-overlay absolute inset-0 flex flex-col justify-end pb-16 sm:pb-20 md:pb-24 px-4 sm:px-8 md:px-12 lg:px-20 z-10">
+            <div class="max-w-4xl mx-auto md:mx-0 w-full">
+                <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div class="h-px w-8 sm:w-12 bg-gradient-to-r from-yellow-400 to-transparent flex-shrink-0"></div>
+                    <span class="font-orbitron text-[10px] sm:text-xs md:text-sm text-yellow-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase animate-subtle-pulse">Season 01</span>
                 </div>
                 
-                <h2 class="font-orbitron text-5xl md:text-7xl lg:text-8xl font-black text-white mb-4 glitch leading-tight">
-                    VIRTUAL <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400">PREMIER</span><br>
+                <h2 class="font-orbitron text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-3 sm:mb-4 glitch leading-[1.1] sm:leading-tight">
+                    VIRTUAL <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400">PREMIER</span><br class="hidden sm:block">
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">LEAGUE</span>
                 </h2>
                 
-                <p class="font-rajdhani text-xl md:text-2xl text-gray-300 max-w-2xl mb-8 leading-relaxed">
+                <p class="font-rajdhani text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-xl sm:max-w-2xl mb-6 sm:mb-8 leading-relaxed px-1 sm:px-0">
                     Five Elite Franchises. One Ultimate Dream. Experience the future of fantasy cricket in a digital arena.
                 </p>
 
-                <div class="flex flex-wrap gap-4">
-                    <a href="season-1/matches.html" class="group relative px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg font-orbitron font-bold text-black tracking-wider overflow-hidden transition-all hover:shadow-lg hover:scale-105">
+                <div class="flex flex-wrap gap-3 sm:gap-4">
+                    <a href="season-1/matches.html" class="group relative px-5 sm:px-6 md:px-8 py-3 sm:py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg font-orbitron font-bold text-black tracking-wider overflow-hidden transition-all hover:shadow-lg hover:scale-105 text-xs sm:text-sm">
                         <span class="relative z-10">VIEW MATCHES</span>
                         <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 transform translate-x-full group-hover:translate-x-0 transition-transform"></div>
                     </a>
-                    <a href="season-1/teams.html" class="px-8 py-4 border border-white/20 rounded-lg font-orbitron font-bold text-white tracking-wider hover:border-yellow-400/50 hover:text-yellow-400 transition-all">
+                    <a href="season-1/teams.html" class="px-5 sm:px-6 md:px-8 py-3 sm:py-4 border border-white/20 rounded-lg font-orbitron font-bold text-white tracking-wider hover:border-yellow-400/50 hover:text-yellow-400 transition-all text-xs sm:text-sm">
                         EXPLORE TEAMS
                     </a>
                 </div>
@@ -574,118 +621,122 @@
         </div>
 
         <!-- Carousel Controls -->
-        <div class="absolute bottom-8 right-8 flex gap-3 z-20">
-            <button onclick="prevSlide()" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-yellow-400/50 hover:text-yellow-400 hover:bg-yellow-400/5 transition-all backdrop-blur-sm">
-                <i class="fas fa-chevron-left"></i>
+        <div class="absolute bottom-4 sm:bottom-6 md:bottom-8 right-4 sm:right-6 md:right-8 flex gap-2 sm:gap-3 z-20">
+            <button onclick="prevSlide()" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-yellow-400/50 hover:text-yellow-400 hover:bg-yellow-400/5 transition-all backdrop-blur-sm no-select" aria-label="Previous slide">
+                <i class="fas fa-chevron-left text-sm sm:text-base"></i>
             </button>
-            <button onclick="nextSlide()" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-yellow-400/50 hover:text-yellow-400 hover:bg-yellow-400/5 transition-all backdrop-blur-sm">
-                <i class="fas fa-chevron-right"></i>
+            <button onclick="nextSlide()" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-yellow-400/50 hover:text-yellow-400 hover:bg-yellow-400/5 transition-all backdrop-blur-sm no-select" aria-label="Next slide">
+                <i class="fas fa-chevron-right text-sm sm:text-base"></i>
             </button>
         </div>
 
         <!-- Slide Indicators -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            <button onclick="goToSlide(0)" class="slide-indicator w-12 h-1 rounded-full bg-white/20 transition-all hover:bg-yellow-400/50" data-index="0"></button>
-            <button onclick="goToSlide(1)" class="slide-indicator w-12 h-1 rounded-full bg-white/20 transition-all hover:bg-yellow-400/50" data-index="1"></button>
+        <div class="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+            <button onclick="goToSlide(0)" class="slide-indicator w-8 sm:w-12 h-1 rounded-full bg-white/20 transition-all hover:bg-yellow-400/50 no-select" data-index="0" aria-label="Go to slide 1"></button>
+            <button onclick="goToSlide(1)" class="slide-indicator w-8 sm:w-12 h-1 rounded-full bg-white/20 transition-all hover:bg-yellow-400/50 no-select" data-index="1" aria-label="Go to slide 2"></button>
         </div>
     </section>
 
     <!-- ================= LIVE STATS BAR ================= -->
-    <section class="relative z-10 -mt-16 container mx-auto px-4">
-        <div class="neon-card rounded-2xl p-6 md:p-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+    <section class="relative z-10 -mt-8 sm:-mt-12 md:-mt-16 container mx-auto px-3 sm:px-4">
+        <div class="neon-card rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
                 <div class="text-center group">
-                    <div class="font-orbitron text-3xl md:text-4xl font-bold text-yellow-400 mb-1">05</div>
-                    <div class="font-rajdhani text-sm text-gray-400 uppercase tracking-wider">Franchises</div>
+                    <div class="font-orbitron text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-400 mb-1">05</div>
+                    <div class="font-rajdhani text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Franchises</div>
                 </div>
                 <div class="text-center group">
-                    <div class="font-orbitron text-3xl md:text-4xl font-bold text-blue-400 mb-1">45</div>
-                    <div class="font-rajdhani text-sm text-gray-400 uppercase tracking-wider">Matches</div>
+                    <div class="font-orbitron text-2xl sm:text-3xl md:text-4xl font-bold text-blue-400 mb-1">45</div>
+                    <div class="font-rajdhani text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Matches</div>
                 </div>
                 <div class="text-center group">
-                    <div class="font-orbitron text-3xl md:text-4xl font-bold text-cyan-400 mb-1">125</div>
-                    <div class="font-rajdhani text-sm text-gray-400 uppercase tracking-wider">Players</div>
+                    <div class="font-orbitron text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400 mb-1">125</div>
+                    <div class="font-rajdhani text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Players</div>
+                </div>
+                <div class="text-center group col-span-2 md:col-span-1">
+                    <div class="font-orbitron text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-1">05</div>
+                    <div class="font-rajdhani text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Venues</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="subtle-divider container mx-auto"></div>
+    <div class="subtle-divider container mx-auto mt-8 sm:mt-12"></div>
 
     <!-- ================= TEAMS SHOWCASE ================= -->
-    <section class="py-20 container mx-auto px-4">
-        <div class="text-center mb-16">
-            <span class="font-rajdhani text-sm text-blue-400 tracking-[0.3em] uppercase mb-4 block">The Contenders</span>
-            <h2 class="font-orbitron text-5xl md:text-6xl font-black text-white mb-4">
+    <section class="py-12 sm:py-16 md:py-20 container mx-auto px-3 sm:px-4">
+        <div class="text-center mb-10 sm:mb-12 md:mb-16">
+            <span class="font-rajdhani text-xs sm:text-sm text-blue-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4 block">The Contenders</span>
+            <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">
                 The <span class="gold-text">Franchises</span>
             </h2>
-            <div class="h-px w-32 bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent mx-auto"></div>
+            <div class="h-px w-20 sm:w-32 bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent mx-auto"></div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
             
             <!-- Jaffna Sharks -->
-            <div class="neon-card team-card-sharks rounded-2xl overflow-hidden group cursor-pointer">
-                <div class="aspect-square relative bg-gradient-to-br from-blue-900/40 to-black flex items-center justify-center p-6 overflow-hidden">
+            <div class="neon-card team-card-sharks rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer">
+                <div class="aspect-square relative bg-gradient-to-br from-blue-900/40 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
                     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,71,171,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/JS.png" alt="Jaffna Sharks" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500">
+                    <img src="season-1/JS.png" alt="Jaffna Sharks" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
                 </div>
-                <div class="p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-lg font-bold text-white mb-1">Jaffna Sharks</h3>
-                    <p class="font-rajdhani text-xs text-blue-400 tracking-wider uppercase">Deep Sea Dominators</p>
+                <div class="p-3 sm:p-5 text-center relative">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
+                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Jaffna Sharks</h3>
+                    <p class="font-rajdhani text-[10px] sm:text-xs text-blue-400 tracking-wider uppercase">Deep Sea Dominators</p>
                 </div>
             </div>
 
             <!-- Rajasthan Stallions -->
-            <div class="neon-card team-card-stallions rounded-2xl overflow-hidden group cursor-pointer">
-                <div class="aspect-square relative bg-gradient-to-br from-amber-900/40 to-black flex items-center justify-center p-6 overflow-hidden">
+            <div class="neon-card team-card-stallions rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer">
+                <div class="aspect-square relative bg-gradient-to-br from-amber-900/40 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
                     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,69,19,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/RS.png" alt="Rajasthan Stallions" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500">
+                    <img src="season-1/RS.png" alt="Rajasthan Stallions" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
                 </div>
-                <div class="p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-amber-600/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-lg font-bold text-white mb-1">Rajasthan Stallions</h3>
-                    <p class="font-rajdhani text-xs text-amber-500 tracking-wider uppercase">Desert Warriors</p>
+                <div class="p-3 sm:p-5 text-center relative">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-amber-600/50 to-transparent"></div>
+                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Rajasthan Stallions</h3>
+                    <p class="font-rajdhani text-[10px] sm:text-xs text-amber-500 tracking-wider uppercase">Desert Warriors</p>
                 </div>
             </div>
 
             <!-- Royal Challengers Galle -->
-            <div class="neon-card team-card-challengers rounded-2xl overflow-hidden group cursor-pointer">
-                <div class="aspect-square relative bg-gradient-to-br from-red-900/40 to-black flex items-center justify-center p-6 overflow-hidden">
+            <div class="neon-card team-card-challengers rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer">
+                <div class="aspect-square relative bg-gradient-to-br from-red-900/40 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
                     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,20,60,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/RCG.jpeg" alt="Royal Challengers Galle" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500">
+                    <img src="season-1/RCG.jpeg" alt="Royal Challengers Galle" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
                 </div>
-                <div class="p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-lg font-bold text-white mb-1">Royal Challengers</h3>
-                    <p class="font-rajdhani text-xs text-red-400 tracking-wider uppercase">Fortress Fighters</p>
+                <div class="p-3 sm:p-5 text-center relative">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent"></div>
+                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Royal Challengers</h3>
+                    <p class="font-rajdhani text-[10px] sm:text-xs text-red-400 tracking-wider uppercase">Fortress Fighters</p>
                 </div>
             </div>
 
             <!-- Sunrisers Colombo -->
-            <div class="neon-card team-card-sunrisers rounded-2xl overflow-hidden group cursor-pointer">
-                <div class="aspect-square relative bg-gradient-to-br from-orange-900/40 to-black flex items-center justify-center p-6 overflow-hidden">
+            <div class="neon-card team-card-sunrisers rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer">
+                <div class="aspect-square relative bg-gradient-to-br from-orange-900/40 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
                     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,107,0,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/SRC.jpeg" alt="Sunrisers Colombo" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500">
+                    <img src="season-1/SRC.jpeg" alt="Sunrisers Colombo" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
                 </div>
-                <div class="p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-lg font-bold text-white mb-1">Sunrisers Colombo</h3>
-                    <p class="font-rajdhani text-xs text-orange-400 tracking-wider uppercase">Rising from East</p>
+                <div class="p-3 sm:p-5 text-center relative">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
+                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Sunrisers Colombo</h3>
+                    <p class="font-rajdhani text-[10px] sm:text-xs text-orange-400 tracking-wider uppercase">Rising from East</p>
                 </div>
             </div>
 
             <!-- Apex Bolt Assassins -->
-            <div class="neon-card team-card-assassins rounded-2xl overflow-hidden group cursor-pointer">
-                <div class="aspect-square relative bg-gradient-to-br from-gray-900/60 to-black flex items-center justify-center p-6 overflow-hidden">
+            <div class="neon-card team-card-assassins rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer col-span-2 sm:col-span-1 md:col-span-1">
+                <div class="aspect-square relative bg-gradient-to-br from-gray-900/60 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
                     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/ABA.jpeg" alt="Apex Bolt Assassins" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500">
+                    <img src="season-1/ABA.jpeg" alt="Apex Bolt Assassins" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
                 </div>
-                <div class="p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-gray-500/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-lg font-bold text-white mb-1">Apex Bolt Assassins</h3>
-                    <p class="font-rajdhani text-xs text-gray-400 tracking-wider uppercase">Strike with Precision</p>
+                <div class="p-3 sm:p-5 text-center relative">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-gray-500/50 to-transparent"></div>
+                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Apex Bolt Assassins</h3>
+                    <p class="font-rajdhani text-[10px] sm:text-xs text-gray-400 tracking-wider uppercase">Strike with Precision</p>
                 </div>
             </div>
 
@@ -693,26 +744,26 @@
     </section>
 
     <!-- ================= WHATSAPP CTA ================= -->
-    <section class="py-20 container mx-auto px-4">
-        <div class="whatsapp-glow rounded-3xl p-12 text-center relative overflow-hidden transition-all duration-500">
+    <section class="py-12 sm:py-16 md:py-20 container mx-auto px-3 sm:px-4">
+        <div class="whatsapp-glow rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center relative overflow-hidden transition-all duration-500">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(37,211,102,0.05)_0%,transparent_70%)]"></div>
             
             <div class="relative z-10">
-                <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center justify-center animate-float">
-                    <i class="fab fa-whatsapp text-4xl text-green-400"></i>
+                <div class="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto mb-4 sm:mb-6 rounded-xl sm:rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center justify-center animate-float">
+                    <i class="fab fa-whatsapp text-2xl sm:text-3xl md:text-4xl text-green-400"></i>
                 </div>
                 
-                <h2 class="font-orbitron text-4xl md:text-5xl font-bold text-white mb-4">
+                <h2 class="font-orbitron text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
                     Join the <span class="text-green-400">VPL Hub</span>
                 </h2>
-                <p class="font-rajdhani text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+                <p class="font-rajdhani text-base sm:text-lg md:text-xl text-gray-300 max-w-xl sm:max-w-2xl mx-auto mb-6 sm:mb-8 px-2 sm:px-0">
                     Get instant match alerts, points table updates, and exclusive auction news delivered straight to your WhatsApp.
                 </p>
                 
-                <button class="group relative px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 rounded-xl font-orbitron font-bold text-white tracking-wider overflow-hidden transition-all hover:shadow-lg hover:scale-105">
-                    <span class="relative z-10 flex items-center gap-3">
-                        <i class="fab fa-whatsapp text-xl"></i>
-                        JOIN WHATSAPP GROUP
+                <button class="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-600 to-green-500 rounded-xl font-orbitron font-bold text-white tracking-wider overflow-hidden transition-all hover:shadow-lg hover:scale-105 text-xs sm:text-sm">
+                    <span class="relative z-10 flex items-center gap-2 sm:gap-3 justify-center">
+                        <i class="fab fa-whatsapp text-lg sm:text-xl"></i>
+                        <span class="whitespace-nowrap">JOIN WHATSAPP GROUP</span>
                     </span>
                     <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-green-400 transform translate-y-full group-hover:translate-y-0 transition-transform"></div>
                 </button>
@@ -722,77 +773,77 @@
 
     <!-- ================= FOOTER ================= -->
     <footer class="relative border-t border-white/5 bg-black/50 backdrop-blur-xl">
-        <div class="container mx-auto px-4 py-16">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div class="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12">
                 
                 <!-- Brand -->
-                <div class="md:col-span-1">
-                    <div class="flex items-center gap-3 mb-6">
-                        <img src="season-1/logo.png" alt="VPL" class="h-12 w-12 rounded-full border-2 border-yellow-400/50">
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                        <img src="season-1/logo.png" alt="VPL" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-yellow-400/50 object-cover flex-shrink-0">
                         <div>
-                            <h4 class="font-orbitron text-2xl font-bold text-white">VPL 2026</h4>
-                            <p class="font-rajdhani text-xs text-blue-400 tracking-wider">VIRTUAL PREMIER LEAGUE</p>
+                            <h4 class="font-orbitron text-xl sm:text-2xl font-bold text-white">VPL 2026</h4>
+                            <p class="font-rajdhani text-[10px] sm:text-xs text-blue-400 tracking-wider">VIRTUAL PREMIER LEAGUE</p>
                         </div>
                     </div>
-                    <p class="font-inter text-sm text-gray-400 leading-relaxed">
+                    <p class="font-inter text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm">
                         The ultimate virtual cricket experience. Compete, strategize, and conquer in the most immersive fantasy cricket league.
                     </p>
                 </div>
 
                 <!-- Quick Links -->
                 <div>
-                    <h5 class="font-orbitron text-lg font-bold text-white mb-6">Navigate</h5>
-                    <ul class="space-y-3">
-                        <li><a href="season-1/index.html" class="font-rajdhani text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Home</a></li>
-                        <li><a href="season-1/matches.html" class="font-rajdhani text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Matches</a></li>
-                        <li><a href="season-1/points.html" class="font-rajdhani text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Points Table</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Teams</a></li>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Navigate</h5>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="season-1/index.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Home</a></li>
+                        <li><a href="season-1/matches.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Matches</a></li>
+                        <li><a href="season-1/points.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Points Table</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Teams</a></li>
                     </ul>
                 </div>
 
                 <!-- Teams -->
                 <div>
-                    <h5 class="font-orbitron text-lg font-bold text-white mb-6">Franchises</h5>
-                    <ul class="space-y-3">
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-xs text-blue-500"></i> Jaffna Sharks</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2"><i class="fas fa-shield text-xs text-amber-600"></i> Rajasthan Stallions</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-gray-400 hover:text-red-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-xs text-red-500"></i> Royal Challengers</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-gray-400 hover:text-orange-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-xs text-orange-500"></i> Sunrisers Colombo</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-2"><i class="fas fa-shield text-xs text-gray-500"></i> Apex Bolt Assassins</a></li>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Franchises</h5>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-blue-500"></i> Jaffna Sharks</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-amber-600"></i> Rajasthan Stallions</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-red-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-red-500"></i> Royal Challengers</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-orange-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-orange-500"></i> Sunrisers Colombo</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-gray-500"></i> Apex Bolt Assassins</a></li>
                     </ul>
                 </div>
 
                 <!-- Social -->
                 <div>
-                    <h5 class="font-orbitron text-lg font-bold text-white mb-6">Connect</h5>
-                    <div class="flex gap-3 mb-6">
-                        <a href="#" class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all">
-                            <i class="fab fa-facebook-f"></i>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Connect</h5>
+                    <div class="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all" aria-label="Facebook">
+                            <i class="fab fa-facebook-f text-sm"></i>
                         </a>
-                        <a href="#" class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all">
-                            <i class="fab fa-twitter"></i>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all" aria-label="Twitter">
+                            <i class="fab fa-twitter text-sm"></i>
                         </a>
-                        <a href="#" class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all">
-                            <i class="fab fa-instagram"></i>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all" aria-label="Instagram">
+                            <i class="fab fa-instagram text-sm"></i>
                         </a>
-                        <a href="#" class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all">
-                            <i class="fab fa-youtube"></i>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all" aria-label="YouTube">
+                            <i class="fab fa-youtube text-sm"></i>
                         </a>
                     </div>
-                    <p class="font-rajdhani text-sm text-gray-500">Subscribe for exclusive updates and behind-the-scenes content.</p>
+                    <p class="font-rajdhani text-xs sm:text-sm text-gray-500">Subscribe for exclusive updates and behind-the-scenes content.</p>
                 </div>
             </div>
 
-            <div class="subtle-divider mb-8"></div>
+            <div class="subtle-divider mb-6 sm:mb-8"></div>
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="font-inter text-xs text-gray-500">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+                <p class="font-inter text-[10px] sm:text-xs text-gray-500 text-center sm:text-left">
                     &copy; 2026 Virtual Premier League. All rights reserved. Not affiliated with BCCI/IPL.
                 </p>
-                <div class="flex gap-6">
-                    <a href="#" class="font-rajdhani text-xs text-gray-500 hover:text-yellow-400 transition-colors">Privacy Policy</a>
-                    <a href="#" class="font-rajdhani text-xs text-gray-500 hover:text-yellow-400 transition-colors">Terms of Service</a>
-                    <a href="#" class="font-rajdhani text-xs text-gray-500 hover:text-yellow-400 transition-colors">Contact</a>
+                <div class="flex gap-4 sm:gap-6">
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Contact</a>
                 </div>
             </div>
         </div>
@@ -803,13 +854,41 @@
         // --- 1. Mobile Menu Toggle ---
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+            const icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
         }
+
+        // Close mobile menu on resize if open
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                const menu = document.getElementById('mobile-menu');
+                const icon = document.getElementById('menu-icon');
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        });
 
         // --- 2. Particle System ---
         function createParticles() {
             const container = document.getElementById('particles');
-            const particleCount = 25;
+            const isMobile = window.innerWidth < 768;
+            const particleCount = isMobile ? 12 : 25;
+            
+            // Clear existing particles
+            container.innerHTML = '';
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
@@ -821,19 +900,29 @@
                 // Random colors between gold and blue
                 const colors = ['#ffd700', '#0066ff', '#00f0ff', '#ffd700'];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.width = (2 + Math.random() * 4) + 'px';
-                particle.style.height = particle.style.width;
+                const size = isMobile ? (1 + Math.random() * 2) : (2 + Math.random() * 4);
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
                 
                 container.appendChild(particle);
             }
         }
+        
         createParticles();
+        
+        // Recreate particles on resize with debounce
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(createParticles, 250);
+        });
 
         // --- 3. Carousel Logic ---
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-slide');
         const indicators = document.querySelectorAll('.slide-indicator');
         const totalSlides = slides.length;
+        let slideInterval;
 
         function updateIndicators() {
             indicators.forEach((ind, i) => {
@@ -870,16 +959,34 @@
         function goToSlide(index) {
             currentSlide = index;
             showSlide(currentSlide);
+            resetAutoAdvance();
+        }
+
+        function resetAutoAdvance() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 6000);
         }
 
         // Auto advance
-        setInterval(nextSlide, 6000);
+        slideInterval = setInterval(nextSlide, 6000);
         updateIndicators();
+
+        // Pause on touch for mobile
+        const heroSection = document.querySelector('.hero-section');
+        if (heroSection) {
+            heroSection.addEventListener('touchstart', () => {
+                clearInterval(slideInterval);
+            }, { passive: true });
+            
+            heroSection.addEventListener('touchend', () => {
+                slideInterval = setInterval(nextSlide, 6000);
+            }, { passive: true });
+        }
 
         // --- 4. Scroll Reveal Animation ---
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            rootMargin: '0px 0px -30px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -899,14 +1006,48 @@
             observer.observe(card);
         });
 
-        // --- 5. Parallax Effect on Hero ---
+        // --- 5. Parallax Effect on Hero (Desktop only) ---
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero-section');
-            if (hero && scrolled < 700) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const hero = document.querySelector('.hero-section');
+                    if (hero && scrolled < 700 && window.innerWidth >= 1024) {
+                        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         });
+
+        // --- 6. Touch swipe support for carousel ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        heroSection.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        heroSection.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+                resetAutoAdvance();
+            }
+        }
     </script>
 </body>
 </html>
