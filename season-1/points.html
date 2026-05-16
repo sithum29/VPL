@@ -2,158 +2,373 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VPL 2026 - Points Table</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vpl: {
+                            blue: '#0a0e27',
+                            gold: '#ffd700',
+                            goldDim: '#b8860b',
+                            black: '#050505',
+                            cyan: '#00f0ff',
+                            neonBlue: '#0066ff',
+                        },
+                        franchise: {
+                            sharks: '#0047AB',
+                            stallions: '#8B4513',
+                            challengers: '#DC143C',
+                            sunrisers: '#FF6B00',
+                            assassins: '#1a1a1a',
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
+        :root {
+            --gold: #ffd700;
+            --blue: #0066ff;
+            --cyan: #00f0ff;
+            --deep-space: #0a0e27;
+            --void: #050505;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        :root {
-            --primary: #1a237e;
-            --secondary: #ff6f00;
-            --accent: #00bcd4;
-            --bg: #0a0e27;
-            --card: #151932;
-            --text: #ffffff;
-            --muted: #8b92b4;
-            --border: #2a3050;
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.5;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #050505 0%, #0a0e27 50%, #050505 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Navigation */
-        .navbar {
-            background: rgba(10, 14, 39, 0.98);
-            border-bottom: 2px solid var(--secondary);
-            position: sticky;
+        /* Animated Background Grid */
+        .bg-grid {
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 102, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0.75rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: float-particle 15s infinite linear;
+            z-index: 1;
         }
 
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
         }
 
-        .nav-links {
-            display: flex;
-            gap: 0.25rem;
-            list-style: none;
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(10, 14, 39, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
         }
 
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 0.5rem 0.75rem;
-            border-radius: 4px;
-            transition: all 0.2s;
+        /* Subtle Gold Text */
+        .gold-text {
+            color: #ffd700;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--secondary);
-            background: rgba(255, 111, 0, 0.1);
-        }
-
-        /* Main Content */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-        }
-
-        .header h1 {
-            font-size: 1.5rem;
-            color: var(--secondary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .header p {
-            color: var(--muted);
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
-        }
-
-        /* Table */
-        .table-wrap {
-            background: var(--card);
-            border-radius: 12px;
+        /* Glowing Button - Subtle */
+        .glow-btn {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(0, 102, 255, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            transition: all 0.3s ease;
             overflow: hidden;
-            border: 1px solid var(--border);
         }
 
+        .glow-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .glow-btn:hover::before {
+            left: 100%;
+        }
+
+        .glow-btn:hover {
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Active Nav Link - Subtle */
+        .nav-active {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(0, 102, 255, 0.08));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.08);
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .dropdown-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--gold);
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+
+        .dropdown-item:hover::after {
+            transform: scaleY(1);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 215, 0, 0.05);
+            padding-left: 1.5rem;
+        }
+
+        /* Neon Border Cards - Subtle */
+        .neon-card {
+            background: rgba(10, 14, 39, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .neon-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.15), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .neon-card:hover::before {
+            opacity: 1;
+        }
+
+        .neon-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.15);
+        }
+
+        /* Progress Bar Animation */
+        .progress-bar {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-fill {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ffd700, #0066ff);
+            border-radius: 3px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+        }
+
+        /* Subtle Divider */
+        .subtle-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), rgba(0, 102, 255, 0.3), rgba(255, 215, 0, 0.3), transparent);
+        }
+
+        /* Float Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Pulse Animation - Subtle */
+        @keyframes subtle-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .animate-subtle-pulse {
+            animation: subtle-pulse 3s ease-in-out infinite;
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) {
+            .neon-card:hover {
+                transform: none;
+            }
+            .glow-btn:hover {
+                transform: none;
+            }
+        }
+
+        /* Mobile-specific fixes */
+        @media (max-width: 640px) {
+            .hero-section {
+                min-height: 500px;
+                height: 85vh;
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .hero-section {
+                min-height: 550px;
+            }
+        }
+
+        /* Large screens */
+        @media (min-width: 1920px) {
+            .hero-section {
+                max-height: 1000px;
+            }
+        }
+
+        /* Prevent text selection on interactive elements */
+        .no-select {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* Points Table Specific Styles */
         .table-header {
-            display: grid;
-            grid-template-columns: 45px 1fr 60px 60px;
-            gap: 0.5rem;
-            padding: 1rem;
-            background: rgba(255, 111, 0, 0.1);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--secondary);
-            font-weight: 700;
-            letter-spacing: 1px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(0, 102, 255, 0.08));
+            border: 1px solid rgba(255, 215, 0, 0.15);
         }
 
         .team-row {
-            display: grid;
-            grid-template-columns: 45px 1fr 60px 60px;
-            gap: 0.5rem;
-            padding: 1rem;
-            align-items: center;
-            border-top: 1px solid var(--border);
-            transition: background 0.2s;
+            background: rgba(10, 14, 39, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
         }
 
         .team-row:hover {
             background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 215, 0, 0.1);
+            transform: translateX(4px);
         }
 
-        /* Rank styling */
-        .team-row.rank-1 {
-            background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), transparent);
+        .rank-1 {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(10, 14, 39, 0.6));
             border-left: 3px solid #ffd700;
         }
 
         .rank-1 .rank-num {
             color: #ffd700;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
         }
 
-        .team-row.rank-2 {
+        .rank-2 {
             border-left: 3px solid #c0c0c0;
         }
 
@@ -161,186 +376,471 @@
             color: #c0c0c0;
         }
 
+        .rank-3 {
+            border-left: 3px solid #cd7f32;
+        }
+
+        .rank-3 .rank-num {
+            color: #cd7f32;
+        }
+
         .rank-num {
             font-size: 1.1rem;
             font-weight: 800;
             text-align: center;
-            color: var(--muted);
-        }
-
-        /* Team cell */
-        .team-cell {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .team-logo {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--border);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             background: #fff;
             flex-shrink: 0;
         }
 
-        .team-info h3 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 0.1rem;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-        }
-
-        .team-info span {
-            font-size: 0.75rem;
-            color: var(--muted);
-            text-transform: uppercase;
-        }
-
-        .badge {
-            font-size: 0.6rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
         .badge-gold {
-            background: #ffd700;
+            background: linear-gradient(135deg, #ffd700, #b8860b);
             color: #000;
         }
 
         .badge-silver {
-            background: #c0c0c0;
+            background: linear-gradient(135deg, #c0c0c0, #808080);
             color: #000;
         }
 
-        /* Stats */
-        .stat {
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .stat-label {
-            display: block;
-            font-size: 0.65rem;
-            color: var(--muted);
-            text-transform: uppercase;
-            margin-bottom: 0.2rem;
-        }
-
-        .points {
-            color: var(--secondary);
+        .points-value {
+            color: var(--gold);
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--muted);
-            font-size: 0.8rem;
-            margin-top: 2rem;
-            border-top: 2px solid var(--secondary);
+        .nrr-positive {
+            color: #4ade80;
         }
 
-        /* Mobile */
-        @media (max-width: 480px) {
-            .nav-links {
-                gap: 0.1rem;
-            }
-            .nav-links a {
-                padding: 0.4rem 0.5rem;
-                font-size: 0.7rem;
-            }
+        .nrr-negative {
+            color: #f87171;
+        }
+
+        /* Mobile table adjustments */
+        @media (max-width: 640px) {
             .team-logo {
-                width: 35px;
-                height: 35px;
+                width: 36px;
+                height: 36px;
             }
-            .team-info h3 {
-                font-size: 0.85rem;
+            .rank-num {
+                font-size: 0.95rem;
+            }
+            .rank-1 .rank-num {
+                font-size: 1.1rem;
             }
         }
     </style>
 </head>
-<body>
+<body class="antialiased relative">
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">VPL</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="matches.html">Matches</a></li>
-                <li><a href="stats.html">Stats</a></li>
-                <li><a href="teams.html">Teams</a></li>
-                <li><a href="points.html" class="active">Table</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
 
-    <div class="container">
-        <div class="header">
-            <h1>Points Table</h1>
-            <p>Season 1 - 2026</p>
-        </div>
+    <!-- Floating Particles -->
+    <div id="particles"></div>
 
-        <div class="table-wrap">
-            <div class="table-header">
-                <div>Pos</div>
-                <div>Team</div>
-                <div>NRR</div>
-                <div>Pts</div>
-            </div>
-
-            <!-- EDIT ONLY DATA ATTRIBUTES BELOW -->
-            <!-- Format: rank|short|name|logo|played|won|lost|tied|nrr|points -->
-            
-            <div class="team-row" data-team="1|JS|Jaffna Sharks|JS.png|11|9|2|0|1923|18"></div>
-            <div class="team-row" data-team="2|SRC|Sunrisers Colombo|SRC.jpeg|10|6|4|0|1465|12"></div>
-            <div class="team-row" data-team="3|RCG|Royal Challengers Galle|RCG.jpeg|11|5|6|0|164|10"></div>
-            <div class="team-row" data-team="4|ABA|Apex Bolt Assassins|ABA.jpeg|11|4|7|0|-2014|8"></div>
-            <div class="team-row" data-team="5|RS|Rajasthan Stallions|RS.png|11|3|8|0|-1538|6"></div>
-        </div>
-    </div>
-
-    <div class="footer">
-        Virtual Premier League 2026<br>
-        CricketXI Points System
-    </div>
-
-    <script>
-        // Render rows from data attributes
-        document.querySelectorAll('.team-row').forEach(row => {
-            const [rank, short, name, logo, played, won, lost, tied, nrr, points] = row.dataset.team.split('|');
-            
-            row.classList.add(`rank-${rank}`);
-            
-            row.innerHTML = `
-                <div class="rank-num">${rank}</div>
-                <div class="team-cell">
-                    <img src="${logo}" alt="${short}" class="team-logo">
-                    <div class="team-info">
-                        <h3>${name}${rank === '1' ? '<span class="badge badge-gold">★ Champions</span>' : rank === '2' ? '<span class="badge badge-silver">Runner-up</span>' : ''}</h3>
-                        <span>${played}M • ${won}W ${lost}L ${tied}T</span>
+    <!-- ================= HEADER ================= -->
+    <header class="glass-header sticky top-0 z-50">
+        <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
+            <div class="flex justify-between items-center">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-2 sm:gap-3 lg:gap-4">
+                    <div class="relative flex-shrink-0">
+                        <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-blue-500 rounded-full blur-lg opacity-30"></div>
+                        <img src="logo.png" alt="VPL Logo" class="relative h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 rounded-full border-2 border-yellow-400/50 object-cover">
+                    </div>
+                    <div class="min-w-0">
+                        <h1 class="font-orbitron text-xl sm:text-2xl lg:text-3xl font-black tracking-wider text-white whitespace-nowrap">
+                            VPL <span class="gold-text">2026</span>
+                        </h1>
+                        <p class="font-rajdhani text-[10px] sm:text-xs text-blue-300 tracking-[0.2em] sm:tracking-[0.3em] uppercase hidden sm:block">Virtual Premier League</p>
                     </div>
                 </div>
-                <div class="stat">
-                    <span class="stat-label">NRR</span>
-                    ${parseFloat(nrr) >= 0 ? '+' : ''}${nrr}
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+                    <!-- Home -->
+                    <a href="index.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-home mr-1 xl:mr-2"></i>HOME
+                    </a>
+
+                    <!-- Matches -->
+                    <a href="matches.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-cricket-bat-ball mr-1 xl:mr-2"></i>MATCHES
+                    </a>
+
+                    <!-- Points Table - ACTIVE -->
+                    <a href="points.html" class="nav-active px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-table mr-1 xl:mr-2"></i>POINTS
+                    </a>
+
+                    <!-- Teams -->
+                    <a href="teams.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-shield-halved mr-1 xl:mr-2"></i>TEAMS
+                    </a>
+
+                    <!-- More Dropdown -->
+                    <div class="relative group">
+                        <button class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all flex items-center gap-1 xl:gap-2 whitespace-nowrap">
+                            <i class="fas fa-ellipsis-vertical"></i>MORE
+                            <i class="fas fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        
+                        <div class="dropdown-menu absolute top-full right-0 mt-2 w-44 sm:w-48 rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
+                            <a href="stats.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-chart-line mr-2 w-5"></i>Stats
+                            </a>
+                            <a href="auction.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-gavel mr-2 w-5"></i>Auction
+                            </a>
+                            <a href="venues.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-location-dot mr-2 w-5"></i>Venues
+                            </a>
+                            <a href="kits.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-shirt mr-2 w-5"></i>Kits
+                            </a>
+                            <a href="rules.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400">
+                                <i class="fas fa-scale-balanced mr-2 w-5"></i>Rules
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg border border-yellow-400/20 text-yellow-400 hover:bg-yellow-400/5 transition-all no-select" aria-label="Toggle menu">
+                    <i class="fas fa-bars text-lg" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden lg:hidden border-t border-yellow-400/10 max-h-[80vh] overflow-y-auto">
+            <div class="container mx-auto px-4 py-4 space-y-1">
+                <a href="index.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-home mr-3 w-5"></i>Home
+                </a>
+                <a href="matches.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-cricket-bat-ball mr-3 w-5"></i>Matches
+                </a>
+                <a href="points.html" class="block px-4 py-3 rounded-lg bg-yellow-400/5 border border-yellow-400/20 text-yellow-400 font-rajdhani font-bold text-sm">
+                    <i class="fas fa-table mr-3 w-5"></i>Points Table
+                </a>
+                <a href="teams.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-shield-halved mr-3 w-5"></i>Teams
+                </a>
+                <div class="pt-2 border-t border-white/10 mt-2">
+                    <p class="px-4 py-2 text-xs text-gray-500 font-rajdhani uppercase tracking-wider">More Options</p>
+                    <a href="stats.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-chart-line mr-3 w-5"></i>Stats
+                    </a>
+                    <a href="auction.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-gavel mr-3 w-5"></i>Auction
+                    </a>
+                    <a href="venues.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-location-dot mr-3 w-5"></i>Venues
+                    </a>
+                    <a href="kits.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-shirt mr-3 w-5"></i>Kits
+                    </a>
+                    <a href="rules.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-scale-balanced mr-3 w-5"></i>Rules
+                    </a>
                 </div>
-                <div class="stat">
-                    <span class="stat-label">Pts</span>
-                    <span class="points">${points}</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= PAGE HEADER ================= -->
+    <section class="relative pt-8 sm:pt-12 md:pt-16 pb-6 sm:pb-8 container mx-auto px-3 sm:px-4">
+        <div class="text-center">
+            <div class="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <div class="h-px w-8 sm:w-12 bg-gradient-to-r from-yellow-400 to-transparent flex-shrink-0"></div>
+                <span class="font-orbitron text-[10px] sm:text-xs md:text-sm text-yellow-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase animate-subtle-pulse">Season 01</span>
+                <div class="h-px w-8 sm:w-12 bg-gradient-to-l from-yellow-400 to-transparent flex-shrink-0"></div>
+            </div>
+            
+            <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">
+                POINTS <span class="gold-text">TABLE</span>
+            </h2>
+            <p class="font-rajdhani text-base sm:text-lg md:text-xl text-gray-400 max-w-xl sm:max-w-2xl mx-auto">
+                Track your team's journey to glory. Every match counts in the race to the top.
+            </p>
+            <div class="h-px w-20 sm:w-32 bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent mx-auto mt-4 sm:mt-6"></div>
+        </div>
+    </section>
+
+    <!-- ================= POINTS TABLE ================= -->
+    <section class="pb-12 sm:pb-16 md:pb-20 container mx-auto px-3 sm:px-4">
+        <div class="neon-card rounded-xl sm:rounded-2xl overflow-hidden">
+            
+            <!-- Table Header -->
+            <div class="table-header grid grid-cols-[50px_1fr_70px_70px] sm:grid-cols-[60px_1fr_80px_80px] md:grid-cols-[70px_1fr_90px_90px] gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 md:p-5 font-orbitron text-[10px] sm:text-xs text-yellow-400 font-bold tracking-wider uppercase">
+                <div class="text-center">Pos</div>
+                <div>Team</div>
+                <div class="text-center">NRR</div>
+                <div class="text-center">Pts</div>
+            </div>
+
+            <!-- Table Body -->
+            <div id="points-table-body">
+                <!-- Rows rendered by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="mt-6 sm:mt-8 flex flex-wrap justify-center gap-4 sm:gap-6 text-[10px] sm:text-xs font-rajdhani text-gray-400">
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                <span>Champions</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                <span>Runner-up</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-orange-400"></div>
+                <span>Third Place</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="subtle-divider container mx-auto"></div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="relative border-t border-white/5 bg-black/50 backdrop-blur-xl mt-8 sm:mt-12">
+        <div class="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12">
+                
+                <!-- Brand -->
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                        <img src="logo.png" alt="VPL" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-yellow-400/50 object-cover flex-shrink-0">
+                        <div>
+                            <h4 class="font-orbitron text-xl sm:text-2xl font-bold text-white">VPL 2026</h4>
+                            <p class="font-rajdhani text-[10px] sm:text-xs text-blue-400 tracking-wider">VIRTUAL PREMIER LEAGUE</p>
+                        </div>
+                    </div>
+                    <p class="font-inter text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm">
+                        The ultimate virtual cricket experience. Compete, strategize, and conquer in the most immersive fantasy cricket league.
+                    </p>
                 </div>
-            `;
+
+                <!-- Quick Links -->
+                <div>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Navigate</h5>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="index.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Home</a></li>
+                        <li><a href="matches.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Matches</a></li>
+                        <li><a href="points.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Points Table</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Teams</a></li>
+                    </ul>
+                </div>
+
+                <!-- Teams -->
+                <div>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Franchises</h5>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-blue-500"></i> Jaffna Sharks</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-amber-600"></i> Rajasthan Stallions</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-red-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-red-500"></i> Royal Challengers</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-orange-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-orange-500"></i> Sunrisers Colombo</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-gray-500"></i> Apex Bolt Assassins</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social -->
+                <div>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Connect</h5>
+                    <div class="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all" aria-label="Facebook">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all" aria-label="Twitter">
+                            <i class="fab fa-twitter text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all" aria-label="Instagram">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all" aria-label="YouTube">
+                            <i class="fab fa-youtube text-sm"></i>
+                        </a>
+                    </div>
+                    <p class="font-rajdhani text-xs sm:text-sm text-gray-500">Subscribe for exclusive updates and behind-the-scenes content.</p>
+                </div>
+            </div>
+
+            <div class="subtle-divider mb-6 sm:mb-8"></div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+                <p class="font-inter text-[10px] sm:text-xs text-gray-500 text-center sm:text-left">
+                    &copy; 2026 Virtual Premier League. All rights reserved. Not affiliated with BCCI/IPL.
+                </p>
+                <div class="flex gap-4 sm:gap-6">
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // --- 1. Mobile Menu Toggle ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close mobile menu on resize if open
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                const menu = document.getElementById('mobile-menu');
+                const icon = document.getElementById('menu-icon');
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // --- 2. Particle System ---
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const isMobile = window.innerWidth < 768;
+            const particleCount = isMobile ? 12 : 25;
+            
+            container.innerHTML = '';
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                
+                const colors = ['#ffd700', '#0066ff', '#00f0ff', '#ffd700'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const size = isMobile ? (1 + Math.random() * 2) : (2 + Math.random() * 4);
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+        
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(createParticles, 250);
+        });
+
+        // --- 3. Points Table Data & Rendering ---
+        const teamsData = [
+            { rank: 1, short: 'JS', name: 'Jaffna Sharks', logo: 'JS.png', played: 11, won: 9, lost: 2, tied: 0, nrr: 1923, points: 18 },
+            { rank: 2, short: 'SRC', name: 'Sunrisers Colombo', logo: 'SRC.jpeg', played: 10, won: 6, lost: 4, tied: 0, nrr: 1465, points: 12 },
+            { rank: 3, short: 'RCG', name: 'Royal Challengers Galle', logo: 'RCG.jpeg', played: 11, won: 5, lost: 6, tied: 0, nrr: 164, points: 10 },
+            { rank: 4, short: 'ABA', name: 'Apex Bolt Assassins', logo: 'ABA.jpeg', played: 11, won: 4, lost: 7, tied: 0, nrr: -2014, points: 8 },
+            { rank: 5, short: 'RS', name: 'Rajasthan Stallions', logo: 'RS.png', played: 11, won: 3, lost: 8, tied: 0, nrr: -1538, points: 6 }
+        ];
+
+        function renderTable() {
+            const tbody = document.getElementById('points-table-body');
+            
+            teamsData.forEach((team, index) => {
+                const nrrFormatted = team.nrr >= 0 ? `+${team.nrr}` : `${team.nrr}`;
+                const nrrClass = team.nrr >= 0 ? 'nrr-positive' : 'nrr-negative';
+                const rankClass = `rank-${team.rank}`;
+                
+                let badge = '';
+                if (team.rank === 1) {
+                    badge = '<span class="badge-gold text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold ml-2">★ Champions</span>';
+                } else if (team.rank === 2) {
+                    badge = '<span class="badge-silver text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold ml-2">Runner-up</span>';
+                }
+
+                const row = document.createElement('div');
+                row.className = `team-row ${rankClass} grid grid-cols-[50px_1fr_70px_70px] sm:grid-cols-[60px_1fr_80px_80px] md:grid-cols-[70px_1fr_90px_90px] gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 md:p-5 items-center`;
+                row.style.animationDelay = `${index * 0.1}s`;
+                
+                row.innerHTML = `
+                    <div class="rank-num font-orbitron">${team.rank}</div>
+                    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <img src="${team.logo}" alt="${team.short}" class="team-logo" loading="lazy">
+                        <div class="min-w-0">
+                            <h3 class="font-orbitron text-xs sm:text-sm md:text-base font-bold text-white truncate flex items-center flex-wrap">
+                                ${team.name}${badge}
+                            </h3>
+                            <p class="font-rajdhani text-[10px] sm:text-xs text-gray-400 tracking-wider">${team.played}M • ${team.won}W ${team.lost}L ${team.tied}T</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <span class="font-rajdhani text-xs sm:text-sm font-semibold ${nrrClass}">${nrrFormatted}</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="points-value font-orbitron">${team.points}</span>
+                    </div>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        renderTable();
+
+        // --- 4. Scroll Reveal Animation ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -30px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.neon-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Observe table rows
+        document.querySelectorAll('.team-row').forEach((row, index) => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateX(-20px)';
+            row.style.transition = `all 0.5s ease ${index * 0.1}s`;
+            observer.observe(row);
         });
     </script>
-
 </body>
 </html>
