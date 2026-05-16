@@ -2,156 +2,306 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPL 2026 Season 01 - Fixtures</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VPL Season 01 | Matches & Fixtures</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vpl: {
+                            blue: '#0a0e27',
+                            gold: '#ffd700',
+                            goldDim: '#b8860b',
+                            black: '#050505',
+                            cyan: '#00f0ff',
+                            neonBlue: '#0066ff',
+                        },
+                        franchise: {
+                            sharks: '#0047AB',
+                            stallions: '#8B4513',
+                            challengers: '#DC143C',
+                            sunrisers: '#FF6B00',
+                            assassins: '#1a1a1a',
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
+        :root {
+            --gold: #ffd700;
+            --blue: #0066ff;
+            --cyan: #00f0ff;
+            --deep-space: #0a0e27;
+            --void: #050505;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f0f23;
-            color: #fff;
-            line-height: 1.5;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #050505 0%, #0a0e27 50%, #050505 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Header */
-        .header {
-            background: #1a237e;
-            padding: 15px;
-            text-align: center;
-            border-bottom: 3px solid #ffd700;
-            position: sticky;
+        /* Animated Background Grid */
+        .bg-grid {
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 102, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .header h1 {
-            font-size: 20px;
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: float-particle 15s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(10, 14, 39, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        /* Gold Text */
+        .gold-text {
             color: #ffd700;
-            margin-bottom: 5px;
         }
 
-        .header p {
-            font-size: 12px;
-            color: #b0b0c0;
-        }
-
-        /* Filters */
-        .filters {
-            display: flex;
-            gap: 8px;
-            padding: 15px;
-            overflow-x: auto;
-            background: rgba(255,255,255,0.03);
-        }
-
-        .filter-btn {
-            padding: 8px 16px;
-            border: 1px solid #333;
-            background: transparent;
-            color: #b0b0c0;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: #ff6f00;
-            color: white;
-            border-color: #ff6f00;
-        }
-
-        /* Match Cards */
-        .container {
-            padding: 0 15px 30px;
-        }
-
-        .date-group {
-            margin-bottom: 25px;
-        }
-
-        .date-label {
-            color: #ffd700;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            padding-left: 5px;
-            border-left: 3px solid #ffd700;
-            padding-left: 10px;
-        }
-
-        .match-card {
-            background: #1a1a2e;
-            border-radius: 12px;
-            margin-bottom: 12px;
+        /* Glowing Button */
+        .glow-btn {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(0, 102, 255, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            transition: all 0.3s ease;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .glow-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .glow-btn:hover::before {
+            left: 100%;
+        }
+
+        .glow-btn:hover {
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Active Nav Link */
+        .nav-active {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(0, 102, 255, 0.08));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.08);
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .dropdown-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--gold);
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+
+        .dropdown-item:hover::after {
+            transform: scaleY(1);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 215, 0, 0.05);
+            padding-left: 1.5rem;
+        }
+
+        /* Neon Border Cards */
+        .neon-card {
+            background: rgba(10, 14, 39, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .neon-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.15), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .neon-card:hover::before {
+            opacity: 1;
+        }
+
+        .neon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.15);
+        }
+
+        /* Match Card Specific */
+        .match-card {
+            background: rgba(10, 14, 39, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
             cursor: pointer;
-            transition: transform 0.2s;
         }
 
-        .match-card:active {
-            transform: scale(0.98);
+        .match-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.15);
         }
 
-        .match-header {
-            background: rgba(26,35,126,0.5);
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
+        .match-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.15), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
-        .match-num {
-            color: #ffd700;
-            font-weight: 700;
+        .match-card:hover::before {
+            opacity: 1;
         }
 
-        .match-status {
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
+        /* Status Badges */
+        .status-upcoming { 
+            background: rgba(255, 215, 0, 0.15); 
+            color: #ffd700; 
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        .status-live { 
+            background: rgba(0, 255, 136, 0.15); 
+            color: #00ff88; 
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            animation: pulse-live 2s infinite;
+        }
+        .status-completed { 
+            background: rgba(107, 107, 139, 0.15); 
+            color: #6b6b8b; 
+            border: 1px solid rgba(107, 107, 139, 0.3);
         }
 
-        .status-upcoming { background: rgba(255,215,0,0.2); color: #ffd700; }
-        .status-live { background: rgba(0,255,136,0.2); color: #00ff88; }
-        .status-completed { background: rgba(107,107,139,0.2); color: #6b6b8b; }
-
-        .match-body {
-            padding: 15px;
+        @keyframes pulse-live {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
-        .teams-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
+        /* Winner Box */
+        .winner-box {
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
         }
 
-        .team {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
+        .winner-box.completed {
+            background: rgba(0, 255, 136, 0.08);
+            border-color: rgba(0, 255, 136, 0.2);
         }
 
-        .team.away {
-            flex-direction: row-reverse;
-            text-align: right;
-        }
-
-        /* ==========================================
-           TEAM LOGO STYLES - Images fit in circles
-           ========================================== */
+        /* Team Logo */
         .team-logo {
             width: 50px;
             height: 50px;
@@ -163,21 +313,19 @@
             font-size: 14px;
             border: 2px solid;
             flex-shrink: 0;
-            overflow: hidden; /* Keeps image inside circle */
+            overflow: hidden;
             position: relative;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
         }
 
-        /* Style for logo images */
         .team-logo img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Makes image cover the circle */
-            object-position: center; /* Centers the image */
+            object-fit: cover;
+            object-position: center;
             display: block;
         }
 
-        /* Fallback text styling (when no image) */
         .team-logo .initials {
             position: absolute;
             top: 50%;
@@ -187,142 +335,439 @@
             font-size: 14px;
         }
 
-        .team-info h3 {
-            font-size: 14px;
-            margin-bottom: 2px;
-        }
-
-        .team-info span {
-            font-size: 11px;
-            color: #6b6b8b;
-        }
-
-        .vs {
-            color: #ffd700;
-            font-weight: 800;
-            font-size: 16px;
-            padding: 0 15px;
-        }
-
-        /* Winner Section */
-        .winner-box {
-            background: rgba(255,215,0,0.1);
-            border: 1px solid rgba(255,215,0,0.3);
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .winner-box.completed {
-            background: rgba(0,255,136,0.1);
-            border-color: rgba(0,255,136,0.3);
-        }
-
-        .winner-label {
-            font-size: 11px;
+        /* Filter Buttons */
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
             color: #b0b0c0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
         }
 
-        .winner-name {
-            font-size: 14px;
-            font-weight: 700;
+        .filter-btn.active, .filter-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 102, 255, 0.15));
             color: #ffd700;
-            margin-top: 3px;
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.1);
         }
 
-        .winner-box.completed .winner-name {
-            color: #00ff88;
-        }
-
-        .match-footer {
-            padding: 10px 15px;
-            background: rgba(0,0,0,0.2);
-            font-size: 11px;
-            color: #6b6b8b;
+        .filter-btn.team-filter {
+            border-radius: 12px;
+            padding: 6px 14px;
+            font-size: 12px;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-btn.team-filter .team-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Date Label */
+        .date-label {
+            color: #ffd700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 3px solid #ffd700;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ffd700, #0066ff);
+            border-radius: 3px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+        }
+
+        /* Subtle Divider */
+        .subtle-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), rgba(0, 102, 255, 0.3), rgba(255, 215, 0, 0.3), transparent);
         }
 
         /* Empty State */
-        .empty {
+        .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             color: #6b6b8b;
         }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #6b6b8b;
-            border-top: 1px solid rgba(255,255,255,0.1);
+        /* Touch device optimizations */
+        @media (hover: none) {
+            .match-card:hover {
+                transform: none;
+            }
+            .glow-btn:hover {
+                transform: none;
+            }
+        }
+
+        /* Mobile-specific fixes */
+        @media (max-width: 640px) {
+            .team-logo {
+                width: 40px;
+                height: 40px;
+            }
+            .team-logo .initials {
+                font-size: 12px;
+            }
+        }
+
+        /* Prevent text selection on interactive elements */
+        .no-select {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* Section Header */
+        .section-header {
+            position: relative;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #0066ff);
+            border-radius: 2px;
         }
     </style>
 </head>
-<body>
+<body class="antialiased relative">
 
-    <header class="header">
-        <h1>VPL Season 01</h1>
-        <p>Fixtures & Results</p>
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
+
+    <!-- Floating Particles -->
+    <div id="particles"></div>
+
+    <!-- ================= HEADER ================= -->
+    <header class="glass-header sticky top-0 z-50">
+        <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
+            <div class="flex justify-between items-center">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-2 sm:gap-3 lg:gap-4">
+                    <div class="relative flex-shrink-0">
+                        <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-blue-500 rounded-full blur-lg opacity-30"></div>
+                        <img src="season-1/logo.png" alt="VPL Logo" class="relative h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 rounded-full border-2 border-yellow-400/50 object-cover">
+                    </div>
+                    <div class="min-w-0">
+                        <h1 class="font-orbitron text-xl sm:text-2xl lg:text-3xl font-black tracking-wider text-white whitespace-nowrap">
+                            VPL <span class="gold-text">2026</span>
+                        </h1>
+                        <p class="font-rajdhani text-[10px] sm:text-xs text-blue-300 tracking-[0.2em] sm:tracking-[0.3em] uppercase hidden sm:block">Virtual Premier League</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+                    <!-- Home -->
+                    <a href="season-1/index.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-home mr-1 xl:mr-2"></i>HOME
+                    </a>
+
+                    <!-- Matches - Current Page (Active) -->
+                    <a href="season-1/matches.html" class="nav-active px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-cricket-bat-ball mr-1 xl:mr-2"></i>MATCHES
+                    </a>
+
+                    <!-- Points Table -->
+                    <a href="season-1/points.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-table mr-1 xl:mr-2"></i>POINTS
+                    </a>
+
+                    <!-- Teams -->
+                    <a href="season-1/teams.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-shield-halved mr-1 xl:mr-2"></i>TEAMS
+                    </a>
+
+                    <!-- More Dropdown -->
+                    <div class="relative group">
+                        <button class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all flex items-center gap-1 xl:gap-2 whitespace-nowrap">
+                            <i class="fas fa-ellipsis-vertical"></i>MORE
+                            <i class="fas fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        
+                        <div class="dropdown-menu absolute top-full right-0 mt-2 w-44 sm:w-48 rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
+                            <a href="season-1/stats.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-chart-line mr-2 w-5"></i>Stats
+                            </a>
+                            <a href="season-1/auction.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-gavel mr-2 w-5"></i>Auction
+                            </a>
+                            <a href="season-1/venues.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-location-dot mr-2 w-5"></i>Venues
+                            </a>
+                            <a href="season-1/kits.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-shirt mr-2 w-5"></i>Kits
+                            </a>
+                            <a href="season-1/rules.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400">
+                                <i class="fas fa-scale-balanced mr-2 w-5"></i>Rules
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg border border-yellow-400/20 text-yellow-400 hover:bg-yellow-400/5 transition-all no-select" aria-label="Toggle menu">
+                    <i class="fas fa-bars text-lg" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden lg:hidden border-t border-yellow-400/10 max-h-[80vh] overflow-y-auto">
+            <div class="container mx-auto px-4 py-4 space-y-1">
+                <a href="season-1/index.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-home mr-3 w-5"></i>Home
+                </a>
+                <a href="season-1/matches.html" class="block px-4 py-3 rounded-lg bg-yellow-400/5 border border-yellow-400/20 text-yellow-400 font-rajdhani font-bold text-sm">
+                    <i class="fas fa-cricket-bat-ball mr-3 w-5"></i>Matches
+                </a>
+                <a href="season-1/points.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-table mr-3 w-5"></i>Points Table
+                </a>
+                <a href="season-1/teams.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-shield-halved mr-3 w-5"></i>Teams
+                </a>
+                <div class="pt-2 border-t border-white/10 mt-2">
+                    <p class="px-4 py-2 text-xs text-gray-500 font-rajdhani uppercase tracking-wider">More Options</p>
+                    <a href="season-1/stats.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-chart-line mr-3 w-5"></i>Stats
+                    </a>
+                    <a href="season-1/auction.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-gavel mr-3 w-5"></i>Auction
+                    </a>
+                    <a href="season-1/venues.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-location-dot mr-3 w-5"></i>Venues
+                    </a>
+                    <a href="season-1/kits.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-shirt mr-3 w-5"></i>Kits
+                    </a>
+                    <a href="season-1/rules.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-scale-balanced mr-3 w-5"></i>Rules
+                    </a>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <div class="filters">
-        <button class="filter-btn active" onclick="filter('all')">All</button>
-        <button class="filter-btn" onclick="filter('upcoming')">Upcoming</button>
-        <button class="filter-btn" onclick="filter('live')">Live</button>
-        <button class="filter-btn" onclick="filter('completed')">Completed</button>
-    </div>
+    <!-- ================= PAGE HEADER ================= -->
+    <section class="relative z-10 pt-8 sm:pt-12 md:pt-16 pb-4 sm:pb-6 container mx-auto px-3 sm:px-4">
+        <div class="max-w-4xl">
+            <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <div class="h-px w-8 sm:w-12 bg-gradient-to-r from-yellow-400 to-transparent flex-shrink-0"></div>
+                <span class="font-orbitron text-[10px] sm:text-xs md:text-sm text-yellow-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase">Season 01</span>
+            </div>
+            <h1 class="font-orbitron text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 leading-tight">
+                Fixtures & <span class="gold-text">Results</span>
+            </h1>
+            <p class="font-rajdhani text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl">
+                Track all 45 matches across the season. Filter by status or team to find your favorite franchise's fixtures.
+            </p>
+        </div>
+    </section>
 
-    <div class="container" id="matches"></div>
+    <div class="subtle-divider container mx-auto mt-4 sm:mt-6"></div>
 
-    <footer class="footer">
-        <p>© 2026 Virtual Premier League</p>
+    <!-- ================= FILTERS ================= -->
+    <section class="relative z-10 py-6 sm:py-8 container mx-auto px-3 sm:px-4">
+        
+        <!-- Status Filters -->
+        <div class="mb-6 sm:mb-8">
+            <h3 class="font-rajdhani text-xs sm:text-sm text-gray-500 uppercase tracking-wider mb-3 sm:mb-4">Filter by Status</h3>
+            <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide" id="status-filters">
+                <button class="filter-btn active" onclick="filterMatches('all')">All Matches</button>
+                <button class="filter-btn" onclick="filterMatches('upcoming')">Upcoming</button>
+                <button class="filter-btn" onclick="filterMatches('live')">Live</button>
+                <button class="filter-btn" onclick="filterMatches('completed')">Completed</button>
+            </div>
+        </div>
+
+        <!-- Team Filters -->
+        <div class="mb-4 sm:mb-6">
+            <h3 class="font-rajdhani text-xs sm:text-sm text-gray-500 uppercase tracking-wider mb-3 sm:mb-4">Filter by Team</h3>
+            <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide" id="team-filters">
+                <button class="filter-btn team-filter active" onclick="filterByTeam('all')">
+                    <span class="team-dot" style="background: linear-gradient(135deg, #ffd700, #0066ff);"></span>
+                    All Teams
+                </button>
+                <button class="filter-btn team-filter" onclick="filterByTeam('jaffna')">
+                    <span class="team-dot" style="background: #0047AB;"></span>
+                    Jaffna Sharks
+                </button>
+                <button class="filter-btn team-filter" onclick="filterByTeam('rajasthan')">
+                    <span class="team-dot" style="background: #8B4513;"></span>
+                    Rajasthan Stallions
+                </button>
+                <button class="filter-btn team-filter" onclick="filterByTeam('rcg')">
+                    <span class="team-dot" style="background: #DC143C;"></span>
+                    Royal Challengers
+                </button>
+                <button class="filter-btn team-filter" onclick="filterByTeam('sunrisers')">
+                    <span class="team-dot" style="background: #FF6B00;"></span>
+                    Sunrisers Colombo
+                </button>
+                <button class="filter-btn team-filter" onclick="filterByTeam('apex')">
+                    <span class="team-dot" style="background: #333;"></span>
+                    Apex Bolt Assassins
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= MATCHES LIST ================= -->
+    <section class="relative z-10 pb-12 sm:pb-16 md:pb-20 container mx-auto px-3 sm:px-4">
+        <div id="matches-container"></div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="relative border-t border-white/5 bg-black/50 backdrop-blur-xl z-10">
+        <div class="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12">
+                
+                <!-- Brand -->
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                        <img src="season-1/logo.png" alt="VPL" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-yellow-400/50 object-cover flex-shrink-0">
+                        <div>
+                            <h4 class="font-orbitron text-xl sm:text-2xl font-bold text-white">VPL 2026</h4>
+                            <p class="font-rajdhani text-[10px] sm:text-xs text-blue-400 tracking-wider">VIRTUAL PREMIER LEAGUE</p>
+                        </div>
+                    </div>
+                    <p class="font-inter text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm">
+                        The ultimate virtual cricket experience. Compete, strategize, and conquer in the most immersive fantasy cricket league.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Navigate</h5>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="season-1/index.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Home</a></li>
+                        <li><a href="season-1/matches.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Matches</a></li>
+                        <li><a href="season-1/points.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Points Table</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Teams</a></li>
+                    </ul>
+                </div>
+
+                <!-- Teams -->
+                <div>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Franchises</h5>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-blue-500"></i> Jaffna Sharks</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-amber-600"></i> Rajasthan Stallions</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-red-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-red-500"></i> Royal Challengers</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-orange-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-orange-500"></i> Sunrisers Colombo</a></li>
+                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-gray-500"></i> Apex Bolt Assassins</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social -->
+                <div>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Connect</h5>
+                    <div class="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all" aria-label="Facebook">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all" aria-label="Twitter">
+                            <i class="fab fa-twitter text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all" aria-label="Instagram">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all" aria-label="YouTube">
+                            <i class="fab fa-youtube text-sm"></i>
+                        </a>
+                    </div>
+                    <p class="font-rajdhani text-xs sm:text-sm text-gray-500">Subscribe for exclusive updates and behind-the-scenes content.</p>
+                </div>
+            </div>
+
+            <div class="subtle-divider mb-6 sm:mb-8"></div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+                <p class="font-inter text-[10px] sm:text-xs text-gray-500 text-center sm:text-left">
+                    &copy; 2026 Virtual Premier League. All rights reserved. Not affiliated with BCCI/IPL.
+                </p>
+                <div class="flex gap-4 sm:gap-6">
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
     </footer>
 
+    <!-- ================= JAVASCRIPT ================= -->
     <script>
         // ==========================================
-        // TEAM DATA - ADD YOUR LOGO PATHS HERE
+        // TEAM DATA
         // ==========================================
-        // logo: "path/to/your/logo.png" or null if no logo
         const teams = {
             jaffna: { 
                 name: "Jaffna Sharks", 
                 short: "JS", 
-                color: "blue", 
-                bg: "rgba(0,102,204,0.2)",
-                logo: "JS.png"      // ← ADD LOGO PATH HERE
+                color: "#0047AB", 
+                bg: "rgba(0,71,171,0.15)",
+                logo: "season-1/JS.png"
             },
             rajasthan: { 
                 name: "Rajasthan Stallions", 
                 short: "RS", 
-                color: "brown", 
-                bg: "rgba(255,20,147,0.2)",
-                logo: "RS.png"   // ← ADD LOGO PATH HERE
+                color: "#8B4513", 
+                bg: "rgba(139,69,19,0.15)",
+                logo: "season-1/RS.png"
             },
             rcg: { 
                 name: "Royal Challengers Galle", 
                 short: "RCG", 
-                color: "red", 
-                bg: "rgba(255,0,0,0.2)",
-                logo: "RCG.jpeg"         // ← ADD LOGO PATH HERE
+                color: "#DC143C", 
+                bg: "rgba(220,20,60,0.15)",
+                logo: "season-1/RCG.jpeg"
             },
             sunrisers: { 
                 name: "Sunrisers Colombo", 
                 short: "SRC", 
-                color: "orange", 
-                bg: "rgba(255,102,0,0.2)",
-                logo: "SRC.jpeg"   // ← ADD LOGO PATH HERE
+                color: "#FF6B00", 
+                bg: "rgba(255,107,0,0.15)",
+                logo: "season-1/SRC.jpeg"
             },
             apex: { 
                 name: "Apex Bolt Assassins", 
                 short: "ABA", 
-                color: "black", 
-                bg: "rgba(0,0,139,0.2)",
-                logo: "ABA.jpeg"        // ← ADD LOGO PATH HERE
+                color: "#555555", 
+                bg: "rgba(85,85,85,0.15)",
+                logo: "season-1/ABA.jpeg"
             }
         };
 
@@ -378,16 +823,24 @@
         ];
 
         // ==========================================
+        // FILTER STATE
+        // ==========================================
+        let currentStatusFilter = 'all';
+        let currentTeamFilter = 'all';
+
+        // ==========================================
         // RENDER FUNCTION
         // ==========================================
-        function render(filterType = 'all') {
-            const container = document.getElementById('matches');
+        function renderMatches() {
+            const container = document.getElementById('matches-container');
             let html = '';
             
-            let filtered = matches;
-            if (filterType !== 'all') {
-                filtered = matches.filter(m => m.status === filterType);
-            }
+            // Apply both filters
+            let filtered = matches.filter(m => {
+                const statusMatch = currentStatusFilter === 'all' || m.status === currentStatusFilter;
+                const teamMatch = currentTeamFilter === 'all' || m.t1 === currentTeamFilter || m.t2 === currentTeamFilter;
+                return statusMatch && teamMatch;
+            });
 
             const grouped = {};
             filtered.forEach(m => {
@@ -396,66 +849,84 @@
             });
 
             Object.keys(grouped).forEach(date => {
-                html += `<div class="date-group"><div class="date-label">${date}</div>`;
+                html += `<div class="date-group mb-8 sm:mb-10"><div class="date-label">${date}</div>`;
                 
                 grouped[date].forEach(m => {
                     const t1 = teams[m.t1];
                     const t2 = teams[m.t2];
                     const winner = m.winner ? teams[m.winner] : null;
                     
-                    // Logo HTML helper function
                     const getLogoHTML = (team) => {
                         if (team.logo) {
-                            return `<img src="${team.logo}" alt="${team.short}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">`;
+                            return `<img src="${team.logo}" alt="${team.short}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">`;
                         }
                         return '';
                     };
                     
                     html += `
-                        <div class="match-card" onclick="window.location.href='m${m.id}s1.html'">
-                            <div class="match-header">
-                                <span class="match-num">${m.num}</span>
-                                <span class="match-status status-${m.status}">${m.status}</span>
+                        <div class="match-card rounded-xl sm:rounded-2xl mb-4 sm:mb-6 overflow-hidden" onclick="window.location.href='m${m.id}s1.html'">
+                            <!-- Match Header -->
+                            <div class="px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center border-b border-white/5" style="background: rgba(26,35,126,0.3);">
+                                <span class="font-orbitron text-xs sm:text-sm text-yellow-400 font-bold tracking-wider">${m.num}</span>
+                                <span class="match-status status-${m.status} px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+                                    ${m.status === 'live' ? '● LIVE' : m.status}
+                                </span>
                             </div>
-                            <div class="match-body">
-                                <div class="teams-row">
-                                    <div class="team">
-                                        <div class="team-logo" style="border-color:${t1.color};background:${t1.bg};color:${t1.color}">
+                            
+                            <!-- Match Body -->
+                            <div class="p-4 sm:p-6">
+                                <div class="flex items-center justify-between gap-3 sm:gap-4">
+                                    <!-- Team 1 -->
+                                    <div class="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
+                                        <div class="team-logo" style="border-color:${t1.color};background:${t1.bg};">
                                             ${getLogoHTML(t1)}
-                                            <span class="initials" style="${t1.logo ? 'display:none' : ''}">${t1.short}</span>
+                                            <span class="initials" style="${t1.logo ? 'display:none' : ''}; color:${t1.color}">${t1.short}</span>
                                         </div>
-                                        <div class="team-info">
-                                            <h3>${t1.name}</h3>
-                                            <span>${m.t1 === m.winner ? '👑 Winner' : ''}</span>
+                                        <div class="min-w-0">
+                                            <h3 class="font-rajdhani font-bold text-sm sm:text-base text-white truncate">${t1.name}</h3>
+                                            ${m.t1 === m.winner ? '<span class="text-[10px] sm:text-xs text-yellow-400 font-rajdhani">👑 Winner</span>' : ''}
                                         </div>
                                     </div>
-                                    <div class="vs">VS</div>
-                                    <div class="team away">
-                                        <div class="team-logo" style="border-color:${t2.color};background:${t2.bg};color:${t2.color}">
+                                    
+                                    <!-- VS -->
+                                    <div class="flex-shrink-0 px-2 sm:px-4">
+                                        <span class="font-orbitron text-sm sm:text-lg text-yellow-400 font-black">VS</span>
+                                    </div>
+                                    
+                                    <!-- Team 2 -->
+                                    <div class="flex items-center gap-2 sm:gap-4 flex-1 min-w-0 flex-row-reverse text-right">
+                                        <div class="team-logo" style="border-color:${t2.color};background:${t2.bg};">
                                             ${getLogoHTML(t2)}
-                                            <span class="initials" style="${t2.logo ? 'display:none' : ''}">${t2.short}</span>
+                                            <span class="initials" style="${t2.logo ? 'display:none' : ''}; color:${t2.color}">${t2.short}</span>
                                         </div>
-                                        <div class="team-info">
-                                            <h3>${t2.name}</h3>
-                                            <span>${m.t2 === m.winner ? '👑 Winner' : ''}</span>
+                                        <div class="min-w-0">
+                                            <h3 class="font-rajdhani font-bold text-sm sm:text-base text-white truncate">${t2.name}</h3>
+                                            ${m.t2 === m.winner ? '<span class="text-[10px] sm:text-xs text-yellow-400 font-rajdhani">👑 Winner</span>' : ''}
                                         </div>
                                     </div>
                                 </div>
+                                
                                 ${winner ? `
-                                <div class="winner-box completed">
-                                    <div class="winner-label">Winner</div>
-                                    <div class="winner-name">🏆 ${winner.name}</div>
+                                <div class="winner-box completed mt-4 sm:mt-6 p-3 sm:p-4 text-center">
+                                    <div class="font-rajdhani text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider mb-1">Winner</div>
+                                    <div class="font-orbitron text-sm sm:text-base font-bold text-green-400">🏆 ${winner.name}</div>
                                 </div>
                                 ` : m.status === 'completed' ? `
-                                <div class="winner-box">
-                                    <div class="winner-label">Winner</div>
-                                    <div class="winner-name">TBD</div>
+                                <div class="winner-box mt-4 sm:mt-6 p-3 sm:p-4 text-center">
+                                    <div class="font-rajdhani text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider mb-1">Winner</div>
+                                    <div class="font-orbitron text-sm sm:text-base font-bold text-gray-500">TBD</div>
                                 </div>
                                 ` : ''}
                             </div>
-                            <div class="match-footer">
-                                <span>📍 ${m.venue}</span>
-                                <span>View Scorecard →</span>
+                            
+                            <!-- Match Footer -->
+                            <div class="px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center border-t border-white/5 bg-black/20">
+                                <span class="font-rajdhani text-[10px] sm:text-xs text-gray-500 flex items-center gap-1 sm:gap-2">
+                                    <i class="fas fa-location-dot text-yellow-400/50"></i> ${m.venue}
+                                </span>
+                                <span class="font-rajdhani text-[10px] sm:text-xs text-yellow-400/60 flex items-center gap-1">
+                                    View Scorecard <i class="fas fa-arrow-right text-[8px]"></i>
+                                </span>
                             </div>
                         </div>
                     `;
@@ -465,19 +936,132 @@
             });
 
             if (filtered.length === 0) {
-                html = '<div class="empty">No matches found</div>';
+                html = `
+                    <div class="empty-state">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-full bg-white/5 flex items-center justify-center">
+                            <i class="fas fa-calendar-xmark text-2xl sm:text-3xl text-gray-600"></i>
+                        </div>
+                        <h3 class="font-orbitron text-lg sm:text-xl text-gray-400 mb-2">No Matches Found</h3>
+                        <p class="font-rajdhani text-sm text-gray-600">Try adjusting your filters to see more results.</p>
+                    </div>
+                `;
             }
 
             container.innerHTML = html;
         }
 
-        function filter(type) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        // ==========================================
+        // FILTER FUNCTIONS
+        // ==========================================
+        function filterMatches(status) {
+            currentStatusFilter = status;
+            
+            // Update status buttons UI
+            document.querySelectorAll('#status-filters .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
             event.target.classList.add('active');
-            render(type);
+            
+            renderMatches();
         }
 
-        render();
+        function filterByTeam(team) {
+            currentTeamFilter = team;
+            
+            // Update team buttons UI
+            document.querySelectorAll('#team-filters .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderMatches();
+        }
+
+        // ==========================================
+        // MOBILE MENU
+        // ==========================================
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                const menu = document.getElementById('mobile-menu');
+                const icon = document.getElementById('menu-icon');
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // ==========================================
+        // PARTICLES
+        // ==========================================
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const isMobile = window.innerWidth < 768;
+            const particleCount = isMobile ? 12 : 25;
+            
+            container.innerHTML = '';
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                
+                const colors = ['#ffd700', '#0066ff', '#00f0ff', '#ffd700'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const size = isMobile ? (1 + Math.random() * 2) : (2 + Math.random() * 4);
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+        
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(createParticles, 250);
+        });
+
+        // ==========================================
+        // SCROLL REVEAL
+        // ==========================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -30px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Initial render
+        renderMatches();
     </script>
 
 </body>
