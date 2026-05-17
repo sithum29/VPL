@@ -739,8 +739,8 @@
     <section class="tabs-container">
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="showTab('scorecard')">Scorecard</button>
-            <!--<button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>-->
-            <button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>
+            <button class="tab-btn" onclick="showTab('playingxi')">Playing XI</button>
+            <!--<button class="tab-btn" onclick="showTab('squadselection')">Squad Selection</button>-->
         </div>
 
         <!-- Scorecard Tab -->
@@ -945,7 +945,7 @@ const matchConfig = {
     home: {
         name: "Sunrisers Colombo",
         short: "SRC",
-        score: 0,
+        score: 269,
         color: "orange",
         logo: "SRC.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -954,11 +954,11 @@ const matchConfig = {
     away: {
         name: "Apex Bolt Assassins", 
         short: "ABA",
-        score: 0,
+        score: 276,
         color: "black",
         logo: "ABA.jpeg"
     },
-    result: "Match Not Started",
+    result: "ABA Lead By 7 Points",
     
     iplMatches: [
         { date: "May 16, 2026", match: "KKR vs GT" },
@@ -970,10 +970,17 @@ const matchConfig = {
     
     stats: {
         home: [
+            { name: "Finn Allen", batting: "93(35)", bowling: "-", total: 273 },
+            { name: "Jitesh Sharma", batting: "DNB", bowling: "-", total: 15 },
+            { name: "Varun Chakaravarthy", batting: "-", bowling: "0/47", total: -19 },
 
 
         ],
         away: [
+            { name: "Sunil Narine", batting: "DNB", bowling: "2/29", total: 146, captain:true },
+            { name: "Sai Sudharsan", batting: "53(28)", bowling: "DNB", total: 133 },
+            { name: "Kagiso Rabada", batting: "-", bowling: "0/40", total: -10 },
+            { name: "Matheesha Pathirana", batting: "-", bowling: "0/9", total: 7 },
             
 
 
@@ -982,18 +989,18 @@ const matchConfig = {
     
     playingXI: {
         home: {
-            batters: [{name: "Riyan Parag"}, {name: "Prabhsimran Singh"}, {name: "Ajinkya Rahane"}],
-            wk: [{name: "Ishan Kishan"}],
-            allRounders: [{name: "Marcus Stoinis"}, {name: "Shahbaz Ahmed"}, {name: "Tim David"}],
-            bowlers: [{name: "Josh Hazlewood"}, {name: "Mohammad Shami"}, {name: "Ravi Bishnoi"}, {name: "Tushar Deshpande"}],
-            emergency: [{name: "Shimron Hetmyer"}, {name: "Jos Buttler"}, {name: "Ishant Sharma"}, {name: "Manish Pandey"}]
+            batters: [{name: "Vaibhav Sooryavanshi"}, {name: "Finn Allen"}, {name: "Kartik Sharma"}],
+            wk: [{name: "Jitesh Sharma"}],
+            allRounders: [{name: "Abhishek Sharma"}, {name: "Sameer Rizvi"}, {name: "Ayush Badoni"}],
+            bowlers: [{name: "Varun Chakaravarthy"}, {name: "Jofra Archer"}, {name: "Prince Yadav"}, {name: "Praful Hinge"}],
+            emergency: [{name: "Dewald Brevis"}, {name: "Rishabh Pant"}, {name: "Ravindra Jadeja"}, {name: "Arshdeep Singh"}]
         },
         away: {
-           batters: [{name: "Abishek Porel"}, {name: "Yashasvi Jaiswal"}, {name: "Travis Head"}],
+           batters: [{name: "Pathum Nissanka"}, {name: "Yashasvi Jaiswal"}, {name: "Travis Head"}],
             wk: [{name: "Heinrich Klaasen"}],
-            allRounders: [{name: "Sunil Narine"}, {name: "Axar Patel"}, {name: "Marco Jansen"}],
-            bowlers: [{name: "Mayank Yadav"}, {name: "Kuldeep Yadav"}, {name: "Anshul Kamboj"}, {name: "Sandeep Sharma"}],
-            emergency: [{name: "Pathum Nissanka"}, {name: "Phil Salt"}, {name: "Shivam Dube"}, {name: "Matheesha Pathirana"}]
+            allRounders: [{name: "Sunil Narine"}, {name: "Axar Patel"}, {name: "Sai Sudharsan"}],
+            bowlers: [{name: "Kagiso Rabada"}, {name: "Kuldeep Yadav"}, {name: "Anshul Kamboj"}, {name: "Matheesha Pathirana"}],
+            emergency: [{name: "Abishek Porel"}, {name: "Phil Salt"}, {name: "Shivam Dube"}, {name: "Mayank Yadav"}]
         },
     }
 };
