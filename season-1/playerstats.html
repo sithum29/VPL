@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Player Stats - VPL Season 01 | Virtual Premier League</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vpl: {
+                            blue: '#0a0e27',
+                            gold: '#ffd700',
+                            goldDim: '#b8860b',
+                            black: '#050505',
+                            cyan: '#00f0ff',
+                            neonBlue: '#0066ff',
+                        },
+                        franchise: {
+                            sharks: '#0047AB',
+                            stallions: '#8B4513',
+                            challengers: '#DC143C',
+                            sunrisers: '#FF6B00',
+                            assassins: '#1a1a1a',
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --gold: #ffd700;
+            --blue: #0066ff;
+            --cyan: #00f0ff;
+            --deep-space: #0a0e27;
+            --void: #050505;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #050505 0%, #0a0e27 50%, #050505 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Animated Background Grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 102, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 102, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: float-particle 15s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(10, 14, 39, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        /* Gold Text */
+        .gold-text {
+            color: #ffd700;
+        }
+
+        /* Glowing Button */
+        .glow-btn {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(0, 102, 255, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .glow-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .glow-btn:hover::before {
+            left: 100%;
+        }
+
+        .glow-btn:hover {
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Active Nav Link - Player Stats highlighted */
+        .nav-active {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(0, 102, 255, 0.08));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.08);
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .dropdown-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--gold);
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+
+        .dropdown-item:hover::after {
+            transform: scaleY(1);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 215, 0, 0.05);
+            padding-left: 1.5rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+        }
+
+        /* Neon Cards */
+        .neon-card {
+            background: rgba(10, 14, 39, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .neon-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.15), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .neon-card:hover::before {
+            opacity: 1;
+        }
+
+        .neon-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.15);
+        }
+
+        /* Player Profile Card */
+        .player-profile-card {
+            background: rgba(10, 14, 39, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .player-profile-card:hover {
+            border-color: rgba(255, 215, 0, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.05);
+        }
+
+        .player-photo-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            background: linear-gradient(to bottom, rgba(10, 14, 39, 0.9), rgba(5, 5, 5, 0.95));
+        }
+
+        .player-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.4s ease;
+        }
+
+        .player-profile-card:hover .player-photo {
+            transform: scale(1.05);
+        }
+
+        .foreign-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            color: #000;
+            font-size: 0.65rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            z-index: 10;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .team-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            z-index: 10;
+        }
+
+        /* Stats Grid */
+        .stat-box-mini {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box-mini:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffd700;
+            line-height: 1;
+        }
+
+        .stat-label-mini {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        /* Match Stats Table */
+        .match-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .match-table th {
+            background: rgba(255, 215, 0, 0.08);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #ffd700;
+            padding: 8px 6px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .match-table td {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            padding: 6px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #d1d5db;
+        }
+
+        .match-table tr:hover td {
+            background: rgba(255, 215, 0, 0.03);
+        }
+
+        /* Career Stats Bar */
+        .career-stat-bar {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .career-stat-bar:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.15);
+        }
+
+        .career-stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .career-stat-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #6b7280;
+        }
+
+        /* Team Filter Tabs */
+        .team-filter-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #9ca3af;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        .team-filter-tab:hover {
+            background: rgba(255, 215, 0, 0.08);
+            border-color: rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+        }
+
+        .team-filter-tab.active {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 102, 255, 0.15));
+            color: #ffd700;
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+        }
+
+        .team-color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Role Colors */
+        .role-batter { color: #ff6b6b; }
+        .role-bowler { color: #4ecdc4; }
+        .role-all-rounder { color: #ffd700; }
+        .role-wk { color: #a8e6cf; }
+
+        /* Subtle Divider */
+        .subtle-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), rgba(0, 102, 255, 0.3), rgba(255, 215, 0, 0.3), transparent);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ffd700, #0066ff);
+            border-radius: 3px;
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) {
+            .neon-card:hover {
+                transform: none;
+            }
+            .glow-btn:hover {
+                transform: none;
+            }
+            .player-profile-card:hover {
+                transform: none;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .match-table th, .match-table td {
+                font-size: 0.65rem;
+                padding: 4px 3px;
+            }
+            .stat-value {
+                font-size: 0.9rem;
+            }
+            .career-stat-value {
+                font-size: 1rem;
+            }
+        }
+
+        /* No select */
+        .no-select {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Expandable section */
+        .expand-btn {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(0, 102, 255, 0.08));
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        .expand-btn:hover {
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.1);
+        }
+
+        .player-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        .player-details.expanded {
+            max-height: 2000px;
+            opacity: 1;
+        }
+
+        .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+        .chevron-icon.rotated {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="antialiased relative">
+
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
+
+    <!-- Floating Particles -->
+    <div id="particles"></div>
+
+    <!-- ================= HEADER ================= -->
+    <header class="glass-header sticky top-0 z-50">
+        <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
+            <div class="flex justify-between items-center">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-2 sm:gap-3 lg:gap-4">
+                    <div class="relative flex-shrink-0">
+                        <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-blue-500 rounded-full blur-lg opacity-30"></div>
+                        <img src="logo.png" alt="VPL Logo" class="relative h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 rounded-full border-2 border-yellow-400/50 object-cover">
+                    </div>
+                    <div class="min-w-0">
+                        <h1 class="font-orbitron text-xl sm:text-2xl lg:text-3xl font-black tracking-wider text-white whitespace-nowrap">
+                            VPL <span class="gold-text">2026</span>
+                        </h1>
+                        <p class="font-rajdhani text-[10px] sm:text-xs text-blue-300 tracking-[0.2em] sm:tracking-[0.3em] uppercase hidden sm:block">Virtual Premier League</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+                    <!-- Home -->
+                    <a href="index.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-home mr-1 xl:mr-2"></i>HOME
+                    </a>
+
+                    <!-- Matches -->
+                    <a href="matches.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-cricket-bat-ball mr-1 xl:mr-2"></i>MATCHES
+                    </a>
+
+                    <!-- Points Table -->
+                    <a href="points.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-table mr-1 xl:mr-2"></i>POINTS
+                    </a>
+
+                    <!-- Teams -->
+                    <a href="teams.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
+                        <i class="fas fa-shield-halved mr-1 xl:mr-2"></i>TEAMS
+                    </a>
+
+                    <!-- More Dropdown - Player Stats ACTIVE inside -->
+                    <div class="relative group">
+                        <button class="nav-active px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-yellow-400 transition-all flex items-center gap-1 xl:gap-2 whitespace-nowrap">
+                            <i class="fas fa-ellipsis-vertical"></i>MORE
+                            <i class="fas fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        
+                        <div class="dropdown-menu absolute top-full right-0 mt-2 w-44 sm:w-48 rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
+                            <a href="stats.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-chart-line mr-2 w-5"></i>Stats
+                            </a>
+                            <a href="playerstats.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-yellow-400 border-b border-white/5 bg-yellow-400/5">
+                                <i class="fas fa-user-chart mr-2 w-5"></i>Player Stats
+                            </a>
+                            <a href="auction.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-gavel mr-2 w-5"></i>Auction
+                            </a>
+                            <a href="venues.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-location-dot mr-2 w-5"></i>Venues
+                            </a>
+                            <a href="kits.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
+                                <i class="fas fa-shirt mr-2 w-5"></i>Kits
+                            </a>
+                            <a href="rules.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400">
+                                <i class="fas fa-scale-balanced mr-2 w-5"></i>Rules
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg border border-yellow-400/20 text-yellow-400 hover:bg-yellow-400/5 transition-all no-select" aria-label="Toggle menu">
+                    <i class="fas fa-bars text-lg" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden lg:hidden border-t border-yellow-400/10 max-h-[80vh] overflow-y-auto">
+            <div class="container mx-auto px-4 py-4 space-y-1">
+                <a href="index.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-home mr-3 w-5"></i>Home
+                </a>
+                <a href="matches.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-cricket-bat-ball mr-3 w-5"></i>Matches
+                </a>
+                <a href="points.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-table mr-3 w-5"></i>Points Table
+                </a>
+                <a href="teams.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
+                    <i class="fas fa-shield-halved mr-3 w-5"></i>Teams
+                </a>
+                <div class="pt-2 border-t border-white/10 mt-2">
+                    <p class="px-4 py-2 text-xs text-gray-500 font-rajdhani uppercase tracking-wider">More Options</p>
+                    <a href="stats.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-chart-line mr-3 w-5"></i>Stats
+                    </a>
+                    <a href="playerstats.html" class="block px-4 py-3 rounded-lg bg-yellow-400/5 border border-yellow-400/20 text-yellow-400 font-rajdhani font-semibold text-sm">
+                        <i class="fas fa-user-chart mr-3 w-5"></i>Player Stats
+                    </a>
+                    <a href="auction.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-gavel mr-3 w-5"></i>Auction
+                    </a>
+                    <a href="venues.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-location-dot mr-3 w-5"></i>Venues
+                    </a>
+                    <a href="kits.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-shirt mr-3 w-5"></i>Kits
+                    </a>
+                    <a href="rules.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
+                        <i class="fas fa-scale-balanced mr-3 w-5"></i>Rules
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= PAGE HERO ================= -->
+    <section class="relative pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-12 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-900/10 to-transparent"></div>
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center">
+                <div class="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div class="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-yellow-400"></div>
+                    <span class="font-orbitron text-[10px] sm:text-xs text-yellow-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase">Season 01</span>
+                    <div class="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-yellow-400"></div>
+                </div>
+                <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">
+                    Player <span class="gold-text">Statistics</span>
+                </h2>
+                <p class="font-rajdhani text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+                    Comprehensive performance data for all 125 players across five franchises
+                </p>
+                <div class="h-px w-20 sm:w-32 bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent mx-auto mt-6 sm:mt-8"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TEAM FILTER BAR ================= -->
+    <section class="sticky top-[70px] z-40 bg-[#050505]/90 backdrop-blur-xl border-b border-white/5 py-3 sm:py-4">
+        <div class="container mx-auto px-3 sm:px-4">
+            <div class="flex gap-2 sm:gap-3 overflow-x-auto pb-1 scrollbar-hide" id="team-filter-container">
+                <button class="team-filter-tab active" onclick="filterTeam('all', this)">
+                    <span class="team-color-dot" style="background: linear-gradient(135deg, #ffd700, #0066ff);"></span>
+                    All Teams
+                </button>
+                <button class="team-filter-tab" onclick="filterTeam('jaffna', this)">
+                    <span class="team-color-dot" style="background: #0047AB;"></span>
+                    Jaffna Sharks
+                </button>
+                <button class="team-filter-tab" onclick="filterTeam('rajasthan', this)">
+                    <span class="team-color-dot" style="background: #8B4513;"></span>
+                    Rajasthan Stallions
+                </button>
+                <button class="team-filter-tab" onclick="filterTeam('rcg', this)">
+                    <span class="team-color-dot" style="background: #DC143C;"></span>
+                    Royal Challengers Galle
+                </button>
+                <button class="team-filter-tab" onclick="filterTeam('sunrisers', this)">
+                    <span class="team-color-dot" style="background: #FF6B00;"></span>
+                    Sunrisers Colombo
+                </button>
+                <button class="team-filter-tab" onclick="filterTeam('apex', this)">
+                    <span class="team-color-dot" style="background: #555;"></span>
+                    Apex Bolt Assassins
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PLAYER STATS GRID ================= -->
+    <section class="py-8 sm:py-12 md:py-16 container mx-auto px-3 sm:px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6" id="players-container">
+            <!-- Players injected via JS -->
+        </div>
+    </section>
+
+    <div class="subtle-divider container mx-auto"></div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="relative border-t border-white/5 bg-black/50 backdrop-blur-xl mt-8 sm:mt-12">
+        <div class="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12">
+                
+                <!-- Brand -->
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                        <img src="logo.png" alt="VPL" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-yellow-400/50 object-cover flex-shrink-0">
+                        <div>
+                            <h4 class="font-orbitron text-xl sm:text-2xl font-bold text-white">VPL 2026</h4>
+                            <p class="font-rajdhani text-[10px] sm:text-xs text-blue-400 tracking-wider">VIRTUAL PREMIER LEAGUE</p>
+                        </div>
+                    </div>
+                    <p class="font-inter text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm">
+                        The ultimate virtual cricket experience. Compete, strategize, and conquer in the most immersive fantasy cricket league.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Navigate</h5>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="index.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Home</a></li>
+                        <li><a href="matches.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Matches</a></li>
+                        <li><a href="points.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Points Table</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Teams</a></li>
+                    </ul>
+                </div>
+
+                <!-- Teams -->
+                <div>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Franchises</h5>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-blue-500"></i> Jaffna Sharks</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-amber-600"></i> Rajasthan Stallions</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-red-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-red-500"></i> Royal Challengers</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-orange-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-orange-500"></i> Sunrisers Colombo</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-gray-500"></i> Apex Bolt Assassins</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social -->
+                <div>
+                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Connect</h5>
+                    <div class="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all" aria-label="Facebook">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all" aria-label="Twitter">
+                            <i class="fab fa-twitter text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all" aria-label="Instagram">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all" aria-label="YouTube">
+                            <i class="fab fa-youtube text-sm"></i>
+                        </a>
+                    </div>
+                    <p class="font-rajdhani text-xs sm:text-sm text-gray-500">Subscribe for exclusive updates and behind-the-scenes content.</p>
+                </div>
+            </div>
+
+            <div class="subtle-divider mb-6 sm:mb-8"></div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+                <p class="font-inter text-[10px] sm:text-xs text-gray-500 text-center sm:text-left">
+                    &copy; 2026 Virtual Premier League. All rights reserved. Not affiliated with BCCI/IPL.
+                </p>
+                <div class="flex gap-4 sm:gap-6">
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // ==========================================
+        // 1. COMPLETE PLAYER DATABASE
+        // ==========================================
+        const allPlayers = [
+            // JAFFNA SHARKS (25 players)
+            { name: "Rohit Sharma", role: "Batter", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Top Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/6.png" },
+            { name: "Ruturaj Gaikwad", role: "Batter", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Opening Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/102.png" },
+            { name: "Shubman Gill", role: "Batter", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Opening Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/62.png" },
+            { name: "Avesh Khan", role: "Bowler", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Right Arm Fast", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/109.png" },
+            { name: "Prasidh Krishna", role: "Bowler", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Right Arm Fast", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/150.png" },
+            { name: "Mitchell Starc", role: "Bowler", isForeign: true, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Left Arm Fast", nationality: "Australia", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/31.png" },
+            { name: "Noor Ahmad", role: "Bowler", isForeign: true, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Left Arm Wrist Spin", nationality: "Afghanistan", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/975.png" },
+            { name: "Yuzvendra Chahal", role: "Bowler", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Right Arm Leg Spin", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/10.png" },
+            { name: "Digvesh Rathi", role: "Bowler", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Right Arm Off Spin", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3565.png" },
+            { name: "Suyash Sharma", role: "Bowler", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Right Arm Leg Spin", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1932.png" },
+            { name: "KL Rahul", role: "WK", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/19.png" },
+            { name: "Nicholas Pooran", role: "WK", isForeign: true, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "West Indies", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/136.png" },
+            { name: "Quinton de Kock", role: "WK", isForeign: true, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/170.png" },
+            { name: "Dhruv Jurel", role: "WK", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1004.png" },
+            { name: "Donovan Ferreira", role: "WK", isForeign: true, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2033.png" },
+            { name: "Priyansh Arya", role: "All-rounder", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3571.png" },
+            { name: "Harshal Patel", role: "All-rounder", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/114.png" },
+            { name: "Romario Shepherd", role: "All-rounder", isForeign: true, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Bowling All-rounder", nationality: "West Indies", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/371.png" },
+            { name: "Liam Livingstone", role: "All-rounder", isForeign: true, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Batting All-rounder", nationality: "England", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/183.png" },
+            { name: "Ashutosh Sharma", role: "All-rounder", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3109.png" },
+            { name: "Vipraj Nigam", role: "All-rounder", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3560.png" },
+            { name: "Ramandeep Singh", role: "All-rounder", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/991.png" },
+            { name: "Shardul Thakur", role: "All-rounder", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/105.png" },
+            { name: "Naman Dhir", role: "All-rounder", isForeign: false, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/3107.png" },
+            { name: "Cooper Connolly", role: "All-rounder", isForeign: true, team: "jaffna", teamName: "Jaffna Sharks", teamColor: "#0047AB", debut: "2026", specialization: "Batting All-rounder", nationality: "Australia", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/848.png" },
+
+            // RAJASTHAN STALLIONS (25 players)
+            { name: "Riyan Parag", role: "Batter", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Middle Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/189.png" },
+            { name: "Shimron Hetmyer", role: "Batter", isForeign: true, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Middle Order Batter", nationality: "West Indies", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/210.png" },
+            { name: "Rinku Singh", role: "Batter", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Middle Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/152.png" },
+            { name: "Glenn Phillips", role: "Batter", isForeign: true, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Middle Order Batter", nationality: "New Zealand", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/635.png" },
+            { name: "Ajinkya Rahane", role: "Batter", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Top Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/44.png" },
+            { name: "Rahul Tripathi", role: "Batter", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Top Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/188.png" },
+            { name: "Prithvi Shaw", role: "Batter", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Opening Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/51.png" },
+            { name: "Manish Pandey", role: "Batter", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Top Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/16.png" },
+            { name: "Ravi Bishnoi", role: "Bowler", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Right Arm Leg Spin", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/520.png" },
+            { name: "Trent Boult", role: "Bowler", isForeign: true, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Left Arm Fast", nationality: "New Zealand", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/66.png" },
+            { name: "Mohammad Shami", role: "Bowler", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Right Arm Fast", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/47.png" },
+            { name: "Deepak Chahar", role: "Bowler", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Right Arm Medium", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/91.png" },
+            { name: "Josh Hazlewood", role: "Bowler", isForeign: true, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Right Arm Fast", nationality: "Australia", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/36.png" },
+            { name: "Ishant Sharma", role: "Bowler", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Right Arm Fast", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/50.png" },
+            { name: "Tushar Deshpande", role: "Bowler", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Right Arm Medium", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/539.png" },
+            { name: "Rahul Tewatia", role: "Bowler", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Right Arm Leg Spin", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/120.png" },
+            { name: "Jos Buttler", role: "WK", isForeign: true, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "England", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/182.png" },
+            { name: "Ishan Kishan", role: "WK", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/164.png" },
+            { name: "Prabhsimran Singh", role: "WK", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/137.png" },
+            { name: "Jason Holder", role: "All-rounder", isForeign: true, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Bowling All-rounder", nationality: "West Indies", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/263.png" },
+            { name: "Marcus Stoinis", role: "All-rounder", isForeign: true, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Batting All-rounder", nationality: "Australia", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/23.png" },
+            { name: "Washington Sundar", role: "All-rounder", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/20.png" },
+            { name: "Tim David", role: "All-rounder", isForeign: true, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Batting All-rounder", nationality: "Australia", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/636.png" },
+            { name: "Shahbaz Ahmed", role: "All-rounder", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/523.png" },
+            { name: "Nitish Rana", role: "All-rounder", isForeign: false, team: "rajasthan", teamName: "Rajasthan Stallions", teamColor: "#8B4513", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/148.png" },
+
+            // ROYAL CHALLENGERS GALLE (25 players)
+            { name: "Virat Kohli", role: "Batter", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Top Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2.png" },
+            { name: "Devdutt Padikkal", role: "Batter", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Opening Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/200.png" },
+            { name: "David Miller", role: "Batter", isForeign: true, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Middle Order Batter", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/128.png" },
+            { name: "Rovman Powell", role: "Batter", isForeign: true, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Middle Order Batter", nationality: "West Indies", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/329.png" },
+            { name: "Rajat Patidar", role: "Batter", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Middle Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/597.png" },
+            { name: "Shreyas Iyer", role: "Batter", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Top Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/12.png" },
+            { name: "Cameron Green", role: "Batter", isForeign: true, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Middle Order Batter", nationality: "Australia", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/550.png" },
+            { name: "Bhuvneshwar Kumar", role: "Bowler", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Right Arm Medium", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/15.png" },
+            { name: "Matt Henry", role: "Bowler", isForeign: true, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Right Arm Fast", nationality: "New Zealand", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/71.png" },
+            { name: "Mukesh Kumar", role: "Bowler", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Right Arm Medium", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1462.png" },
+            { name: "Rahul Chahar", role: "Bowler", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Right Arm Leg Spin", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/171.png" },
+            { name: "Mohsin Khan", role: "Bowler", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Left Arm Fast", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/541.png" },
+            { name: "Pat Cummins", role: "Bowler", isForeign: true, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Right Arm Fast", nationality: "Australia", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/33.png" },
+            { name: "Nandre Burger", role: "Bowler", isForeign: true, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Left Arm Fast", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2806.png" },
+            { name: "Eshan Malinga", role: "Bowler", isForeign: true, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Left Arm Fast", nationality: "Sri Lanka", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/3339.png" },
+            { name: "Sanju Samson", role: "WK", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/190.png" },
+            { name: "Angkrish Raghuvanshi", role: "WK", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/787.png" },
+            { name: "Krunal Pandya", role: "All-rounder", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/17.png" },
+            { name: "Anukul Roy", role: "All-rounder", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/160.png" },
+            { name: "Mitchell Marsh", role: "All-rounder", isForeign: true, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Batting All-rounder", nationality: "Australia", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/40.png" },
+            { name: "Nitish Kumar Reddy", role: "All-rounder", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1944.png" },
+            { name: "Harsh Dubey", role: "All-rounder", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1494.png" },
+            { name: "Venkatesh Iyer", role: "All-rounder", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/584.png" },
+            { name: "Abdul Samad", role: "All-rounder", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/525.png" },
+            { name: "Suryansh Shedge", role: "All-rounder", isForeign: false, team: "rcg", teamName: "Royal Challengers Galle", teamColor: "#DC143C", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/2146.png" },
+
+            // SUNRISERS COLOMBO (25 players)
+            { name: "Aiden Markram", role: "Batter", isForeign: true, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Top Order Batter", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/287.png" },
+            { name: "Sherfane Rutherford", role: "Batter", isForeign: true, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Middle Order Batter", nationality: "West Indies", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/122.png" },
+            { name: "Vaibhav Sooryavanshi", role: "Batter", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Opening Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3498.png" },
+            { name: "Dewald Brevis", role: "Batter", isForeign: true, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Middle Order Batter", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/797.png" },
+            { name: "N. Tilak Varma", role: "Batter", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Middle Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/993.png" },
+            { name: "Shashank Singh", role "Batter", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Middle Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/191.png" },
+            { name: "Aniket Verma", role: "Batter", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Middle Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3576.png" },
+            { name: "Arshdeep Singh", role: "Bowler", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Left Arm Fast", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/125.png" },
+            { name: "Rashid Khan", role: "Bowler", isForeign: true, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Right Arm Leg Spin", nationality: "Afghanistan", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/218.png" },
+            { name: "Jofra Archer", role: "Bowler", isForeign: true, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Right Arm Fast", nationality: "England", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/181.png" },
+            { name: "Prince Yadav", role: "Bowler", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Right Arm Medium", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1225.png" },
+            { name: "T. Natarajan", role: "Bowler", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Left Arm Medium", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/224.png" },
+            { name: "Praful Hinge", role: "Bowler", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Right Arm Off Spin", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/4558.png" },
+            { name: "Varun Chakaravarthy", role: "Bowler", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Right Arm Off Spin", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/140.png" },
+            { name: "Mohammed Siraj", role: "Bowler", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Right Arm Fast", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/63.png" },
+            { name: "Finn Allen", role: "WK", isForeign: true, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "New Zealand", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/595.png" },
+            { name: "Rishabh Pant", role: "WK", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/18.png" },
+            { name: "Jitesh Sharma", role: "WK", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1000.png" },
+            { name: "Tristan Stubbs", role: "WK", isForeign: true, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1017.png" },
+            { name: "Kartik Sharma", role: "WK", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/4540.png" },
+            { name: "Abhishek Sharma", role: "All-rounder", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/212.png" },
+            { name: "Will Jacks", role: "All-rounder", isForeign: true, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Batting All-rounder", nationality: "England", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1941.png" },
+            { name: "Ravindra Jadeja", role: "All-rounder", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/46.png" },
+            { name: "Sameer Rizvi", role: "All-rounder", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1229.png" },
+            { name: "Ayush Badoni", role: "All-rounder", isForeign: false, team: "sunrisers", teamName: "Sunrisers Colombo", teamColor: "#FF6B00", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/985.png" },
+
+            // APEX BOLT ASSASSINS (25 players)
+            { name: "Surya Kumar Yadav", role: "Batter", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Middle Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/174.png" },
+            { name: "Travis Head", role: "Batter", isForeign: true, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Opening Batter", nationality: "Australia", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/37.png" },
+            { name: "Karun Nair", role: "Batter", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Top Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/131.png" },
+            { name: "Nehal Wadhera", role: "Batter", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Middle Order Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1541.png" },
+            { name: "Yashasvi Jaiswal", role: "Batter", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Opening Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/533.png" },
+            { name: "Pathum Nissanka", role: "Batter", isForeign: true, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Opening Batter", nationality: "Sri Lanka", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/618.png" },
+            { name: "Jasprit Bumrah", role: "Bowler", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Right Arm Fast", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/9.png" },
+            { name: "Matheesha Pathirana", role: "Bowler", isForeign: true, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Right Arm Fast", nationality: "Sri Lanka", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/1014.png" },
+            { name: "Jaydev Unadkat", role: "Bowler", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Left Arm Medium", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/180.png" },
+            { name: "Kuldeep Yadav", role: "Bowler", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Left Arm Wrist Spin", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/14.png" },
+            { name: "Kagiso Rabada", role: "Bowler", isForeign: true, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Right Arm Fast", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/116.png" },
+            { name: "Sandeep Sharma", role: "Bowler", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Right Arm Medium", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/220.png" },
+            { name: "Mayank Yadav", role: "Bowler", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Right Arm Fast", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2024/987.png" },
+            { name: "Anshul Kamboj", role: "Bowler", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Right Arm Medium", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/3106.png" },
+            { name: "Phil Salt", role: "WK", isForeign: true, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "England", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1220.png" },
+            { name: "Heinrich Klaasen", role: "WK", isForeign: true, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/202.png" },
+            { name: "Abishek Porel", role: "WK", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Wicketkeeper Batter", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/1580.png" },
+            { name: "Sunil Narine", role: "All-rounder", isForeign: true, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Bowling All-rounder", nationality: "West Indies", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/156.png" },
+            { name: "Hardik Pandya", role: "All-rounder", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/54.png" },
+            { name: "Shivam Dube", role: "All-rounder", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/211.png" },
+            { name: "Sai Kishore", role: "All-rounder", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/544.png" },
+            { name: "Jayant Yadav", role: "All-rounder", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/165.png" },
+            { name: "Axar Patel", role: "All-rounder", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Bowling All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/110.png" },
+            { name: "Marco Jansen", role: "All-rounder", isForeign: true, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Bowling All-rounder", nationality: "South Africa", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/586.png" },
+            { name: "Sai Sudharsan", role: "All-rounder", isForeign: false, team: "apex", teamName: "Apex Bolt Assassins", teamColor: "#555555", debut: "2026", specialization: "Batting All-rounder", nationality: "India", image: "https://documents.iplt20.com/ipl/IPLHeadshot2025/976.png" }
+        ];
+
+        // ==========================================
+        // 2. MATCH DATA TEMPLATE (18 Matches - Season 1)
+        // ==========================================
+        function generateMatchData() {
+            const opponents = ["Jaffna Sharks", "Rajasthan Stallions", "Royal Challengers Galle", "Sunrisers Colombo", "Apex Bolt Assassins"];
+            const matches = [];
+            for (let i = 1; i <= 18; i++) {
+                const opp = opponents[(i - 1) % 5];
+                matches.push({
+                    matchNo: i,
+                    opponent: opp,
+                    runs: "-",
+                    wickets: "-",
+                    status: "Upcoming"
+                });
+            }
+            return matches;
+        }
+
+        // ==========================================
+        // 3. CAREER STATS TEMPLATE
+        // ==========================================
+        function getCareerStats(player) {
+            return {
+                matches: 0,
+                innings: 0,
+                runs: 0,
+                fifties: 0,
+                hundreds: 0,
+                wickets: 0,
+                vplPoints: 0,
+                battingAvg: "-",
+                bowlingAvg: "-",
+                strikeRate: "-",
+                economy: "-"
+            };
+        }
+
+        // ==========================================
+        // 4. SEASON 1 STATS TEMPLATE
+        // ==========================================
+        function getSeason1Stats(player) {
+            return {
+                matches: 0,
+                innings: 0,
+                runs: 0,
+                fifties: 0,
+                hundreds: 0,
+                wickets: 0,
+                vplPoints: 0,
+                battingAvg: "-",
+                bowlingAvg: "-",
+                strikeRate: "-",
+                economy: "-",
+                highestScore: "-",
+                bestBowling: "-"
+            };
+        }
+
+        // ==========================================
+        // 5. RENDER PLAYER CARD
+        // ==========================================
+        function renderPlayerCard(player, index) {
+            const roleClass = player.role === 'Batter' ? 'role-batter' : 
+                             player.role === 'Bowler' ? 'role-bowler' : 
+                             player.role === 'WK' ? 'role-wk' : 'role-all-rounder';
+            
+            const matches = generateMatchData();
+            const season1 = getSeason1Stats(player);
+            const career = getCareerStats(player);
+            
+            const matchRows = matches.map(m => `
+                <tr>
+                    <td class="font-orbitron text-xs">M${m.matchNo}</td>
+                    <td>${m.opponent}</td>
+                    <td>${m.runs}</td>
+                    <td>${m.wickets}</td>
+                    <td><span class="px-2 py-0.5 rounded text-[10px] bg-yellow-400/10 text-yellow-400 border border-yellow-400/20">${m.status}</span></td>
+                </tr>
+            `).join('');
+
+            return `
+            <div class="player-profile-card reveal" data-team="${player.team}" style="transition-delay: ${(index % 12) * 0.05}s">
+                <!-- Photo Section -->
+                <div class="player-photo-container">
+                    ${player.isForeign ? '<span class="foreign-badge">Overseas</span>' : ''}
+                    <span class="team-badge" style="background: ${player.teamColor}20; color: ${player.teamColor}; border: 1px solid ${player.teamColor}40;">${player.teamName}</span>
+                    <img src="${player.image}" alt="${player.name}" class="player-photo" 
+                         onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 pt-8">
+                        <h3 class="font-orbitron text-sm sm:text-base font-bold text-white">${player.name}</h3>
+                        <p class="font-rajdhani text-xs ${roleClass} tracking-wider uppercase">${player.role}</p>
+                    </div>
+                </div>
+
+                <!-- Quick Info -->
+                <div class="p-3 sm:p-4 space-y-3">
+                    <!-- Basic Info Row -->
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div class="stat-box-mini">
+                            <div class="stat-value text-[10px] sm:text-xs text-gray-300">${player.debut}</div>
+                            <div class="stat-label-mini">Debut</div>
+                        </div>
+                        <div class="stat-box-mini">
+                            <div class="stat-value text-[10px] sm:text-xs text-gray-300">${player.nationality}</div>
+                            <div class="stat-label-mini">Nation</div>
+                        </div>
+                        <div class="stat-box-mini">
+                            <div class="stat-value text-[10px] sm:text-xs text-gray-300">${player.specialization}</div>
+                            <div class="stat-label-mini">Role</div>
+                        </div>
+                    </div>
+
+                    <!-- Season 1 Summary -->
+                    <div class="bg-white/5 rounded-lg p-3 border border-white/5">
+                        <h4 class="font-orbitron text-[10px] text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fas fa-chart-bar"></i> Season 1 Summary
+                        </h4>
+                        <div class="grid grid-cols-4 gap-2">
+                            <div class="text-center">
+                                <div class="font-orbitron text-sm text-white">${season1.innings}</div>
+                                <div class="text-[9px] text-gray-500 uppercase">Inns</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-orbitron text-sm text-yellow-400">${season1.runs}</div>
+                                <div class="text-[9px] text-gray-500 uppercase">Runs</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-orbitron text-sm text-cyan-400">${season1.wickets}</div>
+                                <div class="text-[9px] text-gray-500 uppercase">Wkts</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-orbitron text-sm text-green-400">${season1.vplPoints}</div>
+                                <div class="text-[9px] text-gray-500 uppercase">Pts</div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-white/5">
+                            <div class="text-center">
+                                <div class="font-orbitron text-xs text-orange-400">${season1.fifties} <span class="text-[9px] text-gray-500">50s</span> / ${season1.hundreds} <span class="text-[9px] text-gray-500">100s</span></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-[10px] text-gray-400">HS: <span class="text-white">${season1.highestScore}</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expand Button -->
+                    <button onclick="toggleDetails(this)" class="expand-btn w-full py-2 rounded-lg font-rajdhani font-bold text-xs text-yellow-400 tracking-wider flex items-center justify-center gap-2">
+                        <span>VIEW FULL STATS</span>
+                        <i class="fas fa-chevron-down chevron-icon"></i>
+                    </button>
+
+                    <!-- Expandable Details -->
+                    <div class="player-details space-y-4">
+                        
+                        <!-- Match-by-Match Table -->
+                        <div class="bg-white/5 rounded-lg p-3 border border-white/5 overflow-x-auto">
+                            <h4 class="font-orbitron text-[10px] text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                <i class="fas fa-list-ol"></i> Match Log (Season 1)
+                            </h4>
+                            <table class="match-table">
+                                <thead>
+                                    <tr>
+                                        <th>Match</th>
+                                        <th>Opponent</th>
+                                        <th>Runs</th>
+                                        <th>Wkts</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${matchRows}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Career Stats -->
+                        <div class="bg-white/5 rounded-lg p-3 border border-white/5">
+                            <h4 class="font-orbitron text-[10px] text-yellow-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                <i class="fas fa-trophy"></i> Career Stats
+                            </h4>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">Matches</span>
+                                    <span class="career-stat-value">${career.matches}</span>
+                                </div>
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">Innings</span>
+                                    <span class="career-stat-value">${career.innings}</span>
+                                </div>
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">Total Runs</span>
+                                    <span class="career-stat-value">${career.runs}</span>
+                                </div>
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">50s / 100s</span>
+                                    <span class="career-stat-value text-sm">${career.fifties} / ${career.hundreds}</span>
+                                </div>
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">Wickets</span>
+                                    <span class="career-stat-value">${career.wickets}</span>
+                                </div>
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">VPL Points</span>
+                                    <span class="career-stat-value">${career.vplPoints}</span>
+                                </div>
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">Bat Avg</span>
+                                    <span class="career-stat-value text-sm">${career.battingAvg}</span>
+                                </div>
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">Bowl Avg</span>
+                                    <span class="career-stat-value text-sm">${career.bowlingAvg}</span>
+                                </div>
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">Strike Rate</span>
+                                    <span class="career-stat-value text-sm">${career.strikeRate}</span>
+                                </div>
+                                <div class="career-stat-bar">
+                                    <span class="career-stat-label">Economy</span>
+                                    <span class="career-stat-value text-sm">${career.economy}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+
+        // ==========================================
+        // 6. FILTER & RENDER FUNCTIONS
+        // ==========================================
+        let currentFilter = 'all';
+
+        function filterTeam(teamId, btn) {
+            currentFilter = teamId;
+            
+            // Update button states
+            document.querySelectorAll('.team-filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            btn.classList.add('active');
+            
+            renderPlayers();
+        }
+
+        function renderPlayers() {
+            const container = document.getElementById('players-container');
+            let filtered = allPlayers;
+            
+            if (currentFilter !== 'all') {
+                filtered = allPlayers.filter(p => p.team === currentFilter);
+            }
+            
+            container.innerHTML = filtered.map((player, index) => renderPlayerCard(player, index)).join('');
+            
+            // Trigger scroll reveal
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 50);
+        }
+
+        function toggleDetails(btn) {
+            const card = btn.closest('.player-profile-card');
+            const details = card.querySelector('.player-details');
+            const icon = btn.querySelector('.chevron-icon');
+            const text = btn.querySelector('span');
+            
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                icon.classList.remove('rotated');
+                text.textContent = 'VIEW FULL STATS';
+            } else {
+                // Close others
+                document.querySelectorAll('.player-details.expanded').forEach(d => {
+                    d.classList.remove('expanded');
+                    const otherBtn = d.closest('.player-profile-card').querySelector('.expand-btn');
+                    otherBtn.querySelector('.chevron-icon').classList.remove('rotated');
+                    otherBtn.querySelector('span').textContent = 'VIEW FULL STATS';
+                });
+                
+                details.classList.add('expanded');
+                icon.classList.add('rotated');
+                text.textContent = 'HIDE STATS';
+            }
+        }
+
+        // ==========================================
+        // 7. MOBILE MENU TOGGLE
+        // ==========================================
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close mobile menu on resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                const menu = document.getElementById('mobile-menu');
+                const icon = document.getElementById('menu-icon');
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // ==========================================
+        // 8. PARTICLE SYSTEM
+        // ==========================================
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const isMobile = window.innerWidth < 768;
+            const particleCount = isMobile ? 12 : 25;
+            
+            container.innerHTML = '';
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                
+                const colors = ['#ffd700', '#0066ff', '#00f0ff', '#ffd700'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                const size = isMobile ? (1 + Math.random() * 2) : (2 + Math.random() * 4);
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+        
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(createParticles, 250);
+        });
+
+        // ==========================================
+        // 9. SCROLL REVEAL OBSERVER
+        // ==========================================
+        const observerOptions = {
+            threshold: 0.05,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // ==========================================
+        // 10. INITIALIZE
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPlayers();
+            
+            // Observe all reveals after render
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    observer.observe(el);
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
