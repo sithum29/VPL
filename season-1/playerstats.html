@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Player Stats | VPL Season 01 | Virtual Premier League 2026</title>
+    <title>Player Stats | VPL Season 01</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,9 +13,9 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- SheetJS for Excel Reading -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <!-- SheetJS for Excel parsing -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -79,7 +79,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Animated Background Grid */
         .bg-grid {
             position: fixed;
             top: 0;
@@ -94,7 +93,6 @@
             z-index: 0;
         }
 
-        /* Floating Particles */
         .particle {
             position: fixed;
             width: 4px;
@@ -114,7 +112,6 @@
             100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
         }
 
-        /* Glassmorphism Header */
         .glass-header {
             background: rgba(10, 14, 39, 0.85);
             backdrop-filter: blur(20px);
@@ -122,12 +119,10 @@
             border-bottom: 1px solid rgba(255, 215, 0, 0.1);
         }
 
-        /* Gold Text */
         .gold-text {
             color: #ffd700;
         }
 
-        /* Glowing Button */
         .glow-btn {
             position: relative;
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(0, 102, 255, 0.05));
@@ -157,14 +152,12 @@
             transform: translateY(-2px);
         }
 
-        /* Active Nav Link */
         .nav-active {
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(0, 102, 255, 0.08));
             border: 1px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 0 8px rgba(255, 215, 0, 0.08);
         }
 
-        /* Dropdown Menu */
         .dropdown-menu {
             background: rgba(10, 14, 39, 0.95);
             backdrop-filter: blur(20px);
@@ -198,7 +191,6 @@
             padding-left: 1.5rem;
         }
 
-        /* Neon Card */
         .neon-card {
             background: rgba(10, 14, 39, 0.6);
             backdrop-filter: blur(10px);
@@ -233,43 +225,22 @@
             border-color: rgba(255, 215, 0, 0.15);
         }
 
-        /* Table Styles */
-        .stats-table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .stats-table-container::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .stats-table-container::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-        }
-
-        .stats-table-container::-webkit-scrollbar-thumb {
-            background: linear-gradient(90deg, #ffd700, #0066ff);
-            border-radius: 3px;
-        }
-
         .stats-table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
+            border-collapse: collapse;
         }
 
         .stats-table th {
-            background: linear-gradient(180deg, rgba(255, 215, 0, 0.1), rgba(0, 102, 255, 0.05));
+            background: rgba(255, 215, 0, 0.08);
             color: #ffd700;
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            padding: 14px 12px;
-            text-align: center;
+            padding: 0.75rem 0.5rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
             white-space: nowrap;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
             position: sticky;
             top: 0;
             z-index: 10;
@@ -277,160 +248,123 @@
         }
 
         .stats-table td {
-            padding: 12px;
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
             text-align: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .stats-table tbody tr {
-            transition: all 0.3s ease;
-        }
-
-        .stats-table tbody tr:hover {
-            background: rgba(255, 215, 0, 0.03);
+            transition: all 0.2s;
         }
 
         .stats-table tbody tr:hover td {
-            color: #ffffff;
+            background: rgba(255, 215, 0, 0.03);
         }
 
-        /* Team Color Stripes */
-        .team-stripe {
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
+        .stats-table tbody tr:nth-child(even) td {
+            background: rgba(255, 255, 255, 0.01);
         }
 
-        .team-sharks { background: #0047AB; }
-        .team-stallions { background: #8B4513; }
-        .team-challengers { background: #DC143C; }
-        .team-sunrisers { background: #FF6B00; }
-        .team-assassins { background: #555555; }
-
-        /* Team Badge */
-        .team-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            font-family: 'Rajdhani', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        .stats-table tbody tr:nth-child(even):hover td {
+            background: rgba(255, 215, 0, 0.04);
         }
 
-        /* Role Badge */
-        .role-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            font-size: 0.7rem;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
+        .team-section {
+            margin-bottom: 2rem;
         }
 
-        .role-bat { background: rgba(0, 102, 255, 0.2); color: #00f0ff; border: 1px solid rgba(0, 240, 255, 0.3); }
-        .role-bowl { background: rgba(255, 107, 0, 0.2); color: #FF6B00; border: 1px solid rgba(255, 107, 0, 0.3); }
-        .role-all { background: rgba(255, 215, 0, 0.2); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3); }
-        .role-wk { background: rgba(220, 20, 60, 0.2); color: #DC143C; border: 1px solid rgba(220, 20, 60, 0.3); }
-
-        /* Total Runs Highlight */
-        .total-runs {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            color: #ffd700;
-            font-size: 1rem;
-        }
-
-        /* Round Score */
-        .round-score {
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .round-score.dnp {
-            color: rgba(255, 255, 255, 0.2);
-            font-style: italic;
-        }
-
-        /* Section Header */
-        .team-section-header {
-            position: relative;
-            padding: 16px 20px;
-            border-radius: 12px 12px 0 0;
+        .team-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        /* Filter Buttons */
-        .filter-btn {
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.03);
-            color: rgba(255, 255, 255, 0.6);
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
             cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .filter-btn:hover {
+        .team-header:hover {
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .team-header-sharks { background: linear-gradient(135deg, rgba(0, 71, 171, 0.15), rgba(0, 71, 171, 0.05)); border-left: 3px solid #0047AB; }
+        .team-header-stallions { background: linear-gradient(135deg, rgba(139, 69, 19, 0.15), rgba(139, 69, 19, 0.05)); border-left: 3px solid #8B4513; }
+        .team-header-challengers { background: linear-gradient(135deg, rgba(220, 20, 60, 0.15), rgba(220, 20, 60, 0.05)); border-left: 3px solid #DC143C; }
+        .team-header-sunrisers { background: linear-gradient(135deg, rgba(255, 107, 0, 0.15), rgba(255, 107, 0, 0.05)); border-left: 3px solid #FF6B00; }
+        .team-header-assassins { background: linear-gradient(135deg, rgba(26, 26, 26, 0.4), rgba(26, 26, 26, 0.1)); border-left: 3px solid #555555; }
+
+        .tab-btn {
+            position: relative;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 14, 39, 0.6);
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
             border-color: rgba(255, 215, 0, 0.3);
             color: #ffd700;
-            background: rgba(255, 215, 0, 0.05);
         }
 
-        .filter-btn.active {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 102, 255, 0.1));
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 102, 255, 0.1));
             border-color: rgba(255, 215, 0, 0.4);
             color: #ffd700;
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.08);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
         }
 
-        /* Search Input */
-        .search-input {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 10px 16px 10px 40px;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            width: 100%;
+        .tab-content {
+            display: none;
         }
 
-        .search-input:focus {
-            outline: none;
-            border-color: rgba(255, 215, 0, 0.4);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.05);
-            background: rgba(255, 255, 255, 0.05);
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
         }
 
-        .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Loading Spinner */
-        .spinner {
-            width: 50px;
-            height: 50px;
+        .role-badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .role-batter { background: rgba(0, 102, 255, 0.15); color: #60a5fa; border: 1px solid rgba(0, 102, 255, 0.2); }
+        .role-bowler { background: rgba(220, 20, 60, 0.15); color: #f87171; border: 1px solid rgba(220, 20, 60, 0.2); }
+        .role-wk { background: rgba(255, 215, 0, 0.15); color: #fbbf24; border: 1px solid rgba(255, 215, 0, 0.2); }
+        .role-all-rounder { background: rgba(37, 211, 102, 0.15); color: #4ade80; border: 1px solid rgba(37, 211, 102, 0.2); }
+
+        .mobile-menu {
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+        }
+
+        .subtle-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), rgba(0, 102, 255, 0.3), rgba(255, 215, 0, 0.3), transparent);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
             border: 3px solid rgba(255, 215, 0, 0.1);
             border-top-color: #ffd700;
             border-radius: 50%;
@@ -441,9 +375,19 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Scrollbar */
+        .empty-cell {
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .total-highlight {
+            color: #ffd700;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
         ::-webkit-scrollbar {
             width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
             background: #050505;
@@ -453,100 +397,70 @@
             border-radius: 3px;
         }
 
-        /* Mobile Menu */
-        .mobile-menu {
-            background: rgba(5, 5, 5, 0.98);
-            backdrop-filter: blur(20px);
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Subtle Divider */
-        .subtle-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), rgba(0, 102, 255, 0.3), rgba(255, 215, 0, 0.3), transparent);
+        .table-scroll::-webkit-scrollbar {
+            height: 4px;
         }
 
-        /* Touch device optimizations */
-        @media (hover: none) {
-            .neon-card:hover {
-                transform: none;
-            }
-            .glow-btn:hover {
-                transform: none;
-            }
-        }
-
-        /* Mobile-specific fixes */
         @media (max-width: 640px) {
-            .stats-table th {
-                padding: 10px 8px;
-                font-size: 0.7rem;
+            .stats-table th, .stats-table td {
+                padding: 0.5rem 0.35rem;
+                font-size: 0.75rem;
             }
-            .stats-table td {
-                padding: 8px;
-                font-size: 0.8rem;
+            .team-header h3 {
+                font-size: 0.9rem !important;
             }
-            .team-badge {
+            .tab-btn {
+                padding: 0.6rem 1rem;
                 font-size: 0.65rem;
-                padding: 2px 6px;
-            }
-            .role-badge {
-                width: 24px;
-                height: 24px;
-                font-size: 0.6rem;
             }
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @media (hover: none) {
+            .neon-card:hover { transform: none; }
+            .glow-btn:hover { transform: none; }
         }
 
-        .animate-fade-in {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        /* Collapsible Team Section */
-        .team-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-        }
-
-        .team-content.expanded {
-            max-height: 5000px;
-        }
-
-        .team-toggle {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .team-toggle:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .team-toggle-icon {
-            transition: transform 0.3s ease;
-        }
-
-        .team-toggle-icon.rotated {
-            transform: rotate(180deg);
-        }
-
-        /* No Select */
         .no-select {
             -webkit-user-select: none;
             user-select: none;
+        }
+
+        .error-msg {
+            color: #f87171;
+            text-align: center;
+            padding: 2rem;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .refresh-btn {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: auto;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
         }
     </style>
 </head>
 <body class="antialiased relative">
 
-    <!-- Background Grid -->
     <div class="bg-grid"></div>
-
-    <!-- Floating Particles -->
     <div id="particles"></div>
 
     <!-- ================= HEADER ================= -->
@@ -573,31 +487,25 @@
                     <a href="index.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
                         <i class="fas fa-home mr-1 xl:mr-2"></i>HOME
                     </a>
-
                     <a href="matches.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
                         <i class="fas fa-cricket-bat-ball mr-1 xl:mr-2"></i>MATCHES
                     </a>
-
                     <a href="points.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
                         <i class="fas fa-table mr-1 xl:mr-2"></i>POINTS
                     </a>
-
                     <a href="teams.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
                         <i class="fas fa-shield-halved mr-1 xl:mr-2"></i>TEAMS
                     </a>
-
-                    <!-- More Dropdown -->
                     <div class="relative group">
-                        <button class="nav-active px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-yellow-400 transition-all flex items-center gap-1 xl:gap-2 whitespace-nowrap">
+                        <button class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all flex items-center gap-1 xl:gap-2 whitespace-nowrap">
                             <i class="fas fa-ellipsis-vertical"></i>MORE
                             <i class="fas fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
                         </button>
-                        
                         <div class="dropdown-menu absolute top-full right-0 mt-2 w-44 sm:w-48 rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
                             <a href="stats.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
                                 <i class="fas fa-chart-line mr-2 w-5"></i>Stats
                             </a>
-                            <a href="playerstats.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-yellow-400 bg-yellow-400/5 border-b border-white/5">
+                            <a href="playerstats.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-yellow-400 border-b border-white/5 bg-yellow-400/5">
                                 <i class="fas fa-chart-line mr-2 w-5"></i>Player Stats
                             </a>
                             <a href="auction.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
@@ -663,296 +571,70 @@
         </div>
     </header>
 
-    <!-- ================= PAGE HERO ================= -->
-    <section class="relative pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-12 container mx-auto px-3 sm:px-4">
-        <div class="text-center">
-            <div class="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <div class="h-px w-8 sm:w-12 bg-gradient-to-r from-yellow-400 to-transparent"></div>
-                <span class="font-orbitron text-[10px] sm:text-xs md:text-sm text-yellow-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase">Season 01</span>
-                <div class="h-px w-8 sm:w-12 bg-gradient-to-l from-yellow-400 to-transparent"></div>
-            </div>
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="relative z-10 pt-8 sm:pt-12 md:pt-16 pb-16 sm:pb-20">
+        <div class="container mx-auto px-3 sm:px-4 lg:px-6">
             
-            <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">
-                Player <span class="gold-text">Statistics</span>
-            </h2>
-            
-            <p class="font-rajdhani text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto px-2 sm:px-0">
-                Complete batting statistics for all VPL Season 01 players. Data auto-updates from the master spreadsheet.
-            </p>
-        </div>
-    </section>
+            <!-- Page Header -->
+            <div class="text-center mb-8 sm:mb-12">
+                <span class="font-rajdhani text-xs sm:text-sm text-blue-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4 block">Season 01</span>
+                <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">
+                    Player <span class="gold-text">Statistics</span>
+                </h2>
+                <div class="h-px w-20 sm:w-32 bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent mx-auto mb-4"></div>
+                <p class="font-rajdhani text-sm sm:text-base text-gray-400 max-w-xl mx-auto">
+                    Live stats automatically loaded from Excel files. Updates instantly when you modify the data.
+                </p>
+            </div>
 
-    <div class="subtle-divider container mx-auto mb-6 sm:mb-8"></div>
+            <!-- Tabs -->
+            <div class="flex justify-center gap-2 sm:gap-4 mb-8 sm:mb-12 flex-wrap">
+                <button class="tab-btn active" onclick="switchTab('runs')" id="tab-runs">
+                    <i class="fas fa-baseball-bat mr-1 sm:mr-2"></i>Player Runs
+                </button>
+                <button class="tab-btn" onclick="switchTab('wickets')" id="tab-wickets">
+                    <i class="fas fa-bullseye mr-1 sm:mr-2"></i>Player Wickets
+                </button>
+                <button class="tab-btn" onclick="switchTab('points')" id="tab-points">
+                    <i class="fas fa-star mr-1 sm:mr-2"></i>Player Points
+                </button>
+            </div>
 
-    <!-- ================= FILTERS & SEARCH ================= -->
-    <section class="container mx-auto px-3 sm:px-4 mb-6 sm:mb-8">
-        <div class="neon-card rounded-xl sm:rounded-2xl p-4 sm:p-6">
-            <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch lg:items-center justify-between">
-                
-                <!-- Search -->
-                <div class="relative flex-shrink-0 lg:w-72">
-                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search player name..." oninput="filterPlayers()">
-                </div>
+            <!-- Loading State -->
+            <div id="loading-state" class="flex flex-col items-center justify-center py-20">
+                <div class="loading-spinner mb-4"></div>
+                <p class="font-rajdhani text-sm text-gray-400">Loading player statistics...</p>
+            </div>
 
-                <!-- Team Filters -->
-                <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
-                    <button class="filter-btn active" onclick="filterByTeam('all')" id="filter-all">All Teams</button>
-                    <button class="filter-btn" onclick="filterByTeam('Jaffna Sharks')" id="filter-sharks">
-                        <i class="fas fa-shield mr-1 text-blue-500"></i>Sharks
+            <!-- Error State -->
+            <div id="error-state" class="hidden">
+                <div class="neon-card rounded-2xl p-8 text-center">
+                    <i class="fas fa-triangle-exclamation text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="font-orbitron text-xl text-white mb-2">Unable to Load Data</h3>
+                    <p class="font-rajdhani text-gray-400 mb-4">Make sure the Excel files are in the same folder as this page:</p>
+                    <ul class="font-rajdhani text-sm text-gray-500 space-y-1 mb-6">
+                        <li>PlayerRuns.xlsx</li>
+                        <li>PlayerWickets.xlsx</li>
+                        <li>PlayerPoints.xlsx</li>
+                    </ul>
+                    <button onclick="loadAllData()" class="px-6 py-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg font-orbitron text-sm text-yellow-400 hover:bg-yellow-500/20 transition-all">
+                        <i class="fas fa-rotate-right mr-2"></i>Retry
                     </button>
-                    <button class="filter-btn" onclick="filterByTeam('Rajasthan Stallions')" id="filter-stallions">
-                        <i class="fas fa-shield mr-1 text-amber-600"></i>Stallions
-                    </button>
-                    <button class="filter-btn" onclick="filterByTeam('Royal Challengers')" id="filter-challengers">
-                        <i class="fas fa-shield mr-1 text-red-500"></i>Challengers
-                    </button>
-                    <button class="filter-btn" onclick="filterByTeam('Sunrisers Colombo')" id="filter-sunrisers">
-                        <i class="fas fa-shield mr-1 text-orange-500"></i>Sunrisers
-                    </button>
-                    <button class="filter-btn" onclick="filterByTeam('Apex Bolt Assassins')" id="filter-assassins">
-                        <i class="fas fa-shield mr-1 text-gray-500"></i>Assassins
-                    </button>
-                </div>
-
-                <!-- Role Filters -->
-                <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
-                    <button class="filter-btn active" onclick="filterByRole('all')" id="role-all">All Roles</button>
-                    <button class="filter-btn" onclick="filterByRole('BAT')" id="role-bat">Batter</button>
-                    <button class="filter-btn" onclick="filterByRole('BOWL')" id="role-bowl">Bowler</button>
-                    <button class="filter-btn" onclick="filterByRole('ALL')" id="role-allr">All-Rounder</button>
-                    <button class="filter-btn" onclick="filterByRole('WK')" id="role-wk">Wicket Keeper</button>
                 </div>
             </div>
+
+            <!-- Tab Contents -->
+            <div id="content-runs" class="tab-content active"></div>
+            <div id="content-wickets" class="tab-content"></div>
+            <div id="content-points" class="tab-content"></div>
+
         </div>
-    </section>
-
-    <!-- ================= LOADING STATE ================= -->
-    <div id="loadingState" class="container mx-auto px-3 sm:px-4 py-12 sm:py-16 text-center">
-        <div class="spinner mx-auto mb-6"></div>
-        <p class="font-rajdhani text-lg text-gray-400">Loading player statistics...</p>
-        <p class="font-inter text-sm text-gray-600 mt-2">Reading data from VPL_PlayerStats.xlsx</p>
-    </div>
-
-    <!-- ================= ERROR STATE ================= -->
-    <div id="errorState" class="container mx-auto px-3 sm:px-4 py-12 sm:py-16 text-center hidden">
-        <div class="neon-card rounded-2xl p-8 sm:p-12 max-w-lg mx-auto">
-            <i class="fas fa-triangle-exclamation text-4xl sm:text-5xl text-yellow-400/60 mb-4"></i>
-            <h3 class="font-orbitron text-xl sm:text-2xl font-bold text-white mb-3">Excel File Not Found</h3>
-            <p class="font-rajdhani text-base text-gray-400 mb-6">
-                Please ensure the file <span class="text-yellow-400 font-mono">VPL_PlayerStats.xlsx</span> is placed in the same folder as this webpage.
-            </p>
-            <div class="text-left bg-black/30 rounded-lg p-4 font-mono text-xs text-gray-500 mb-6">
-                <p class="mb-2 text-gray-400">Expected columns:</p>
-                <p>PlayerName | VPLTeam | Role | IPL Team | R1-R14 | Total Runs</p>
-            </div>
-            <button onclick="location.reload()" class="glow-btn px-6 py-3 rounded-lg font-orbitron font-bold text-sm text-yellow-400">
-                <i class="fas fa-rotate-right mr-2"></i>Retry Loading
-            </button>
-        </div>
-    </div>
-
-    <!-- ================= PLAYER STATS CONTENT ================= -->
-    <section id="statsContent" class="container mx-auto px-3 sm:px-4 pb-12 sm:pb-16 md:pb-20 hidden">
-        
-        <!-- Jaffna Sharks -->
-        <div class="mb-6 sm:mb-8 team-section" data-team="Jaffna Sharks">
-            <div class="team-toggle neon-card rounded-xl sm:rounded-2xl overflow-hidden" onclick="toggleTeam('sharks')">
-                <div class="team-section-header" style="background: linear-gradient(90deg, rgba(0,71,171,0.2), rgba(0,71,171,0.05));">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-900/50 border-2 border-blue-500/50 flex items-center justify-center flex-shrink-0">
-                        <img src="JS.png" alt="JS" class="w-6 h-6 sm:w-8 sm:h-8 object-contain">
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-orbitron text-base sm:text-lg md:text-xl font-bold text-white">Jaffna Sharks</h3>
-                        <p class="font-rajdhani text-xs text-blue-400">Deep Sea Dominators</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="font-orbitron text-sm text-blue-400 player-count" id="count-sharks">0 players</span>
-                        <i class="fas fa-chevron-down team-toggle-icon text-gray-500" id="icon-sharks"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="team-content expanded" id="content-sharks">
-                <div class="neon-card rounded-b-xl sm:rounded-b-2xl border-t-0 overflow-hidden">
-                    <div class="stats-table-container">
-                        <table class="stats-table" id="table-sharks">
-                            <thead>
-                                <tr>
-                                    <th>Player</th>
-                                    <th>Role</th>
-                                    <th>IPL Team</th>
-                                    <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>R6</th><th>R7</th>
-                                    <th>R8</th><th>R9</th><th>R10</th><th>R11</th><th>R12</th><th>R13</th><th>R14</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Rajasthan Stallions -->
-        <div class="mb-6 sm:mb-8 team-section" data-team="Rajasthan Stallions">
-            <div class="team-toggle neon-card rounded-xl sm:rounded-2xl overflow-hidden" onclick="toggleTeam('stallions')">
-                <div class="team-section-header" style="background: linear-gradient(90deg, rgba(139,69,19,0.2), rgba(139,69,19,0.05));">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-900/50 border-2 border-amber-600/50 flex items-center justify-center flex-shrink-0">
-                        <img src="RS.png" alt="RS" class="w-6 h-6 sm:w-8 sm:h-8 object-contain">
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-orbitron text-base sm:text-lg md:text-xl font-bold text-white">Rajasthan Stallions</h3>
-                        <p class="font-rajdhani text-xs text-amber-500">Desert Warriors</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="font-orbitron text-sm text-amber-500 player-count" id="count-stallions">0 players</span>
-                        <i class="fas fa-chevron-down team-toggle-icon text-gray-500" id="icon-stallions"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="team-content expanded" id="content-stallions">
-                <div class="neon-card rounded-b-xl sm:rounded-b-2xl border-t-0 overflow-hidden">
-                    <div class="stats-table-container">
-                        <table class="stats-table" id="table-stallions">
-                            <thead>
-                                <tr>
-                                    <th>Player</th>
-                                    <th>Role</th>
-                                    <th>IPL Team</th>
-                                    <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>R6</th><th>R7</th>
-                                    <th>R8</th><th>R9</th><th>R10</th><th>R11</th><th>R12</th><th>R13</th><th>R14</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Royal Challengers -->
-        <div class="mb-6 sm:mb-8 team-section" data-team="Royal Challengers">
-            <div class="team-toggle neon-card rounded-xl sm:rounded-2xl overflow-hidden" onclick="toggleTeam('challengers')">
-                <div class="team-section-header" style="background: linear-gradient(90deg, rgba(220,20,60,0.2), rgba(220,20,60,0.05));">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-900/50 border-2 border-red-500/50 flex items-center justify-center flex-shrink-0">
-                        <img src="RCG.jpeg" alt="RCG" class="w-6 h-6 sm:w-8 sm:h-8 object-contain rounded-full">
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-orbitron text-base sm:text-lg md:text-xl font-bold text-white">Royal Challengers</h3>
-                        <p class="font-rajdhani text-xs text-red-400">Fortress Fighters</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="font-orbitron text-sm text-red-400 player-count" id="count-challengers">0 players</span>
-                        <i class="fas fa-chevron-down team-toggle-icon text-gray-500" id="icon-challengers"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="team-content expanded" id="content-challengers">
-                <div class="neon-card rounded-b-xl sm:rounded-b-2xl border-t-0 overflow-hidden">
-                    <div class="stats-table-container">
-                        <table class="stats-table" id="table-challengers">
-                            <thead>
-                                <tr>
-                                    <th>Player</th>
-                                    <th>Role</th>
-                                    <th>IPL Team</th>
-                                    <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>R6</th><th>R7</th>
-                                    <th>R8</th><th>R9</th><th>R10</th><th>R11</th><th>R12</th><th>R13</th><th>R14</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sunrisers Colombo -->
-        <div class="mb-6 sm:mb-8 team-section" data-team="Sunrisers Colombo">
-            <div class="team-toggle neon-card rounded-xl sm:rounded-2xl overflow-hidden" onclick="toggleTeam('sunrisers')">
-                <div class="team-section-header" style="background: linear-gradient(90deg, rgba(255,107,0,0.2), rgba(255,107,0,0.05));">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-900/50 border-2 border-orange-500/50 flex items-center justify-center flex-shrink-0">
-                        <img src="SRC.jpeg" alt="SRC" class="w-6 h-6 sm:w-8 sm:h-8 object-contain rounded-full">
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-orbitron text-base sm:text-lg md:text-xl font-bold text-white">Sunrisers Colombo</h3>
-                        <p class="font-rajdhani text-xs text-orange-400">Rising from East</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="font-orbitron text-sm text-orange-400 player-count" id="count-sunrisers">0 players</span>
-                        <i class="fas fa-chevron-down team-toggle-icon text-gray-500" id="icon-sunrisers"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="team-content expanded" id="content-sunrisers">
-                <div class="neon-card rounded-b-xl sm:rounded-b-2xl border-t-0 overflow-hidden">
-                    <div class="stats-table-container">
-                        <table class="stats-table" id="table-sunrisers">
-                            <thead>
-                                <tr>
-                                    <th>Player</th>
-                                    <th>Role</th>
-                                    <th>IPL Team</th>
-                                    <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>R6</th><th>R7</th>
-                                    <th>R8</th><th>R9</th><th>R10</th><th>R11</th><th>R12</th><th>R13</th><th>R14</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Apex Bolt Assassins -->
-        <div class="mb-6 sm:mb-8 team-section" data-team="Apex Bolt Assassins">
-            <div class="team-toggle neon-card rounded-xl sm:rounded-2xl overflow-hidden" onclick="toggleTeam('assassins')">
-                <div class="team-section-header" style="background: linear-gradient(90deg, rgba(50,50,50,0.3), rgba(50,50,50,0.05));">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-800/50 border-2 border-gray-500/50 flex items-center justify-center flex-shrink-0">
-                        <img src="ABA.jpeg" alt="ABA" class="w-6 h-6 sm:w-8 sm:h-8 object-contain rounded-full">
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-orbitron text-base sm:text-lg md:text-xl font-bold text-white">Apex Bolt Assassins</h3>
-                        <p class="font-rajdhani text-xs text-gray-400">Strike with Precision</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="font-orbitron text-sm text-gray-400 player-count" id="count-assassins">0 players</span>
-                        <i class="fas fa-chevron-down team-toggle-icon text-gray-500" id="icon-assassins"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="team-content expanded" id="content-assassins">
-                <div class="neon-card rounded-b-xl sm:rounded-b-2xl border-t-0 overflow-hidden">
-                    <div class="stats-table-container">
-                        <table class="stats-table" id="table-assassins">
-                            <thead>
-                                <tr>
-                                    <th>Player</th>
-                                    <th>Role</th>
-                                    <th>IPL Team</th>
-                                    <th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>R6</th><th>R7</th>
-                                    <th>R8</th><th>R9</th><th>R10</th><th>R11</th><th>R12</th><th>R13</th><th>R14</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
+    </main>
 
     <!-- ================= FOOTER ================= -->
     <footer class="relative border-t border-white/5 bg-black/50 backdrop-blur-xl">
         <div class="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12">
-                
-                <!-- Brand -->
                 <div class="sm:col-span-2 lg:col-span-1">
                     <div class="flex items-center gap-3 mb-4 sm:mb-6">
                         <img src="logo.png" alt="VPL" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-yellow-400/50 object-cover flex-shrink-0">
@@ -965,8 +647,6 @@
                         The ultimate virtual cricket experience. Compete, strategize, and conquer in the most immersive fantasy cricket league.
                     </p>
                 </div>
-
-                <!-- Quick Links -->
                 <div>
                     <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Navigate</h5>
                     <ul class="space-y-2 sm:space-y-3">
@@ -976,8 +656,6 @@
                         <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Teams</a></li>
                     </ul>
                 </div>
-
-                <!-- Teams -->
                 <div>
                     <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Franchises</h5>
                     <ul class="space-y-2 sm:space-y-3">
@@ -988,30 +666,18 @@
                         <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-gray-500"></i> Apex Bolt Assassins</a></li>
                     </ul>
                 </div>
-
-                <!-- Social -->
                 <div>
                     <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Connect</h5>
                     <div class="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all" aria-label="Facebook">
-                            <i class="fab fa-facebook-f text-sm"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all" aria-label="Twitter">
-                            <i class="fab fa-twitter text-sm"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all" aria-label="Instagram">
-                            <i class="fab fa-instagram text-sm"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all" aria-label="YouTube">
-                            <i class="fab fa-youtube text-sm"></i>
-                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all" aria-label="Facebook"><i class="fab fa-facebook-f text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all" aria-label="Twitter"><i class="fab fa-twitter text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all" aria-label="Instagram"><i class="fab fa-instagram text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all" aria-label="YouTube"><i class="fab fa-youtube text-sm"></i></a>
                     </div>
                     <p class="font-rajdhani text-xs sm:text-sm text-gray-500">Subscribe for exclusive updates and behind-the-scenes content.</p>
                 </div>
             </div>
-
             <div class="subtle-divider mb-6 sm:mb-8"></div>
-
             <div class="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
                 <p class="font-inter text-[10px] sm:text-xs text-gray-500 text-center sm:text-left">
                     &copy; 2026 Virtual Premier League. All rights reserved. Not affiliated with BCCI/IPL.
@@ -1025,36 +691,33 @@
         </div>
     </footer>
 
-    <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // ================= GLOBAL VARIABLES =================
-        let allPlayers = [];
-        let currentTeamFilter = 'all';
-        let currentRoleFilter = 'all';
-        let currentSearch = '';
-
-        // ================= TEAM MAPPING =================
-        const teamMapping = {
-            'Jaffna Sharks': { id: 'sharks', color: 'blue', class: 'team-sharks' },
-            'Rajasthan Stallions': { id: 'stallions', color: 'amber', class: 'team-stallions' },
-            'Royal Challengers Galle': { id: 'challengers', color: 'red', class: 'team-challengers' },
-            'Sunrisers Colombo': { id: 'sunrisers', color: 'orange', class: 'team-sunrisers' },
-            'Apex Bolt Assassins': { id: 'assassins', color: 'gray', class: 'team-assassins' }
+        // ================= DATA STORAGE =================
+        let statsData = {
+            runs: null,
+            wickets: null,
+            points: null
         };
 
-        // ================= ROLE MAPPING =================
-        const roleMapping = {
-            'BAT': { label: 'BAT', class: 'role-bat', icon: 'fa-baseball-bat-ball' },
-            'BOWL': { label: 'BOWL', class: 'role-bowl', icon: 'fa-bowling-ball' },
-            'ALL': { label: 'ALL', class: 'role-all', icon: 'fa-star' },
-            'WK': { label: 'WK', class: 'role-wk', icon: 'fa-gloves' }
+        const teamConfig = {
+            'Jaffna Sharks': { class: 'sharks', headerClass: 'team-header-sharks', color: '#0047AB', logo: 'JS.png' },
+            'Rajasthan Stallions': { class: 'stallions', headerClass: 'team-header-stallions', color: '#8B4513', logo: 'RS.png' },
+            'Royal Challengers Galle': { class: 'challengers', headerClass: 'team-header-challengers', color: '#DC143C', logo: 'RCG.jpeg' },
+            'Sunrisers Colombo': { class: 'sunrisers', headerClass: 'team-header-sunrisers', color: '#FF6B00', logo: 'SRC.jpeg' },
+            'Apex Bolt Assassins': { class: 'assassins', headerClass: 'team-header-assassins', color: '#555555', logo: 'ABA.jpeg' }
         };
 
-        // ================= 1. MOBILE MENU =================
+        const roleConfig = {
+            'Batter': { class: 'role-batter', icon: 'fa-baseball-bat' },
+            'Bowler': { class: 'role-bowler', icon: 'fa-bullseye' },
+            'WK': { class: 'role-wk', icon: 'fa-gloves' },
+            'All-rounder': { class: 'role-all-rounder', icon: 'fa-star' }
+        };
+
+        // ================= MOBILE MENU =================
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('menu-icon');
-            
             if (menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
                 icon.classList.remove('fa-bars');
@@ -1079,251 +742,281 @@
             }
         });
 
-        // ================= 2. PARTICLES =================
+        // ================= PARTICLES =================
         function createParticles() {
             const container = document.getElementById('particles');
             const isMobile = window.innerWidth < 768;
-            const particleCount = isMobile ? 12 : 25;
-            
+            const particleCount = isMobile ? 12 : 20;
             container.innerHTML = '';
-            
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 15 + 's';
                 particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-                
-                const colors = ['#ffd700', '#0066ff', '#00f0ff', '#ffd700'];
+                const colors = ['#ffd700', '#0066ff', '#00f0ff'];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 const size = isMobile ? (1 + Math.random() * 2) : (2 + Math.random() * 4);
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
-                
                 container.appendChild(particle);
             }
         }
-        
         createParticles();
-        
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(createParticles, 250);
-        });
 
-        // ================= 3. TOGGLE TEAM SECTION =================
-        function toggleTeam(teamId) {
-            const content = document.getElementById('content-' + teamId);
-            const icon = document.getElementById('icon-' + teamId);
-            
-            if (content.classList.contains('expanded')) {
-                content.classList.remove('expanded');
-                content.style.maxHeight = '0';
-                icon.classList.remove('rotated');
-            } else {
-                content.classList.add('expanded');
-                content.style.maxHeight = '5000px';
-                icon.classList.add('rotated');
-            }
-        }
-
-        // ================= 4. LOAD EXCEL DATA =================
-        async function loadExcelData() {
+        // ================= EXCEL LOADING =================
+        async function fetchExcelFile(filename) {
             try {
-                const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vT8u-xlbFJEaQYkcJRNESf4Kk909nV5fC3bbR0f0LUesY75NERvzwUysdm5lU7w_q7lI0TksbPnoX-3/pub?gid=886410588&single=true&output=csv');
-                if (!response.ok) {
-                    throw new Error('File not found');
-                }
-                
+                const response = await fetch(filename);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const arrayBuffer = await response.arrayBuffer();
                 const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-                
-                // Get first sheet
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
-                
-                // Convert to JSON
-                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-                
-                // Parse headers (first row)
-                const headers = jsonData[0];
-                
-                // Expected headers mapping
-                const expectedHeaders = ['PlayerName', 'VPLTeam', 'Role', 'IPL Team', 'R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8', 'R9', 'R10', 'R11', 'R12', 'R13', 'R14', 'Total Runs'];
-                
-                // Find column indices
-                const colIndices = {};
-                expectedHeaders.forEach((header, index) => {
-                    const foundIndex = headers.findIndex(h => 
-                        String(h).toLowerCase().replace(/\s/g, '') === header.toLowerCase().replace(/\s/g, '')
-                    );
-                    colIndices[header] = foundIndex !== -1 ? foundIndex : headers.indexOf(header);
-                });
-                
-                // Parse player data
-                allPlayers = [];
-                for (let i = 1; i < jsonData.length; i++) {
-                    const row = jsonData[i];
-                    if (!row[0] || String(row[0]).trim() === '') continue;
-                    
-                    const player = {
-                        name: String(row[colIndices['PlayerName']] || ''),
-                        vplTeam: String(row[colIndices['VPLTeam']] || ''),
-                        role: String(row[colIndices['Role']] || '').toUpperCase().trim(),
-                        iplTeam: String(row[colIndices['IPL Team']] || ''),
-                        rounds: [],
-                        totalRuns: 0
-                    };
-                    
-                    // Extract round scores
-                    for (let r = 1; r <= 14; r++) {
-                        const roundKey = 'R' + r;
-                        const val = row[colIndices[roundKey]];
-                        player.rounds.push(val !== undefined && val !== '' ? Number(val) : null);
-                    }
-                    
-                    // Total runs
-                    const totalVal = row[colIndices['Total Runs']];
-                    player.totalRuns = totalVal !== undefined && totalVal !== '' ? Number(totalVal) : 
-                        player.rounds.reduce((a, b) => a + (b || 0), 0);
-                    
-                    allPlayers.push(player);
-                }
-                
-                // Hide loading, show content
-                document.getElementById('loadingState').classList.add('hidden');
-                document.getElementById('statsContent').classList.remove('hidden');
-                
-                // Render all tables
-                renderAllTables();
-                
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+                return parseExcelData(jsonData);
             } catch (error) {
-                console.error('Error loading Excel:', error);
-                document.getElementById('loadingState').classList.add('hidden');
-                document.getElementById('errorState').classList.remove('hidden');
+                console.error(`Error loading ${filename}:`, error);
+                throw error;
             }
         }
 
-        // ================= 5. RENDER TABLES =================
-        function renderAllTables() {
-            const teams = ['Jaffna Sharks', 'Rajasthan Stallions', 'Royal Challengers Galle', 'Sunrisers Colombo', 'Apex Bolt Assassins'];
+        function parseExcelData(rawData) {
+            if (!rawData || rawData.length < 2) return [];
             
-            teams.forEach(team => {
-                const teamData = teamMapping[team];
-                const tableId = 'table-' + teamData.id;
-                const tbody = document.querySelector('#' + tableId + ' tbody');
-                const countEl = document.getElementById('count-' + teamData.id);
-                
-                // Filter players for this team
-                let teamPlayers = allPlayers.filter(p => VPLTeam === team);
-                
-                // Apply role filter
-                if (currentRoleFilter !== 'all') {
-                    teamPlayers = teamPlayers.filter(p => Role === currentRoleFilter);
+            // Find the actual header row (skip any empty rows at top)
+            let headerRowIndex = 0;
+            for (let i = 0; i < Math.min(5, rawData.length); i++) {
+                if (rawData[i] && rawData[i].length > 3) {
+                    headerRowIndex = i;
+                    break;
                 }
-                
-                // Apply search filter
-                if (currentSearch) {
-                    teamPlayers = teamPlayers.filter(p => 
-                        p.name.toLowerCase().includes(currentSearch.toLowerCase())
-                    );
-                }
-                
-                // Update count
-                countEl.textContent = teamPlayers.length + ' player' + (teamPlayers.length !== 1 ? 's' : '');
-                
-                // Clear and render
-                tbody.innerHTML = '';
-                
-                if (teamPlayers.length === 0) {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `<td colspan="18" class="py-8 text-gray-500 font-rajdhani text-sm">No players found matching filters</td>`;
-                    tbody.appendChild(tr);
-                } else {
-                    teamPlayers.forEach((player, index) => {
-                        const tr = document.createElement('tr');
-                        tr.className = 'animate-fade-in';
-                        tr.style.animationDelay = (index * 0.05) + 's';
-                        
-                        // Role badge
-                        const roleInfo = roleMapping[player.role] || { label: player.role, class: 'role-all', icon: 'fa-user' };
-                        
-                        // Build round cells
-                        let roundCells = '';
-                        player.rounds.forEach(score => {
-                            if (score === null || score === undefined || score === '') {
-                                roundCells += `<td class="round-score dnp">-</td>`;
-                            } else {
-                                roundCells += `<td class="round-score">${score}</td>`;
-                            }
-                        });
-                        
-                        tr.innerHTML = `
-                            <td class="text-left relative pl-5">
-                                <div class="team-stripe ${teamData.class}"></div>
-                                <span class="font-semibold text-white">${player.name}</span>
-                            </td>
-                            <td>
-                                <span class="role-badge ${roleInfo.class}" title="${roleInfo.label}">
-                                    ${roleInfo.label.substring(0, 3)}
-                                </span>
-                            </td>
-                            <td class="text-gray-300 text-xs sm:text-sm">${player.iplTeam || '-'}</td>
-                            ${roundCells}
-                            <td class="total-runs">${player.totalRuns}</td>
-                        `;
-                        
-                        tbody.appendChild(tr);
-                    });
-                }
-                
-                // Show/hide team section based on filter
-                const section = document.querySelector(`.team-section[data-team="${team}"]`);
-                if (currentTeamFilter !== 'all' && currentTeamFilter !== team) {
-                    section.style.display = 'none';
-                } else {
-                    section.style.display = 'block';
-                }
+            }
+            
+            const headers = rawData[headerRowIndex];
+            const dataRows = rawData.slice(headerRowIndex + 1).filter(row => row.length > 0 && row[0]);
+            
+            return dataRows.map(row => {
+                const obj = {};
+                headers.forEach((header, index) => {
+                    if (header) {
+                        obj[header] = row[index] !== undefined ? row[index] : '';
+                    }
+                });
+                return obj;
             });
         }
 
-        // ================= 6. FILTER FUNCTIONS =================
-        function filterByTeam(team) {
-            currentTeamFilter = team;
-            
-            // Update button states
-            document.querySelectorAll('[id^="filter-"]').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('filter-' + (team === 'all' ? 'all' : teamMapping[team].id)).classList.add('active');
-            
-            renderAllTables();
+        async function loadAllData() {
+            document.getElementById('loading-state').classList.remove('hidden');
+            document.getElementById('error-state').classList.add('hidden');
+            document.getElementById('content-runs').innerHTML = '';
+            document.getElementById('content-wickets').innerHTML = '';
+            document.getElementById('content-points').innerHTML = '';
+
+            try {
+                const [runsData, wicketsData, pointsData] = await Promise.all([
+                    fetchExcelFile('PlayerRuns.xlsx'),
+                    fetchExcelFile('PlayerWickets.xlsx'),
+                    fetchExcelFile('PlayerPoints.xlsx')
+                ]);
+
+                statsData.runs = runsData;
+                statsData.wickets = wicketsData;
+                statsData.points = pointsData;
+
+                renderAllTabs();
+                document.getElementById('loading-state').classList.add('hidden');
+            } catch (error) {
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('error-state').classList.remove('hidden');
+            }
         }
 
-        function filterByRole(role) {
-            currentRoleFilter = role;
-            
-            // Update button states
-            document.querySelectorAll('[id^="role-"]').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('role-' + (role === 'all' ? 'all' : role.toLowerCase())).classList.add('active');
-            
-            renderAllTables();
+        // ================= RENDERING =================
+        function getMatchColumns(data) {
+            if (!data || data.length === 0) return [];
+            const keys = Object.keys(data[0]);
+            return keys.filter(k => /^M\d+$/.test(k)).sort((a, b) => {
+                return parseInt(a.replace('M', '')) - parseInt(b.replace('M', ''));
+            });
         }
 
-        function filterPlayers() {
-            currentSearch = document.getElementById('searchInput').value;
-            renderAllTables();
+        function getTotalColumnName(data) {
+            if (!data || data.length === 0) return 'Total';
+            const keys = Object.keys(data[0]);
+            const totalKey = keys.find(k => k.toLowerCase().includes('total'));
+            return totalKey || 'Total';
         }
 
-        // ================= 7. AUTO-REFRESH =================
-        // Check for file changes every 30 seconds
-        setInterval(() => {
-            loadExcelData();
-        }, 30000);
+        function groupByTeam(data) {
+            const grouped = {};
+            data.forEach(player => {
+                const team = player['VPLTeam'] || player['Team'] || 'Unknown';
+                if (!grouped[team]) grouped[team] = [];
+                grouped[team].push(player);
+            });
+            return grouped;
+        }
 
-        // ================= INITIALIZE =================
+        function renderTeamTable(teamName, players, matchCols, totalCol, type) {
+            const config = teamConfig[teamName] || { class: '', headerClass: '', color: '#888', logo: '' };
+            const totalLabel = type === 'runs' ? 'Total Runs' : type === 'wickets' ? 'Total Wickets' : 'Total Points';
+            
+            let rowsHtml = players.map((player, idx) => {
+                const role = player['Role'] || 'Unknown';
+                const roleCfg = roleConfig[role] || { class: '', icon: 'fa-user' };
+                const name = player['PlayerName'] || player['Player'] || 'Unknown';
+                
+                let cells = matchCols.map(col => {
+                    const val = player[col];
+                    const display = val === '' || val === undefined || val === null ? '<span class="empty-cell">-</span>' : val;
+                    return `<td>${display}</td>`;
+                }).join('');
+
+                const totalVal = player[totalCol];
+                const totalDisplay = totalVal === '' || totalVal === undefined || totalVal === null ? '<span class="empty-cell">-</span>' : `<span class="total-highlight">${totalVal}</span>`;
+
+                return `
+                    <tr>
+                        <td style="text-align:left; padding-left:1rem; font-weight:600;">${name}</td>
+                        <td><span class="role-badge ${roleCfg.class}"><i class="fas ${roleCfg.icon} mr-1"></i>${role}</span></td>
+                        ${cells}
+                        <td>${totalDisplay}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            const matchHeaders = matchCols.map(col => `<th>${col}</th>`).join('');
+
+            return `
+                <div class="team-section neon-card rounded-xl sm:rounded-2xl overflow-hidden mb-6">
+                    <div class="team-header ${config.headerClass}" onclick="toggleTeamSection(this)">
+                        <img src="${config.logo}" alt="${teamName}" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border border-white/20 flex-shrink-0" onerror="this.style.display='none'">
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white truncate">${teamName}</h3>
+                            <p class="font-rajdhani text-[10px] sm:text-xs text-gray-400">${players.length} Players</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300 chevron-icon"></i>
+                    </div>
+                    <div class="team-content">
+                        <div class="table-scroll">
+                            <table class="stats-table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left; padding-left:1rem;">Player</th>
+                                        <th>Role</th>
+                                        ${matchHeaders}
+                                        <th>${totalLabel}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rowsHtml}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTabContent(data, containerId, type) {
+            const container = document.getElementById(containerId);
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="text-center py-12 text-gray-500 font-rajdhani">No data available</div>';
+                return;
+            }
+
+            const matchCols = getMatchColumns(data);
+            const totalCol = getTotalColumnName(data);
+            const grouped = groupByTeam(data);
+
+            // Order teams consistently
+            const teamOrder = [
+                'Jaffna Sharks',
+                'Rajasthan Stallions', 
+                'Royal Challengers Galle',
+                'Sunrisers Colombo',
+                'Apex Bolt Assassins'
+            ];
+
+            let html = '';
+            teamOrder.forEach(teamName => {
+                if (grouped[teamName]) {
+                    html += renderTeamTable(teamName, grouped[teamName], matchCols, totalCol, type);
+                }
+            });
+
+            // Add any unknown teams at the end
+            Object.keys(grouped).forEach(teamName => {
+                if (!teamOrder.includes(teamName)) {
+                    html += renderTeamTable(teamName, grouped[teamName], matchCols, totalCol, type);
+                }
+            });
+
+            container.innerHTML = html;
+        }
+
+        function renderAllTabs() {
+            renderTabContent(statsData.runs, 'content-runs', 'runs');
+            renderTabContent(statsData.wickets, 'content-wickets', 'wickets');
+            renderTabContent(statsData.points, 'content-points', 'points');
+        }
+
+        // ================= TAB SWITCHING =================
+        function switchTab(tabName) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('content-' + tabName).classList.add('active');
+        }
+
+        // ================= TEAM SECTION TOGGLE =================
+        function toggleTeamSection(header) {
+            const section = header.closest('.team-section');
+            const content = section.querySelector('.team-content');
+            const chevron = header.querySelector('.chevron-icon');
+            
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+                content.style.overflow = 'hidden';
+                chevron.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.overflow = 'visible';
+                chevron.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // ================= SCROLL REVEAL =================
+        const observerOptions = {
+            threshold: 0.05,
+            rootMargin: '0px 0px -30px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // ================= INIT =================
         document.addEventListener('DOMContentLoaded', () => {
-            loadExcelData();
+            loadAllData();
         });
+
+        // Auto-refresh every 30 seconds (optional - checks if file changed)
+        setInterval(() => {
+            if (document.visibilityState === 'visible') {
+                loadAllData();
+            }
+        }, 30000);
     </script>
 </body>
 </html>
