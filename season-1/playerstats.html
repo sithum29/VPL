@@ -1037,7 +1037,7 @@
         const teamMapping = {
             'Jaffna Sharks': { id: 'sharks', color: 'blue', class: 'team-sharks' },
             'Rajasthan Stallions': { id: 'stallions', color: 'amber', class: 'team-stallions' },
-            'Royal Challengers': { id: 'challengers', color: 'red', class: 'team-challengers' },
+            'Royal Challengers Galle': { id: 'challengers', color: 'red', class: 'team-challengers' },
             'Sunrisers Colombo': { id: 'sunrisers', color: 'orange', class: 'team-sunrisers' },
             'Apex Bolt Assassins': { id: 'assassins', color: 'gray', class: 'team-assassins' }
         };
@@ -1207,7 +1207,7 @@
 
         // ================= 5. RENDER TABLES =================
         function renderAllTables() {
-            const teams = ['Jaffna Sharks', 'Rajasthan Stallions', 'Royal Challengers', 'Sunrisers Colombo', 'Apex Bolt Assassins'];
+            const teams = ['Jaffna Sharks', 'Rajasthan Stallions', 'Royal Challengers Galle', 'Sunrisers Colombo', 'Apex Bolt Assassins'];
             
             teams.forEach(team => {
                 const teamData = teamMapping[team];
@@ -1216,11 +1216,11 @@
                 const countEl = document.getElementById('count-' + teamData.id);
                 
                 // Filter players for this team
-                let teamPlayers = allPlayers.filter(p => p.vplTeam === team);
+                let teamPlayers = allPlayers.filter(p => VPLTeam === team);
                 
                 // Apply role filter
                 if (currentRoleFilter !== 'all') {
-                    teamPlayers = teamPlayers.filter(p => p.role === currentRoleFilter);
+                    teamPlayers = teamPlayers.filter(p => Role === currentRoleFilter);
                 }
                 
                 // Apply search filter
