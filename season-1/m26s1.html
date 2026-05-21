@@ -726,7 +726,7 @@
             </div>
         </div>
 
-        <div class="match-status" id="match-result">LIVE</div>
+        <div class="match-status" id="match-result">ABA Won By 345 Points</div>
     </header>
 
 
@@ -953,11 +953,11 @@ const matchConfig = {
     away: {
         name: "Apex Bolt Assassins", 
         short: "ABA",
-        score: 656,
+        score: 940,
         color: "black",
         logo: "ABA.jpeg"
     },
-    result: "ABA Lead By 61 Points",
+    result: "ABA Won By 345 Points",
     
     iplMatches: [
         { date: "April 28, 2026", match: "PBKS vs RR" },
@@ -978,7 +978,7 @@ const matchConfig = {
             { name: "Jason Holder", batting: "12(10)", bowling: "2/29", total: 136 },
             { name: "Mohammad Shami", batting: "DNB", bowling: "DNB", total: 0 },
             { name: "Josh Hazlewood", batting: "0(1)", bowling: "0/56", total: -35 },
-            { name: "Rahul Tewatia", batting: "27(17)", bowling: "-", total: 56 },
+            { name: "Rahul Tewatia", batting: "27(17)", bowling: "-", total: 56 }
             
 
 
@@ -988,11 +988,13 @@ const matchConfig = {
             { name: "Yashasvi Jaiswal", batting: "51(27)", bowling: "-", total: 124 },
             { name: "Travis Head", batting: "76(30)", bowling: "-", total: 226 },
             { name: "Heinrich Klaasen", batting: "65(30)", bowling: "-", total: 199, emergency: true },
+            { name: "Sunil Narine", batting: "DNB", bowling: "1/13", total: 168, captain:true },
             { name: "Axar Patel", batting: "2(6)", bowling: "1/25", total: 54 },
-            { name: "Hardik Pandya", batting: "31(15)", bowling: "1/39", total: 88 },
-            { name: "Jasprit Bumrah", batting: "-", bowling: "0/50", total: -32 },
+            { name: "Hardik Pandya", batting: "57(42)", bowling: "1/52", total: 138 },
+            { name: "Kagiso Rabada", batting: "-", bowling: "1/44", total: 15 },
+            { name: "Jasprit Bumrah", batting: "-", bowling: "1/76", total: 19 },
             { name: "Kuldeep Yadav", batting: "-", bowling: "0/34", total: -13 },
-            { name: "Anshul Kamboj", batting: "-", bowling: "0/49", total: -23 },
+            { name: "Anshul Kamboj", batting: "-", bowling: "0/49", total: -23 }
 
 
         ],
@@ -1018,10 +1020,10 @@ const matchConfig = {
 
 // PLAYER OF THE MATCH DATA - Add to your JavaScript
 const potmData = {
-    name: "",           // Change player name
-    team: "",          // Change team name
-    stats: "", // Change stats
-    image: "" // Change image URL
+    name: "Travis Head",           // Change player name
+    team: "Apex Bolt Assassins",          // Change team name
+    stats: "226 Points (76 from 30 balls)", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/37.png" // Change image URL
 };
 
 // FUNCTION TO RENDER POTM - Add to your init() or call separately
