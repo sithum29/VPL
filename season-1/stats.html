@@ -49,62 +49,194 @@
         .award-tab.active.vpower { background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,140,0,0.1)); border-color: var(--vpower); box-shadow: 0 0 20px rgba(255,215,0,0.15); }
         .award-tab.active.vstrike { background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(0,153,204,0.1)); border-color: var(--vstrike); box-shadow: 0 0 20px rgba(0,229,255,0.15); }
         .award-tab.active.vprime { background: linear-gradient(135deg, rgba(255,111,0,0.15), rgba(255,61,0,0.1)); border-color: var(--vprime); box-shadow: 0 0 20px rgba(255,111,0,0.15); }
+
+        /* ===== MOBILE-FIRST STATS TABLE ===== */
         .stats-table-container { background: rgba(10,14,39,0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; }
-        .stats-header { display: grid; grid-template-columns: 60px minmax(140px,2fr) 100px 80px 80px 60px; gap: 12px; padding: 1rem 1.5rem; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid; align-items: center; }
-        .stats-row { display: grid; grid-template-columns: 60px minmax(140px,2fr) 100px 80px 80px 60px; gap: 12px; padding: 0.875rem 1.5rem; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.3s; }
-        .stats-row:hover { background: rgba(255,255,255,0.03); transform: scale(1.01); }
+
+        /* Desktop Table Layout - hidden on mobile */
+        .stats-header { display: none; }
+
+        /* Mobile Row Layout */
+        .stats-row { 
+            display: grid; 
+            grid-template-columns: 40px 1fr 65px; 
+            gap: 8px; 
+            padding: 10px 12px; 
+            align-items: center; 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            transition: all 0.3s; 
+        }
+        .stats-row:hover { background: rgba(255,255,255,0.03); }
         .stats-row.rank-1 { background: linear-gradient(90deg, rgba(255,215,0,0.1), transparent); border-left: 3px solid #ffd700; }
         .stats-row.rank-2 { background: linear-gradient(90deg, rgba(192,192,192,0.08), transparent); border-left: 3px solid #c0c0c0; }
         .stats-row.rank-3 { background: linear-gradient(90deg, rgba(205,127,50,0.08), transparent); border-left: 3px solid #cd7f32; }
-        .col-position { font-size: 1.4rem; font-weight: 900; text-align: center; color: rgba(255,255,255,0.4); font-family: 'Orbitron'; }
-        .rank-1 .col-position { color: #ffd700; text-shadow: 0 0 20px rgba(255,215,0,0.5); font-size: 1.8rem; }
+
+        .col-position { 
+            font-size: 1.1rem; 
+            font-weight: 900; 
+            text-align: center; 
+            color: rgba(255,255,255,0.4); 
+            font-family: 'Orbitron'; 
+        }
+        .rank-1 .col-position { color: #ffd700; text-shadow: 0 0 20px rgba(255,215,0,0.5); font-size: 1.4rem; }
         .rank-2 .col-position { color: #c0c0c0; }
         .rank-3 .col-position { color: #cd7f32; }
-        .player-image { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); background: #fff; flex-shrink: 0; }
+
+        .player-image { 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 2px solid rgba(255,255,255,0.1); 
+            background: #fff; 
+            flex-shrink: 0; 
+        }
         .rank-1 .player-image { border-color: #ffd700; box-shadow: 0 0 15px rgba(255,215,0,0.3); }
-        .team-logo-small { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 2px solid; flex-shrink: 0; }
-        .col-stat { text-align: center; font-weight: 900; font-size: 1.2rem; font-family: 'Orbitron'; }
+
+        .team-logo-small { 
+            width: 20px; 
+            height: 20px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 2px solid; 
+            flex-shrink: 0; 
+        }
+
+        .col-stat { 
+            text-align: right; 
+            font-weight: 900; 
+            font-size: 1rem; 
+            font-family: 'Orbitron'; 
+        }
         .vpower .col-stat { color: var(--vpower); }
         .vstrike .col-stat { color: var(--vstrike); }
         .vprime .col-stat { color: var(--vprime); }
-        .row-award-icon { font-size: 1.5rem; filter: drop-shadow(0 0 8px currentColor); }
-        .stats-header.vpower { background: linear-gradient(90deg, rgba(255,215,0,0.15), transparent); color: var(--vpower); border-color: var(--vpower); }
-        .stats-header.vstrike { background: linear-gradient(90deg, rgba(0,229,255,0.15), transparent); color: var(--vstrike); border-color: var(--vstrike); }
-        .stats-header.vprime { background: linear-gradient(90deg, rgba(255,111,0,0.15), transparent); color: var(--vprime); border-color: var(--vprime); }
-        .award-header { background: rgba(10,14,39,0.6); backdrop-filter: blur(10px); border: 1px solid; border-radius: 16px; padding: 2rem; text-align: center; position: relative; overflow: hidden; }
+
+        .row-award-icon { font-size: 1.1rem; filter: drop-shadow(0 0 8px currentColor); }
+
+        /* Mobile player info layout */
+        .player-info-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+        .player-name-mobile {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .player-meta-mobile {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.5);
+        }
+        .player-meta-mobile img {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Desktop-only columns hidden on mobile */
+        .desktop-only { display: none; }
+
+        .award-header { 
+            background: rgba(10,14,39,0.6); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid; 
+            border-radius: 16px; 
+            padding: 1.25rem; 
+            text-align: center; 
+            position: relative; 
+            overflow: hidden; 
+        }
         .award-header.vpower { border-color: rgba(255,215,0,0.3); }
         .award-header.vstrike { border-color: rgba(0,229,255,0.3); }
         .award-header.vprime { border-color: rgba(255,111,0,0.3); }
-        .award-title { font-family: 'Orbitron'; font-size: 2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 0.5rem; }
+        .award-title { font-family: 'Orbitron'; font-size: 1.3rem; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 0.5rem; }
         .award-header.vpower .award-title { color: var(--vpower); text-shadow: 0 0 30px rgba(255,215,0,0.3); }
         .award-header.vstrike .award-title { color: var(--vstrike); text-shadow: 0 0 30px rgba(0,229,255,0.3); }
         .award-header.vprime .award-title { color: var(--vprime); text-shadow: 0 0 30px rgba(255,111,0,0.3); }
         .mobile-menu { background: rgba(5,5,5,0.98); backdrop-filter: blur(20px); }
+
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ffd700, #0066ff); border-radius: 3px; }
+
         .subtle-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), rgba(0,102,255,0.3), rgba(255,215,0,0.3), transparent); }
         .award-section { display: none; animation: fadeIn 0.5s ease; }
         .award-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @media (hover: none) { .neon-card:hover, .award-tab:hover { transform: none; } }
-        @media (max-width: 640px) {
-            .stats-header, .stats-row { grid-template-columns: 45px minmax(100px,2fr) 70px 60px 60px 45px; gap: 8px; padding: 0.75rem 1rem; }
-            .player-image { width: 36px; height: 36px; }
+
+        /* ===== TABLET BREAKPOINT (640px+) ===== */
+        @media (min-width: 640px) {
+            .stats-row { 
+                grid-template-columns: 50px minmax(120px, 2fr) 80px 80px 70px; 
+                gap: 10px; 
+                padding: 12px 16px; 
+            }
+            .player-image { width: 42px; height: 42px; }
+            .player-name-mobile { font-size: 0.95rem; }
+            .player-meta-mobile { font-size: 0.7rem; }
+            .player-meta-mobile img { width: 16px; height: 16px; }
+            .col-position { font-size: 1.2rem; }
+            .rank-1 .col-position { font-size: 1.5rem; }
+            .col-stat { font-size: 1.15rem; }
             .team-logo-small { width: 24px; height: 24px; }
-            .col-stat { font-size: 1rem; }
-            .col-position { font-size: 1.1rem; }
-            .rank-1 .col-position { font-size: 1.4rem; }
-            .award-title { font-size: 1.4rem; }
-            .award-tab { padding: 0.75rem 1.25rem; font-size: 0.8rem; }
+            .award-title { font-size: 1.6rem; }
+            .award-header { padding: 1.75rem; }
+            .row-award-icon { font-size: 1.3rem; }
         }
-        @media (max-width: 380px) {
-            .stats-header, .stats-row { grid-template-columns: 40px minmax(90px,2fr) 60px 50px 50px 40px; gap: 6px; padding: 0.625rem 0.75rem; font-size: 0.7rem; }
-            .player-image { width: 32px; height: 32px; }
-            .col-stat { font-size: 0.9rem; }
+
+        /* ===== DESKTOP BREAKPOINT (768px+) ===== */
+        @media (min-width: 768px) {
+            .stats-header { 
+                display: grid; 
+                grid-template-columns: 60px minmax(140px, 2fr) 100px 80px 80px 60px; 
+                gap: 12px; 
+                padding: 1rem 1.5rem; 
+                font-weight: 700; 
+                font-size: 0.75rem; 
+                text-transform: uppercase; 
+                letter-spacing: 1px; 
+                border-bottom: 2px solid; 
+                align-items: center; 
+            }
+            .stats-row { 
+                grid-template-columns: 60px minmax(140px, 2fr) 100px 80px 80px 60px; 
+                gap: 12px; 
+                padding: 0.875rem 1.5rem; 
+            }
+            .stats-row:hover { transform: scale(1.01); }
+            .player-image { width: 48px; height: 48px; }
+            .col-position { font-size: 1.4rem; }
+            .rank-1 .col-position { font-size: 1.8rem; }
+            .col-stat { font-size: 1.3rem; text-align: center; }
+            .team-logo-small { width: 28px; height: 28px; }
+            .desktop-only { display: flex; }
+            .player-info-mobile { display: none; }
+            .award-title { font-size: 2rem; }
+            .award-header { padding: 2rem; }
+            .row-award-icon { font-size: 1.5rem; }
+
+            .stats-header.vpower { background: linear-gradient(90deg, rgba(255,215,0,0.15), transparent); color: var(--vpower); border-color: var(--vpower); }
+            .stats-header.vstrike { background: linear-gradient(90deg, rgba(0,229,255,0.15), transparent); color: var(--vstrike); border-color: var(--vstrike); }
+            .stats-header.vprime { background: linear-gradient(90deg, rgba(255,111,0,0.15), transparent); color: var(--vprime); border-color: var(--vprime); }
         }
+
+        @media (hover: none) { 
+            .neon-card:hover, .award-tab:hover { transform: none; } 
+        }
+
         .no-select { -webkit-user-select: none; user-select: none; }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body class="antialiased relative">
@@ -170,7 +302,7 @@
     </header>
 
     <!-- PAGE HEADER -->
-    <section class="relative py-12 sm:py-16 md:py-20 px-4 sm:px-8 text-center overflow-hidden">
+    <section class="relative py-10 sm:py-14 md:py-18 px-4 sm:px-8 text-center overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-b from-blue-900/10 via-transparent to-transparent"></div>
         <div class="relative z-10 max-w-4xl mx-auto">
             <div class="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
@@ -178,48 +310,69 @@
                 <span class="font-rajdhani text-[10px] sm:text-xs text-yellow-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase">Season 01</span>
                 <div class="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-yellow-400"></div>
             </div>
-            <h1 class="font-orbitron text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">Statistics & <span class="gold-text">Awards</span></h1>
-            <p class="font-rajdhani text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">Virtual Premier League Season 1 - 2026</p>
+            <h1 class="font-orbitron text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4">Statistics & <span class="gold-text">Awards</span></h1>
+            <p class="font-rajdhani text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto">Virtual Premier League Season 1 - 2026</p>
         </div>
     </section>
 
     <!-- MAIN CONTENT -->
     <main class="container mx-auto px-3 sm:px-4 lg:px-6 pb-16 sm:pb-20">
-        <div class="flex justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-10 md:mb-12 flex-wrap">
-            <div class="award-tab vpower active flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-orbitron font-bold text-xs sm:text-sm tracking-wider" onclick="showAward('vpower')"><span class="text-lg sm:text-xl">⚙️</span><span>V-POWER</span></div>
-            <div class="award-tab vstrike flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-orbitron font-bold text-xs sm:text-sm tracking-wider text-gray-400 hover:text-white" onclick="showAward('vstrike')"><span class="text-lg sm:text-xl">🔱</span><span>V-STRIKE</span></div>
-            <div class="award-tab vprime flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-orbitron font-bold text-xs sm:text-sm tracking-wider text-gray-400 hover:text-white" onclick="showAward('vprime')"><span class="text-lg sm:text-xl">👑</span><span>V-PRIME</span></div>
+        <div class="flex justify-center gap-2 sm:gap-3 md:gap-4 mb-6 sm:mb-8 md:mb-10 flex-wrap">
+            <div class="award-tab vpower active flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2.5 sm:py-3.5 rounded-xl font-orbitron font-bold text-xs sm:text-sm tracking-wider" onclick="showAward('vpower')"><span class="text-base sm:text-xl">⚙️</span><span class="hidden sm:inline">V-POWER</span><span class="sm:hidden">POWER</span></div>
+            <div class="award-tab vstrike flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2.5 sm:py-3.5 rounded-xl font-orbitron font-bold text-xs sm:text-sm tracking-wider text-gray-400 hover:text-white" onclick="showAward('vstrike')"><span class="text-base sm:text-xl">🔱</span><span class="hidden sm:inline">V-STRIKE</span><span class="sm:hidden">STRIKE</span></div>
+            <div class="award-tab vprime flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2.5 sm:py-3.5 rounded-xl font-orbitron font-bold text-xs sm:text-sm tracking-wider text-gray-400 hover:text-white" onclick="showAward('vprime')"><span class="text-base sm:text-xl">👑</span><span class="hidden sm:inline">V-PRIME</span><span class="sm:hidden">PRIME</span></div>
         </div>
 
         <section id="vpower" class="award-section active">
-            <div class="award-header vpower mb-6 sm:mb-8">
+            <div class="award-header vpower mb-4 sm:mb-6 md:mb-8">
                 <h2 class="award-title">⚙️ V-POWER</h2>
-                <p class="font-rajdhani text-sm sm:text-base text-gray-400 mt-2">Most Runs in VPL Season 1</p>
+                <p class="font-rajdhani text-xs sm:text-sm md:text-base text-gray-400 mt-2">Most Runs in VPL Season 1</p>
             </div>
             <div class="stats-table-container vpower neon-card">
-                <div class="stats-header vpower"><div class="col-position">Pos</div><div class="col-player">Player</div><div class="col-team">Team</div><div class="col-role">Role</div><div class="col-stat">Runs</div><div class="award-icon-cell">Award</div></div>
+                <div class="stats-header vpower">
+                    <div class="col-position">Pos</div>
+                    <div class="col-player">Player</div>
+                    <div class="col-team">Team</div>
+                    <div class="col-role">Role</div>
+                    <div class="col-stat">Runs</div>
+                    <div class="award-icon-cell">Award</div>
+                </div>
                 <div id="vpower-body"></div>
             </div>
         </section>
 
         <section id="vstrike" class="award-section">
-            <div class="award-header vstrike mb-6 sm:mb-8">
+            <div class="award-header vstrike mb-4 sm:mb-6 md:mb-8">
                 <h2 class="award-title">🔱 V-STRIKE</h2>
-                <p class="font-rajdhani text-sm sm:text-base text-gray-400 mt-2">Most Wickets in VPL Season 1</p>
+                <p class="font-rajdhani text-xs sm:text-sm md:text-base text-gray-400 mt-2">Most Wickets in VPL Season 1</p>
             </div>
             <div class="stats-table-container vstrike neon-card">
-                <div class="stats-header vstrike"><div class="col-position">Pos</div><div class="col-player">Player</div><div class="col-team">Team</div><div class="col-role">Role</div><div class="col-stat">Wkts</div><div class="award-icon-cell">Award</div></div>
+                <div class="stats-header vstrike">
+                    <div class="col-position">Pos</div>
+                    <div class="col-player">Player</div>
+                    <div class="col-team">Team</div>
+                    <div class="col-role">Role</div>
+                    <div class="col-stat">Wkts</div>
+                    <div class="award-icon-cell">Award</div>
+                </div>
                 <div id="vstrike-body"></div>
             </div>
         </section>
 
         <section id="vprime" class="award-section">
-            <div class="award-header vprime mb-6 sm:mb-8">
+            <div class="award-header vprime mb-4 sm:mb-6 md:mb-8">
                 <h2 class="award-title">👑 V-PRIME</h2>
-                <p class="font-rajdhani text-sm sm:text-base text-gray-400 mt-2">Most VPL Points in Season 1</p>
+                <p class="font-rajdhani text-xs sm:text-sm md:text-base text-gray-400 mt-2">Most VPL Points in Season 1</p>
             </div>
             <div class="stats-table-container vprime neon-card">
-                <div class="stats-header vprime"><div class="col-position">Pos</div><div class="col-player">Player</div><div class="col-team">Team</div><div class="col-role">Role</div><div class="col-stat">Pts</div><div class="award-icon-cell">Award</div></div>
+                <div class="stats-header vprime">
+                    <div class="col-position">Pos</div>
+                    <div class="col-player">Player</div>
+                    <div class="col-team">Team</div>
+                    <div class="col-role">Role</div>
+                    <div class="col-stat">Pts</div>
+                    <div class="award-icon-cell">Award</div>
+                </div>
                 <div id="vprime-body"></div>
             </div>
         </section>
@@ -227,47 +380,47 @@
 
     <!-- FOOTER -->
     <footer class="relative border-t border-white/5 bg-black/50 backdrop-blur-xl">
-        <div class="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12">
+        <div class="container mx-auto px-4 sm:px-6 py-8 sm:py-10 md:py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 mb-8 sm:mb-10">
                 <div class="sm:col-span-2 lg:col-span-1">
-                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
-                        <img src="logo.png" alt="VPL" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-yellow-400/50 object-cover flex-shrink-0">
-                        <div><h4 class="font-orbitron text-xl sm:text-2xl font-bold text-white">VPL 2026</h4><p class="font-rajdhani text-[10px] sm:text-xs text-blue-400 tracking-wider">VIRTUAL PREMIER LEAGUE</p></div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="logo.png" alt="VPL" class="h-10 w-10 sm:h-11 sm:w-11 rounded-full border-2 border-yellow-400/50 object-cover flex-shrink-0">
+                        <div><h4 class="font-orbitron text-lg sm:text-xl font-bold text-white">VPL 2026</h4><p class="font-rajdhani text-[10px] sm:text-xs text-blue-400 tracking-wider">VIRTUAL PREMIER LEAGUE</p></div>
                     </div>
                     <p class="font-inter text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm">The ultimate virtual cricket experience. Compete, strategize, and conquer in the most immersive fantasy cricket league.</p>
                 </div>
                 <div>
-                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Navigate</h5>
-                    <ul class="space-y-2 sm:space-y-3">
-                        <li><a href="index.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Home</a></li>
-                        <li><a href="matches.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Matches</a></li>
-                        <li><a href="points.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Points Table</a></li>
-                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Teams</a></li>
+                    <h5 class="font-orbitron text-sm sm:text-base font-bold text-white mb-3 sm:mb-4">Navigate</h5>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="font-rajdhani text-xs sm:text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Home</a></li>
+                        <li><a href="matches.html" class="font-rajdhani text-xs sm:text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Matches</a></li>
+                        <li><a href="points.html" class="font-rajdhani text-xs sm:text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Points Table</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-xs sm:text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Teams</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Franchises</h5>
-                    <ul class="space-y-2 sm:space-y-3">
-                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-blue-500"></i> Jaffna Sharks</a></li>
-                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-amber-600"></i> Rajasthan Stallions</a></li>
-                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-red-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-red-500"></i> Royal Challengers</a></li>
-                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-orange-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-orange-500"></i> Sunrisers Colombo</a></li>
-                        <li><a href="teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-gray-500"></i> Apex Bolt Assassins</a></li>
+                    <h5 class="font-orbitron text-sm sm:text-base font-bold text-white mb-3 sm:mb-4">Franchises</h5>
+                    <ul class="space-y-2">
+                        <li><a href="teams.html" class="font-rajdhani text-xs sm:text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-blue-500"></i> Jaffna Sharks</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-xs sm:text-sm text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-amber-600"></i> Rajasthan Stallions</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-xs sm:text-sm text-gray-400 hover:text-red-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-red-500"></i> Royal Challengers</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-xs sm:text-sm text-gray-400 hover:text-orange-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-orange-500"></i> Sunrisers Colombo</a></li>
+                        <li><a href="teams.html" class="font-rajdhani text-xs sm:text-sm text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-gray-500"></i> Apex Bolt Assassins</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Connect</h5>
-                    <div class="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all" aria-label="Facebook"><i class="fab fa-facebook-f text-sm"></i></a>
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all" aria-label="Twitter"><i class="fab fa-twitter text-sm"></i></a>
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all" aria-label="Instagram"><i class="fab fa-instagram text-sm"></i></a>
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all" aria-label="YouTube"><i class="fab fa-youtube text-sm"></i></a>
+                    <h5 class="font-orbitron text-sm sm:text-base font-bold text-white mb-3 sm:mb-4">Connect</h5>
+                    <div class="flex gap-2 sm:gap-3 mb-4">
+                        <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all" aria-label="Facebook"><i class="fab fa-facebook-f text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all" aria-label="Twitter"><i class="fab fa-twitter text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all" aria-label="Instagram"><i class="fab fa-instagram text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all" aria-label="YouTube"><i class="fab fa-youtube text-sm"></i></a>
                     </div>
-                    <p class="font-rajdhani text-xs sm:text-sm text-gray-500">Subscribe for exclusive updates and behind-the-scenes content.</p>
+                    <p class="font-rajdhani text-xs text-gray-500">Subscribe for exclusive updates and behind-the-scenes content.</p>
                 </div>
             </div>
-            <div class="subtle-divider mb-6 sm:mb-8"></div>
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+            <div class="subtle-divider mb-4 sm:mb-6"></div>
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
                 <p class="font-inter text-[10px] sm:text-xs text-gray-500 text-center sm:text-left">&copy; 2026 Virtual Premier League. All rights reserved. Not affiliated with BCCI/IPL.</p>
                 <div class="flex gap-4 sm:gap-6">
                     <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Privacy Policy</a>
@@ -279,7 +432,6 @@
     </footer>
 
     <script>
-
         // ============================================
         // VPL SQUAD DATA
         // ============================================
@@ -435,20 +587,35 @@
             { name: "Cooper Connolly", runs: 450 },
             { name: "Ishan Kishan", runs: 448 },
             { name: "Virat Kohli", runs: 430 },
-            { name: "Vaibhav Suryavanshi", runs: 428 },
-            { name: "Prabhsimran Singh", runs: 427 }
+            { name: "Vaibhav Sooryavanshi", runs: 428 },
+            { name: "Prabhsimran Singh", runs: 427 },
+            { name: "Mitchell Marsh", runs: 378 }
         ];
 
         const vstrikeData = [
-            // { name: "Jasprit Bumrah", wickets: 25 },
-            // { name: "Kagiso Rabada", wickets: 22 },
-            // Add more players...
+            { name: "Rashid Khan", wickets: 25 },
+            { name: "Bhuvneshwar Kumar", wickets: 23 },
+            { name: "Kagiso Rabada", wickets: 19 },
+            { name: "Prasidh Krishna", wickets: 16 },
+            { name: "Ravi Bishnoi", wickets: 16 },
+            { name: "Jofra Archer", wickets: 16 },
+            { name: "Sunil Narine", wickets: 14 },
+            { name: "Krunal Pandya", wickets: 12 },
+            { name: "Axar Patel", wickets: 12 },
+            { name: "Yuzvendra Chahal", wickets: 12 }
         ];
 
         const vprimeData = [
-            // { name: "Virat Kohli", points: 850 },
-            // { name: "Jasprit Bumrah", points: 780 },
-            // Add more players...
+            { name: "Shubman Gill", points: 3280 },
+            { name: "Abhishek Sharma", points: 2347 },
+            { name: "Sunil Narine", points: 1644 },
+            { name: "KL Rahul", points: 1444 },
+            { name: "Ravindra Jadeja", points: 1295 },
+            { name: "Heinrich Klaasen", points: 1292 },
+            { name: "Nitish Kumar Reddy", points: 1185 },
+            { name: "Rohit Sharma", points: 1184 },
+            { name: "Ishan Kishan", points: 1181 },
+            { name: "Vaibhav Suryavanshi", points: 1160 }
         ];
 
         // ============================================
@@ -470,22 +637,48 @@
                 const row = document.createElement('div');
                 row.className = `stats-row rank-${rank}`;
 
+                // Mobile layout (3 columns: position, player info, stat)
+                // Desktop layout (6 columns: position, player, team, role, stat, award)
                 row.innerHTML = `
                     <div class="col-position">${rank}</div>
-                    <div class="col-player flex items-center gap-3">
+
+                    <!-- Desktop Player Column -->
+                    <div class="col-player desktop-only items-center gap-3">
                         <img src="${player.image}" alt="${player.name}" class="player-image" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
                         <div class="flex flex-col min-w-0">
                             <div class="font-bold text-sm sm:text-base text-white truncate">${player.name}</div>
                             <div class="text-xs text-gray-400 uppercase">${player.role}</div>
                         </div>
                     </div>
-                    <div class="col-team flex items-center gap-2 justify-center">
+
+                    <!-- Mobile Player Column -->
+                    <div class="flex items-center gap-2.5 player-info-mobile">
+                        <img src="${player.image}" alt="${player.name}" class="player-image" onerror="this.src='https://documents.iplt20.com/ipl/assets/images/Default-Men.png'">
+                        <div class="player-info-mobile">
+                            <div class="player-name-mobile">${player.name}</div>
+                            <div class="player-meta-mobile">
+                                <img src="${player.teamLogo}" alt="${player.team}" class="${player.teamCode}" onerror="this.style.display='none'">
+                                <span>${player.teamCode.toUpperCase()}</span>
+                                <span>•</span>
+                                <span>${player.role}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Team Column -->
+                    <div class="col-team desktop-only items-center gap-2 justify-center">
                         <img src="${player.teamLogo}" alt="${player.team}" class="team-logo-small ${player.teamCode}" onerror="this.style.display='none'">
                         <span class="text-xs font-semibold">${player.teamCode.toUpperCase()}</span>
                     </div>
-                    <div class="text-center text-xs text-gray-400 uppercase">${player.role}</div>
+
+                    <!-- Desktop Role Column -->
+                    <div class="text-center text-xs text-gray-400 uppercase desktop-only justify-center">${player.role}</div>
+
+                    <!-- Stat Column -->
                     <div class="col-stat">${item[statKey]}</div>
-                    <div class="flex justify-center items-center"><span class="row-award-icon">${awardIcon}</span></div>
+
+                    <!-- Desktop Award Column -->
+                    <div class="flex justify-center items-center desktop-only"><span class="row-award-icon">${awardIcon}</span></div>
                 `;
                 container.appendChild(row);
             });
