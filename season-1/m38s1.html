@@ -726,7 +726,7 @@
             </div>
         </div>
 
-        <div class="match-status" id="match-result">Match not started</div>
+        <div class="match-status" id="match-result">ABA Won By 38 Points</div>
     </header>
 
 
@@ -945,7 +945,7 @@ const matchConfig = {
     home: {
         name: "Apex Bolt Assassins",
         short: "ABA",
-        score: 455,
+        score: 729,
         color: "black",
         logo: "ABA.jpeg",
         // STADIUM IMAGE - Set this to change background per match
@@ -954,11 +954,11 @@ const matchConfig = {
     away: {
         name: "Jaffna Sharks", 
         short: "JS",
-        score: 612,
+        score: 691,
         color: "blue",
         logo: "JS.png"
     },
-    result: "JS Lead By 157 Points",
+    result: "ABA Won By 38 Points",
     
     iplMatches: [
         { date: "May 10, 2026", match: "CSK vs LSG" },
@@ -970,11 +970,13 @@ const matchConfig = {
     
     stats: {
         home: [
-            { name: "Surya Kumar Yadav", batting: "0(1)", bowling: "-", total: -20 },
+            { name: "Shubman Gill", batting: "27(17)", bowling: "-", total: 62, emergency:true },
+            { name: "Surya Kumar Yadav", batting: "60(43)", bowling: "-", total: 106 },
             { name: "Travis Head", batting: "0(4)", bowling: "-", total: -44 },
             { name: "Heinrich Klaasen", batting: "14(16)", bowling: "-", total: 45 },
             { name: "Axar Patel", batting: "56(30)", bowling: "DNB", total: 152 },
-            { name: "Sai Suaharsan", batting: "61(44)", bowling: "DNB", total: 121 },
+            { name: "Hardik Pandya", batting: "34(15)", bowling: "DNB", total: 86 },
+            { name: "Sai Sudharsan", batting: "61(44)", bowling: "DNB", total: 121 },
             { name: "Jasprit Bumrah", batting: "-", bowling: "0/20", total: 39 },
             { name: "Kagiso Rabada", batting: "-", bowling: "3/28", total: 111 },
             { name: "Anshul Kamboj", batting: "-", bowling: "2/47", total: 51 },
@@ -982,12 +984,13 @@ const matchConfig = {
 
         ],
         away: [
-            { name: "Rohit Sharma", batting: "22(10)", bowling: "-", total: 108, captain: true },
+            { name: "Rohit Sharma", batting: "22(14)", bowling: "-", total: 64, captain: true },
             { name: "Shubman Gill", batting: "5(7)", bowling: "-", total: 20 },
+            { name: "Ruturaj Gaikwad", batting: "42(28)", bowling: "-", total: 84, emergency:true },
             { name: "KL Rahul", batting: "9(8)", bowling: "-", total: 13 },
             { name: "Priyansh Arya", batting: "56(33)", bowling: "DNB", total: 137 },
             { name: "Cooper Connolly", batting: "38(27)", bowling: "DNB", total: 89 },
-            { name: "Naman Dhir", batting: "47(32)", bowling: "DNB", total: 108 },
+            { name: "Naman Dhir", batting: "53(37)", bowling: "DNB", total: 147 },
             { name: "Noor Ahmad", batting: "-", bowling: "1/24", total: 57 },
             { name: "Mitchell Starc", batting: "-", bowling: "2/57", total: 22 },
             { name: "Suyash Sharma", batting: "-", bowling: "0/21", total: -8 },
@@ -1018,10 +1021,10 @@ const matchConfig = {
 
 // PLAYER OF THE MATCH DATA - Add to your JavaScript
 const potmData = {
-    name: "",           // Change player name
-    team: "",          // Change team name
-    stats: "", // Change stats
-    image: "" // Change image URL
+    name: "Sai Sudharsan",           // Change player name
+    team: "Apex Bolt Assassins",          // Change team name
+    stats: "121 Points (61 from 44 balls)", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/976.png" // Change image URL
 };
 
 // FUNCTION TO RENDER POTM - Add to your init() or call separately
