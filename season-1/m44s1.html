@@ -726,7 +726,7 @@
             </div>
         </div>
 
-        <div class="match-status" id="match-result">Match not started</div>
+        <div class="match-status" id="match-result">RCG Won By 445 Points</div>
     </header>
 
 
@@ -945,7 +945,7 @@ const matchConfig = {
     home: {
         name: "Rajasthan Stallions",
         short: "RS",
-        score: 282,
+        score: 647,
         color: "brown",
         logo: "RS.png",
         // STADIUM IMAGE - Set this to change background per match
@@ -954,11 +954,11 @@ const matchConfig = {
     away: {
         name: "Royal Challengers Galle", 
         short: "RCG",
-        score: 1066,
+        score: 1092,
         color: "red",
         logo: "RCG.jpeg"
     },
-    result: "RCG Lead By 784 Points",
+    result: "RCG Won By 445 Points",
     
     iplMatches: [
         { date: "May 16, 2026", match: "KKR vs GT" },
@@ -970,29 +970,30 @@ const matchConfig = {
     
     stats: {
         home: [
-            { name: "Ajinkya Rahane", batting: "14(14)", bowling: "-", total: 36, captain:true },
-            { name: "Manish Pandey", batting: "DNB", bowling: "-", total: 15 },
+            { name: "Ajinkya Rahane", batting: "77(53)", bowling: "-", total: 350, captain:true },
+            { name: "Manish Pandey", batting: "25(16)", bowling: "-", total: 71 },
+            { name: "Rinku Singh", batting: "0(1)", bowling: "-", total: -5 },
             { name: "Jos Buttler", batting: "57(35)", bowling: "-", total: 127 },
             { name: "Jason Holder", batting: "DNB", bowling: "0/39", total: -9 },
             { name: "Washington Sundar", batting: "DNB", bowling: "DNB", total: 0 },
             { name: "Tim David", batting: "28(12)", bowling: "DNB", total: 88 },
             { name: "Josh Hazlewood", batting: "-", bowling: "1/36", total: 24 },
-            { name: "Rahul Tewatia", batting: "2(4)", bowling: "DNB", total: 1 },
+            { name: "Rahul Tewatia", batting: "2(4)", bowling: "DNB", total: 1 }
 
 
         ],
         away: [
             { name: "Virat Kohli", batting: "58(37)", bowling: "-", total: 158 },
             { name: "Shreyas Iyer", batting: "1(3)", bowling: "-", total: 30, captain:true },
-            { name: "Cameron Green", batting: "52(28)", bowling: "1/25", total: 159 },
+            { name: "Cameron Green", batting: "54(31)", bowling: "1/56", total: 156 },
             { name: "Angkrish Raghuvanshi", batting: "82(44)", bowling: "-", total: 228 },
             { name: "Krunal Pandya", batting: "DNB", bowling: "0/27", total: -3 },
             { name: "Mitchell Marsh", batting: "96(57)", bowling: "DNB", total: 230 },
-            { name: "Anukul Roy", batting: "DNB", bowling: "0/17", total: 2 },
+            { name: "Anukul Roy", batting: "9(8)", bowling: "1/40", total: 31 },
             { name: "Bhuvneshwar Kumar", batting: "-", bowling: "2/38", total: 52 },
             { name: "Pat Cummins", batting: "-", bowling: "3/28", total: 110 },
             { name: "Mohsin Khan", batting: "-", bowling: "1/31", total: 38 },
-            { name: "Eshan Malinga", batting: "-", bowling: "1/26", total: 62 },
+            { name: "Eshan Malinga", batting: "-", bowling: "1/26", total: 62 }
             
 
 
@@ -1019,10 +1020,10 @@ const matchConfig = {
 
 // PLAYER OF THE MATCH DATA - Add to your JavaScript
 const potmData = {
-    name: "",           // Change player name
-    team: "",          // Change team name
-    stats: "", // Change stats
-    image: "" // Change image URL
+    name: "Mitchell Marsh",           // Change player name
+    team: "Royal Challengers Galle",          // Change team name
+    stats: "230 Points (96 from 57 Balls)", // Change stats
+    image: "https://documents.iplt20.com/ipl/IPLHeadshot2026/40.png" // Change image URL
 };
 
 // FUNCTION TO RENDER POTM - Add to your init() or call separately
