@@ -2,1052 +2,2338 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VPL Season 01 | Virtual Premier League 2026</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#03150b">
+    <title>VPL Season 02 | Virtual Premier League 2026-27</title>
+    <meta name="description" content="VPL Season 02 — Virtual Premier League based on the Big Bash League 2026-27. Five elite franchises, one ultimate dream. Team registrations open!">
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        vpl: {
-                            blue: '#0a0e27',
-                            gold: '#ffd700',
-                            goldDim: '#b8860b',
-                            black: '#050505',
-                            cyan: '#00f0ff',
-                            neonBlue: '#0066ff',
-                        },
-                        franchise: {
-                            sharks: '#0047AB',
-                            stallions: '#8B4513',
-                            challengers: '#DC143C',
-                            sunrisers: '#FF6B00',
-                            assassins: '#1a1a1a',
-                        }
-                    },
-                    fontFamily: {
-                        orbitron: ['Orbitron', 'sans-serif'],
-                        rajdhani: ['Rajdhani', 'sans-serif'],
-                        inter: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Site stylesheet -->
+    <!-- Styles inlined so the page renders standalone (no external css needed). Master copy: css/style.css -->
+<style>
+/* ============================================================
+   VPL SEASON 02 — Virtual Premier League (BBL 2026-27)
+   Shared stylesheet for all pages
+   Theme: dark space arena • gold + cyan + neon blue
+   Fonts : Orbitron (display) • Rajdhani (nav/headings) • Inter (body)
+   ============================================================ */
 
-    <style>
-        :root {
-            --gold: #ffd700;
-            --blue: #0066ff;
-            --cyan: #00f0ff;
-            --deep-space: #0a0e27;
-            --void: #050505;
-        }
+:root {
+  --bg-deep: #03150b;
+  --bg-navy: #072a19;
+  --bg-card: rgba(10, 42, 26, 0.75);
+  --gold: #ffd700;
+  --gold-dim: #b8860b;
+  --cyan: #a3e635;
+  --neon-blue: #16a34a;
+  --white: #ffffff;
+  --muted: #94a3b8;
+  --muted-dim: #64748b;
+  --green: #22c55e;
+  --red: #ef4444;
+  --border-glow: rgba(255, 215, 0, 0.25);
+  --radius: 16px;
+  --shadow-glow: 0 0 30px rgba(163, 230, 53, 0.15), 0 8px 40px rgba(0, 0, 0, 0.6);
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+/* ---------- Reset & base ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html {
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
+html { scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #050505 0%, #0a0e27 50%, #050505 100%);
-            color: #ffffff;
-            overflow-x: hidden;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-deep);
+  color: #e2e8f0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
 
-        /* Animated Background Grid */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 102, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 102, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            pointer-events: none;
-            z-index: 0;
-        }
+/* Ambient background: grid + radial glows + stars */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(34, 197, 94, 0.22), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 100% 110%, rgba(163, 230, 53, 0.10), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 0% 110%, rgba(255, 215, 0, 0.07), transparent 60%),
+    linear-gradient(180deg, #07160e 0%, #03150b 60%, #03140a 100%);
+}
 
-        /* Floating Particles */
-        .particle {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.3;
-            animation: float-particle 15s infinite linear;
-            z-index: 1;
-        }
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 75%);
+  pointer-events: none;
+}
 
-        @keyframes float-particle {
-            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
-        }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
 
-        /* Glassmorphism Header */
-        .glass-header {
-            background: rgba(10, 14, 39, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-        }
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* Subtle Gold Text */
-        .gold-text {
-            color: #ffd700;
-        }
+::selection { background: rgba(255, 215, 0, 0.35); color: #fff; }
 
-        /* Glowing Button - Subtle */
-        .glow-btn {
-            position: relative;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(0, 102, 255, 0.05));
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #07160e; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--gold-dim), var(--neon-blue)); border-radius: 8px; }
 
-        .glow-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-            transition: left 0.5s;
-        }
+/* ============================================================
+   HEADER / NAVIGATION
+   ============================================================ */
+.glass-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(6, 24, 14, 0.86);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.14);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
 
-        .glow-btn:hover::before {
-            left: 100%;
-        }
+.glass-header.scrolled {
+  background: rgba(3, 16, 9, 0.96);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(163, 230, 53, 0.06);
+}
 
-        .glow-btn:hover {
-            border-color: rgba(255, 215, 0, 0.4);
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-        }
+.header-inner { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; gap: 12px; }
 
-        /* Active Nav Link - Subtle */
-        .nav-active {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(0, 102, 255, 0.08));
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 0 8px rgba(255, 215, 0, 0.08);
-        }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
 
-        /* Dropdown Menu */
-        .dropdown-menu {
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
+.brand-logo {
+  position: relative;
+  flex-shrink: 0;
+}
 
-        .dropdown-item {
-            transition: all 0.3s ease;
-            position: relative;
-        }
+.brand-logo img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 215, 0, 0.55);
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
+  background: var(--bg-navy);
+}
 
-        .dropdown-item::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background: var(--gold);
-            transform: scaleY(0);
-            transition: transform 0.3s;
-        }
+@media (min-width: 640px) { .brand-logo img { width: 54px; height: 54px; } }
 
-        .dropdown-item:hover::after {
-            transform: scaleY(1);
-        }
+.brand-name {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+  white-space: nowrap;
+  line-height: 1.1;
+}
 
-        .dropdown-item:hover {
-            background: rgba(255, 215, 0, 0.05);
-            padding-left: 1.5rem;
-        }
+.brand-name .gold-text { color: var(--gold); text-shadow: 0 0 16px rgba(255, 215, 0, 0.5); }
 
-        /* Hero Section */
-        .hero-section {
-            position: relative;
-            height: 100vh;
-            min-height: 600px;
-            max-height: 900px;
-            overflow: hidden;
-        }
+.brand-tag {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #a3e635;
+  white-space: nowrap;
+}
 
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 100%, rgba(0, 240, 255, 0.03) 0%, transparent 50%);
-        }
+@media (max-width: 639px) { .brand-tag { display: none; } }
 
-        /* Carousel */
-        .carousel-slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out, transform 8s ease-out;
-            transform: scale(1.1);
-        }
+/* Desktop nav */
+.desktop-nav { display: none; align-items: center; gap: 4px; }
 
-        .carousel-slide.active {
-            opacity: 1;
-            transform: scale(1);
-        }
+@media (min-width: 1024px) { .desktop-nav { display: flex; } }
 
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.4) contrast(1.2);
-        }
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 15px;
+  border-radius: 10px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: #cbd5e1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
 
-        .carousel-overlay {
-            background: linear-gradient(to top, 
-                rgba(5, 5, 5, 1) 0%, 
-                rgba(5, 5, 5, 0.8) 30%, 
-                rgba(10, 14, 39, 0.4) 60%, 
-                rgba(10, 14, 39, 0.2) 100%);
-        }
+.nav-link:hover { color: var(--gold); background: rgba(255, 215, 0, 0.07); box-shadow: 0 0 18px rgba(255, 215, 0, 0.12) inset, 0 0 14px rgba(255, 215, 0, 0.08); }
 
-        /* Neon Border Cards - Subtle */
-        .neon-card {
-            background: rgba(10, 14, 39, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
+.nav-link.active {
+  color: var(--gold);
+  background: rgba(255, 215, 0, 0.08);
+  border-color: rgba(255, 215, 0, 0.35);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+}
 
-        .neon-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.15), transparent);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
+/* MORE dropdown */
+.nav-more { position: relative; }
 
-        .neon-card:hover::before {
-            opacity: 1;
-        }
+.nav-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 15px;
+  border-radius: 10px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: #cbd5e1;
+  background: none;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
 
-        .neon-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.05);
-            border-color: rgba(255, 215, 0, 0.15);
-        }
+.nav-more:hover .nav-more-btn,
+.nav-more-btn:hover { color: var(--gold); background: rgba(255, 215, 0, 0.07); }
 
-        /* Team Cards with Franchise Colors */
-        .team-card-sharks:hover {
-            box-shadow: 0 20px 40px rgba(0, 71, 171, 0.2);
-            border-color: rgba(0, 71, 171, 0.4);
-        }
-        .team-card-sharks:hover::before {
-            background: linear-gradient(135deg, transparent, rgba(0, 71, 171, 0.3), transparent);
-        }
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 190px;
+  background: rgba(7, 28, 17, 0.97);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 14px;
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.98);
+  transform-origin: top right;
+  transition: all 0.28s ease;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(163, 230, 53, 0.07);
+  z-index: 110;
+}
 
-        .team-card-stallions:hover {
-            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.2);
-            border-color: rgba(139, 69, 19, 0.4);
-        }
-        .team-card-stallions:hover::before {
-            background: linear-gradient(135deg, transparent, rgba(139, 69, 19, 0.3), transparent);
-        }
+.nav-more:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
 
-        .team-card-challengers:hover {
-            box-shadow: 0 20px 40px rgba(220, 20, 60, 0.2);
-            border-color: rgba(220, 20, 60, 0.4);
-        }
-        .team-card-challengers:hover::before {
-            background: linear-gradient(135deg, transparent, rgba(220, 20, 60, 0.3), transparent);
-        }
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  color: #e2e8f0;
+  transition: all 0.2s ease;
+}
 
-        .team-card-sunrisers:hover {
-            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.2);
-            border-color: rgba(255, 107, 0, 0.4);
-        }
-        .team-card-sunrisers:hover::before {
-            background: linear-gradient(135deg, transparent, rgba(255, 107, 0, 0.3), transparent);
-        }
+.dropdown-item i { width: 20px; text-align: center; color: var(--cyan); }
 
-        .team-card-assassins:hover {
-            box-shadow: 0 20px 40px rgba(26, 26, 26, 0.4);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        .team-card-assassins:hover::before {
-            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-        }
+.dropdown-item:hover { background: rgba(255, 215, 0, 0.08); color: var(--gold); padding-left: 18px; }
 
-        /* Progress Bar Animation */
-        .progress-bar {
-            position: relative;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.05);
-        }
+/* Mobile menu */
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  background: rgba(255, 215, 0, 0.04);
+  color: var(--gold);
+  font-size: 1.1rem;
+  transition: all 0.25s ease;
+}
 
-        .progress-fill {
-            position: relative;
-            overflow: hidden;
-        }
+.menu-toggle:hover { background: rgba(255, 215, 0, 0.1); }
 
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            animation: shimmer 2s infinite;
-        }
+@media (min-width: 1024px) { .menu-toggle { display: none; } }
 
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
+.mobile-menu {
+  display: none;
+  border-top: 1px solid rgba(255, 215, 0, 0.12);
+  max-height: 78vh;
+  overflow-y: auto;
+  padding: 10px 0 14px;
+}
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050505;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #ffd700, #0066ff);
-            border-radius: 3px;
-        }
+.mobile-menu.open { display: block; }
 
-        /* Mobile Menu */
-        .mobile-menu {
-            background: rgba(5, 5, 5, 0.98);
-            backdrop-filter: blur(20px);
-        }
+.mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.08em;
+  color: #cbd5e1;
+  transition: all 0.2s ease;
+}
 
-        /* WhatsApp Section */
-        .whatsapp-glow {
-            background: linear-gradient(135deg, rgba(37, 211, 102, 0.08), rgba(5, 5, 5, 0.9));
-            border: 1px solid rgba(37, 211, 102, 0.15);
-        }
+.mobile-link i { width: 22px; text-align: center; }
 
-        .whatsapp-glow:hover {
-            box-shadow: 0 0 25px rgba(37, 211, 102, 0.1);
-            border-color: rgba(37, 211, 102, 0.3);
-        }
+.mobile-link:hover { background: rgba(255, 255, 255, 0.05); color: var(--gold); }
 
-        /* Glitch Effect for Title - Subtle */
-        .glitch {
-            position: relative;
-        }
+.mobile-link.active { color: var(--gold); background: rgba(255, 215, 0, 0.08); }
 
-        /* Subtle Divider */
-        .subtle-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), rgba(0, 102, 255, 0.3), rgba(255, 215, 0, 0.3), transparent);
-        }
+.mobile-sub-label {
+  padding: 14px 18px 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
 
-        /* Stat Counter Animation */
-        @keyframes count-up {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+/* ============================================================
+   HERO (home)
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 70px 0 90px;
+}
 
-        .stat-animate {
-            animation: count-up 0.8s ease-out forwards;
-        }
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(34, 197, 94, 0.25), transparent 65%),
+    radial-gradient(ellipse 50% 45% at 85% 25%, rgba(163, 230, 53, 0.12), transparent 60%);
+  z-index: 0;
+}
 
-        /* Float Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
+#particles { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.9);
+  opacity: 0;
+  animation: floatUp linear infinite;
+}
 
-        /* Pulse Animation - Subtle */
-        @keyframes subtle-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
+@keyframes floatUp {
+  0%   { transform: translateY(20vh); opacity: 0; }
+  12%  { opacity: 0.9; }
+  85%  { opacity: 0.6; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
 
-        .animate-subtle-pulse {
-            animation: subtle-pulse 3s ease-in-out infinite;
-        }
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
 
-        /* Touch device optimizations */
-        @media (hover: none) {
-            .neon-card:hover {
-                transform: none;
-            }
-            .glow-btn:hover {
-                transform: none;
-            }
-        }
+@media (min-width: 900px) { .hero-inner { grid-template-columns: 1.25fr 0.75fr; } }
 
-        /* Mobile-specific fixes */
-        @media (max-width: 640px) {
-            .hero-section {
-                min-height: 500px;
-                height: 85vh;
-            }
-            
-            .carousel-slide img {
-                object-position: center;
-            }
-        }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.07);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  animation: pulseGlow 2.6s ease-in-out infinite;
+}
 
-        /* Tablet */
-        @media (min-width: 641px) and (max-width: 1024px) {
-            .hero-section {
-                min-height: 550px;
-            }
-        }
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.15); }
+  50%      { box-shadow: 0 0 26px rgba(255, 215, 0, 0.5); }
+}
 
-        /* Large screens */
-        @media (min-width: 1920px) {
-            .hero-section {
-                max-height: 1000px;
-            }
-        }
+.hero-title {
+  margin-top: 22px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-transform: uppercase;
+}
 
-        /* Prevent text selection on interactive elements */
-        .no-select {
-            -webkit-user-select: none;
-            user-select: none;
-        }
-    </style>
+.hero-title .gold-text {
+  background: linear-gradient(120deg, #fff7cc, var(--gold) 45%, #b8860b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 22px rgba(255, 215, 0, 0.4));
+}
+
+.hero-title .cyan-text {
+  background: linear-gradient(120deg, #ecfccb, var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(163, 230, 53, 0.35));
+}
+
+.hero-sub {
+  margin-top: 18px;
+  max-width: 560px;
+  color: var(--muted);
+  font-size: 1.02rem;
+  font-weight: 300;
+}
+
+.hero-sub strong { color: var(--cyan); font-weight: 600; }
+
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+
+.hero-logo { display: none; justify-content: center; }
+
+@media (min-width: 900px) { .hero-logo { display: flex; } }
+
+.hero-logo img {
+  width: min(340px, 100%);
+  border-radius: 24px;
+  box-shadow: 0 0 60px rgba(163, 230, 53, 0.22), 0 30px 80px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  animation: floatLogo 6s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  color: var(--muted-dim);
+  font-size: 1.4rem;
+  animation: bounceDown 2s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translate(-50%, 0); opacity: 0.7; }
+  50%      { transform: translate(-50%, 10px); opacity: 1; }
+}
+
+/* ============================================================
+   PAGE HERO (sub pages)
+   ============================================================ */
+.page-hero {
+  position: relative;
+  padding: 64px 0 40px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 55% 60% at 50% -10%, rgba(34, 197, 94, 0.28), transparent 65%);
+  z-index: 0;
+}
+
+.page-hero-inner { position: relative; z-index: 1; }
+
+.page-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.page-kicker::before, .page-kicker::after {
+  content: "";
+  height: 1px;
+  width: 34px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+
+.page-kicker::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+.page-title {
+  margin-top: 14px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.7rem, 4.5vw, 2.8rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.page-title .gold-text { color: var(--gold); text-shadow: 0 0 24px rgba(255, 215, 0, 0.45); }
+
+.page-sub { margin: 12px auto 0; max-width: 620px; color: var(--muted); font-size: 0.98rem; }
+
+/* ============================================================
+   TICKER / MARQUEE
+   ============================================================ */
+.ticker {
+  border-top: 1px solid rgba(255, 215, 0, 0.16);
+  border-bottom: 1px solid rgba(163, 230, 53, 0.14);
+  background: rgba(7, 10, 26, 0.8);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 12px 0;
+}
+
+.ticker-track {
+  display: inline-block;
+  animation: marquee 28s linear infinite;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+}
+
+.ticker-track span { margin: 0 34px; }
+
+.ticker-track .sep { color: var(--gold); }
+.ticker-track .hl { color: var(--cyan); }
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section { padding: 72px 0; position: relative; }
+
+.section-alt { background: rgba(7, 28, 17, 0.5); border-top: 1px solid rgba(255, 255, 255, 0.04); border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+
+.section-head { text-align: center; margin-bottom: 44px; }
+
+.section-kicker {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.section-title {
+  margin-top: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.45rem, 3.6vw, 2.3rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.section-title .gold-text { color: var(--gold); text-shadow: 0 0 22px rgba(255, 215, 0, 0.4); }
+
+.section-line {
+  width: 110px;
+  height: 3px;
+  margin: 18px auto 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--cyan), transparent);
+}
+
+.section-sub { max-width: 640px; margin: 14px auto 0; color: var(--muted); font-size: 0.96rem; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.28s ease;
+  white-space: nowrap;
+}
+
+.btn i { font-size: 0.95em; }
+
+.btn-gold {
+  background: linear-gradient(135deg, #ffe066, var(--gold) 45%, #d4af37);
+  color: #151515;
+  box-shadow: 0 6px 26px rgba(255, 215, 0, 0.35);
+}
+
+.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 34px rgba(255, 215, 0, 0.5); filter: brightness(1.06); }
+
+.btn-cyan {
+  background: linear-gradient(135deg, rgba(163, 230, 53, 0.16), rgba(34, 197, 94, 0.22));
+  color: var(--cyan);
+  border-color: rgba(163, 230, 53, 0.5);
+  box-shadow: 0 6px 26px rgba(163, 230, 53, 0.15);
+}
+
+.btn-cyan:hover { transform: translateY(-3px); box-shadow: 0 12px 34px rgba(163, 230, 53, 0.3); background: rgba(163, 230, 53, 0.22); }
+
+.btn-outline {
+  background: transparent;
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.4);
+}
+
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
+
+.btn-block { width: 100%; }
+.btn-sm { padding: 9px 16px; font-size: 0.82rem; border-radius: 10px; }
+.btn-lg { padding: 16px 34px; font-size: 1.02rem; border-radius: 14px; }
+.btn[disabled] { opacity: 0.6; pointer-events: none; }
+
+/* ============================================================
+   BADGES & CHIPS
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.badge-gold   { background: rgba(255, 215, 0, 0.12); color: var(--gold); border: 1px solid rgba(255, 215, 0, 0.4); }
+.badge-cyan   { background: rgba(163, 230, 53, 0.1); color: var(--cyan); border: 1px solid rgba(163, 230, 53, 0.4); }
+.badge-green  { background: rgba(34, 197, 94, 0.12); color: var(--green); border: 1px solid rgba(34, 197, 94, 0.4); }
+.badge-red    { background: rgba(239, 68, 68, 0.12); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.4); }
+.badge-gray   { background: rgba(148, 163, 184, 0.1); color: var(--muted); border: 1px solid rgba(148, 163, 184, 0.3); }
+.badge-blue   { background: rgba(34, 197, 94, 0.14); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.45); }
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 26px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--cyan), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 215, 0, 0.3);
+  box-shadow: var(--shadow-glow);
+}
+
+.card:hover::before { opacity: 1; }
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.14), rgba(163, 230, 53, 0.1));
+  color: var(--gold);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  margin-bottom: 18px;
+}
+
+.card-title { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.12rem; color: #fff; letter-spacing: 0.03em; }
+.card-text { margin-top: 8px; color: var(--muted); font-size: 0.92rem; }
+
+/* Stats strip */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 900px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.stat-card {
+  text-align: center;
+  padding: 30px 16px;
+}
+
+.stat-value {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  background: linear-gradient(120deg, #fff, var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.35));
+}
+
+.stat-label {
+  margin-top: 8px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.84rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat-note { margin-top: 6px; font-size: 0.72rem; color: var(--muted-dim); }
+
+/* ============================================================
+   FRANCHISE CARDS
+   ============================================================ */
+.franchise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 22px;
+}
+
+.franchise-card {
+  text-align: center;
+  padding: 30px 20px 24px;
+}
+
+.franchise-crest {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: var(--cyan);
+  background: radial-gradient(circle at 35% 30%, rgba(163, 230, 53, 0.16), rgba(34, 197, 94, 0.1));
+  border: 2px dashed rgba(163, 230, 53, 0.4);
+  overflow: hidden;
+}
+
+.franchise-crest img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+.franchise-name { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.02rem; color: #fff; letter-spacing: 0.05em; min-height: 1.4em; }
+
+.franchise-tag { margin-top: 4px; font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-dim); }
+
+.franchise-meta {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.franchise-meta .meta-row { display: flex; justify-content: space-between; gap: 10px; }
+
+.franchise-meta .meta-row b { color: #e2e8f0; font-weight: 600; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.04em; }
+
+.owner-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.14);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #86efac;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+  border: 2px dashed rgba(148, 163, 184, 0.3);
+  border-radius: 20px;
+  padding: 70px 24px;
+  text-align: center;
+  background: rgba(7, 28, 17, 0.55);
+}
+
+.empty-state .empty-icon {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.1rem;
+  color: var(--gold);
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.empty-state h3 { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.25rem; color: #fff; letter-spacing: 0.04em; text-transform: uppercase; }
+
+.empty-state p { margin: 12px auto 0; max-width: 520px; color: var(--muted); font-size: 0.95rem; }
+
+.empty-state .badge { margin-top: 20px; }
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+.table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-card);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+
+.points-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+
+.points-table thead th {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: left;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.25);
+  background: rgba(255, 215, 0, 0.05);
+  white-space: nowrap;
+}
+
+.points-table tbody td {
+  padding: 15px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.94rem;
+  color: #cbd5e1;
+  white-space: nowrap;
+}
+
+.points-table tbody tr:last-child td { border-bottom: none; }
+
+.points-table tbody tr { transition: background 0.2s ease; }
+.points-table tbody tr:hover { background: rgba(255, 215, 0, 0.04); }
+
+.points-table .pos { font-family: 'Orbitron', sans-serif; font-weight: 800; color: var(--cyan); }
+.points-table .team-cell { display: flex; align-items: center; gap: 12px; font-weight: 600; color: #fff; }
+
+.team-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--bg-navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  color: var(--gold);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+}
+
+.points-table .pts { font-family: 'Orbitron', sans-serif; font-weight: 800; color: var(--gold); }
+
+.legend-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px; }
+
+/* ============================================================
+   FORMS (Team Registration)
+   ============================================================ */
+.form-panel {
+  position: relative;
+  border-radius: 22px;
+  padding: 34px 28px;
+  background: linear-gradient(160deg, rgba(10, 42, 26, 0.92), rgba(5, 20, 12, 0.96));
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(163, 230, 53, 0.06);
+  overflow: hidden;
+}
+
+.form-panel::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--cyan), var(--neon-blue), var(--gold));
+  background-size: 300% 100%;
+  animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 0; }
+  100% { background-position: 300% 0; }
+}
+
+.form-head { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+
+.form-head .form-icon {
+  width: 48px; height: 48px;
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.18), rgba(163, 230, 53, 0.12));
+  color: var(--gold);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.form-title { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.28rem; color: #fff; letter-spacing: 0.04em; }
+
+.form-note { color: var(--muted); font-size: 0.9rem; margin: 6px 0 22px; }
+
+.form-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+
+@media (min-width: 640px) { .form-grid { grid-template-columns: 1fr 1fr; } .form-field.full { grid-column: 1 / -1; } }
+
+.field label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.84rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  margin-bottom: 8px;
+}
+
+.field label i { color: var(--cyan); width: 16px; text-align: center; }
+.field label .req { color: var(--gold); }
+
+.input, .select, textarea.input {
+  width: 100%;
+  padding: 13px 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: rgba(3, 14, 8, 0.72);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.input::placeholder { color: var(--muted-dim); }
+
+.input:focus, .select:focus, textarea.input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.14), 0 0 18px rgba(163, 230, 53, 0.15);
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3e%3cpath fill='%23ffd700' d='M6 8L0 0h12z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.select option { background: #072a19; color: #fff; }
+
+.select option:disabled { color: var(--muted-dim); }
+
+.field-hint { margin-top: 6px; font-size: 0.76rem; color: var(--muted-dim); }
+
+/* Colour picker */
+.color-field { display: flex; align-items: center; gap: 12px; }
+
+.color-input {
+  width: 54px;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: rgba(3, 14, 8, 0.72);
+  padding: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.color-input::-webkit-color-swatch-wrapper { padding: 2px; }
+.color-input::-webkit-color-swatch { border-radius: 8px; border: none; }
+
+.color-hex {
+  flex: 1;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+/* File dropzone */
+.file-drop {
+  position: relative;
+  border: 2px dashed rgba(163, 230, 53, 0.35);
+  border-radius: 14px;
+  padding: 26px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: rgba(163, 230, 53, 0.03);
+}
+
+.file-drop:hover, .file-drop.dragover { border-color: var(--gold); background: rgba(255, 215, 0, 0.05); }
+
+.file-drop i { font-size: 1.6rem; color: var(--cyan); }
+
+.file-drop p { margin-top: 8px; font-size: 0.86rem; color: var(--muted); }
+
+.file-drop p b { color: var(--gold); font-family: 'Rajdhani', sans-serif; letter-spacing: 0.06em; }
+
+.file-drop input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+.file-drop .file-preview {
+  display: none;
+  margin-top: 12px;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+}
+
+.file-drop.has-file { border-style: solid; border-color: var(--green); }
+
+.file-drop.has-file .file-preview { display: flex; }
+
+.file-drop.has-file .file-preview img {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: var(--bg-navy);
+}
+
+.file-drop .file-preview .fa-xmark { color: var(--red); cursor: pointer; margin-left: 6px; }
+
+/* Alerts */
+.form-alert {
+  display: none;
+  margin-top: 20px;
+  padding: 15px 18px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.form-alert i { margin-top: 2px; }
+
+.form-alert.success { display: flex; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.4); color: #86efac; }
+.form-alert.error { display: flex; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; }
+.form-alert.warn { display: flex; background: rgba(255, 215, 0, 0.08); border: 1px solid rgba(255, 215, 0, 0.4); color: #fde68a; }
+
+/* Success panel */
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.form-success.show { display: block; animation: fadeUp 0.6s ease; }
+
+.form-success .success-icon {
+  width: 86px; height: 86px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  color: var(--gold);
+  background: rgba(255, 215, 0, 0.1);
+  border: 2px solid rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.25);
+  animation: popIn 0.5s ease;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.4); opacity: 0; }
+  70% { transform: scale(1.12); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-success h3 { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.3rem; color: #fff; }
+.form-success p { margin-top: 10px; color: var(--muted); font-size: 0.94rem; max-width: 440px; margin-inline: auto; }
+
+/* Spinner */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(21, 21, 21, 0.3);
+  border-top-color: #151515;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner.light { border-color: rgba(255, 255, 255, 0.25); border-top-color: var(--gold); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Registration info side */
+.info-item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+
+.info-item:last-child { border-bottom: none; }
+
+.info-item .info-icon {
+  width: 46px; height: 46px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem;
+  color: var(--cyan);
+  background: rgba(163, 230, 53, 0.08);
+  border: 1px solid rgba(163, 230, 53, 0.3);
+}
+
+.info-item h4 { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.08em; color: #fff; text-transform: uppercase; }
+.info-item p { margin-top: 4px; font-size: 0.88rem; color: var(--muted); }
+
+/* ============================================================
+   REGISTRATION BANNER (teams page)
+   ============================================================ */
+.progress-strip { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 24px auto 0; }
+
+.progress-row { display: flex; align-items: center; gap: 12px; }
+
+.progress-row .p-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: rgba(148, 163, 184, 0.25);
+  flex-shrink: 0;
+}
+
+.progress-row .p-dot.done { background: var(--green); box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); }
+
+.progress-row .p-dot.pending { background: var(--gold); box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); animation: pulseGlow 2s infinite; }
+
+.progress-row .p-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.9rem; color: #e2e8f0; }
+
+.progress-row .p-status { margin-left: auto; font-size: 0.76rem; color: var(--muted-dim); font-family: 'Rajdhani', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ============================================================
+   VENUE CARDS
+   ============================================================ */
+.venue-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.venue-card { text-align: left; padding: 24px; }
+
+.venue-card .venue-icon {
+  width: 52px; height: 52px;
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  color: var(--cyan);
+  background: rgba(163, 230, 53, 0.08);
+  border: 1px solid rgba(163, 230, 53, 0.3);
+  margin-bottom: 14px;
+}
+
+.venue-card h3 { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1rem; color: #fff; }
+.venue-card .venue-city { margin-top: 4px; font-size: 0.85rem; color: var(--muted); }
+.venue-card .venue-meta { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--muted-dim); }
+
+/* ============================================================
+   RULES / SCORING
+   ============================================================ */
+.rule-card { padding: 26px; }
+
+.rule-card .rule-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+
+.rule-card .rule-head i {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  color: var(--gold);
+  background: rgba(255, 215, 0, 0.09);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.rule-card .rule-head h3 { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.05rem; color: #fff; letter-spacing: 0.03em; }
+
+.scoring-row { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 12px; }
+
+@media (min-width: 640px) { .scoring-row { grid-template-columns: 1fr 1fr; } }
+
+.scoring-item {
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.scoring-item h4 { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.92rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+
+.scoring-item ul { list-style: none; display: grid; gap: 6px; font-size: 0.88rem; color: var(--muted); }
+
+.scoring-item li { display: flex; justify-content: space-between; gap: 12px; }
+
+.scoring-item li span:first-child { color: #cbd5e1; }
+
+.scoring-item li span:last-child { font-weight: 600; color: var(--gold); white-space: nowrap; }
+
+.rule-note {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255, 215, 0, 0.06);
+  border: 1px dashed rgba(255, 215, 0, 0.35);
+  font-size: 0.85rem;
+  color: #fde68a;
+}
+
+/* ============================================================
+   SEASON 01 HIGHLIGHTS
+   ============================================================ */
+.champion-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 34px 24px;
+}
+
+.champion-banner .champ-crown { font-size: 2.6rem; color: var(--gold); filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.6)); animation: pulseGlow 2.6s infinite; }
+
+.champion-banner h3 { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.7rem; color: #fff; letter-spacing: 0.05em; }
+
+.champion-banner h3 .gold-text { color: var(--gold); }
+
+.champion-banner .champ-record { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 8px; }
+
+.award-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+
+.award-card { text-align: center; padding: 24px 18px; }
+
+.award-card .award-icon { font-size: 1.5rem; color: var(--cyan); margin-bottom: 10px; }
+
+.award-card h4 { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+
+.award-card .award-value { margin-top: 6px; font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--gold); }
+
+.award-card .award-player { margin-top: 4px; font-size: 0.88rem; color: #e2e8f0; font-weight: 600; }
+
+.award-card .award-team { font-size: 0.78rem; color: var(--cyan); font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  border-top: 1px solid rgba(255, 215, 0, 0.16);
+  background: rgba(3, 16, 9, 0.92);
+  padding: 46px 0 24px;
+  margin-top: 20px;
+}
+
+.footer-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+
+@media (min-width: 768px) { .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+
+.footer-brand p { margin-top: 12px; color: var(--muted-dim); font-size: 0.85rem; max-width: 300px; }
+
+.footer-col h4 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.footer-col a {
+  display: block;
+  padding: 5px 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+}
+
+.footer-col a:hover { color: var(--cyan); padding-left: 6px; }
+
+.footer-bottom {
+  margin-top: 34px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--muted-dim);
+  text-align: center;
+}
+
+@media (min-width: 768px) { .footer-bottom { flex-direction: row; text-align: left; } }
+
+.footer-bottom .gold-text { color: var(--gold); }
+
+/* ============================================================
+   UTILITIES & ANIMATIONS
+   ============================================================ */
+.gold-text { color: var(--gold); }
+.cyan-text { color: var(--cyan); }
+
+.text-center { text-align: center; }
+.mt-2 { margin-top: 8px; } .mt-3 { margin-top: 14px; } .mt-4 { margin-top: 20px; } .mt-5 { margin-top: 28px; }
+
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.fade-in { animation: fadeUp 0.8s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+
+/* ============================================================
+   MOBILE POLISH — phones & small screens
+   ============================================================ */
+html { -webkit-tap-highlight-color: transparent; }
+
+@media (max-width: 899px) {
+  .hero { min-height: auto; padding: 48px 0 84px; }
+  .hero-logo { display: flex; margin-top: 6px; }
+  .hero-logo img { width: min(230px, 72%); }
+  .hero-title { font-size: clamp(1.8rem, 9vw, 3rem); }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  .franchise-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .section { padding: 50px 0; }
+  .hero-cta { flex-direction: column; align-items: stretch; }
+  .hero-cta .btn { width: 100%; }
+  .brand-name { font-size: 1.02rem; }
+  .page-hero { padding: 46px 0 28px; }
+  .form-panel { padding: 26px 18px; }
+  .franchise-grid { grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 14px; }
+  .franchise-card { padding: 22px 14px 18px; }
+  .franchise-crest { width: 76px; height: 76px; font-size: 1.8rem; }
+  .footer-bottom { gap: 10px; }
+  .card { padding: 20px; }
+  .points-table tbody td { padding: 12px 14px; }
+  .empty-state { padding: 48px 18px; }
+  .stat-card { padding: 22px 12px; }
+  .stats-grid { gap: 12px; }
+  .ticker { padding: 10px 0; }
+  .ticker-track { font-size: 0.8rem; }
+}
+
+@media (max-width: 380px) {
+  .brand-logo img { width: 40px; height: 40px; }
+  .brand-name { font-size: 0.92rem; }
+  .franchise-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .franchise-meta { font-size: 0.78rem; }
+}
+
+</style>
 </head>
-<body class="antialiased relative">
-
-    <!-- Background Grid -->
-    <div class="bg-grid"></div>
-
-    <!-- Floating Particles -->
-    <div id="particles"></div>
+<body data-page="home">
 
     <!-- ================= HEADER ================= -->
-    <header class="glass-header sticky top-0 z-50">
-        <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
-            <div class="flex justify-between items-center">
-                
-                <!-- Logo -->
-                <div class="flex items-center gap-2 sm:gap-3 lg:gap-4">
-                    <div class="relative flex-shrink-0">
-                        <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-blue-500 rounded-full blur-lg opacity-30"></div>
-                        <img src="season-1/logo.png" alt="VPL Logo" class="relative h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 rounded-full border-2 border-yellow-400/50 object-cover">
+    <header class="glass-header">
+        <div class="container">
+            <div class="header-inner">
+                <!-- Brand -->
+                <div class="brand">
+                    <!--
+                        🔑 OFFICIAL SEASON 02 LOGO:
+                        Put your logo file in this same folder and update the file name in
+                        js/main.js → const VPL_LOGO  (default: logo2.png)
+                    -->
+                    <div class="brand-logo">
+                        <img src="logo2.png" alt="VPL Season 02 Logo" class="vpl-logo">
                     </div>
                     <div class="min-w-0">
-                        <h1 class="font-orbitron text-xl sm:text-2xl lg:text-3xl font-black tracking-wider text-white whitespace-nowrap">
-                            VPL <span class="gold-text">2026</span>
-                        </h1>
-                        <p class="font-rajdhani text-[10px] sm:text-xs text-blue-300 tracking-[0.2em] sm:tracking-[0.3em] uppercase hidden sm:block">Virtual Premier League</p>
+                        <div class="brand-name">VPL <span class="gold-text">2026-27</span></div>
+                        <div class="brand-tag">Virtual Premier League · Season 02</div>
                     </div>
                 </div>
 
-                <!-- Desktop Navigation -->
-                <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
-                    <!-- Home - Current Page -->
-                    <a href="season-1/index.html" class="nav-active px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-yellow-400 transition-all whitespace-nowrap">
-                        <i class="fas fa-home mr-1 xl:mr-2"></i>HOME
-                    </a>
-
-                    <!-- Matches -->
-                    <a href="season-1/matches.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
-                        <i class="fas fa-handshake mr-3 w-5"></i>MATCHES
-                    </a>
-
-                    <!-- Points Table -->
-                    <a href="season-1/points.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
-                        <i class="fas fa-table mr-1 xl:mr-2"></i>POINTS
-                    </a>
-
-                    <!-- Teams -->
-                    <a href="season-1/teams.html" class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all whitespace-nowrap">
-                        <i class="fas fa-shield-halved mr-1 xl:mr-2"></i>TEAMS
-                    </a>
-
-                    <!-- More Dropdown -->
-                    <div class="relative group">
-                        <button class="glow-btn px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-rajdhani font-bold text-xs xl:text-sm tracking-wider text-white hover:text-yellow-400 transition-all flex items-center gap-1 xl:gap-2 whitespace-nowrap">
-                            <i class="fas fa-ellipsis-vertical"></i>MORE
-                            <i class="fas fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
-                        </button>
-                        
-                        <div class="dropdown-menu absolute top-full right-0 mt-2 w-44 sm:w-48 rounded-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
-                            <a href="season-1/stats.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
-                                <i class="fas fa-chart-line mr-2 w-5"></i>Stats
-                            </a>
-                            <a href="season-1/auction.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
-                                <i class="fas fa-gavel mr-2 w-5"></i>Auction
-                            </a>
-                            <a href="season-1/venues.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
-                                <i class="fas fa-location-dot mr-2 w-5"></i>Venues
-                            </a>
-                            <a href="season-1/finale.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400 border-b border-white/5">
-                                <i class="fas fa-trophy mr-3 w-5"></i>Finale
-                            </a>
-                            <a href="season-1/rules.html" class="dropdown-item block px-4 py-3 text-sm font-rajdhani font-semibold text-white hover:text-yellow-400">
-                                <i class="fas fa-scale-balanced mr-2 w-5"></i>Rules
-                            </a>
+                <!-- Desktop nav -->
+                <nav class="desktop-nav">
+                    <a href="index.html" class="nav-link active"><i class="fas fa-home"></i>HOME</a>
+                    <a href="matches.html" class="nav-link"><i class="fas fa-handshake"></i>MATCHES</a>
+                    <a href="points.html" class="nav-link"><i class="fas fa-table"></i>POINTS</a>
+                    <a href="teams.html" class="nav-link"><i class="fas fa-shield-halved"></i>TEAMS</a>
+                    <div class="nav-more">
+                        <button class="nav-more-btn" type="button"><i class="fas fa-ellipsis-vertical"></i>MORE <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-menu">
+                            <a href="stats.html" class="dropdown-item"><i class="fas fa-chart-line"></i>Stats</a>
+                            <a href="auction.html" class="dropdown-item"><i class="fas fa-gavel"></i>Auction</a>
+                            <a href="venues.html" class="dropdown-item"><i class="fas fa-location-dot"></i>Venues</a>
+                            <a href="rules.html" class="dropdown-item"><i class="fas fa-scale-balanced"></i>Rules</a>
                         </div>
                     </div>
                 </nav>
 
-                <!-- Mobile Menu Button -->
-                <button onclick="toggleMobileMenu()" class="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg border border-yellow-400/20 text-yellow-400 hover:bg-yellow-400/5 transition-all no-select" aria-label="Toggle menu">
-                    <i class="fas fa-bars text-lg" id="menu-icon"></i>
+                <!-- Mobile menu button -->
+                <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                    <i class="fas fa-bars" id="menu-icon"></i>
                 </button>
             </div>
-        </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu hidden lg:hidden border-t border-yellow-400/10 max-h-[80vh] overflow-y-auto">
-            <div class="container mx-auto px-4 py-4 space-y-1">
-                <a href="season-1/index.html" class="block px-4 py-3 rounded-lg bg-yellow-400/5 border border-yellow-400/20 text-yellow-400 font-rajdhani font-bold text-sm">
-                    <i class="fas fa-home mr-3 w-5"></i>Home
-                </a>
-                <a href="season-1/matches.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
-                    <i class="fas fa-handshake mr-3 w-5"></i>Matches
-                </a>
-                <a href="season-1/points.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
-                    <i class="fas fa-table mr-3 w-5"></i>Points Table
-                </a>
-                <a href="season-1/teams.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-white font-rajdhani font-bold text-sm transition-all">
-                    <i class="fas fa-shield-halved mr-3 w-5"></i>Teams
-                </a>
-                <div class="pt-2 border-t border-white/10 mt-2">
-                    <p class="px-4 py-2 text-xs text-gray-500 font-rajdhani uppercase tracking-wider">More Options</p>
-                    <a href="season-1/stats.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
-                        <i class="fas fa-chart-line mr-3 w-5"></i>Stats
-                    </a>
-                    <a href="season-1/auction.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
-                        <i class="fas fa-gavel mr-3 w-5"></i>Auction
-                    </a>
-                    <a href="season-1/venues.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
-                        <i class="fas fa-location-dot mr-3 w-5"></i>Venues
-                    </a>
-                    <a href="season-1/finale.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
-                        <i class="fas fa-trophy mr-3 w-5"></i>Finale
-                    </a>
-                    <a href="season-1/rules.html" class="block px-4 py-3 rounded-lg hover:bg-white/5 text-gray-300 font-rajdhani font-semibold text-sm transition-all">
-                        <i class="fas fa-scale-balanced mr-3 w-5"></i>Rules
-                    </a>
-                </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="mobile-menu">
+                <a href="index.html" class="mobile-link active"><i class="fas fa-home"></i>Home</a>
+                <a href="matches.html" class="mobile-link"><i class="fas fa-handshake"></i>Matches</a>
+                <a href="points.html" class="mobile-link"><i class="fas fa-table"></i>Points Table</a>
+                <a href="teams.html" class="mobile-link"><i class="fas fa-shield-halved"></i>Teams</a>
+                <div class="mobile-sub-label">More Options</div>
+                <a href="stats.html" class="mobile-link"><i class="fas fa-chart-line"></i>Stats</a>
+                <a href="auction.html" class="mobile-link"><i class="fas fa-gavel"></i>Auction</a>
+                <a href="venues.html" class="mobile-link"><i class="fas fa-location-dot"></i>Venues</a>
+                <a href="rules.html" class="mobile-link"><i class="fas fa-scale-balanced"></i>Rules</a>
             </div>
         </div>
     </header>
 
-    <!-- ================= HERO CAROUSEL ================= -->
-    <section class="hero-section relative">
-        <div class="hero-bg"></div>
-
-        <!-- Slides -->
-        <div class="carousel-slide active" data-slide="0">
-            <img src="season-1/slide1.png" alt="Cricket Action" loading="eager">
-        </div>
-        <div class="carousel-slide" data-slide="1">
-            <img src="https://ipl2026.live/images/Rollwin%20Website%20Banner.jpg" alt="IPL 2026" loading="lazy">
-        </div>
-
-        <!-- Overlay Content -->
-        <div class="carousel-overlay absolute inset-0 flex flex-col justify-end pb-16 sm:pb-20 md:pb-24 px-4 sm:px-8 md:px-12 lg:px-20 z-10">
-            <div class="max-w-4xl mx-auto md:mx-0 w-full">
-                <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                    <div class="h-px w-8 sm:w-12 bg-gradient-to-r from-yellow-400 to-transparent flex-shrink-0"></div>
-                    <span class="font-orbitron text-[10px] sm:text-xs md:text-sm text-yellow-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase animate-subtle-pulse">Season 01</span>
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+        <div id="particles"></div>
+        <div class="container">
+            <div class="hero-inner">
+                <div>
+                    <span class="hero-badge"><i class="fas fa-bolt"></i> Season 02</span>
+                    <h1 class="hero-title">
+                        Virtual<br>Premier League<br><span class="gold-text">2026</span><span class="cyan-text">-27</span>
+                    </h1>
+                    <p class="hero-sub">
+                        Five elite franchises. One ultimate dream.
+                        Powered by the <strong>Big Bash League 2026-27</strong> —
+                        <strong>12 Dec 2026 → 26 Jan 2027</strong> · points on the cricketxi fantasy system.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#registration" class="btn btn-gold btn-lg"><i class="fas fa-user-plus"></i>Register Franchise</a>
+                        <a href="matches.html" class="btn btn-cyan btn-lg"><i class="fas fa-handshake"></i>View Matches</a>
+                    </div>
                 </div>
-                
-                <h2 class="font-orbitron text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white mb-3 sm:mb-4 glitch leading-[1.1] sm:leading-tight">
-                    VIRTUAL <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400">PREMIER</span><br class="hidden sm:block">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">LEAGUE</span>
-                </h2>
-                
-                <p class="font-rajdhani text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-xl sm:max-w-2xl mb-6 sm:mb-8 leading-relaxed px-1 sm:px-0">
-                    Five Elite Franchises. One Ultimate Dream. Experience the future of fantasy cricket in a digital arena.
-                </p>
-
-                <div class="flex flex-wrap gap-3 sm:gap-4">
-                    <a href="season-1/matches.html" class="group relative px-5 sm:px-6 md:px-8 py-3 sm:py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg font-orbitron font-bold text-black tracking-wider overflow-hidden transition-all hover:shadow-lg hover:scale-105 text-xs sm:text-sm">
-                        <span class="relative z-10">VIEW MATCHES</span>
-                        <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 transform translate-x-full group-hover:translate-x-0 transition-transform"></div>
-                    </a>
-                    <a href="season-1/teams.html" class="px-5 sm:px-6 md:px-8 py-3 sm:py-4 border border-white/20 rounded-lg font-orbitron font-bold text-white tracking-wider hover:border-yellow-400/50 hover:text-yellow-400 transition-all text-xs sm:text-sm">
-                        EXPLORE TEAMS
-                    </a>
+                <div class="hero-logo">
+                    <img src="logo2.png" alt="VPL Season 02 Official Logo" class="vpl-logo">
                 </div>
             </div>
         </div>
-
-        <!-- Carousel Controls -->
-        <div class="absolute bottom-4 sm:bottom-6 md:bottom-8 right-4 sm:right-6 md:right-8 flex gap-2 sm:gap-3 z-20">
-            <button onclick="prevSlide()" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-yellow-400/50 hover:text-yellow-400 hover:bg-yellow-400/5 transition-all backdrop-blur-sm no-select" aria-label="Previous slide">
-                <i class="fas fa-chevron-left text-sm sm:text-base"></i>
-            </button>
-            <button onclick="nextSlide()" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-yellow-400/50 hover:text-yellow-400 hover:bg-yellow-400/5 transition-all backdrop-blur-sm no-select" aria-label="Next slide">
-                <i class="fas fa-chevron-right text-sm sm:text-base"></i>
-            </button>
-        </div>
-
-        <!-- Slide Indicators -->
-        <div class="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            <button onclick="goToSlide(0)" class="slide-indicator w-8 sm:w-12 h-1 rounded-full bg-white/20 transition-all hover:bg-yellow-400/50 no-select" data-index="0" aria-label="Go to slide 1"></button>
-            <button onclick="goToSlide(1)" class="slide-indicator w-8 sm:w-12 h-1 rounded-full bg-white/20 transition-all hover:bg-yellow-400/50 no-select" data-index="1" aria-label="Go to slide 2"></button>
-        </div>
+        <div class="scroll-hint"><i class="fas fa-chevron-down"></i></div>
     </section>
 
-    <!-- ================= LIVE STATS BAR ================= -->
-    <section class="relative z-10 -mt-8 sm:-mt-12 md:-mt-16 container mx-auto px-3 sm:px-4">
-        <div class="neon-card rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-                <div class="text-center group">
-                    <div class="font-orbitron text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-400 mb-1">05</div>
-                    <div class="font-rajdhani text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Franchises</div>
+    <!-- ================= TICKER ================= -->
+    <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+            <span>🏏 VPL <span class="sep">Season 02</span> · Big Bash League 2026-27</span>
+            <span class="hl">12 Dec 2026</span><span class="sep">→</span><span class="hl">26 Jan 2027</span>
+            <span>· 5 Franchises · 5 Owners ·</span>
+            <span class="hl">Team Registrations Underway</span>
+            <span>· Auction TBA ·</span>
+            <span class="hl">cricketxi Fantasy Points</span>
+            <span>· 🏆 Defending Champions: Jaffna Sharks</span>
+            <span>🏏 VPL <span class="sep">Season 02</span> · Big Bash League 2026-27</span>
+            <span class="hl">12 Dec 2026</span><span class="sep">→</span><span class="hl">26 Jan 2027</span>
+            <span>· 5 Franchises · 5 Owners ·</span>
+            <span class="hl">Team Registrations Underway</span>
+            <span>· Auction TBA ·</span>
+            <span class="hl">cricketxi Fantasy Points</span>
+            <span>· 🏆 Defending Champions: Jaffna Sharks</span>
+        </div>
+    </div>
+
+    <!-- ================= STATS ================= -->
+    <section class="section" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="card stat-card reveal">
+                    <div class="stat-value" data-count="5">05</div>
+                    <div class="stat-label">Franchises</div>
+                    <div class="stat-note">Five owners · five franchises</div>
                 </div>
-                <div class="text-center group">
-                    <div class="font-orbitron text-2xl sm:text-3xl md:text-4xl font-bold text-blue-400 mb-1">45</div>
-                    <div class="font-rajdhani text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Matches</div>
+                <div class="card stat-card reveal">
+                    <div class="stat-value" data-count="5">05</div>
+                    <div class="stat-label">Team Owners</div>
+                    <div class="stat-note">Anuhas · Faith · Kawidu · Rishel · Sithum</div>
                 </div>
-                <div class="text-center group">
-                    <div class="font-orbitron text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400 mb-1">125</div>
-                    <div class="font-rajdhani text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Players</div>
+                <div class="card stat-card reveal">
+                    <div class="stat-value" data-count="44" data-suffix="+">40+</div>
+                    <div class="stat-label">Matches</div>
+                    <div class="stat-note">BBL 2026-27 · fixtures TBC</div>
                 </div>
-                <div class="text-center group col-span-2 md:col-span-1">
-                    <div class="font-orbitron text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-1">05</div>
-                    <div class="font-rajdhani text-xs sm:text-sm text-gray-400 uppercase tracking-wider">Venues</div>
+                <div class="card stat-card reveal">
+                    <div class="stat-value" data-count="7">07</div>
+                    <div class="stat-label">Venues</div>
+                    <div class="stat-note">Australian grounds · TBC</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="subtle-divider container mx-auto mt-8 sm:mt-12"></div>
+    <!-- ================= SEASON 01 SUMMARY ================= -->
+    <section class="section section-alt" id="season-1">
+        <div class="container">
+            <div class="section-head">
+                <div class="section-kicker">Rewind</div>
+                <h2 class="section-title">Season <span class="gold-text">01</span> Highlights</h2>
+                <div class="section-line"></div>
+                <p class="section-sub">The champions, the warriors and the legends of VPL 2026 — before the 2026-27 campaign begins.</p>
+            </div>
 
-    <!-- ================= TEAMS SHOWCASE ================= -->
-    <section class="py-12 sm:py-16 md:py-20 container mx-auto px-3 sm:px-4">
-        <div class="text-center mb-10 sm:mb-12 md:mb-16">
-            <span class="font-rajdhani text-xs sm:text-sm text-blue-400 tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4 block">The Contenders</span>
-            <h2 class="font-orbitron text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">
-                The <span class="gold-text">Franchises</span>
-            </h2>
-            <div class="h-px w-20 sm:w-32 bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent mx-auto"></div>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
-            
-            <!-- Jaffna Sharks -->
-            <div class="neon-card team-card-sharks rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer">
-                <div class="aspect-square relative bg-gradient-to-br from-blue-900/40 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
-                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,71,171,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/JS.png" alt="Jaffna Sharks" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
-                </div>
-                <div class="p-3 sm:p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Jaffna Sharks</h3>
-                    <p class="font-rajdhani text-[10px] sm:text-xs text-blue-400 tracking-wider uppercase">Deep Sea Dominators</p>
+            <!-- Champion banner -->
+            <div class="card champion-banner reveal">
+                <div class="champ-crown"><i class="fas fa-crown"></i></div>
+                <div class="badge badge-gold"><i class="fas fa-trophy"></i> Season 01 Champions</div>
+                <h3><span class="gold-text">Jaffna Sharks</span> — Deep Sea Dominators</h3>
+                <p style="color:var(--muted);font-size:.92rem;">Owned by Anuhas · 18 M · 12 W · 6 L · 24 Pts · NRR +2493</p>
+                <div class="champ-record">
+                    <span class="badge badge-cyan"><i class="fas fa-fire"></i> Highest Team Score 1354</span>
+                    <span class="badge badge-green"><i class="fas fa-medal"></i> Runner-up: Sunrisers Colombo</span>
                 </div>
             </div>
 
-            <!-- Rajasthan Stallions -->
-            <div class="neon-card team-card-stallions rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer">
-                <div class="aspect-square relative bg-gradient-to-br from-amber-900/40 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
-                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,69,19,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/RS.png" alt="Rajasthan Stallions" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
+            <!-- Final standings + awards -->
+            <div class="mt-5" style="display:grid;gap:22px;grid-template-columns:1fr;" id="s1-grid">
+                <div>
+                    <div class="card reveal" style="padding:0;overflow:hidden;">
+                        <div style="padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;">
+                            <i class="fas fa-ranking-star" style="color:var(--gold);font-size:1.2rem;"></i>
+                            <h3 style="font-family:'Orbitron',sans-serif;font-weight:800;font-size:1.05rem;color:#fff;letter-spacing:.04em;">FINAL STANDINGS — SEASON 01</h3>
+                        </div>
+                        <div class="table-wrap" style="border:none;box-shadow:none;border-radius:0;">
+                            <table class="points-table">
+                                <thead>
+                                    <tr>
+                                        <th>Pos</th><th>Team</th><th>M</th><th>W</th><th>L</th><th>T</th><th>Pts</th><th>NRR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="pos">1</td>
+                                        <td class="team-cell">
+                                            <span class="team-avatar"><img src="https://sithum29.github.io/VPL/season-1/JS.png" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"></span>
+                                            Jaffna Sharks <span class="badge badge-gold" style="margin-left:8px;"><i class="fas fa-crown"></i>Champions</span>
+                                        </td>
+                                        <td>18</td><td>12</td><td>6</td><td>0</td><td class="pts">24</td><td>+2493</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pos">2</td>
+                                        <td class="team-cell">
+                                            <span class="team-avatar"><img src="https://sithum29.github.io/VPL/season-1/SRC.jpeg" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"></span>
+                                            Sunrisers Colombo <span class="badge badge-cyan" style="margin-left:8px;">Runner-up</span>
+                                        </td>
+                                        <td>18</td><td>11</td><td>7</td><td>0</td><td class="pts">22</td><td>+2045</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pos">3</td>
+                                        <td class="team-cell">
+                                            <span class="team-avatar"><img src="https://sithum29.github.io/VPL/season-1/RCG.jpeg" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"></span>
+                                            Royal Challengers Galle <span class="badge badge-blue" style="margin-left:8px;">3rd Place</span>
+                                        </td>
+                                        <td>18</td><td>9</td><td>9</td><td>0</td><td class="pts">18</td><td>+217</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pos">4</td>
+                                        <td class="team-cell">
+                                            <span class="team-avatar"><img src="https://sithum29.github.io/VPL/season-1/ABA.jpeg" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"></span>
+                                            Apex Bolt Assassins
+                                        </td>
+                                        <td>18</td><td>8</td><td>10</td><td>0</td><td class="pts">16</td><td>-2220</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pos">5</td>
+                                        <td class="team-cell">
+                                            <span class="team-avatar"><img src="https://sithum29.github.io/VPL/season-1/RS.png" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'"></span>
+                                            Rajasthan Stallions
+                                        </td>
+                                        <td>18</td><td>5</td><td>13</td><td>0</td><td class="pts">10</td><td>-2555</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-3 sm:p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-amber-600/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Rajasthan Stallions</h3>
-                    <p class="font-rajdhani text-[10px] sm:text-xs text-amber-500 tracking-wider uppercase">Desert Warriors</p>
+
+                <!-- Awards -->
+                <div>
+                    <div class="award-grid">
+                        <div class="card award-card reveal">
+                            <div class="award-icon"><i class="fas fa-bat"></i></div>
+                            <h4>Most Runs</h4>
+                            <div class="award-value">855</div>
+                            <div class="award-player">Shubman Gill</div>
+                            <div class="award-team">Jaffna Sharks</div>
+                        </div>
+                        <div class="card award-card reveal">
+                            <div class="award-icon"><i class="fas fa-baseball"></i></div>
+                            <h4>Most Wickets</h4>
+                            <div class="award-value">31</div>
+                            <div class="award-player">Bhuvneshwar Kumar</div>
+                            <div class="award-team">Royal Challengers Galle</div>
+                        </div>
+                        <div class="card award-card reveal">
+                            <div class="award-icon"><i class="fas fa-star"></i></div>
+                            <h4>Most VPL Points</h4>
+                            <div class="award-value">3746</div>
+                            <div class="award-player">Shubman Gill</div>
+                            <div class="award-team">Jaffna Sharks</div>
+                        </div>
+                        <div class="card award-card reveal">
+                            <div class="award-icon"><i class="fas fa-fire"></i></div>
+                            <h4>Highest Team Score</h4>
+                            <div class="award-value">1354</div>
+                            <div class="award-player">Jaffna Sharks</div>
+                            <div class="award-team">Team Total · Season 01</div>
+                        </div>
+                    </div>
+
+                    <div class="card reveal mt-4" style="text-align:center;padding:26px;">
+                        <h3 style="font-family:'Orbitron',sans-serif;font-weight:800;font-size:1.05rem;color:#fff;letter-spacing:.04em;">Relive the Glory</h3>
+                        <p style="color:var(--muted);font-size:.9rem;margin-top:8px;">Browse the full Season 01 archive — all 45 matches, squads, stats and the finale.</p>
+                        <a href="https://sithum29.github.io/VPL/" target="_blank" rel="noopener" class="btn btn-cyan mt-4" style="margin-top:18px;"><i class="fas fa-arrow-up-right-from-square"></i>Visit Season 01 Website</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Royal Challengers Galle -->
-            <div class="neon-card team-card-challengers rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer">
-                <div class="aspect-square relative bg-gradient-to-br from-red-900/40 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
-                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,20,60,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/RCG.jpeg" alt="Royal Challengers Galle" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
-                </div>
-                <div class="p-3 sm:p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Royal Challengers</h3>
-                    <p class="font-rajdhani text-[10px] sm:text-xs text-red-400 tracking-wider uppercase">Fortress Fighters</p>
-                </div>
-            </div>
-
-            <!-- Sunrisers Colombo -->
-            <div class="neon-card team-card-sunrisers rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer">
-                <div class="aspect-square relative bg-gradient-to-br from-orange-900/40 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
-                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,107,0,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/SRC.jpeg" alt="Sunrisers Colombo" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
-                </div>
-                <div class="p-3 sm:p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Sunrisers Colombo</h3>
-                    <p class="font-rajdhani text-[10px] sm:text-xs text-orange-400 tracking-wider uppercase">Rising from East</p>
+            <!-- Season 01 franchise logos strip -->
+            <div class="mt-5 text-center reveal">
+                <p style="font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:.76rem;color:var(--muted-dim);margin-bottom:14px;">The Season 01 Franchises</p>
+                <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+                    <img src="https://sithum29.github.io/VPL/season-1/JS.png" alt="Jaffna Sharks" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,215,0,.4);" onerror="this.style.display='none'">
+                    <img src="https://sithum29.github.io/VPL/season-1/RS.png" alt="Rajasthan Stallions" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,215,0,.4);" onerror="this.style.display='none'">
+                    <img src="https://sithum29.github.io/VPL/season-1/RCG.jpeg" alt="Royal Challengers Galle" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,215,0,.4);" onerror="this.style.display='none'">
+                    <img src="https://sithum29.github.io/VPL/season-1/SRC.jpeg" alt="Sunrisers Colombo" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,215,0,.4);" onerror="this.style.display='none'">
+                    <img src="https://sithum29.github.io/VPL/season-1/ABA.jpeg" alt="Apex Bolt Assassins" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,215,0,.4);" onerror="this.style.display='none'">
                 </div>
             </div>
-
-            <!-- Apex Bolt Assassins -->
-            <div class="neon-card team-card-assassins rounded-xl sm:rounded-2xl overflow-hidden group cursor-pointer col-span-2 sm:col-span-1 md:col-span-1">
-                <div class="aspect-square relative bg-gradient-to-br from-gray-900/60 to-black flex items-center justify-center p-4 sm:p-6 overflow-hidden">
-                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <img src="season-1/ABA.jpeg" alt="Apex Bolt Assassins" class="relative max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
-                </div>
-                <div class="p-3 sm:p-5 text-center relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-gray-500/50 to-transparent"></div>
-                    <h3 class="font-orbitron text-sm sm:text-base lg:text-lg font-bold text-white mb-0.5 sm:mb-1">Apex Bolt Assassins</h3>
-                    <p class="font-rajdhani text-[10px] sm:text-xs text-gray-400 tracking-wider uppercase">Strike with Precision</p>
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <!-- ================= WHATSAPP CTA ================= -->
-    <section class="py-12 sm:py-16 md:py-20 container mx-auto px-3 sm:px-4">
-        <div class="whatsapp-glow rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center relative overflow-hidden transition-all duration-500">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(37,211,102,0.05)_0%,transparent_70%)]"></div>
-            
-            <div class="relative z-10">
-                <div class="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto mb-4 sm:mb-6 rounded-xl sm:rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center justify-center animate-float">
-                    <i class="fab fa-whatsapp text-2xl sm:text-3xl md:text-4xl text-green-400"></i>
+    <!-- ================= TEAM REGISTRATION ================= -->
+    <section class="section" id="registration">
+        <div class="container">
+            <div class="section-head">
+                <div class="section-kicker">Season 02 · Open</div>
+                <h2 class="section-title">Team <span class="gold-text">Registrations</span></h2>
+                <div class="section-line"></div>
+                <p class="section-sub">Five owners. Five franchises. Register yours before the Season 02 auction — submissions go straight to the commissioner by email.</p>
+            </div>
+
+            <div style="display:grid;gap:28px;grid-template-columns:1fr;" class="reg-grid">
+                <!-- Info side -->
+                <div>
+                    <div class="card reveal" style="height:100%;">
+                        <h3 style="font-family:'Orbitron',sans-serif;font-weight:800;font-size:1.15rem;color:#fff;letter-spacing:.04em;margin-bottom:8px;">What you need to register</h3>
+                        <p style="color:var(--muted);font-size:.92rem;">Each owner submits one franchise. The form takes under a minute — the commissioner gets every entry by email.</p>
+                        <div style="margin-top:14px;">
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fas fa-user-tie"></i></div>
+                                <div>
+                                    <h4>Owner Identity</h4>
+                                    <p>Pick your name from the five VPL owners — Anuhas, Faith, Kawidu, Rishel, Sithum.</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fas fa-history"></i></div>
+                                <div>
+                                    <h4>Season 01 Franchise</h4>
+                                    <p>Tell us which franchise you owned in Season 01 — it carries your legacy into 2026-27.</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fas fa-flag"></i></div>
+                                <div>
+                                    <h4>New Franchise Details</h4>
+                                    <p>Franchise name, icon, colour and your home city in Australia — the identity of your Season 02 club.</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                                <div>
+                                    <h4>Instant Email Delivery</h4>
+                                    <p>Every registration is delivered straight to the commissioner's inbox via Formspree — nothing gets lost.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <h2 class="font-orbitron text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-                    <span class="text-green-400">VPL Hub</span>
-                </h2>
-                <p class="font-rajdhani text-base sm:text-lg md:text-xl text-gray-300 max-w-xl sm:max-w-2xl mx-auto mb-6 sm:mb-8 px-2 sm:px-0">
-                    Get instant match alerts, points table updates, and exclusive auction news delivered straight to your WhatsApp.
-                </p>
-                
-                <button class="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-600 to-green-500 rounded-xl font-orbitron font-bold text-white tracking-wider overflow-hidden transition-all hover:shadow-lg hover:scale-105 text-xs sm:text-sm">
-                    <span class="relative z-10 flex items-center gap-2 sm:gap-3 justify-center">
-                        <i class="fab fa-whatsapp text-lg sm:text-xl"></i>
-                        <span class="whitespace-nowrap">WHATSAPP GROUP</span>
-                    </span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-green-400 transform translate-y-full group-hover:translate-y-0 transition-transform"></div>
-                </button>
+
+                <!-- Form panel -->
+                <div class="form-panel reveal">
+                    <div class="form-head">
+                        <div class="form-icon"><i class="fas fa-user-plus"></i></div>
+                        <div>
+                            <h3 class="form-title">Franchise Registration</h3>
+                        </div>
+                    </div>
+                    <p class="form-note">Season 02 · Virtual Premier League 2026-27 — fields marked <span class="gold-text">*</span> are required.</p>
+
+                    <div id="form-body">
+                        <form id="team-registration-form" action="#" method="post" enctype="multipart/form-data" novalidate>
+                            <!-- Owner -->
+                            <div class="form-grid">
+                                <div class="field">
+                                    <label for="owner_name"><i class="fas fa-user-tie"></i>Owner Name <span class="req">*</span></label>
+                                    <select id="owner_name" name="owner_name" class="select" required>
+                                        <option value="" disabled selected>Select owner…</option>
+                                        <option value="Anuhas">Anuhas</option>
+                                        <option value="Faith">Faith</option>
+                                        <option value="Kawidu">Kawidu</option>
+                                        <option value="Rishel">Rishel</option>
+                                        <option value="Sithum">Sithum</option>
+                                    </select>
+                                </div>
+
+                                <!-- Previous franchise -->
+                                <div class="field">
+                                    <label for="prev_franchise"><i class="fas fa-history"></i>Previous Franchise (S01) <span class="req">*</span></label>
+                                    <select id="prev_franchise" name="prev_franchise" class="select" required>
+                                        <option value="" disabled selected>Select Season 01 franchise…</option>
+                                        <option value="Jaffna Sharks">Jaffna Sharks</option>
+                                        <option value="Rajasthan Stallions">Rajasthan Stallions</option>
+                                        <option value="Royal Challengers Galle">Royal Challengers Galle</option>
+                                        <option value="Sunrisers Colombo">Sunrisers Colombo</option>
+                                        <option value="Apex Bolt Assassins">Apex Bolt Assassins</option>
+                                    </select>
+                                    <div class="field-hint">Auto-suggests when you pick your owner.</div>
+                                </div>
+
+                                <!-- Franchise name -->
+                                <div class="field">
+                                    <label for="franchise_name"><i class="fas fa-flag"></i>Franchise Name (S02) <span class="req">*</span></label>
+                                    <input type="text" id="franchise_name" name="franchise_name" class="input" placeholder="e.g. Sydney Thunderbirds" maxlength="40" required>
+                                    <div class="field-hint">Max 40 characters.</div>
+                                </div>
+
+                                <!-- Home city -->
+                                <div class="field">
+                                    <label for="home_city"><i class="fas fa-city"></i>Franchise Home City (Australia) <span class="req">*</span></label>
+                                    <input type="text" id="home_city" name="home_city" class="input" list="au-cities" placeholder="e.g. Sydney" required>
+                                    <datalist id="au-cities">
+                                        <option value="Sydney"></option><option value="Melbourne"></option>
+                                        <option value="Brisbane"></option><option value="Perth"></option>
+                                        <option value="Adelaide"></option><option value="Hobart"></option>
+                                        <option value="Canberra"></option><option value="Darwin"></option>
+                                        <option value="Gold Coast"></option><option value="Newcastle"></option>
+                                        <option value="Geelong"></option><option value="Wollongong"></option>
+                                        <option value="Cairns"></option><option value="Townsville"></option>
+                                        <option value="Launceston"></option><option value="Ballarat"></option>
+                                        <option value="Bendigo"></option><option value="Toowoomba"></option>
+                                    </datalist>
+                                </div>
+
+                                <!-- Colour -->
+                                <div class="field full">
+                                    <label for="franchise_colour"><i class="fas fa-palette"></i>Franchise Colour <span class="req">*</span></label>
+                                    <div class="color-field">
+                                        <input type="color" id="franchise_colour" name="franchise_colour" class="color-input" value="#ffd700" required>
+                                        <input type="text" id="colour-hex" class="input color-hex" value="#FFD700" readonly aria-label="Selected colour hex code">
+                                    </div>
+                                </div>
+
+                                <!-- Icon -->
+                                <div class="field full">
+                                    <label for="franchise_icon"><i class="fas fa-image"></i>Franchise Icon <span class="req" style="color:var(--muted-dim);">(optional)</span></label>
+                                    <div class="file-drop" id="file-drop">
+                                        <i class="fas fa-cloud-arrow-up"></i>
+                                        <p><b>Click to upload</b> or drag &amp; drop your icon</p>
+                                        <p style="margin-top:4px;font-size:.76rem;color:var(--muted-dim);">PNG, JPG, SVG or WebP · max 5 MB</p>
+                                        <input type="file" id="franchise_icon" name="franchise_icon" accept=".png,.jpg,.jpeg,.svg,.webp,image/*">
+                                        <div class="file-preview" id="file-preview" style="display:none;">
+                                            <img id="file-preview-img" alt="Icon preview" style="display:none;">
+                                            <span id="file-preview-name"></span>
+                                            <i class="fas fa-xmark" id="file-preview-remove" title="Remove icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Alert -->
+                            <div id="form-alert" class="form-alert" role="alert">
+                                <i id="form-alert-icon" class="fas fa-circle-info"></i>
+                                <span id="form-alert-text"></span>
+                            </div>
+
+                            <button type="submit" id="form-submit-btn" class="btn btn-gold btn-block btn-lg mt-4">
+                                <span class="spinner" id="form-submit-spinner" style="display:none;"></span>
+                                <span id="form-submit-label"><i class="fas fa-paper-plane"></i> Submit Registration</span>
+                            </button>
+                            <p style="text-align:center;margin-top:12px;font-size:.76rem;color:var(--muted-dim);">
+                                <i class="fas fa-lock"></i> Your submission (including icon) is emailed securely to the commissioner.
+                            </p>
+                        </form>
+                    </div>
+
+                    <!-- Success panel -->
+                    <div id="form-success" class="form-success">
+                        <div class="success-icon"><i class="fas fa-trophy"></i></div>
+                        <h3>Registration Received!</h3>
+                        <p>Your Season 02 franchise has been submitted. The commissioner has been notified by email — keep an eye on the Franchises section for your team to appear.</p>
+                        <button type="button" id="form-again-btn" class="btn btn-cyan mt-5"><i class="fas fa-plus"></i>Register Another Franchise</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FRANCHISES (placeholder) ================= -->
+    <section class="section section-alt" id="franchises">
+        <div class="container">
+            <div class="section-head">
+                <div class="section-kicker">Season 02</div>
+                <h2 class="section-title">The <span class="gold-text">Franchises</span></h2>
+                <div class="section-line"></div>
+                <p class="section-sub">Team registrations are underway — the five Season 02 franchises will be revealed here after the auction.</p>
+            </div>
+
+            <div class="franchise-grid">
+                <!--
+                    ✏️  HOW TO ADD A FRANCHISE LATER:
+                    1. Copy one .franchise-card block below.
+                    2. Replace the crest icon with your logo image:
+                         <div class="franchise-crest"><img src="YOUR-LOGO.png" alt="..."></div>
+                    3. Update the name, tagline, owner, home city and previous franchise.
+                -->
+
+                <!-- Franchise 1 -->
+                <div class="card franchise-card reveal">
+                    <div class="franchise-crest"><i class="fas fa-shield-halved"></i></div>
+                    <div class="franchise-name">Franchise TBD</div>
+                    <div class="franchise-tag">Awaiting registration</div>
+                    <div class="owner-chip"><i class="fas fa-user-tie"></i>Owner: Anuhas</div>
+                    <div class="franchise-meta">
+                        <div class="meta-row"><span>Home city</span><b>—</b></div>
+                        <div class="meta-row"><span>Season 01</span><b>Jaffna Sharks</b></div>
+                        <div class="meta-row"><span>Status</span><b style="color:var(--gold);">Pending</b></div>
+                    </div>
+                </div>
+
+                <!-- Franchise 2 -->
+                <div class="card franchise-card reveal">
+                    <div class="franchise-crest"><i class="fas fa-shield-halved"></i></div>
+                    <div class="franchise-name">Franchise TBD</div>
+                    <div class="franchise-tag">Awaiting registration</div>
+                    <div class="owner-chip"><i class="fas fa-user-tie"></i>Owner: Faith</div>
+                    <div class="franchise-meta">
+                        <div class="meta-row"><span>Home city</span><b>—</b></div>
+                        <div class="meta-row"><span>Season 01</span><b>Rajasthan Stallions</b></div>
+                        <div class="meta-row"><span>Status</span><b style="color:var(--gold);">Pending</b></div>
+                    </div>
+                </div>
+
+                <!-- Franchise 3 -->
+                <div class="card franchise-card reveal">
+                    <div class="franchise-crest"><i class="fas fa-shield-halved"></i></div>
+                    <div class="franchise-name">Franchise TBD</div>
+                    <div class="franchise-tag">Awaiting registration</div>
+                    <div class="owner-chip"><i class="fas fa-user-tie"></i>Owner: Kawidu</div>
+                    <div class="franchise-meta">
+                        <div class="meta-row"><span>Home city</span><b>—</b></div>
+                        <div class="meta-row"><span>Season 01</span><b>Royal Challengers Galle</b></div>
+                        <div class="meta-row"><span>Status</span><b style="color:var(--gold);">Pending</b></div>
+                    </div>
+                </div>
+
+                <!-- Franchise 4 -->
+                <div class="card franchise-card reveal">
+                    <div class="franchise-crest"><i class="fas fa-shield-halved"></i></div>
+                    <div class="franchise-name">Franchise TBD</div>
+                    <div class="franchise-tag">Awaiting registration</div>
+                    <div class="owner-chip"><i class="fas fa-user-tie"></i>Owner: Rishel</div>
+                    <div class="franchise-meta">
+                        <div class="meta-row"><span>Home city</span><b>—</b></div>
+                        <div class="meta-row"><span>Season 01</span><b>Sunrisers Colombo</b></div>
+                        <div class="meta-row"><span>Status</span><b style="color:var(--gold);">Pending</b></div>
+                    </div>
+                </div>
+
+                <!-- Franchise 5 -->
+                <div class="card franchise-card reveal">
+                    <div class="franchise-crest"><i class="fas fa-shield-halved"></i></div>
+                    <div class="franchise-name">Franchise TBD</div>
+                    <div class="franchise-tag">Awaiting registration</div>
+                    <div class="owner-chip"><i class="fas fa-user-tie"></i>Owner: Sithum</div>
+                    <div class="franchise-meta">
+                        <div class="meta-row"><span>Home city</span><b>—</b></div>
+                        <div class="meta-row"><span>Season 01</span><b>Apex Bolt Assassins</b></div>
+                        <div class="meta-row"><span>Status</span><b style="color:var(--gold);">Pending</b></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5 reveal">
+                <a href="teams.html" class="btn btn-cyan"><i class="fas fa-shield-halved"></i>Explore Teams</a>
             </div>
         </div>
     </section>
 
     <!-- ================= FOOTER ================= -->
-    <footer class="relative border-t border-white/5 bg-black/50 backdrop-blur-xl">
-        <div class="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12">
-                
-                <!-- Brand -->
-                <div class="sm:col-span-2 lg:col-span-1">
-                    <div class="flex items-center gap-3 mb-4 sm:mb-6">
-                        <img src="season-1/logo.png" alt="VPL" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-yellow-400/50 object-cover flex-shrink-0">
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <img src="logo2.png" alt="VPL" class="vpl-logo" style="width:44px;height:44px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,215,0,.4);">
                         <div>
-                            <h4 class="font-orbitron text-xl sm:text-2xl font-bold text-white">VPL 2026</h4>
-                            <p class="font-rajdhani text-[10px] sm:text-xs text-blue-400 tracking-wider">VIRTUAL PREMIER LEAGUE</p>
+                            <div class="brand-name" style="font-size:1rem;">VPL <span class="gold-text">2026-27</span></div>
+                            <div class="brand-tag" style="display:block;">Virtual Premier League · Season 02</div>
                         </div>
                     </div>
-                    <p class="font-inter text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm">
-                        The ultimate virtual cricket experience. Compete, strategize, and conquer in the most immersive fantasy cricket league.
-                    </p>
+                    <p>Five elite franchises. One ultimate dream. Season 02 powered by the Big Bash League 2026-27 — points on the cricketxi fantasy system.</p>
                 </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Navigate</h5>
-                    <ul class="space-y-2 sm:space-y-3">
-                        <li><a href="season-1/index.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Home</a></li>
-                        <li><a href="season-1/matches.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Matches</a></li>
-                        <li><a href="season-1/points.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Points Table</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-yellow-400 transition-colors flex items-center gap-2"><i class="fas fa-chevron-right text-[10px]"></i> Teams</a></li>
-                    </ul>
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <a href="index.html">Home</a>
+                    <a href="matches.html">Matches</a>
+                    <a href="points.html">Points Table</a>
+                    <a href="teams.html">Teams</a>
+                    <a href="stats.html">Stats</a>
                 </div>
-
-                <!-- Teams -->
-                <div>
-                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Franchises</h5>
-                    <ul class="space-y-2 sm:space-y-3">
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-blue-500"></i> Jaffna Sharks</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-amber-600"></i> Rajasthan Stallions</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-red-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-red-500"></i> Royal Challengers</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-orange-400 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-orange-500"></i> Sunrisers Colombo</a></li>
-                        <li><a href="season-1/teams.html" class="font-rajdhani text-sm text-gray-400 hover:text-gray-300 transition-colors flex items-center gap-2"><i class="fas fa-shield text-[10px] text-gray-500"></i> Apex Bolt Assassins</a></li>
-                    </ul>
-                </div>
-
-                <!-- Social -->
-                <div>
-                    <h5 class="font-orbitron text-base sm:text-lg font-bold text-white mb-4 sm:mb-6">Connect</h5>
-                    <div class="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all" aria-label="Facebook">
-                            <i class="fab fa-facebook-f text-sm"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all" aria-label="Twitter">
-                            <i class="fab fa-twitter text-sm"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all" aria-label="Instagram">
-                            <i class="fab fa-instagram text-sm"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all" aria-label="YouTube">
-                            <i class="fab fa-youtube text-sm"></i>
-                        </a>
-                    </div>
-                    <p class="font-rajdhani text-xs sm:text-sm text-gray-500">Subscribe for exclusive updates and behind-the-scenes content.</p>
+                <div class="footer-col">
+                    <h4>League</h4>
+                    <a href="auction.html">Auction</a>
+                    <a href="venues.html">Venues</a>
+                    <a href="rules.html">Rules</a>
+                    <a href="#registration">Register Franchise</a>
+                    <a href="https://sithum29.github.io/VPL/" target="_blank" rel="noopener">Season 01 Archive</a>
                 </div>
             </div>
-
-            <div class="subtle-divider mb-6 sm:mb-8"></div>
-
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
-                <p class="font-inter text-[10px] sm:text-xs text-gray-500 text-center sm:text-left">
-                    &copy; 2026 Virtual Premier League. All rights reserved. Not affiliated with BCCI/IPL.
-                </p>
-                <div class="flex gap-4 sm:gap-6">
-                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Privacy Policy</a>
-                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Terms of Service</a>
-                    <a href="#" class="font-rajdhani text-[10px] sm:text-xs text-gray-500 hover:text-yellow-400 transition-colors">Contact</a>
-                </div>
+            <div class="footer-bottom">
+                <span>© <span class="js-year">2026</span> <span class="gold-text">VPL Season 02</span> · Virtual Premier League · BBL 2026-27</span>
+                <span>Made for the five VPL owners 🏏</span>
             </div>
         </div>
     </footer>
 
-    <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // --- 1. Mobile Menu Toggle ---
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('menu-icon');
-            
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
-                document.body.style.overflow = 'hidden';
-            } else {
-                menu.classList.add('hidden');
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-                document.body.style.overflow = '';
-            }
-        }
+/* ============================================================
+   VPL SEASON 02 — Virtual Premier League (BBL 2026-27)
+   Shared script for all pages
+   ============================================================ */
 
-        // Close mobile menu on resize if open
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 1024) {
-                const menu = document.getElementById('mobile-menu');
-                const icon = document.getElementById('menu-icon');
-                menu.classList.add('hidden');
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-                document.body.style.overflow = '';
-            }
-        });
+/* ============================================================
+   ⚙️  CONFIG — EDIT THESE TWO VALUES
+   ============================================================ */
 
-        // --- 2. Particle System ---
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const isMobile = window.innerWidth < 768;
-            const particleCount = isMobile ? 12 : 25;
-            
-            // Clear existing particles
-            container.innerHTML = '';
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-                
-                // Random colors between gold and blue
-                const colors = ['#ffd700', '#0066ff', '#00f0ff', '#ffd700'];
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                const size = isMobile ? (1 + Math.random() * 2) : (2 + Math.random() * 4);
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                
-                container.appendChild(particle);
-            }
-        }
-        
-        createParticles();
-        
-        // Recreate particles on resize with debounce
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(createParticles, 250);
-        });
+/* 1) OFFICIAL SEASON 02 LOGO
+   Place your logo file in the SAME folder as this site (or a sub-folder)
+   and update the file name below. The whole site will update automatically. */
+const VPL_LOGO = 'logo2.png';
 
-        // --- 3. Carousel Logic ---
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const indicators = document.querySelectorAll('.slide-indicator');
-        const totalSlides = slides.length;
-        let slideInterval;
+/* 2) FORMSPREE FORM ID (Team Registrations)
+   1. Go to https://formspree.io and create a free account.
+   2. Create a new form, copy its endpoint, e.g.  https://formspree.io/f/abcdwxyz
+   3. Paste it below (replace YOUR_FORM_ID).
+   Submissions (including the icon upload) will arrive in your email inbox. */
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
 
-        function updateIndicators() {
-            indicators.forEach((ind, i) => {
-                if (i === currentSlide) {
-                    ind.classList.remove('bg-white/20');
-                    ind.classList.add('bg-yellow-400/60');
-                } else {
-                    ind.classList.add('bg-white/20');
-                    ind.classList.remove('bg-yellow-400/60');
-                }
-            });
-        }
+/* ============================================================
+   Helpers
+   ============================================================ */
+const $  = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
-                }
-            });
-            updateIndicators();
-        }
+/* ============================================================
+   Mobile menu toggle
+   ============================================================ */
+function toggleMobileMenu() {
+  const menu = $('#mobile-menu');
+  const icon = $('#menu-icon');
+  if (!menu) return;
+  const open = menu.classList.toggle('open');
+  if (icon) icon.className = open ? 'fas fa-xmark' : 'fas fa-bars';
+}
 
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = $('.menu-toggle');
+  if (toggle) toggle.addEventListener('click', toggleMobileMenu);
 
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        }
+  /* Close mobile menu when a link is tapped */
+  $$('#mobile-menu a').forEach(link => link.addEventListener('click', () => {
+    const menu = $('#mobile-menu');
+    const icon = $('#menu-icon');
+    menu && menu.classList.remove('open');
+    if (icon) icon.className = 'fas fa-bars';
+  }));
+});
 
-        function goToSlide(index) {
-            currentSlide = index;
-            showSlide(currentSlide);
-            resetAutoAdvance();
-        }
+/* ============================================================
+   Header shadow on scroll
+   ============================================================ */
+window.addEventListener('scroll', () => {
+  const header = $('.glass-header');
+  if (header) header.classList.toggle('scrolled', window.scrollY > 24);
+}, { passive: true });
 
-        function resetAutoAdvance() {
-            clearInterval(slideInterval);
-            slideInterval = setInterval(nextSlide, 6000);
-        }
+/* ============================================================
+   Logo fallback — if the logo image is missing or broken,
+   show a styled shield placeholder instead of a broken icon.
+   (Replace the file 'logo2.png' with your official logo.)
+   ============================================================ */
+const LOGO_FALLBACK_SVG =
+  "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ffd700"/><stop offset="1" stop-color="#b8860b"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="24" fill="#072a19" stroke="#ffd700" stroke-width="3"/>
+      <path d="M50 14 L84 26 V52 C84 74 69 86 50 92 C31 86 16 74 16 52 V26 Z" fill="none" stroke="#a3e635" stroke-width="2.5"/>
+      <text x="50" y="50" font-family="Arial Black, sans-serif" font-weight="900" font-size="30" fill="url(#g)" text-anchor="middle" dominant-baseline="central">VPL</text>
+      <text x="50" y="72" font-family="Arial, sans-serif" font-weight="bold" font-size="9" fill="#a3e635" text-anchor="middle" letter-spacing="2">SEASON 02</text>
+    </svg>`);
 
-        // Auto advance
-        slideInterval = setInterval(nextSlide, 6000);
-        updateIndicators();
+function applyLogoFallback() {
+  $$('img.vpl-logo').forEach(img => {
+    img.addEventListener('error', () => {
+      img.src = LOGO_FALLBACK_SVG;
+      img.style.borderRadius = '14px';
+      img.style.objectFit = 'cover';
+      img.removeEventListener('error', () => {});
+    });
+    /* If src was never set, use the configured logo file */
+    if (!img.src || img.src === window.location.href) {
+      img.src = VPL_LOGO;
+    }
+  });
+}
 
-        // Pause on touch for mobile
-        const heroSection = document.querySelector('.hero-section');
-        if (heroSection) {
-            heroSection.addEventListener('touchstart', () => {
-                clearInterval(slideInterval);
-            }, { passive: true });
-            
-            heroSection.addEventListener('touchend', () => {
-                slideInterval = setInterval(nextSlide, 6000);
-            }, { passive: true });
-        }
+/* ============================================================
+   Hero particles
+   ============================================================ */
+function spawnParticles() {
+  const wrap = $('#particles');
+  if (!wrap) return;
+  const count = Math.min(34, Math.floor(window.innerWidth / 40));
+  for (let i = 0; i < count; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'particle';
+    const size = 2 + Math.random() * 4;
+    dot.style.width = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.left = (Math.random() * 100) + '%';
+    dot.style.animationDuration = (7 + Math.random() * 10) + 's';
+    dot.style.animationDelay = (Math.random() * 10) + 's';
+    const gold = Math.random() > 0.55;
+    dot.style.background = gold ? '#ffd700' : '#a3e635';
+    dot.style.boxShadow = gold ? '0 0 8px rgba(255,215,0,.9)' : '0 0 8px rgba(0,240,255,.9)';
+    wrap.appendChild(dot);
+  }
+}
 
-        // --- 4. Scroll Reveal Animation ---
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -30px 0px'
-        };
+/* ============================================================
+   Animated counters
+   ============================================================ */
+function animateCounters() {
+  const counters = $$('[data-count]');
+  if (!counters.length) return;
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      io.unobserve(el);
+      const target = parseInt(el.dataset.count, 10) || 0;
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
+      const dur = 1400;
+      const start = performance.now();
 
-        // Observe all cards
-        document.querySelectorAll('.neon-card').forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-            observer.observe(card);
-        });
+      const tick = (now) => {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = Math.round(target * eased);
+        el.textContent = prefix + String(val).padStart(2, '0') + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.4 });
 
-        // --- 5. Parallax Effect on Hero (Desktop only) ---
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const scrolled = window.pageYOffset;
-                    const hero = document.querySelector('.hero-section');
-                    if (hero && scrolled < 700 && window.innerWidth >= 1024) {
-                        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
+  counters.forEach(c => io.observe(c));
+}
 
-        // --- 6. Touch swipe support for carousel ---
-        let touchStartX = 0;
-        let touchEndX = 0;
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+function initReveal() {
+  const items = $$('.reveal');
+  if (!items.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => io.observe(el));
+}
 
-        heroSection.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
+/* ============================================================
+   TEAM REGISTRATION FORM (Formspree AJAX)
+   ============================================================ */
+function initRegistrationForm() {
+  const form = $('#team-registration-form');
+  if (!form) return;
 
-        heroSection.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
+  const alertBox   = $('#form-alert');
+  const alertIcon  = $('#form-alert-icon');
+  const alertText  = $('#form-alert-text');
+  const submitBtn  = $('#form-submit-btn');
+  const btnLabel   = $('#form-submit-label');
+  const btnSpinner = $('#form-submit-spinner');
+  const formBody   = $('#form-body');
+  const successBox = $('#form-success');
 
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-            
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    nextSlide();
-                } else {
-                    prevSlide();
-                }
-                resetAutoAdvance();
-            }
-        }
-    </script>
+  const setAlert = (type, icon, msg) => {
+    alertBox.className = 'form-alert ' + type;
+    alertIcon.className = icon;
+    alertText.textContent = msg;
+  };
+
+  const clearAlert = () => { alertBox.className = 'form-alert'; };
+
+  const setLoading = (loading) => {
+    submitBtn.disabled = loading;
+    btnLabel.textContent = loading ? 'Submitting...' : 'Submit Registration';
+    btnSpinner.style.display = loading ? 'inline-block' : 'none';
+  };
+
+  /* --- Owner → Season 01 franchise auto-suggest --- */
+  const ownerSel   = $('#owner_name');
+  const prevSel    = $('#prev_franchise');
+  const OWNER_PREV = {
+    'Anuhas': 'Jaffna Sharks',
+    'Faith': 'Rajasthan Stallions',
+    'Kawidu': 'Royal Challengers Galle',
+    'Rishel': 'Sunrisers Colombo',
+    'Sithum': 'Apex Bolt Assassins'
+  };
+  if (ownerSel && prevSel) {
+    ownerSel.addEventListener('change', () => {
+      const prev = OWNER_PREV[ownerSel.value];
+      if (prev) {
+        [...prevSel.options].forEach(opt => { if (opt.value === prev) opt.selected = true; });
+      }
+    });
+  }
+
+  /* --- Colour picker → hex readout --- */
+  const colourInput = $('#franchise_colour');
+  const colourHex   = $('#colour-hex');
+  if (colourInput && colourHex) {
+    const sync = () => { colourHex.value = colourInput.value.toUpperCase(); };
+    colourInput.addEventListener('input', sync);
+    sync();
+  }
+
+  /* --- Icon file dropzone preview --- */
+  const fileInput = $('#franchise_icon');
+  const dropzone  = $('#file-drop');
+  const preview   = $('#file-preview');
+  const previewImg = $('#file-preview-img');
+  const previewName = $('#file-preview-name');
+  const removeBtn  = $('#file-preview-remove');
+
+  if (fileInput && dropzone) {
+    const MAX_MB = 5;
+    const showPreview = () => {
+      const file = fileInput.files[0];
+      if (!file) { dropzone.classList.remove('has-file'); preview.style.display = 'none'; return; }
+      dropzone.classList.add('has-file');
+      previewName.textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)';
+      if (file.type.startsWith('image/')) {
+        previewImg.src = URL.createObjectURL(file);
+        previewImg.style.display = 'block';
+      } else {
+        previewImg.removeAttribute('src');
+        previewImg.style.display = 'none';
+      }
+    };
+    fileInput.addEventListener('change', showPreview);
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        showPreview();
+      }
+    });
+    if (removeBtn) {
+      removeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        fileInput.value = '';
+        showPreview();
+      });
+    }
+  }
+
+  /* --- Submit via Formspree (AJAX, supports file upload) --- */
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert();
+
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    /* Icon size guard */
+    if (fileInput && fileInput.files.length && fileInput.files[0].size > 5 * 1024 * 1024) {
+      setAlert('error', 'fas fa-triangle-exclamation', 'Icon file is too large. Maximum size is 5 MB.');
+      return;
+    }
+
+    /* Not configured yet? */
+    if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
+      setAlert('warn', 'fas fa-circle-info',
+        'The registration form is not connected yet — the commissioner needs to add their Formspree form ID in js/main.js. (See README.md for the 2-minute setup.)');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const fd = new FormData(form);
+      fd.append('_subject', 'VPL Season 02 Franchise Registration — ' + (form.franchise_name.value || 'New Franchise'));
+      fd.append('_template', 'table');
+
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        body: fd,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        form.reset();
+        if (fileInput) { fileInput.value = ''; if (dropzone) { dropzone.classList.remove('has-file'); } if (preview) { preview.style.display = 'none'; } }
+        if (colourHex) colourHex.value = '#FFD700';
+        formBody.style.display = 'none';
+        successBox.classList.add('show');
+        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setAlert('error', 'fas fa-triangle-exclamation',
+          (data && data.errors && data.errors.length) ? 'Form error: ' + data.errors[0].message : 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      setAlert('error', 'fas fa-triangle-exclamation', 'Network error — could not reach the form service. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  /* Register another franchise */
+  const againBtn = $('#form-again-btn');
+  if (againBtn) {
+    againBtn.addEventListener('click', () => {
+      successBox.classList.remove('show');
+      formBody.style.display = 'block';
+      clearAlert();
+    });
+  }
+}
+
+/* ============================================================
+   Footer year
+   ============================================================ */
+function setFooterYear() {
+  $$('.js-year').forEach(el => { el.textContent = new Date().getFullYear(); });
+}
+
+/* ============================================================
+   Boot
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  spawnParticles();
+  applyLogoFallback();
+  animateCounters();
+  initReveal();
+  initRegistrationForm();
+  setFooterYear();
+});
+
+</script>
 </body>
 </html>
