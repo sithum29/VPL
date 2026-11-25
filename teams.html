@@ -1823,8 +1823,8 @@ html { overflow-x: hidden; }
                                 </div>
                             </div>
                             <div class="tp-stats">
-                                <div class="tp-stat"><b data-stat="js" data-kind="total">0</b><span>Players</span></div>
-                                <div class="tp-stat"><b data-stat="js" data-kind="foreign">0</b><span>Foreign</span></div>
+                                <div class="tp-stat"><b data-stat="js" data-kind="total">1</b><span>Players</span></div>
+                                <div class="tp-stat"><b data-stat="js" data-kind="foreign">1</b><span>Foreign</span></div>
                                 <div class="tp-stat"><b data-stat="js" data-kind="local">0</b><span>Local</span></div>
                             </div>
                         </div>
@@ -1889,8 +1889,8 @@ html { overflow-x: hidden; }
                                 </div>
                             </div>
                             <div class="tp-stats">
-                                <div class="tp-stat"><b data-stat="srh" data-kind="total">0</b><span>Players</span></div>
-                                <div class="tp-stat"><b data-stat="srh" data-kind="foreign">0</b><span>Foreign</span></div>
+                                <div class="tp-stat"><b data-stat="srh" data-kind="total">1</b><span>Players</span></div>
+                                <div class="tp-stat"><b data-stat="srh" data-kind="foreign">1</b><span>Foreign</span></div>
                                 <div class="tp-stat"><b data-stat="srh" data-kind="local">0</b><span>Local</span></div>
                             </div>
                         </div>
@@ -2340,7 +2340,7 @@ const SQUADS = {
     js: {
         captain: '',
         batters: [
-            // { name: 'Example Player', img: 'https://example.com/photo.jpg', foreign: false, price: 120000 },
+            { name: 'Cooper Connolly', img: 'https://static-files.cricket-australia.pulselive.com/headshots/440/3958-bbl.png', foreign: true, price: 5 },
             // { name: 'Overseas Player', img: 'https://example.com/photo2.jpg', foreign: true, price: 'Rs 2.5M' },
         ],
         bowlers: [],
@@ -2349,7 +2349,14 @@ const SQUADS = {
     },
     hs:  { captain: '', batters: [], bowlers: [], wk: [], allrounders: [] },
     rcb: { captain: '', batters: [], bowlers: [], wk: [], allrounders: [] },
-    srh: { captain: '', batters: [], bowlers: [], wk: [], allrounders: [] },
+    srh: { 
+        captain: '', 
+        batters: [
+            { name: 'Finn Allen', img: 'https://static-files.cricket-australia.pulselive.com/headshots/440/3149-bbl.png', foreign: true, price: 5 },
+        ], 
+        bowlers: [], 
+        wk: [], 
+        allrounders: [] },
     aba: { captain: '', batters: [], bowlers: [], wk: [], allrounders: [] }
 };
 
