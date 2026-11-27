@@ -1867,8 +1867,8 @@ html { overflow-x: hidden; }
                                 </div>
                             </div>
                             <div class="tp-stats">
-                                <div class="tp-stat"><b data-stat="rcb" data-kind="total">0</b><span>Players</span></div>
-                                <div class="tp-stat"><b data-stat="rcb" data-kind="foreign">0</b><span>Foreign</span></div>
+                                <div class="tp-stat"><b data-stat="rcb" data-kind="total">1</b><span>Players</span></div>
+                                <div class="tp-stat"><b data-stat="rcb" data-kind="foreign">1</b><span>Foreign</span></div>
                                 <div class="tp-stat"><b data-stat="rcb" data-kind="local">0</b><span>Local</span></div>
                             </div>
                         </div>
@@ -2348,7 +2348,14 @@ const SQUADS = {
         allrounders: []
     },
     hs:  { captain: '', batters: [], bowlers: [], wk: [], allrounders: [] },
-    rcb: { captain: '', batters: [], bowlers: [], wk: [], allrounders: [] },
+    rcb: { 
+        captain: '', 
+        batters: [
+            { name: 'Mitchell Marsh', img: 'https://static-files.cricket-australia.pulselive.com/headshots/440/722-bbl.png', foreign: true, price: 5 },
+        ], 
+        bowlers: [], 
+        wk: [], 
+        allrounders: [] },
     srh: { 
         captain: '', 
         batters: [
